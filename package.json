@@ -1,0 +1,46 @@
+{
+	"name": "@biz-dev-ops/web-components",
+	"version": "0.0.1",
+	"description": "Webcomponent to display business models.",
+	"keywords": [
+		"bizdevops",
+		"webcomponent",
+		"html5"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/biz-dev-ops/web-components"
+	},
+	"author": "Arjan Geertsema",
+	"license": "Apache 2.0",
+	"bugs": {
+		"url": "https://github.com/biz-dev-ops/web-components/issues"
+	},
+	"homepage": "https://github.com/biz-dev-ops/web-components/blob/main/README.md",
+	"type": "module",
+	"main": "dist/web-components.js",
+	"module": "dist/web-components.js",
+	"files": [
+		"dist/"
+	],
+	"scripts": {
+		"develop": "webpack-dev-server --mode development",
+		"build": "webpack --mode production",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"dependencies": {
+		"html-webpack-plugin": "^5.5.3",
+		"lit": "^3.0.2"
+	},
+	"devDependencies": {
+		"@webcomponents/webcomponentsjs": "^2.8.0",
+		"copy-webpack-plugin": "^11.0.0",
+		"minify-html-literals-loader": "^1.1.1",
+		"svg-inline-loader": "^0.8.2",
+		"ts-loader": "^9.4.4",
+		"typescript": "^5.1.6",
+		"webpack": "^5.88.1",
+		"webpack-cli": "^5.1.4",
+		"webpack-dev-server": "^4.15.1"
+	}
+}
