@@ -39,9 +39,7 @@ export class BusinessModelCanvasComponent extends LitElement {
     return html`  
     <table cellspacing="0">
       <tr>
-        <th class="key-partnerships" colspan="2">
-          ${this.blockTitleTemplate('Key Partnerships', this.icons.link)}
-        </th>
+        <th class="key-partnerships" colspan="2">${this.blockTitleTemplate('Key Partnerships', this.icons.link)}</th>
         <th class="key-activities" colspan="2">${this.blockTitleTemplate('Key Activities', this.icons.checkSquare)}</th>
         <th class="value-propositions" colspan="2">${this.blockTitleTemplate('Value Propositions', this.icons.gift)}</th>
         <th class="customer-relationships" colspan="2"">${this.blockTitleTemplate('Customer Relationships', this.icons.heart)}</th>

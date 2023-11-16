@@ -104,8 +104,7 @@ export class ModelViewerComponent extends LitElement {
               type="button"
               class="button--path"
               .disabled="${index + 1 === this.path.length}"
-              @click="${() => { this.gotoPathItem(index); }}"
-            >
+              @click="${() => { this.gotoPathItem(index); }}">
               <span class="txt--property">${path.title}</span>
             </button>
           ` :
@@ -139,7 +138,8 @@ export class ModelViewerComponent extends LitElement {
       case 'oneOf':
         if (root) {
           return this.renderOneOf(property, title, item.oneOf);
-        } else {
+        } 
+        else {
           return this.renderObject(property, title, item, required, root);
         }
     }
@@ -157,8 +157,8 @@ export class ModelViewerComponent extends LitElement {
       `);
     }
 
-    return root ? 
-      html`
+    if(root)
+      return html`
         <div class="item item--object">
           <h2>
             <span class="txt--property">
@@ -167,17 +167,15 @@ export class ModelViewerComponent extends LitElement {
             <span>
           </h2>
           
-          ${
-            item.description ?
-            html`<p>${item.description}</p>` : null
-          }
+          ${ item.description ?  html`<p>${item.description}</p>` : null }
           
           <div class="items">
             ${properties}
           </div>
         </div>
-      ` :
-      html`
+      `;
+    else
+      return html`
         <div class="item item--object">
           <button type="button" class="button--object" @click="${() => { this.selectObject(property, item); }}"><span class="txt--property">${title || property} ${required ? html`<span class="txt--required">*</span>`: ``}</span></button>
         </div>
