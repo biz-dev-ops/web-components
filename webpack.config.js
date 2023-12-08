@@ -17,7 +17,7 @@ let multipleHtmlPlugins = glob.sync('./src/**/index.html').map(path => {
 });
 
 const config = {
-    entry: glob.sync('./src/**/component.ts'),
+    entry: glob.sync('./src/*/index.ts'),
     module: {
         rules: [{
             test: /\.ts?$/,
