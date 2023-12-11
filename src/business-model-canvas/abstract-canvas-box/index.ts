@@ -8,7 +8,7 @@ import { ModelItem } from "../modules/models/model";
 import "../canvas-box-title";
 import "../canvas-box-collection";
 
-export abstract class CanvasBox extends LitElement {
+export abstract class AbstractCanvasBox extends LitElement {
   protected abstract defaultItems: ModelItem[];
   
   //Icons from https://www.svgrepo.com/collection/solar-linear-icons/
