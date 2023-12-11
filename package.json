@@ -1,6 +1,6 @@
 {
 	"name": "@biz-dev-ops/web-components",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "Webcomponent to display business models.",
 	"keywords": [
 		"bizdevops",
