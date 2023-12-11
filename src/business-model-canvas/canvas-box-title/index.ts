@@ -20,6 +20,8 @@ export abstract class CanvasBoxTitle extends LitElement {
       .block-title {
         display: flex;
         justify-content: space-between;
+        font-weight: 700;
+        font-size: 1em;
       }
 
       ::slotted(svg) {
