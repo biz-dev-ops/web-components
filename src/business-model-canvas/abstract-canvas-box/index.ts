@@ -2,7 +2,7 @@ import { html, LitElement } from "lit";
 import { property, state } from "lit/decorators.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 
-import styles from "../../general/styles/reset";
+import styles from "../../shared/styles/reset";
 import { ModelItem } from "../modules/models/model";
 
 import "../canvas-box-title";

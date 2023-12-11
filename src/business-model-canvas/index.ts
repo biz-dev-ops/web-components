@@ -1,6 +1,6 @@
 import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import styles from "../general/styles/reset";
+import styles from "../shared/styles/reset";
 import { Model } from "./modules/models/model";
 
 import "./channels-canvas-box";
