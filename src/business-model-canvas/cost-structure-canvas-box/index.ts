@@ -1,10 +1,10 @@
-import { customElement } from 'lit/decorators.js';
-import { CanvasBox } from '../canvas-box';
-import { ModelItem } from '../modules/models/model';
+import { customElement } from "lit/decorators.js";
+import { CanvasBox } from "../canvas-box";
+import { ModelItem } from "../modules/models/model";
 
 const icon = require("./icon.svg");
 
-@customElement('cost-structure-canvas-box')
+@customElement("cost-structure-canvas-box")
 export abstract class CostStructureCanvasBox extends CanvasBox {
   constructor() {
     super();

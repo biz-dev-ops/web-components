@@ -1,10 +1,10 @@
-import { customElement } from 'lit/decorators.js';
-import { CanvasBox } from '../canvas-box';
-import { ModelItem } from '../modules/models/model';
+import { customElement } from "lit/decorators.js";
+import { CanvasBox } from "../canvas-box";
+import { ModelItem } from "../modules/models/model";
 
 const icon = require("./icon.svg");
 
-@customElement('value-propositions-canvas-box')
+@customElement("value-propositions-canvas-box")
 export abstract class ValuePropositionsCanvasBox extends CanvasBox {
   constructor() {
     super();

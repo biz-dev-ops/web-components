@@ -1,7 +1,7 @@
 import { css, html, LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
 
-import styles from "../css";
+import styles from "../../general/styles/reset";
 
 @customElement("canvas-box-title")
 export abstract class CanvasBoxTitle extends LitElement {
