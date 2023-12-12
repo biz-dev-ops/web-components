@@ -1,6 +1,6 @@
 import { customElement } from "lit/decorators.js";
 import { AbstractCanvasBox } from "../abstract-canvas-box";
-import { ModelItem } from "../modules/models/model";
+import { ModelItem } from "../models";
 
 const icon = require("./icon.svg");
 

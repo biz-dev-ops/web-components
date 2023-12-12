@@ -1,5 +1,5 @@
 import { TemplateResult } from "lit";
-import { ItemSelected, ModelItemDecorator } from "../../model-viewer.types";
+import { ItemSelected, ModelItemDecorator } from "../../models";
 import { ModelViewerItemArray } from "../../components/model-viewer-item/model-viewer-item-array";
 import { ModelViewerItemBoolean } from "../../components/model-viewer-item/model-viewer-item-boolean";
 import { ModelViewerItemObject } from "../../components/model-viewer-item/model-viewer-item-object";

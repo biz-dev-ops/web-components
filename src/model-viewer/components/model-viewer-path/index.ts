@@ -1,6 +1,6 @@
 import { LitElement, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { ModelItemDecorator, PathChanged } from "../../model-viewer.types";
+import { ModelItemDecorator, PathChanged } from "../../models";
 import { ifDefined } from "lit/directives/if-defined.js";
 import modelViewerPathCss from "./model-viewer-path.css";
 

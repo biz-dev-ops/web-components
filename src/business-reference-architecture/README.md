@@ -22,18 +22,29 @@ The business reference architecture model, must be set via JavaScript.
 ### HTML
 
 ```html
-<business-reference-architecture model-json="{ &quot;key &quot;: &quot;value &quot; }" />
+<business-reference-architecture model-json="{ &quot;key &quot;: &quot;value &quot; }"></business-reference-architectur>
 ```
 
 ### HTML and JavaScript
 
 ```html
-<business-reference-architecture id="business-reference-architecture" />
+<business-reference-architecture id="business-reference-architecture"></business-reference-architectur>
 
 <script>
     document.getElementById('business-reference-architecture').model = {
-    	endUsers: [ "..." ],
-        channels: [ "..." ],
+    	endUsers: {
+            title: "end users",
+            items: [{
+                icon: "test",
+                title: "test",
+                link: "../../test/index.html"
+            }]
+        },
+        channels: [{
+            icon: "test",
+            title: "test",
+            link: "../../test/index.html"
+        }],
         vallueStreams: [ "..." ],
         businessCapabilities: [ "..." ],
         principles: [ "..." ]

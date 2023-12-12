@@ -1,7 +1,7 @@
 import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import styles from "../shared/styles/reset";
-import { Model } from "./modules/models/model";
+import { Model } from "./models";
 
 import "./channels-canvas-box";
 import "./cost-structure-canvas-box";

@@ -18,7 +18,7 @@ The id attribute identifies the property within the `window.modelViewer`.
 
 The name attribute is a human-readable name fallback. Only used when the model doesn't provide a title.
 
-### data-json
+### model-json
 
 A HTML escaped version of the JSON-schema model.
 
@@ -31,10 +31,7 @@ The JSON-schema model, must be set via JavaScript.
 ### HTML
 
 ```html
-<model-viewer 
-    id="trainset"
-    name="a name"
-    data-json="{ &quot;key &quot;: &quot;value &quot; }" />
+<model-viewer name="a name" model-json="{ &quot;key &quot;: &quot;value &quot; }"></model-viewer>
 ```
 
 ### HTML and JavaScript

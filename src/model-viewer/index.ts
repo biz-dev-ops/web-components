@@ -1,9 +1,8 @@
-import { html, LitElement } from 'lit';
+import { css, html, LitElement } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
-import { ItemSelected, ModelItem, ModelItemDecorator, PathChanged } from './model-viewer.types';
+import { ItemSelected, ModelItem, ModelItemDecorator, PathChanged } from './models';
 import { ModelItemBuilder } from './modules/model-item-builder';
-import modelViewerCss from './model-viewer.css';
 
 import "./components/model-viewer-path";
 
@@ -15,8 +14,8 @@ export class ModelViewer extends LitElement {
   @property({type: Object}) 
   model!: ModelItem
 
-  @property({ attribute: "data-json" })
-  dataJson!: string
+  @property({ attribute: "model-json" })
+  modelJson!: string
 
   @state()
   path: ModelItemDecorator[] = [];
@@ -34,9 +33,9 @@ export class ModelViewer extends LitElement {
   }
 
   override update(changedProperties: Map<string, unknown>) {
-    if(changedProperties.has("dataJson")) {
+    if(changedProperties.has("modelJson")) {
       this.path = [];
-      this.model = JSON.parse(this.dataJson);
+      this.model = JSON.parse(this.modelJson);
       this.model.title = this.model.title || this.name;
       this.setPath('', this.model);
     }
@@ -71,6 +70,17 @@ export class ModelViewer extends LitElement {
   }
 
   static override get styles() {  
-    return modelViewerCss;
+    return css`
+      :host {
+        border: var(--line-base) solid var(--color-brand-a40);
+        padding: var(--space-md);
+        display: block;
+        border-radius: var(--radius-base);
+        font-size: var(--font-size-sm);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-md);
+      }
+    `;
   }
 }

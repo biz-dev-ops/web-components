@@ -15,10 +15,19 @@
           <h2 id="h2" tabindex="-1">Business reference architecture <a class="header-anchor" href="#h2">¶</a></h2>
         </div>
         <div class="container">
-          <business-reference-architecture id="business-reference-architecture" />
+          <business-reference-architecture id="business-reference-architecture"></business-reference-architecture>
         </div>
       </div>
   </main>
+  <script>
+    document.getElementById('business-reference-architecture').model = {
+      endUsers: [{
+        icon: "test",
+        title: "test",
+        link: "test.html"
+      }]
+    };
+  </script>
 </body>
 
 </html>

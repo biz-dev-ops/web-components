@@ -3,7 +3,7 @@ import { property, state } from "lit/decorators.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 
 import styles from "../../shared/styles/reset";
-import { ModelItem } from "../modules/models/model";
+import { ModelItem } from "../models";
 
 import "../canvas-box-title";
 import "../canvas-box-collection";

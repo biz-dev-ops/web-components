@@ -1,7 +1,7 @@
 import { LitElement } from "lit";
 import { property } from "lit/decorators.js";
 
-import { ItemSelected, ModelItem } from "../../model-viewer.types";
+import { ItemSelected, ModelItem } from "../../models";
 import modelViewerItemCss from "./model-viewer-item.css";
 
 export abstract class ModelViewerItem extends LitElement {

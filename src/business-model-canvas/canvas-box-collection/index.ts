@@ -2,7 +2,7 @@ import { css, html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
 import styles from "../../shared/styles/reset";
-import { Collection, Text, Head, ModelItem } from "../modules/models/model";
+import { Collection, Text, Head, ModelItem } from "../models";
 
 @customElement("canvas-box-collection")
 export abstract class CanvasBoxCollection extends LitElement {

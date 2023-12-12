@@ -28,7 +28,7 @@ The business model canvas model, must be set via JavaScript.
 ### HTML and JavaScript
 
 ```html
-<business-model-canvas id="business-model-canvas" />
+<business-model-canvas id="business-model-canvas" model-json=" { ...json }"></business-model-canvas>
 
 <script>
     document.getElementById('business-model-canvas').model = {

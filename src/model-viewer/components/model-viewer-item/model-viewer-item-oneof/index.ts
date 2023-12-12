@@ -1,6 +1,6 @@
 import { customElement, property } from "lit/decorators.js";
 import { TemplateResult, css, html } from "lit";
-import { ItemSelected, ModelItem, ModelItemDecorator } from "../../../model-viewer.types";
+import { ItemSelected, ModelItem, ModelItemDecorator } from "../../../models";
 
 import "../../../../shared/button";
 import "../../../../shared/popover";
