@@ -7,6 +7,8 @@ HTML5 web component which renders a business reference architecture.
 - Add `business-reference-architecture.js` to the webpage
 - Add the `<business-reference-architecture></business-reference-architecture>` to the page
 
+The group title has a default value, but can be overwritten with a custom value.
+
 ## Attributes
 
 ### model-json
