@@ -1,19 +1,25 @@
 export type Model = {
-    enUsers: Group | Button[]
-    channels: Group | Button[]
-    valueStreams: Group | Button[]
-    businessCapabilities: Group | Button[]
-    principles: Group | Button[]
+    endUsers: Group
+    channels: Group
+    valueStreams: Group
+    businessCapabilities: Group
+    principles: Group
 }
 
-type Group = {
-    title?: string
+export type Group = Button[] | Groups | Buttons;
+
+export type Groups = {
+    title: string
+    groups: Group[]
+}
+
+export type Buttons = {
+    title: string
     items: Button[]
 }
 
-type Button = {
+export type Button = {
     icon?: string
     title: string
     link?: string
 }
-
