@@ -1,9 +1,9 @@
 export type Model = {
     endUsers: Group
     channels: Group
-    valueStreams: Group
+    valueStreams: Buttons | Button[]
     businessCapabilities: Group
-    principles: Group
+    principles: Buttons | Button[]
 }
 
 export type Group = Groups | Buttons | Buttons[] | Button[];
