@@ -6,11 +6,11 @@ export type Model = {
     principles: Group
 }
 
-export type Group = Button[] | Groups | Buttons;
+export type Group = Groups | Group[] | Buttons | Button[];
 
 export type Groups = {
     title: string
-    groups: Group[]
+    groups: Buttons[]
 }
 
 export type Buttons = {
