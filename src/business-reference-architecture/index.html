@@ -15,19 +15,101 @@
           <h2 id="h2" tabindex="-1">Business reference architecture <a class="header-anchor" href="#h2">¶</a></h2>
         </div>
         <div class="container">
-          <business-reference-architecture id="business-reference-architecture"></business-reference-architecture>
+            <business-reference-architecture id="business-ref-arch" model-json='{
+                "enUsers": {
+                    "title": "end users",
+                    "arrow": "down",
+                    "buttonStyle": "brand",
+                    "content": [
+                        {"icon": "user", "title": "Consumer", "link": "#"},
+                        {"icon": "users", "title": "Employee", "link": "#"},
+                        {"icon": "loan", "title": "Lender", "link": "#"}
+                    ]
+                },
+                "channels": {
+                    "title": "channels",
+                    "arrow": "down",
+                    "content": [
+                        {"icon": "user", "title": "Button Title", "link": "#"},
+                        {"icon": "user", "title": "Button Title", "link": "#"}
+                    ]
+                },
+                "valueStreams": {
+                    "title": "value streams",
+                    "style": "streams",
+                    "buttonStyle": "stream",
+                    "content": [
+                        {"title": "Originating mortgages", "link": "#"},
+                        {"title": "Servicing mortgages", "link": "#"},
+                        {"title": "Changing mortgages", "link": "#"}
+                    ]
+                },
+                "businessCapabilities": {
+                    "title": "business capabilities",
+                    "arrow": "up",
+                    "buttonStyle": "white",
+                    "content": [
+                        {
+                            "title": "Group 1",
+                            "items": [
+                                {"icon": "user", "title": "Loans", "link": "#"},
+                                {"icon": "user", "title": "Engagements", "link": "#"},
+                                {"icon": "user", "title": "Assets", "link": "#"},
+                                {"icon": "user", "title": "Contracts", "link": "#"},
+                                {"icon": "user", "title": "Money", "link": "#"},
+                                {"icon": "user", "title": "Relations", "link": "#"},
+                                {"icon": "user", "title": "Product", "link": "#"}
+                            ]
+                        },
+                        {
+                            "title": "Group 2",
+                            "items": [
+                                {"icon": "user", "title": "Loans", "link": "#"},
+                                {"icon": "user", "title": "Engagements", "link": "#"},
+                                {"icon": "user", "title": "Assets", "link": "#"},
+                                {"icon": "user", "title": "Contracts", "link": "#"},
+                                {"icon": "user", "title": "Money", "link": "#"},
+                                {"icon": "user", "title": "Relations", "link": "#"},
+                                {"icon": "user", "title": "Product", "link": "#"}
+                            ]
+                        },
+                        {
+                            "title": "Group 3",
+                            "items": [
+                                {"icon": "user", "title": "Loans", "link": "#"},
+                                {"icon": "user", "title": "Engagements", "link": "#"},
+                                {"icon": "user", "title": "Relations", "link": "#"},
+                                {"icon": "user", "title": "Product", "link": "#"}
+                            ]
+                        },
+                        {
+                            "title": "Group 4",
+                            "items": [
+                                {"icon": "user", "title": "Button Title", "link": "#"},
+                                {"icon": "user", "title": "Button Title", "link": "#"}
+                            ]
+                        }
+                    ]
+                },
+                "principles": {
+                    "title": "principles",
+                    "style": "principles",
+                    "buttonStyle": "white",
+                    "content": [
+                        {"icon": "user", "title": "Button Title", "link": "#"},
+                        {"icon": "user", "title": "Button Title", "link": "#"},
+                        {"icon": "user", "title": "Button Title", "link": "#"},
+                        {"icon": "user", "title": "Button Title", "link": "#"},
+                        {"icon": "user", "title": "Button Title", "link": "#"},
+                        {"icon": "user", "title": "Button Title", "link": "#"},
+                        {"icon": "user", "title": "Button Title", "link": "#"},
+                        {"icon": "user", "title": "Button Title", "link": "#"}
+                    ]
+                }
+            }'></business-reference-architecture>
         </div>
       </div>
   </main>
-  <script>
-    document.getElementById('business-reference-architecture').model = {
-      endUsers: [{
-        icon: "test",
-        title: "test",
-        link: "test.html"
-      }]
-    };
-  </script>
 </body>
 
 </html>
