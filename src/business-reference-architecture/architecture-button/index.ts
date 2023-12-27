@@ -14,7 +14,7 @@ export class ArchitectureButton extends LitElement {
     override render() {
         return html`
             <a href="${this.button.link}" class="architecture-button architecture-button-${this.button.style || 'default'}">
-                ${this.button.icon ? html`<architecture-icon icon="${this.button.icon}" />` : ""}
+                ${this.button.icon && html`<architecture-icon icon="${this.button.icon}" />`}
                 <span>${this.button.title}</span>
             </a>
         `;
