@@ -15,98 +15,132 @@
           <h2 id="h2" tabindex="-1">Business reference architecture <a class="header-anchor" href="#h2">¶</a></h2>
         </div>
         <div class="container">
-            <business-reference-architecture id="business-ref-arch" model-json='{
-                "enUsers": {
-                    "title": "end users",
-                    "arrow": "down",
-                    "buttonStyle": "brand",
-                    "content": [
-                        {"icon": "user", "title": "Consumer", "link": "#"},
-                        {"icon": "users", "title": "Employee", "link": "#"},
-                        {"icon": "loan", "title": "Lender", "link": "#"}
-                    ]
-                },
-                "channels": {
-                    "title": "channels",
-                    "arrow": "down",
-                    "content": [
-                        {"icon": "user", "title": "Button Title", "link": "#"},
-                        {"icon": "user", "title": "Button Title", "link": "#"}
-                    ]
-                },
-                "valueStreams": {
-                    "title": "value streams",
-                    "style": "streams",
-                    "buttonStyle": "stream",
-                    "content": [
-                        {"title": "Originating mortgages", "link": "#"},
-                        {"title": "Servicing mortgages", "link": "#"},
-                        {"title": "Changing mortgages", "link": "#"}
-                    ]
-                },
-                "businessCapabilities": {
-                    "title": "business capabilities",
-                    "arrow": "up",
-                    "buttonStyle": "white",
-                    "content": [
-                        {
-                            "title": "Group 1",
-                            "items": [
-                                {"icon": "user", "title": "Loans", "link": "#"},
-                                {"icon": "user", "title": "Engagements", "link": "#"},
-                                {"icon": "user", "title": "Assets", "link": "#"},
-                                {"icon": "user", "title": "Contracts", "link": "#"},
-                                {"icon": "user", "title": "Money", "link": "#"},
-                                {"icon": "user", "title": "Relations", "link": "#"},
-                                {"icon": "user", "title": "Product", "link": "#"}
-                            ]
-                        },
-                        {
-                            "title": "Group 2",
-                            "items": [
-                                {"icon": "user", "title": "Loans", "link": "#"},
-                                {"icon": "user", "title": "Engagements", "link": "#"},
-                                {"icon": "user", "title": "Assets", "link": "#"},
-                                {"icon": "user", "title": "Contracts", "link": "#"},
-                                {"icon": "user", "title": "Money", "link": "#"},
-                                {"icon": "user", "title": "Relations", "link": "#"},
-                                {"icon": "user", "title": "Product", "link": "#"}
-                            ]
-                        },
-                        {
-                            "title": "Group 3",
-                            "items": [
-                                {"icon": "user", "title": "Loans", "link": "#"},
-                                {"icon": "user", "title": "Engagements", "link": "#"},
-                                {"icon": "user", "title": "Relations", "link": "#"},
-                                {"icon": "user", "title": "Product", "link": "#"}
-                            ]
-                        },
-                        {
-                            "title": "Group 4",
-                            "items": [
-                                {"icon": "user", "title": "Button Title", "link": "#"},
-                                {"icon": "user", "title": "Button Title", "link": "#"}
-                            ]
-                        }
-                    ]
-                },
-                "principles": {
-                    "title": "principles",
-                    "style": "principles",
-                    "buttonStyle": "white",
-                    "content": [
-                        {"icon": "user", "title": "Button Title", "link": "#"},
-                        {"icon": "user", "title": "Button Title", "link": "#"},
-                        {"icon": "user", "title": "Button Title", "link": "#"},
-                        {"icon": "user", "title": "Button Title", "link": "#"},
-                        {"icon": "user", "title": "Button Title", "link": "#"},
-                        {"icon": "user", "title": "Button Title", "link": "#"},
-                        {"icon": "user", "title": "Button Title", "link": "#"},
-                        {"icon": "user", "title": "Button Title", "link": "#"}
-                    ]
-                }
-            }'></business-reference-architecture>
+            <business-reference-architecture id="business-ref-arch" model-json='[
+            {
+                "arrow": "down",
+                "buttonStyle": "brand",
+                "buttons": [],
+                "title": "End users",
+                "link": "manage-mortgages/our-business/end-users/index.html"
+            },
+            {
+                "arrow": "down",
+                "buttons": [],
+                "title": "Channels",
+                "link": "manage-mortgages/our-business/channels/index.html"
+            },
+            {
+                "buttonStyle": "stream",
+                "sectionStyle": "streams",
+                "buttons": [],
+                "title": "Value streams",
+                "link": "manage-mortgages/our-business/value-streams/index.html"
+            },
+            {
+                "arrow": "up",
+                "buttonStyle": "white",
+                "groups": [
+                    {
+                        "title": "Engagements",
+                        "link": null,
+                        "buttons": [
+                            {
+                                "title": "Content management",
+                                "link": null
+                            },
+                            {
+                                "title": "Correspondence management",
+                                "link": null
+                            },
+                            {
+                                "title": "Document management",
+                                "link": null
+                            },
+                            {
+                                "title": "Label management",
+                                "link": null
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Orientations",
+                        "link": null,
+                        "buttons": [
+                            {
+                                "title": "Orientation management",
+                                "link": "manage-mortgages/our-business/domains/orientations/orientation-management/index.html"
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Originations",
+                        "link": null,
+                        "buttons": [
+                            {
+                                "title": "Credit checks management",
+                                "link": null
+                            },
+                            {
+                                "title": "Loan application management",
+                                "link": null
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Relationships",
+                        "link": null,
+                        "buttons": [
+                            {
+                                "title": "Consumer relationship management",
+                                "link": "manage-mortgages/our-business/domains/relationships/consumer-relationship-management/index.html"
+                            }
+                        ]
+                    }
+                ],
+                "title": "Domains",
+                "link": "manage-mortgages/our-business/domains/index.html"
+            },
+            {
+                "sectionStyle": "side",
+                "buttonStyle": "white",
+                "buttons": [
+                    {
+                        "title": "Cost reductions through growth",
+                        "link": "manage-mortgages/our-business/principles/cost-reductions-through-growth/index.html"
+                    },
+                    {
+                        "title": "Direct processing",
+                        "link": "manage-mortgages/our-business/principles/direct-processing/index.html"
+                    },
+                    {
+                        "title": "European mortgages platform",
+                        "link": "manage-mortgages/our-business/principles/european-mortgages-platform/index.html"
+                    },
+                    {
+                        "title": "Focus on residential mortgages",
+                        "link": "manage-mortgages/our-business/principles/focus-on-residential-mortgages/index.html"
+                    },
+                    {
+                        "title": "Generic and flexible",
+                        "link": "manage-mortgages/our-business/principles/generic-and-flexible/index.html"
+                    },
+                    {
+                        "title": "High levels of compliance and assurance",
+                        "link": "manage-mortgages/our-business/principles/high-levels-of-compliance-and-assurance/index.html"
+                    },
+                    {
+                        "title": "Impartiality",
+                        "link": "manage-mortgages/our-business/principles/impartiality/index.html"
+                    },
+                    {
+                        "title": "Sustainability",
+                        "link": "manage-mortgages/our-business/principles/sustainability/index.html"
+                    }
+                ],
+                "title": "Principles",
+                "link": null
+            }
+        ]'></business-reference-architecture>
         </div>
       </div>
   </main>

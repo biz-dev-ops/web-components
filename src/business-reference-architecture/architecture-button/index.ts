@@ -1,6 +1,6 @@
 import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { Button as ButtonType } from "../models";
+import { ButtonStyle, Button as ButtonType } from "../models";
 
 import styles from "../../shared/styles/reset";
 
@@ -8,16 +8,35 @@ import "../architecture-icon";
 
 @customElement("architecture-button")
 export class ArchitectureButton extends LitElement {
+    @property()
+    buttonStyle!: ButtonStyle;
+
     @property({ type: Object })
     button!: ButtonType;
 
     override render() {
-        return html`
-            <a .href=${this.button.link} class="architecture-button architecture-button-${this.button.style || 'default'}">
-                ${this.button.icon ? html`<architecture-icon icon="${this.button.icon}" />` : ""}
-                <span>${this.button.title}</span>
-            </a>
-        `;
+        if(this.button.link) {
+            return html`
+                <a .href=${this.button.link} class="architecture-button architecture-button-${this.buttonStyle || 'default'}">
+                   ${this.iconTemplate()}
+                   ${this.textTemplate()}
+                </a>
+            `;
+        }
+        else {
+            return html`
+                ${this.iconTemplate()}
+                ${this.textTemplate()}
+            `;
+        }
+    }
+
+    iconTemplate() {
+        return  html`${this.button.icon ? html`<architecture-icon icon="${this.button.icon}" />` : ""}`;
+    }
+
+    textTemplate() {
+        return  html`<span>${this.button.title}</span>`;
     }
 
     static override get styles() {

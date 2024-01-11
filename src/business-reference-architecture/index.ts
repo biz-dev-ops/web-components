@@ -2,21 +2,21 @@ import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
 import resetStyles from "../shared/styles/reset";
-import { Model } from "./models";
+import { Section } from "./models";
 
 import "./architecture-section";
 
 @customElement("business-reference-architecture")
 export class BusinessReferenceArchitectureComponent extends LitElement {
-    @property({ type: Object })
-    model!: Model;
+    @property({ type: Array })
+    model!: Section[];
 
     @property({ attribute: "model-json" })
     modelJson!: string;
 
     override render() {
         return html`
-            ${Object.entries(this.model).map(([_, sectionValue]) => html`<architecture-section .section=${sectionValue}></architecture-section>`)}
+            ${this.model.map(section => html`<architecture-section .section=${section} .arrow=${section.arrow} .sectionStyle=${section.sectionStyle} .buttonStyle=${section.buttonStyle}></architecture-section>`)}
         `;
     }
 

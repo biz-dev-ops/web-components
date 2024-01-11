@@ -1,33 +1,36 @@
 import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { Group as GroupType, Button } from "../models";
 import "../architecture-button";
 
 import styles from "../../shared/styles/reset";
+import { ButtonStyle, Group } from "../models";
 
 @customElement("architecture-group")
 export class ArchitectureGroup extends LitElement {
+    @property()
+    buttonStyle!: ButtonStyle;
+    
     @property({ type: Object })
-    group!: GroupType;
+    group!: Group;
 
     override render() {
-        const buttons = this.group.items as Button[];
-        const buttonStyle = this.group.buttonStyle;
-
-        if (buttonStyle) {
-            buttons.forEach((button) => {
-                if (!button.style) {
-                    button.style = buttonStyle;
-                }
-            });
-        }
-
         return html`
-                ${this.group.title ? html`<h3><a href="#">${this.group.title}</a></h3>` : ""}
-                <div class="architecture-group-buttons">
-                    ${this.group.items.map((button) => html`<architecture-button .button=${button}></architecture-button>`)}
-                </div>
+            ${this.groupTitleTemplate()}
+            <div class="architecture-group-buttons">
+                ${this.group.buttons.map((button) => html`<architecture-button .button=${button} .buttonStyle=${this.buttonStyle}></architecture-button>`)}
+            </div>
         `;
+    }
+
+    groupTitleTemplate() {
+        if(!this.group.link)
+            return html`<h3>${this.group.title}</h3>`;
+
+        return html`<h3><a .href=${this.group.link}>${this.group.title}</a></h3>`;
+    }
+
+    groupHeadingTemplate() {
+        return this.group.title ? html`<h3><a href="#">${this.group.title}</a></h3>` : html``;
     }
 
     static override get styles() {

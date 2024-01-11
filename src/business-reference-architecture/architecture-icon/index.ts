@@ -4,8 +4,11 @@ import { unsafeHTML } from "lit/directives/unsafe-html.js";
 
 @customElement("architecture-icon")
 export class ArchitectureIcon extends LitElement {
-    @property() icon: string = '';
-    @property() svgContent: string = '';
+    @property() 
+    icon!: string | undefined;
+    
+    @property() 
+    svgContent!: string | undefined;
 
     override async connectedCallback() {
         super.connectedCallback();
