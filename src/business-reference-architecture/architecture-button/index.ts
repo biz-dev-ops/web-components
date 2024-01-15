@@ -45,7 +45,7 @@ export class ArchitectureButton extends LitElement {
                     color: var(--color-white);
                 `;
                 innerButtonCss = `
-                    padding: var(--space-sm) var(--space-md);
+                    padding: var(--space-sm);
                     background-color: var(--color-brand-base);
                 `;
                 beforeCss = `
