@@ -3,13 +3,13 @@ import { customElement, property } from "lit/decorators.js";
 import "../architecture-button";
 
 import styles from "../../shared/styles/reset";
-import { ButtonStyle, Group } from "../models";
+import { ButtonType, Group } from "../models";
 
 @customElement("architecture-group")
 export class ArchitectureGroup extends LitElement {
     @property()
-    buttonStyle!: ButtonStyle;
-    
+    buttonType!: ButtonType;
+
     @property({ type: Object })
     group!: Group;
 
@@ -17,7 +17,7 @@ export class ArchitectureGroup extends LitElement {
         return html`
             ${this.groupTitleTemplate()}
             <div class="architecture-group-buttons">
-                ${this.group.buttons.map((button) => html`<architecture-button .button=${button} .buttonStyle=${this.buttonStyle}></architecture-button>`)}
+                ${this.group.buttons.map((button) => html`<architecture-button .button=${button} .buttonType=${this.buttonType}></architecture-button>`)}
             </div>
         `;
     }
@@ -44,26 +44,28 @@ export class ArchitectureGroup extends LitElement {
                     border-radius: var(--radius-base);
                     position: relative;
                 }
+                h3, a {
+                    color: var(--color-black);
+                }
                 h3 {
                     display: inline-block;
                     position: absolute;
                     top: 0;
                     left: var(--space-sm);
                     margin: 0;
+                    padding: var(--space-xxs) var(--space-sm);
                     font-size: var(--font-size-sm);
                     background-color: var(--color-white);
                     border-radius: var(--radius-pill);
                     transform: translateY(-50%);
                     overflow: hidden;
                 }
-                h3 a {
+                a {
                     display: block;
-                    padding: var(--space-xxs) var(--space-sm);
-                    color: var(--color-black);
-                    text-decoration: none;
-                }
-                h3 a:hover {
                     text-decoration: underline;
+                }
+                a:hover {
+                    text-decoration: none;
                 }
                 .architecture-group-buttons {
                     display: flex;

@@ -1,4 +1,4 @@
-import { html, css, LitElement } from "lit";
+import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
 import resetStyles from "../shared/styles/reset";
@@ -15,8 +15,29 @@ export class BusinessReferenceArchitectureComponent extends LitElement {
     modelJson!: string;
 
     override render() {
+        const hasSideSection = this.model.some(section => section.sectionType === "side");
+
+        let gridCss = '';
+
+        if(hasSideSection) {
+            gridCss = `
+                display: grid;
+                grid-template-columns: repeat(12, 1fr);
+                column-gap: var(--space-md);
+                row-gap: var(--space-lg);
+            `;
+        } else {
+            gridCss = `
+                display: flex;
+                flex-direction: column;
+                gap: var(--space-lg);
+            `;
+        }
+
         return html`
-            ${this.model.map(section => html`<architecture-section .section=${section} .arrow=${section.arrow} .sectionStyle=${section.sectionStyle} .buttonStyle=${section.buttonStyle}></architecture-section>`)}
+            <div class="architecture-section-grid" style="${gridCss}">
+                ${this.model.map(section => html`<architecture-section .section=${section} .arrow=${section.arrow} .sectionType=${section.sectionType} .buttonType=${section.buttonType}></architecture-section>`)}
+            </div>
         `;
     }
 
@@ -32,13 +53,6 @@ export class BusinessReferenceArchitectureComponent extends LitElement {
     }
 
     static override get styles() {
-        return [resetStyles, css`
-            :host {
-                display: grid;
-                grid-template-columns: repeat(12, 1fr);
-                column-gap: var(--space-md);
-                row-gap: var(--space-lg);
-            }
-        `];
+        return [resetStyles];
     }
 }

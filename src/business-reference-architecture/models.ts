@@ -1,5 +1,6 @@
 export type ArrowDirection = 'down' | 'up' | null | undefined;
-export type ButtonStyle = 'white' | 'brand' | 'stream' | null | undefined;
+export type ButtonType = 'default' | 'brand' | 'stream' | null | undefined;
+export type SectionType = 'side' | 'streams' | null | undefined;
 
 export type Button = {
     icon?: string;
@@ -19,6 +20,6 @@ export type Section = {
     buttons?: Button[];
     groups?: Group[];
     arrow?: ArrowDirection;
-    sectionStyle?: string;
-    buttonStyle?: ButtonStyle;
+    sectionType?: SectionType;
+    buttonType?: ButtonType;
 };
