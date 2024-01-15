@@ -163,6 +163,7 @@ export class ArchitectureSection extends LitElement {
                     background-color: var(--color-white);
                     border-radius: var(--radius-pill);
                     transform: translateY(-50%);
+                    text-transform: lowercase;
                 }
                 a h2 {
                     text-decoration: underline;

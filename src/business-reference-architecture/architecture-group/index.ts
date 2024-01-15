@@ -59,6 +59,7 @@ export class ArchitectureGroup extends LitElement {
                     border-radius: var(--radius-pill);
                     transform: translateY(-50%);
                     overflow: hidden;
+                    text-transform: lowercase;
                 }
                 a {
                     display: block;
