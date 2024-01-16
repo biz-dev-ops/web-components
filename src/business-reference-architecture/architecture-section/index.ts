@@ -108,7 +108,7 @@ export class ArchitectureSection extends LitElement {
                 .architecture-section[data-section-type="streams"] {
                     padding-top: var(--space-md);
                     color: var(--color-white);
-                    border: 3px solid var(--color-black);
+                    border: 3px solid var(--text-color-heading);
                     gap: 0;
                 }
                 
@@ -142,7 +142,9 @@ export class ArchitectureSection extends LitElement {
                 }
                 
                 h2, a {
-                    color: var(--color-black);
+                    color: var(--text-color-heading);
+                    font-family: var(--font-family-heading);
+                    line-height: var(--line-height-heading);
                 }
                 h2 {
                     display: inline-block;

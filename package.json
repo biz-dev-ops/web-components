@@ -1,6 +1,6 @@
 {
 	"name": "@biz-dev-ops/web-components",
-	"version": "0.0.5",
+	"version": "0.0.7",
 	"description": "Webcomponent to display business models.",
 	"keywords": [
 		"bizdevops",
@@ -34,6 +34,7 @@
 		"lit": "^3.0.2"
 	},
 	"devDependencies": {
+		"@synion/md-docs": "^1.0.108",
 		"@webcomponents/webcomponentsjs": "^2.8.0",
 		"copy-webpack-plugin": "^12.0.0",
 		"minify-html-literals-loader": "^1.1.1",

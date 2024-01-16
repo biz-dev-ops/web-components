@@ -24,7 +24,7 @@ export class ArrowArchitectureButton extends AbstractArchitectureButton {
 
                 .inner {
                     padding: var(--space-sm);
-                    background-color: var(--color-brand-base);
+                    background-color: var(--color-brand-secondary);
                 }
 
                 .before {
@@ -32,7 +32,7 @@ export class ArrowArchitectureButton extends AbstractArchitectureButton {
                     margin-right: -1px;
                     display: block;
                     height: 54px; /* Make dynamic */
-                    color: var(--color-brand-base);
+                    color: var(--color-brand-secondary);
                 }
 
                 .after {
@@ -41,7 +41,7 @@ export class ArrowArchitectureButton extends AbstractArchitectureButton {
                     margin-right: -3px;
                     display: block;
                     height: 54px; /* Make dynamic */
-                    color: var(--color-brand-base);
+                    color: var(--color-brand-secondary);
                 }
             `
         )
