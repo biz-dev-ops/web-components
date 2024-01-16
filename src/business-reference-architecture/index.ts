@@ -1,4 +1,4 @@
-import { html, LitElement } from "lit";
+import { css, html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
 import resetStyles from "../shared/styles/reset";
@@ -15,37 +15,23 @@ export class BusinessReferenceArchitectureComponent extends LitElement {
     modelJson!: string;
 
     override render() {
-        const hasSideSection = this.model.some(section => section.sectionType === "side");
-
-        let gridCss = '';
-
-        if(hasSideSection) {
-            gridCss = `
-                display: grid;
-                grid-template-columns: 1fr 244px;
-                column-gap: var(--space-md);
-                row-gap: var(--space-lg);
-            `;
-        } else {
-            gridCss = `
-                display: flex;
-                flex-direction: column;
-                gap: var(--space-lg);
-            `;
-        }
-
         return html`
-            <div class="architecture-section-grid" style="${gridCss}">
+            <div class="architecture-section-grid" data-has-side="${this.hasSide()}">
                 ${this.model.map(section => html`<architecture-section .section=${section} .arrow=${section.arrow} .sectionType=${section.sectionType} .buttonType=${section.buttonType}></architecture-section>`)}
             </div>
         `;
+    }
+
+    hasSide() {
+        return this.model.some(section => section.sectionType === "side");
     }
 
     override update(changedProperties: Map<string, unknown>) {
         if (changedProperties.has("modelJson")) {
             try {
                 this.model = JSON.parse(this.modelJson);
-            } catch (e) {
+            } 
+            catch (e) {
                 console.error("Error parsing modelJson:", e);
             }
         }
@@ -53,6 +39,26 @@ export class BusinessReferenceArchitectureComponent extends LitElement {
     }
 
     static override get styles() {
-        return [resetStyles];
+        return [
+            resetStyles,
+            css`
+                :host {
+                    margin-top: var(--space-sm);
+                    display: block;
+                }
+
+                .architecture-section-grid[data-has-side=true] {
+                    display: grid;
+                    grid-template-columns: 1fr 244px;
+                    column-gap: var(--space-md);
+                    row-gap: var(--space-lg);
+                }
+
+                .architecture-section-grid[data-has-side=false] {
+                    display: flex;
+                    flex-direction: column;
+                    gap: var(--space-lg);
+                }
+            `];
     }
 }
