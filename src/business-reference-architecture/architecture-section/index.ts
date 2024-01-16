@@ -22,55 +22,9 @@ export class ArchitectureSection extends LitElement {
     section!: Section;
 
     override render() {
-        let sectionCss = '';
-        switch (this.sectionType) {
-            case 'streams':
-                sectionCss = `
-                    color: var(--color-white);
-                    border: 3px solid var(--color-black);
-                    gap: 0;
-                `;
-                break;
-            case 'side':
-                sectionCss = `
-                    grid-row: span 4 / span 4; /* Make dynamic */
-                    grid-column-start: 2;
-                    grid-row-start: 1;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: stretch;
-                    gap: var(--space-sm);
-                    background-color: var(--color-grey-100);
-                `;
-                break;
-            default:
-                sectionCss = `
-                    background-color: var(--color-brand-a10);
-                    color: var(--color-black);
-                    `;
-        }
-
-        let arrowCss = '';
-        switch (this.arrow) {
-            case 'up':
-                arrowCss = `
-                    top: 0.375rem;
-                    right: 50%;
-                    transform: translate(50%, -100%) rotate(180deg);
-                `;
-                break;
-            case 'down':
-                arrowCss = `
-                    bottom: 0.375rem;
-                    left: 50%;
-                    transform: translate(-50%, 100%);
-                `;
-                break;
-        }
-
         return html`
-            <div class="architecture-section" style="${sectionCss}">
-                ${this.arrowTemplate(arrowCss)}
+            <div class="architecture-section architecture-section-${this.sectionType}">
+                ${this.arrowTemplate()}
                 ${this.sectionTitleTemplate()}
                 ${this.groupsTemplate()}
                 ${this.buttonsTemplate()}
@@ -78,12 +32,12 @@ export class ArchitectureSection extends LitElement {
         `;
     }
 
-    arrowTemplate(arrowCss: string) {
+    arrowTemplate() {
         if(!this.arrow)
             return html``;
 
         return html`
-            <svg class="arrow" viewBox="0 0 70 45" xmlns="http://www.w3.org/2000/svg" style="${arrowCss}">
+            <svg class="arrow arrow-${this.arrow}" viewBox="0 0 70 45" xmlns="http://www.w3.org/2000/svg">
                 <path d="M61.895 0H8.45273C1.60825 0 -2.0756 8.03663 2.39206 13.2219L27.3318 42.1676C30.3843 45.7104 35.8116 45.8909 39.0928 42.5587L67.5953 13.6131C72.5752 8.55579 68.9925 0 61.895 0Z" fill="currentColor"/>
             </svg>
         `;
@@ -142,6 +96,24 @@ export class ArchitectureSection extends LitElement {
                     width: 100%;
                     position: relative;
                     border-radius: var(--radius-base);
+                    background-color: var(--color-brand-a10);
+                    color: var(--color-black);
+                }
+                .architecture-section-streams {
+                    padding-top: var(--space-md);
+                    color: var(--color-white);
+                    border: 3px solid var(--color-black);
+                    gap: 0;
+                }
+                .architecture-section-side {
+                    grid-row: span 4 / span 4; /* Make dynamic */
+                    grid-column-start: 2;
+                    grid-row-start: 1;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: stretch;
+                    gap: var(--space-sm);
+                    background-color: var(--color-grey-100);
                 }
                 .arrow {
                     position: absolute;
@@ -149,6 +121,19 @@ export class ArchitectureSection extends LitElement {
                     color: var(--color-brand-a10);
                     fill: currentColor;
                 }
+
+                .arrow-up {
+                    top: 0.375rem;
+                    right: 50%;
+                    transform: translate(50%, -100%) rotate(180deg);
+                }
+
+                .arrow-down {
+                    bottom: 0.375rem;
+                    left: 50%;
+                    transform: translate(-50%, 100%);
+                }
+                
                 h2, a {
                     color: var(--color-black);
                 }

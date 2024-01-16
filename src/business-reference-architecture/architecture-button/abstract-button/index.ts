@@ -86,6 +86,7 @@ export abstract class AbstractArchitectureButton extends LitElement {
                     align-items: center;
                     justify-content: center;
                     gap: var(--space-xs);
+                    line-height: 140%;
                 }
 
                 a architecture-icon, span architecture-icon {
