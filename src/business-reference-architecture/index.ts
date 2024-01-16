@@ -1,4 +1,4 @@
-import { html, LitElement } from "lit";
+import { css, html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
 import resetStyles from "../shared/styles/reset";
@@ -53,6 +53,13 @@ export class BusinessReferenceArchitectureComponent extends LitElement {
     }
 
     static override get styles() {
-        return [resetStyles];
+        return [
+            resetStyles,
+            css`
+                :host {
+                    margin-top: var(--space-sm);
+                    display: block;
+                }
+            `];
     }
 }
