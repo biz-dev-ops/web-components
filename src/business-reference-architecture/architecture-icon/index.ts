@@ -1,6 +1,5 @@
 import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { ButtonType } from "../models";
 
 import "@phosphor-icons/webcomponents";
 
@@ -17,8 +16,8 @@ export class ArchitectureIcon extends LitElement {
     @property()
     icon!: string | undefined;
 
-    @property()
-    buttonType!: ButtonType;
+    @property({ type: Boolean})
+    inverted!: boolean;
 
     override async connectedCallback() {
         super.connectedCallback();
@@ -33,10 +32,11 @@ export class ArchitectureIcon extends LitElement {
             const IconTag = customElements.get(this.icon);
             if (IconTag) {
                 const iconElement = new IconTag();
-                if (this.buttonType === "default") {
+                if (this.inverted) {
                     iconElement.setAttribute("color", "var(--color-brand-base)");
-                } else {
-                    iconElement.setAttribute("color", "white");
+                } 
+                else {
+                    iconElement.setAttribute("color", "var(--color-white)");
                 }
                 iconElement.setAttribute("weight", "bold");
                 iconElement.setAttribute("size", "100%");

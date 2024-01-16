@@ -16,7 +16,7 @@ export abstract class AbstractArchitectureButton extends LitElement {
                 <a .href=${this.button.link}>
                     ${this.arrowBeforeTemplate()}
                     <span class="inner">
-                        ${this.iconTemplate()}
+                        ${this.iconContainerTemplate()}
                         ${this.textTemplate()}
                     </span>
                     ${this.arrowAfterTemplate()}
@@ -27,7 +27,7 @@ export abstract class AbstractArchitectureButton extends LitElement {
             return html`
                 <span>
                     <span class="inner">
-                        ${this.iconTemplate()}
+                        ${this.iconContainerTemplate()}
                         ${this.textTemplate()}
                     </span>
                 </span>
@@ -35,16 +35,20 @@ export abstract class AbstractArchitectureButton extends LitElement {
         }
     }
 
-    iconTemplate() {
+    iconContainerTemplate() {
         if(!this.button.icon) {
             return html``;
         }
 
         return html`
             <span class="icon">
-                <architecture-icon icon="${this.button.icon}"></architecture-icon>
+                ${this.iconTemplate()}
             </span>
         `;
+    }
+
+    protected iconTemplate() : TemplateResult {
+        return html`<architecture-icon .icon="${this.button.icon}"></architecture-icon>`;
     }
 
     textTemplate() {
@@ -71,15 +75,12 @@ export abstract class AbstractArchitectureButton extends LitElement {
                     transition: all 0.2s ease-in-out;
                     position: relative;
                 }
-
                 a {
                     text-decoration: underline;
                 }
-                
                 a:hover {
                     text-decoration: none;
                 }
-                
                 a .inner, span .inner {
                     display: flex;
                     align-items: center;
