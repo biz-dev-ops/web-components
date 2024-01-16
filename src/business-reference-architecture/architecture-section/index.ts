@@ -1,8 +1,9 @@
 import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
+import {ifDefined} from 'lit/directives/if-defined.js';
 
 import styles from "../../shared/styles/reset";
-import { Section, ButtonType, ArrowDirection } from "../models";
+import { Section, ButtonType, ArrowDirection, SectionType } from "../models";
 
 import "../architecture-group";
 import "../architecture-button";
@@ -13,7 +14,7 @@ export class ArchitectureSection extends LitElement {
     buttonType!: ButtonType;
 
     @property()
-    sectionType!: string | undefined;
+    sectionType!: SectionType
 
     @property()
     arrow!: ArrowDirection;
@@ -23,7 +24,7 @@ export class ArchitectureSection extends LitElement {
 
     override render() {
         return html`
-            <div class="architecture-section architecture-section-${this.sectionType}">
+            <div class="architecture-section" data-section-type="${ifDefined(ifDefined(this.sectionType))}">
                 ${this.arrowTemplate()}
                 ${this.sectionTitleTemplate()}
                 ${this.groupsTemplate()}
@@ -87,6 +88,7 @@ export class ArchitectureSection extends LitElement {
                 :host {
                     display: contents;
                 }
+
                 .architecture-section {
                     display: flex;
                     align-items: center;
@@ -96,16 +98,21 @@ export class ArchitectureSection extends LitElement {
                     width: 100%;
                     position: relative;
                     border-radius: var(--radius-base);
+                }
+                
+                .architecture-section:not([data-section-type]) {
                     background-color: var(--color-brand-a10);
                     color: var(--color-black);
                 }
-                .architecture-section-streams {
+
+                .architecture-section[data-section-type="streams"] {
                     padding-top: var(--space-md);
                     color: var(--color-white);
                     border: 3px solid var(--color-black);
                     gap: 0;
                 }
-                .architecture-section-side {
+                
+                .architecture-section[data-section-type="side"] {
                     grid-row: span 4 / span 4; /* Make dynamic */
                     grid-column-start: 2;
                     grid-row-start: 1;
