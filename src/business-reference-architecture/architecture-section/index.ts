@@ -26,6 +26,7 @@ export class ArchitectureSection extends LitElement {
         switch (this.sectionType) {
             case 'streams':
                 sectionCss = `
+                    padding-top: var(--space-md);
                     color: var(--color-white);
                     border: 3px solid var(--color-black);
                     gap: 0;
