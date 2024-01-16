@@ -33,13 +33,13 @@ export class ArchitectureSection extends LitElement {
                 break;
             case 'side':
                 sectionCss = `
-                    grid-column: span 3 / span 3;
                     grid-row: span 4 / span 4; /* Make dynamic */
-                    grid-column-start: 10;
+                    grid-column-start: 2;
                     grid-row-start: 1;
                     flex-direction: column;
                     justify-content: center;
                     align-items: stretch;
+                    gap: var(--space-sm);
                     background-color: var(--color-grey-100);
                 `;
                 break;
@@ -134,7 +134,6 @@ export class ArchitectureSection extends LitElement {
                     display: contents;
                 }
                 .architecture-section {
-                    grid-column: span 9 / span 9;
                     display: flex;
                     align-items: center;
                     gap: var(--space-xs);
@@ -175,7 +174,7 @@ export class ArchitectureSection extends LitElement {
                     display: grid;
                     grid-template-columns: repeat(3, 1fr);
                     align-items: stretch;
-                    gap: var(--space-lg);
+                    gap: var(--space-md);
                     margin-top: var(--space-sm);
                 }
                 * {

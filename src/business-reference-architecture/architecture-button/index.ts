@@ -58,7 +58,7 @@ export class ArchitectureButton extends LitElement {
                 afterCss = `
                     flex: none;
                     margin-left: -1px;
-                    margin-right: -2px;
+                    margin-right: -3px;
                     display: block;
                     height: 54px; /* Make dynamic */
                     color: var(--color-brand-base);

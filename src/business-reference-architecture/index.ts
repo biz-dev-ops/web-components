@@ -22,7 +22,7 @@ export class BusinessReferenceArchitectureComponent extends LitElement {
         if(hasSideSection) {
             gridCss = `
                 display: grid;
-                grid-template-columns: repeat(12, 1fr);
+                grid-template-columns: 1fr 244px;
                 column-gap: var(--space-md);
                 row-gap: var(--space-lg);
             `;
