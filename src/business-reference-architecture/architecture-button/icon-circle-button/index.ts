@@ -12,7 +12,7 @@ export class IconCircleArchitectureButton extends AbstractArchitectureButton {
             css`
                 :host > a, :host > span {
                     padding: 0 var(--space-xs);
-                    color: var(--color-black);
+                    color: var(--text-color-base);
                 }
 
                 .icon {

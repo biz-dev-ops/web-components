@@ -40,7 +40,10 @@ const config = {
   },
   plugins: [
     new CopyPlugin({
-      patterns: [{ from: "assets", to: "assets" }],
+      patterns: [
+        { from: "node_modules/@synion/md-docs/assets", to: "assets" },
+        { from: "assets", to: "assets", force: true }
+      ],
     }),
   ].concat(multipleHtmlPlugins),
   optimization: {

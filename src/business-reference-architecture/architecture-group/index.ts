@@ -45,7 +45,9 @@ export class ArchitectureGroup extends LitElement {
                     position: relative;
                 }
                 h3, a {
-                    color: var(--color-black);
+                    color: var(--text-color-base);
+                    font-family: var(--font-family-heading);
+                    line-height: var(--line-height-heading);
                 }
                 h3 {
                     display: inline-block;
@@ -55,11 +57,10 @@ export class ArchitectureGroup extends LitElement {
                     margin: 0;
                     padding: var(--space-xxs) var(--space-sm);
                     font-size: var(--font-size-sm);
-                    background-color: var(--color-white);
+                    background-color: var(--color-brand-a10);
                     border-radius: var(--radius-pill);
                     transform: translateY(-50%);
                     overflow: hidden;
-                    text-transform: lowercase;
                 }
                 a {
                     display: block;
