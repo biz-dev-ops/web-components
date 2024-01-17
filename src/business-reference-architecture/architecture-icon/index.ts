@@ -1,7 +1,14 @@
 import { html, css, LitElement } from "lit";
+import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { customElement, property } from "lit/decorators.js";
 
 import "@phosphor-icons/webcomponents";
+
+import { library, findIconDefinition, icon, IconName } from '@fortawesome/fontawesome-svg-core'
+import { far } from '@fortawesome/free-regular-svg-icons'
+library.add(far)
+
+import 'material-symbols/outlined.css';
 
 /*
 Font icon support for:
@@ -34,7 +41,7 @@ export class ArchitectureIcon extends LitElement {
                 const iconElement = new IconTag();
                 if (this.inverted) {
                     iconElement.setAttribute("color", "var(--color-brand-base)");
-                } 
+                }
                 else {
                     iconElement.setAttribute("color", "var(--color-white)");
                 }
@@ -46,7 +53,10 @@ export class ArchitectureIcon extends LitElement {
         }
 
         if(this.icon.startsWith("fa-")) {
-            return html`<i class="fa-regular ${this.icon}"></i>`;
+            const iconName = this.icon.substring(3) as IconName; // remove the "fa-" prefix
+            const iconDefinition = findIconDefinition({ prefix: 'far', iconName: iconName });
+            const svgElement = icon(iconDefinition).html.join('');
+            return html`${unsafeHTML(svgElement)}`;
         }
 
         if(this.icon.startsWith("mat-")) {
@@ -63,8 +73,30 @@ export class ArchitectureIcon extends LitElement {
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    color: var(--color-white);
+                    color: inherit;
                     overflow: hidden;
+                }
+                svg {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: contain;
+                }
+                .material-symbols-outlined {
+                    font-family: "Material Symbols Outlined";
+                    font-weight: normal;
+                    font-style: normal;
+                    font-size: 24px;
+                    line-height: 1;
+                    letter-spacing: normal;
+                    text-transform: none;
+                    display: inline-block;
+                    white-space: nowrap;
+                    word-wrap: normal;
+                    direction: ltr;
+                    -webkit-font-smoothing: antialiased;
+                    -moz-osx-font-smoothing: grayscale;
+                    text-rendering: optimizeLegibility;
+                    font-feature-settings: "liga";
                 }
             `,
         ];
