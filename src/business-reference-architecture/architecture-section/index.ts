@@ -144,7 +144,7 @@ export class ArchitectureSection extends LitElement {
                 h2, a {
                     color: var(--text-color-heading);
                     font-family: var(--font-family-heading);
-                    line-height: var(--line-height-heading);
+                    font-size: 1.3rem;
                 }
                 h2 {
                     display: inline-block;
