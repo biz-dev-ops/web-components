@@ -9,6 +9,12 @@ HTML5 web component which renders a business reference architecture.
 
 The group title has a default value, but can be overwritten with a custom value.
 
+Font icon support for:
+
+- [Material icons, add mat- before the icon name.](https://fonts.google.com/icons)
+- [Font awesome icons, add fa- before the icon name.](https://fontawesome.com/)
+- [Phosphor icons, add ph- before the icon name.](https://phosphoricons.com/)
+
 ## Attributes
 
 ### model-json
@@ -33,23 +39,8 @@ The business reference architecture model, must be set via JavaScript.
 <business-reference-architecture id="business-reference-architecture"></business-reference-architectur>
 
 <script>
-    document.getElementById('business-reference-architecture').model = {
-    	endUsers: {
-            title: "end users",
-            items: [{
-                icon: "test",
-                title: "test",
-                link: "../../test/index.html"
-            }]
-        },
-        channels: [{
-            icon: "test",
-            title: "test",
-            link: "../../test/index.html"
-        }],
-        vallueStreams: [ "..." ],
-        businessCapabilities: [ "..." ],
-        principles: [ "..." ]
-    }
+    document.getElementById('business-reference-architecture').model = [
+        sections
+    ];
 <script>
 ```

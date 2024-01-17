@@ -29,6 +29,10 @@ const config = {
         test: /\.svg$/,
         loader: "svg-inline-loader",
       },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
+      },
     ],
   },
   resolve: {
@@ -42,7 +46,7 @@ const config = {
     new CopyPlugin({
       patterns: [
         { from: "node_modules/@synion/md-docs/assets", to: "assets" },
-        { from: "assets", to: "assets", force: true }
+        { from: "assets", to: "assets", force: true },
       ],
     }),
   ].concat(multipleHtmlPlugins),

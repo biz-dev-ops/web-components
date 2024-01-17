@@ -5,7 +5,7 @@ import { AbstractArchitectureButton } from "../abstract-button";
 
 @customElement("icon-circle-architecture-button")
 export class IconCircleArchitectureButton extends AbstractArchitectureButton {
-    
+
     static override get styles() : CSSResult[] {
         const styles = super.styles;
         styles.push(
@@ -22,6 +22,7 @@ export class IconCircleArchitectureButton extends AbstractArchitectureButton {
                     align-items: center;
                     justify-content: center;
                     background-color: var(--color-brand-base);
+                    color: var(--color-white);
                     border-radius: var(--radius-pill);
                     aspect-ratio: 1;
                 }
