@@ -15,8 +15,6 @@ Font icon support for:
 - https://fonts.google.com/icons
 - https://fontawesome.com/
 - https://phosphoricons.com/
-
-Add font files to html to enable the functionality.
 */
 @customElement("architecture-icon")
 export class ArchitectureIcon extends LitElement {
