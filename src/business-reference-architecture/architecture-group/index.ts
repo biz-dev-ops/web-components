@@ -23,6 +23,10 @@ export class ArchitectureGroup extends LitElement {
     }
 
     groupTitleTemplate() {
+        if(!this.group.title || this.group.title === "") {
+            return html``;
+        }
+
         if(!this.group.link)
             return html`<h3>${this.group.title}</h3>`;
 

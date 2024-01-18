@@ -45,6 +45,10 @@ export class ArchitectureSection extends LitElement {
     }
 
     sectionTitleTemplate() {
+        if(!this.section.title || this.section.title.trim() === "") {
+            return html``;
+        }
+
         if(!this.section.link)
             return this.sectionHeadingTemplate();
 
@@ -103,6 +107,10 @@ export class ArchitectureSection extends LitElement {
                 .architecture-section:not([data-section-type]) {
                     background-color: var(--color-brand-a10);
                     color: var(--color-black);
+                }
+
+                .architecture-section:not(:has(a), :has(h2)) {
+                    padding: var(--space-sm);
                 }
 
                 .architecture-section[data-section-type="streams"] {
