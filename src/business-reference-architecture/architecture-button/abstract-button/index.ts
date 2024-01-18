@@ -26,10 +26,12 @@ export abstract class AbstractArchitectureButton extends LitElement {
         else {
             return html`
                 <span>
+                    ${this.arrowBeforeTemplate()}
                     <span class="inner">
                         ${this.iconContainerTemplate()}
                         ${this.textTemplate()}
                     </span>
+                    ${this.arrowAfterTemplate()}
                 </span>
             `;
         }
