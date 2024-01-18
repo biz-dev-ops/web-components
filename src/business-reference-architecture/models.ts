@@ -15,7 +15,7 @@ export type Group = {
 };
 
 export type Section = {
-    title: string;
+    title?: string;
     link?: string;
     buttons?: Button[];
     groups?: Group[];
