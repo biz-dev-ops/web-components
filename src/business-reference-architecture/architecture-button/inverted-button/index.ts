@@ -7,7 +7,7 @@ import { AbstractArchitectureButton } from "../abstract-button";
 export class InvertedArchitectureButton extends AbstractArchitectureButton {
     
     override iconTemplate() : TemplateResult {
-        return html`<architecture-icon .icon="${this.button.icon}" inverted></architecture-icon>`;
+        return html`<bdo-icon .icon="${this.button.icon}" inverted></bdo-icon>`;
     }
 
     static override get styles() : CSSResult[] {

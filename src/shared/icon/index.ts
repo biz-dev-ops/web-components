@@ -10,14 +10,8 @@ library.add(far)
 
 import 'material-symbols/outlined.css';
 
-/*
-Font icon support for:
-- https://fonts.google.com/icons
-- https://fontawesome.com/
-- https://phosphoricons.com/
-*/
-@customElement("architecture-icon")
-export class ArchitectureIcon extends LitElement {
+@customElement("bdo-icon")
+export class Icon extends LitElement {
     @property()
     icon!: string | undefined;
 
