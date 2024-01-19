@@ -23,7 +23,6 @@
 	"files": [
 		"dist/*.js",
 		"dist/*.woff2",
-		"dist/*.txt",
 		"dist/**/*.ts",
 		"dist/**/*.ts.map"
 	],
