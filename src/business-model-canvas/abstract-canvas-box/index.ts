@@ -1,17 +1,16 @@
 import { html, LitElement } from "lit";
 import { property, state } from "lit/decorators.js";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
 
 import styles from "../../shared/styles/reset";
 import { ModelItem } from "../models";
 
 import "../canvas-box-title";
 import "../canvas-box-collection";
+import "../../shared/icon";
 
 export abstract class AbstractCanvasBox extends LitElement {
   protected abstract defaultItems: ModelItem[];
   
-  //Icons from https://www.svgrepo.com/collection/solar-linear-icons/
   @state()
   protected abstract icon: string;
 
@@ -21,7 +20,7 @@ export abstract class AbstractCanvasBox extends LitElement {
   override render() {
     return html`
       <canvas-box-title title=${this.title}>
-        ${unsafeHTML(this.icon)}
+        <bdo-icon .icon=${this.icon}></bdo-icon>
       </canvas-box-title>
       <canvas-box-collection .items=${this.items || this.defaultItems}></canvas-box-collection>
     `;

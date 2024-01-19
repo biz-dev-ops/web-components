@@ -2,8 +2,6 @@ import { customElement } from "lit/decorators.js";
 import { AbstractCanvasBox } from "../abstract-canvas-box";
 import { ModelItem } from "../models";
 
-const icon = require("./icon.svg");
-
 @customElement("cost-structure-canvas-box")
 export abstract class CostStructureCanvasBox extends AbstractCanvasBox {
   constructor() {
@@ -22,5 +20,5 @@ export abstract class CostStructureCanvasBox extends AbstractCanvasBox {
     ]
   ]; 
   
-  protected override icon: string = icon;
+  protected override icon: string = "ph-tag";
 }

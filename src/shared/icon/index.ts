@@ -15,13 +15,6 @@ export class Icon extends LitElement {
     @property()
     icon!: string | undefined;
 
-    @property({ type: Boolean})
-    inverted!: boolean;
-
-    override async connectedCallback() {
-        super.connectedCallback();
-    }
-
     override render() {
         if(!this.icon) {
             return html``;
@@ -31,12 +24,12 @@ export class Icon extends LitElement {
             const IconTag = customElements.get(this.icon);
             if (IconTag) {
                 const iconElement = new IconTag();
-                if (this.inverted) {
-                    iconElement.setAttribute("color", "var(--color-brand-base)");
-                }
-                else {
-                    iconElement.setAttribute("color", "var(--color-white)");
-                }
+                // if (this.inverted) {
+                //     iconElement.setAttribute("color", "var(--color-brand-base)");
+                // }
+                // else {
+                //     iconElement.setAttribute("color", "var(--color-white)");
+                // }
                 iconElement.setAttribute("weight", "bold");
                 iconElement.setAttribute("size", "100%");
                 iconElement.setAttribute("style", "display: grid; place-content: center;");
@@ -65,7 +58,6 @@ export class Icon extends LitElement {
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    color: inherit;
                     overflow: hidden;
                 }
                 svg {

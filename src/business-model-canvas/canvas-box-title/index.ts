@@ -22,9 +22,10 @@ export abstract class CanvasBoxTitle extends LitElement {
         justify-content: space-between;
         font-weight: 700;
         font-size: 1em;
+        color: var(--color-brand-base);
       }
 
-      ::slotted(svg) {
+      ::slotted(bdo-icon) {
         inline-size: var(--space-md);
         block-size: var(--space-md);
         aspect-ratio: 1;

@@ -2,8 +2,6 @@ import { customElement } from "lit/decorators.js";
 import { AbstractCanvasBox } from "../abstract-canvas-box";
 import { ModelItem } from "../models";
 
-const icon = require("./icon.svg");
-
 @customElement("channels-canvas-box")
 export abstract class ChannelsCanvasBox extends AbstractCanvasBox {
   constructor() {
@@ -20,5 +18,5 @@ export abstract class ChannelsCanvasBox extends AbstractCanvasBox {
     "How are we integrating them with customer routines?"
   ];
 
-  protected override icon: string = icon;
+  protected override icon: string = "ph-truck";
 }

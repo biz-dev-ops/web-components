@@ -2,8 +2,6 @@ import { customElement } from "lit/decorators.js";
 import { AbstractCanvasBox } from "../abstract-canvas-box";
 import { ModelItem } from "../models";
 
-const icon = require("./icon.svg");
-
 @customElement("key-activities-canvas-box")
 export abstract class KeyActivitiesCanvasBox extends AbstractCanvasBox {
   constructor() {
@@ -24,5 +22,5 @@ export abstract class KeyActivitiesCanvasBox extends AbstractCanvasBox {
     ]
   ]; 
 
-  protected override icon: string = icon;
+  protected override icon: string = "ph-check";
 }
