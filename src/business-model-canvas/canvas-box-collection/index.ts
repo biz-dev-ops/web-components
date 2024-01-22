@@ -26,7 +26,7 @@ export abstract class CanvasBoxCollection extends LitElement {
             return html`<p>${(item as Text).text}</p>`;
           }
           else if((item as Head).head){
-            return html`<h1>${(item as Head).head}</h1>`;
+            return html`<h4>${(item as Head).head}</h4>`;
           }
           else {
             return html`<p>${item}</p>`;
@@ -38,12 +38,17 @@ export abstract class CanvasBoxCollection extends LitElement {
 
   static override get styles() {
     return [styles, css`
-      p,li,h1 {
+      p,li,h4 {
         font-weight: 300;
         font-size: 0.8em;
       }
 
-      h1 {
+      p, h4, ul {
+        margin-block-start: 0.5rem;
+        margin-block-end: 0.5rem;
+      }
+
+      h4 {
         font-weight: 600;
       }
     `];
