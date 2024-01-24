@@ -7,6 +7,9 @@ export class BdoButton extends LitElement {
     @property({ type: String })
     type: 'button' | 'submit' | 'reset' | 'menu' = 'button';
 
+    @property()
+    link!: string | undefined;
+
     @property({ type: String })
     direction!: 'up' | 'right' | 'down' | 'left';
         
@@ -15,7 +18,7 @@ export class BdoButton extends LitElement {
 
     override render() {
         return html`
-            <button type="${this.type}" .disabled='${this.disabled}' @click="${this._onClick}">
+            <button type=${this.type} .disabled=${this.disabled} @click=${this._onClick}>
                 <span class="content">
                     <slot></slot>
                 </span>

@@ -2,10 +2,6 @@ export type ArrowDirection = 'down' | 'up' | null | undefined;
 export type ButtonType = 'default' | 'brand' | 'stream' | null | undefined;
 export type SectionType = 'side' | 'streams' | null | undefined;
 
-export type Color = "brand" | "pop" | "white" | "none";
-export type Fill = "solid" | "border";
-export type Direction = "left" | "right" | "up" | "down";
-
 export type Button = {
     icon?: string;
     title: string;
@@ -21,9 +17,11 @@ export type Group = {
 export type Section = {
     title?: string;
     link?: string;
+    style?: string;
+    arrow?: ArrowDirection;
     buttons?: Button[];
     groups?: Group[];
-    arrow?: ArrowDirection;
-    sectionType?: SectionType;
+    
     buttonType?: ButtonType;
+    sectionType?: SectionType;    
 };

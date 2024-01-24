@@ -4,22 +4,19 @@
 <head>
   <meta charset="utf-8" />
   <base href=".." />
-  <title>Business reference architecture</title>
+  <title>Reference modeler</title>
   <link rel="stylesheet" href="../assets/style/page/style.css">
 </head>
 
 <body>
   <main>
-    <header>
-        <h1 class="title">Webcomponents</h1>
-    </header>
     <div class="content">
       <div class="header-container h2">
         <div class="header">
-          <h2 id="h2" tabindex="-1">Business reference architecture <a class="header-anchor" href="#h2">¶</a></h2>
+          <h2 id="h2" tabindex="-1">Reference modeler <a class="header-anchor" href="#h2">¶</a></h2>
         </div>
         <div class="container">
-            <business-reference-architecture id="business-ref-arch" model-json='[
+            <reference-modeler id="reference-modeler" model-json='[
             {
                 "arrow": "down",
                 "buttonType": "brand",
@@ -65,8 +62,6 @@
                 "link": "manage-mortgages/our-business/channels/index.html"
             },
             {
-                "buttonType": "stream",
-                "sectionType": "streams",
                 "buttons": [{
                     "title": "Orientation",
                     "link": "#",
@@ -82,7 +77,8 @@
                     "link": "#"
                 }],
                 "title": "Value streams",
-                "link": "manage-mortgages/our-business/value-streams/index.html"
+                "link": "manage-mortgages/our-business/value-streams/index.html",
+                "style": "pop"
             },
             {
                 "arrow": "up",
@@ -204,7 +200,7 @@
                 "title": "Principles",
                 "link": null
             }
-        ]'></business-reference-architecture>
+        ]'></reference-modeler>
         </div>
       </div>
   </main>

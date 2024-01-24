@@ -116,8 +116,7 @@ export class ArchitectureSection extends LitElement {
                 .architecture-section[data-section-type="streams"] {
                     padding-top: var(--space-md);
                     color: var(--color-white);
-                    border: 3px solid var(--text-color-heading);
-                    gap: 0;
+                    border: var(--line-medium) solid var(--color-brand-pop);
                 }
                 
                 .architecture-section[data-section-type="side"] {
@@ -154,6 +153,12 @@ export class ArchitectureSection extends LitElement {
                     font-family: var(--font-family-heading);
                     font-size: 1.3rem;
                 }
+
+                .architecture-section[data-section-type="streams"] h2,
+                .architecture-section[data-section-type="streams"] a {
+                    color: var(--color-brand-pop)
+                }
+
                 h2 {
                     display: inline-block;
                     position: absolute;
@@ -181,9 +186,9 @@ export class ArchitectureSection extends LitElement {
                     margin-top: var(--space-sm);
                 }
 
-                * {
+                /* * {
                     box-sizing: border-box;
-                }
+                } */
             `,
         ];
     }

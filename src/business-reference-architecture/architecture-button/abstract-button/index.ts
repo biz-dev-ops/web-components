@@ -1,6 +1,6 @@
 import { html, css, LitElement, TemplateResult, CSSResult } from "lit";
 import { property } from "lit/decorators.js";
-import { Button } from "../../models";
+import { Button, Color } from "../../models";
 
 import styles from "../../../shared/styles/reset";
 
@@ -9,6 +9,9 @@ import "../../../shared/icon";
 export abstract class AbstractArchitectureButton extends LitElement {
     @property({ type: Object })
     button!: Button;
+
+    @property()
+    color: Color = "brand";
 
     override render() {
         if (this.button.link) {
@@ -77,13 +80,63 @@ export abstract class AbstractArchitectureButton extends LitElement {
                     transition: all 0.2s ease-in-out;
                     position: relative;
                 }
+
+                :host([color="none"]) > a,
+                :host([color="none"]) > span {
+                    padding: 0 var(--space-xs);
+                    color: var(--text-color-base);
+                }
+
+                :host([color="none"]) bdo-icon {
+                    padding: var(--space-xs);
+                    flex: none;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    background-color: var(--color-brand-base);
+                    color: var(--color-white);
+                    border-radius: var(--radius-pill);
+                    aspect-ratio: 1;
+                }
+
+                :host([color="brand"]) > a,
+                :host([color="brand"]) > span {
+                    padding: var(--space-xs) var(--space-sm);
+                    background-color: var(--color-brand-base);
+                    color: var(--color-white);
+                    border-radius: var(--radius-pill);
+                }
+
+                :host([color="pop"]) > a,
+                :host([color="pop"]) > span {
+                    padding: var(--space-xs) var(--space-sm);
+                    background-color: var(--color-brand-pop);
+                    color: var(--color-white);
+                    border-radius: var(--radius-pill);
+                }
+
+                :host([color="white"]) > a,
+                :host([color="white"]) > span {
+                    padding: var(--space-xs);
+                    background-color: var(--color-white);
+                    color: var(--text-color-base);
+                    border-radius: var(--radius-base);
+                }
+
+                :host([color="white"]) > bdo-icon {
+                    color: var(--color-brand-base)!important;
+                }
+
                 a {
                     text-decoration: underline;
                 }
+
                 a:hover {
                     text-decoration: none;
                 }
-                a .inner, span .inner {
+
+                a .inner, 
+                span .inner {
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -91,7 +144,8 @@ export abstract class AbstractArchitectureButton extends LitElement {
                     line-height: 140%;
                 }
 
-                a bdo-icon, span bdo-icon {
+                a bdo-icon, 
+                span bdo-icon {
                     flex: none;
                     width: 1.5rem;
                     height: 1.5rem;

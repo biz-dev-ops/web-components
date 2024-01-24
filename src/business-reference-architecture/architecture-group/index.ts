@@ -46,7 +46,7 @@ export class ArchitectureGroup extends LitElement {
                     width: 100%;
                     border: 3px solid var(--color-brand-a20);
                     border-radius: var(--radius-base);
-                    position: relative;
+                    position: relative; 
                 }
                 h3, a {
                     color: var(--text-color-base);

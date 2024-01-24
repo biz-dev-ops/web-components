@@ -45,7 +45,7 @@ const config = {
   plugins: [
     new CopyPlugin({
       patterns: [
-        { from: "node_modules/@synion/md-docs/assets", to: "assets" },
+        { from: "node_modules/@biz-dev-ops/md-docs/assets", to: "assets" },
         { from: "assets", to: "assets", force: true },
       ],
     }),

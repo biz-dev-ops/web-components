@@ -6,11 +6,15 @@
     /* md-docs colors */
     --rgb-brand: var(--st-rgb-color-primary);
     --rgb-brand-secondary: var(--st-rgb-color-secondary);
-    --rgb-heading: var(--st-rgb-color-secondary);
+    --rgb-heading: var(--st-rgb-color-primary);
 
     /* Typography */
     --font-family-base: Inter, sans-serif;
     --line-height-base: 1.75;
     --font-family-heading: Roboto Slab, sans-serif;
+
+    h1 {
+        color: var(--color-brand-pop);
+    }
 }
 
