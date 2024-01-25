@@ -19,10 +19,7 @@ export default css`
     
     /* Component */
     :host {
-        --command-color-200: #E5CAF5;
-        --command-color-500: #7B449E;
-        --command-color-800: #4A1F63;
-        --expansion-panel-border-color: var(--command-color-500);
+        --expansion-panel-border-color: var(--use-case-color-500);
     }
 
     section {
@@ -31,19 +28,26 @@ export default css`
         gap: var(--space-xxs);
     }
 
+    model-viewer {
+        --color-brand-a10: var(--use-case-color-200);
+        --color-brand-a40: var(--use-case-color-500);
+        --color-brand-base: var(--use-case-color-800);
+    }
+
     header {
-        --text-color-heading: var(--command-color-800);
-        --text-color-base: var(--command-color-800);
+        --text-color-heading: var(--use-case-color-800);
+        --text-color-base: var(--use-case-color-800);
 
         display: flex;
         flex-direction: row;
         align-items: center;
         gap: var(--space-xxs);
+        font-weight: bold;
     }
 
     header bdo-badge {
-        --badge-color: var(--command-color-200);
-        --badge-text-color: var(--command-color-800);
+        --badge-color: var(--use-case-color-200);
+        --badge-text-color: var(--use-case-color-800);
     }
 
     main {

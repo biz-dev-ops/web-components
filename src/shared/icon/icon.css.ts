@@ -37,5 +37,10 @@ export default css`
 
     .bdo-icon__phosphor {
         display: inline-flex;
+        display: grid; 
+        place-content: center;
+        font-weight: bold;
+        height: 100%;
+        width: 100%;
     }
 `;

@@ -35,9 +35,9 @@
 		"material-symbols": "^0.14.5"
 	},
 	"devDependencies": {
+		"@biz-dev-ops/md-docs": "^1.0.114",
 		"@fortawesome/fontawesome-svg-core": "^6.5.1",
 		"@fortawesome/free-regular-svg-icons": "^6.5.1",
-		"@synion/md-docs": "^1.0.108",
 		"@webcomponents/webcomponentsjs": "^2.8.0",
 		"copy-webpack-plugin": "^12.0.0",
 		"css-loader": "^6.9.0",
