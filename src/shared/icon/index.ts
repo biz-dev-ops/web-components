@@ -25,7 +25,6 @@ export class Icon extends LitElement {
             const IconTag = customElements.get(this.icon);
             if (IconTag) {
                 const iconElement = new IconTag();
-                iconElement.setAttribute("weight", "bold");
                 iconElement.classList.add("bdo-icon__phosphor");
                 return html`${iconElement}`;
             }

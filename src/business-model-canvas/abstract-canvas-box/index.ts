@@ -1,17 +1,15 @@
-import { html, LitElement } from "lit";
+import { css, html, LitElement } from "lit";
 import { property, state } from "lit/decorators.js";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
 
 import styles from "../../shared/styles/reset";
 import { ModelItem } from "../models";
 
-import "../canvas-box-title";
 import "../canvas-box-collection";
+import "../../shared/icon";
 
 export abstract class AbstractCanvasBox extends LitElement {
   protected abstract defaultItems: ModelItem[];
   
-  //Icons from https://www.svgrepo.com/collection/solar-linear-icons/
   @state()
   protected abstract icon: string;
 
@@ -20,14 +18,37 @@ export abstract class AbstractCanvasBox extends LitElement {
   
   override render() {
     return html`
-      <canvas-box-title title=${this.title}>
-        ${unsafeHTML(this.icon)}
-      </canvas-box-title>
+      <h3>
+        ${this.title}
+        <bdo-icon .icon=${this.icon}></bdo-icon>
+      </h3>
       <canvas-box-collection .items=${this.items || this.defaultItems}></canvas-box-collection>
     `;
   }
 
   static override get styles() {
-    return [styles];
+    return [styles, css`
+      h3, bdo-icon {
+        color: var(--text-color-heading);
+      }
+
+      h3 {
+        display: flex;
+        justify-content: space-between;
+        font-weight: 700;
+        font-size: 1em;
+        margin: 0;
+        font-family: var(--font-family-heading);
+        line-height: var(--line-height-heading);
+      }
+
+      bdo-icon {
+        inline-size: var(--space-md);
+        block-size: var(--space-md);
+        aspect-ratio: 1;
+        display: inline-flex;
+        align-self: end;
+      }
+    `];
   }
 }

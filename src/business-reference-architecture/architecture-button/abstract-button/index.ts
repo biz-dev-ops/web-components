@@ -4,7 +4,7 @@ import { Button } from "../../models";
 
 import styles from "../../../shared/styles/reset";
 
-import "../../architecture-icon";
+import "../../../shared/icon";
 
 export abstract class AbstractArchitectureButton extends LitElement {
     @property({ type: Object })
@@ -50,7 +50,7 @@ export abstract class AbstractArchitectureButton extends LitElement {
     }
 
     protected iconTemplate() : TemplateResult {
-        return html`<architecture-icon .icon="${this.button.icon}"></architecture-icon>`;
+        return html`<bdo-icon .icon="${this.button.icon}"></bdo-icon>`;
     }
 
     textTemplate() {
@@ -91,7 +91,7 @@ export abstract class AbstractArchitectureButton extends LitElement {
                     line-height: 140%;
                 }
 
-                a architecture-icon, span architecture-icon {
+                a bdo-icon, span bdo-icon {
                     flex: none;
                     width: 1.5rem;
                     height: 1.5rem;

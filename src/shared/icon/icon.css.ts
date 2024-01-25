@@ -11,12 +11,6 @@ export default css`
         aspect-ratio: 1;
     }
 
-    svg {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-    }
-
     .material-symbols-outlined {
         font-family: "Material Symbols Outlined";
         font-weight: normal;
