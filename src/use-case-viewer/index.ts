@@ -5,7 +5,7 @@ import "../shared/badge";
 import "../shared/expansion-panel";
 import "../shared/truncate";
 import "../model-viewer";
-import { Exception, UseCase, UseCaseType } from "./models";
+import { Case, UseCase, UseCaseType } from "./models";
 
 export abstract class UseCaseViewer<T extends UseCase> extends LitElement {
     @property({ type: Object })
@@ -61,21 +61,21 @@ export abstract class UseCaseViewer<T extends UseCase> extends LitElement {
         `;
     }
 
-    exceptionTemplate(exceptions: Exception[]) {
-        if(!exceptions || exceptions.length === 0) {
+    casesTemplate(title: string, cases: Map<string, Case>) {
+        if(!cases) {
             return html``;
         }
 
         return html`
             <bdo-expansion-panel>
-                <div slot="summary">Exceptions <span class="count">(${this.countItems(exceptions)})</span></div>
+                <div slot="summary">${title} <span class="count">(${this.countItems(cases)})</span></div>
                 
                 <div class="cases">
-                    ${Object.entries(exceptions).map(([key, exception]) => html`
+                    ${Object.entries(cases).map(([key, exception]) => html`
                         <div class="case">
                             <h2>${exception.name || key}</h2>
                             ${this.descriptionTemplate(exception.description)}
-                            ${this.modelViewerTemplate("Exception parameters", exception.parameters)}
+                            ${this.modelViewerTemplate("Parameters", exception.parameters)}
                         </div>
                     `)}
                 </div>

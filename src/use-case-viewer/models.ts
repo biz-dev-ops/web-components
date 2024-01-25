@@ -12,8 +12,10 @@ export type UseCaseType = {
     name: string
 }
 
-export type Exception = {
+export type Case = {
     name: string
     description: string
     parameters: ModelItem
 }
+
+export type Exception = Case;

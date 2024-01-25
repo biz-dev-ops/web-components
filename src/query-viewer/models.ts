@@ -4,5 +4,5 @@ import { Exception, UseCase } from "../use-case-viewer/models";
 export type Query = UseCase & {
     parameters: ModelItem,
     response: ModelItem,
-    exceptions: Exception[]
+    exceptions: Map<string, Exception>
 };

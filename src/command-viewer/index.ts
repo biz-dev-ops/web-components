@@ -18,7 +18,7 @@ export class CommandViewer extends UseCaseViewer<Command> {
     renderMain() {
         return html`
             ${this.modelViewerTemplate(`${this.useCaseType.name} parameters`, this.model.parameters)}
-            ${this.exceptionTemplate(this.model.exceptions)}
+            ${this.casesTemplate("Exceptions", this.model.exceptions)}
         `;
     }
 

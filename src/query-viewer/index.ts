@@ -19,7 +19,7 @@ export class QueryViewer extends UseCaseViewer<Query> {
         return html`
             ${this.modelViewerTemplate(`Parameters`, this.model.parameters)}
             ${this.modelViewerTemplate(`Response`, this.model.response)}
-            ${this.exceptionTemplate(this.model.exceptions)}
+            ${this.casesTemplate("Exceptions", this.model.exceptions)}
         `;
     }
 
