@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Command viewer</title>
+  <title>Query viewer</title>
   <link rel="stylesheet" href="../assets/style/page/style.css">
 </head>
 
@@ -12,12 +12,12 @@
     <div class="content">
       <div class="header-container h1">
         <div class="header">
-          <h1>Command Viewer</h1>
+          <h1>Query viewer</h1>
         </div>
         <div class="container">
-          <command-viewer model-json='
+          <query-viewer model-json='
           {
-            "name": "Test command",
+            "name": "Test query",
             "description": "........",
             "parameters": {
               "required": [
@@ -82,6 +82,17 @@
                 }
               }
             },
+            "response": {
+              "required": [
+                "market_value_adjustment"
+              ],
+              "properties": {
+                "market_value_adjustment": {
+                  "description": "The adjustement of the market value relative to the market value of the colleteral.",
+                  "type": "integer"
+                }
+              }
+            },
             "exceptions": {
               "threshold_exceeded_exception": {
                 "name": "Threshold exceeded",
@@ -99,7 +110,7 @@
               }
             }
           }
-          '></command-viewer>
+          '></query-viewer>
         </div>
       </div>
   </main>

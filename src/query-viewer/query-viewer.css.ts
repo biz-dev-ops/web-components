@@ -1,11 +1,7 @@
-
 import { css } from "lit";
 
-const queryViewerCss = css`
-    /* Reset */
-    /* ... */
-    
-    /* Component */
+export default css`
+
     :host {
         --query-color-200: #F6DF90;
         --query-color-500: #B17521;
@@ -13,7 +9,13 @@ const queryViewerCss = css`
         --expansion-panel-border-color: var(--query-color-500);
     }
 
-    /* ... */
-`;
+    header {
+        --text-color-heading: var(--query-color-800);
+        --text-color-base: var(--query-color-800);
+    }
 
-export default queryViewerCss;
+    header bdo-badge {
+        --badge-color: var(--query-color-200);
+        --badge-text-color: var(--query-color-800);
+    }
+`;

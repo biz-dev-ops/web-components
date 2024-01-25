@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Command viewer</title>
+  <title>Event viewer</title>
   <link rel="stylesheet" href="../assets/style/page/style.css">
 </head>
 
@@ -12,12 +12,12 @@
     <div class="content">
       <div class="header-container h1">
         <div class="header">
-          <h1>Command Viewer</h1>
+          <h1>Event viewer</h1>
         </div>
         <div class="container">
-          <command-viewer model-json='
+          <event-viewer model-json='
           {
-            "name": "Test command",
+            "name": "Test event",
             "description": "........",
             "parameters": {
               "required": [
@@ -81,25 +81,9 @@
                   }
                 }
               }
-            },
-            "exceptions": {
-              "threshold_exceeded_exception": {
-                "name": "Threshold exceeded",
-                "description": "......",
-                "parameters": {
-                  "required": [
-                    "message"
-                  ],
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
             }
           }
-          '></command-viewer>
+          '></event-viewer>
         </div>
       </div>
   </main>
