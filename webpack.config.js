@@ -7,8 +7,6 @@ import glob from "glob";
 
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 
-console.log();
-
 let multipleHtmlPlugins = glob.sync("./src/**/index.html").map((path) => {
   return new HtmlWebpackPlugin({
     template: path,
