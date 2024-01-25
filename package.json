@@ -1,6 +1,6 @@
 {
 	"name": "@biz-dev-ops/web-components",
-	"version": "0.0.3",
+	"version": "0.0.10",
 	"description": "Webcomponent to display business models.",
 	"keywords": [
 		"bizdevops",
@@ -29,13 +29,20 @@
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"dependencies": {
+		"@phosphor-icons/webcomponents": "^2.0.6",
 		"html-webpack-plugin": "^5.5.4",
-		"lit": "^3.0.2"
+		"lit": "^3.0.2",
+		"material-symbols": "^0.14.5"
 	},
 	"devDependencies": {
+		"@fortawesome/fontawesome-svg-core": "^6.5.1",
+		"@fortawesome/free-regular-svg-icons": "^6.5.1",
+		"@synion/md-docs": "^1.0.108",
 		"@webcomponents/webcomponentsjs": "^2.8.0",
-		"copy-webpack-plugin": "^11.0.0",
+		"copy-webpack-plugin": "^12.0.0",
+		"css-loader": "^6.9.0",
 		"minify-html-literals-loader": "^1.1.1",
+		"style-loader": "^3.3.4",
 		"svg-inline-loader": "^0.8.2",
 		"ts-loader": "^9.4.4",
 		"typescript": "^5.3.3",

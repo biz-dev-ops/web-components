@@ -1,9 +1,0 @@
-/* Layout: Main */
-main {
-    background-color: var(--main-surface);
-    border-radius: var(--radius-base) var(--radius-base) 0 0;
-    inset: var(--main-margin) var(--main-margin) auto var(--nav-width);
-    min-height: 100vh;
-    padding-block-start: var(--space-md);
-    position: absolute;
-}

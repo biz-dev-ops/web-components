@@ -1,25 +1,25 @@
-export type Model = {
-    endUsers: Group
-    channels: Group
-    valueStreams: Group
-    businessCapabilities: Group
-    principles: Group
-}
-
-export type Group = Button[] | Groups | Buttons;
-
-export type Groups = {
-    title: string
-    groups: Group[]
-}
-
-export type Buttons = {
-    title: string
-    items: Button[]
-}
+export type ArrowDirection = 'down' | 'up' | null | undefined;
+export type ButtonType = 'default' | 'brand' | 'stream' | null | undefined;
+export type SectionType = 'side' | 'streams' | null | undefined;
 
 export type Button = {
-    icon?: string
-    title: string
-    link?: string
-}
+    icon?: string;
+    title: string;
+    link?: string;
+};
+
+export type Group = {
+    title?: string;
+    link?: string;
+    buttons: Button[];
+};
+
+export type Section = {
+    title?: string;
+    link?: string;
+    buttons?: Button[];
+    groups?: Group[];
+    arrow?: ArrowDirection;
+    sectionType?: SectionType;
+    buttonType?: ButtonType;
+};
