@@ -1,10 +1,7 @@
-
 import { css } from "lit";
 
-const taskViewerCss = css`
-    /* Reset */
-    /* ... */
-    
+export default css`
+
     /* Component */
     :host {
         --task-color-200: #CDE1AC;
@@ -13,7 +10,13 @@ const taskViewerCss = css`
         --expansion-panel-border-color: var(--task-color-500);
     }
 
-    /* ... */
-`;
+    header {
+        --text-color-heading: var(--task-color-800);
+        --text-color-base: var(--task-color-800);
+    }
 
-export default taskViewerCss;
+    header bdo-badge {
+        --badge-color: var(--task-color-200);
+        --badge-text-color: var(--task-color-800);
+    }
+`;

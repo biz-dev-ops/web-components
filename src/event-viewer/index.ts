@@ -11,6 +11,7 @@ export class EventViewer extends UseCaseViewer<Event> {
    
     useCaseType = {
         type: "event",
+        icon: "ph-bell",
         name: "Event"
     };
     

@@ -8,6 +8,7 @@ export type UseCase = {
 
 export type UseCaseType = {
     type: string,
+    icon: string,
     name: string
 }
 

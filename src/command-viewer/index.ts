@@ -11,6 +11,7 @@ export class CommandViewer extends UseCaseViewer<Command> {
    
     useCaseType = {
         type: "command",
+        icon: "ph-terminal-window",
         name: "Command"
     };
     

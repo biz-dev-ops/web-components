@@ -1,37 +1,32 @@
 import { css } from "lit";
 
-const iconCss = css`
-    /* Reset */
+export default css`
     :host {
-        all: unset;
-        font-family: var(--font-family-base);
-        font-size: var(--font-size-base);
-        display: inline-block;
-        line-height: var(--line-height-base);
-        box-sizing: border-box;
-        text-align: start;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
     }
-
-    :where(*, ::before, ::after) {
-        box-sizing: border-box;
-    }
-    
-    /* Component */
-    :host {
-        --_icon-color: var(--icon-color, currentcolor);
-        --_icon-stroke-width: var(--icon-stroke-width, 1.5);
-
-        display: inline-block
-    }
-    
     svg {
-        color: var(--_icon-color);
-        display: block;
-        stroke: currentcolor;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-        stroke-width: var(--_icon-stroke-width);
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+    .material-symbols-outlined {
+        font-family: "Material Symbols Outlined";
+        font-weight: normal;
+        font-style: normal;
+        font-size: 24px;
+        line-height: 1;
+        letter-spacing: normal;
+        text-transform: none;
+        display: inline-block;
+        white-space: nowrap;
+        word-wrap: normal;
+        direction: ltr;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+        font-feature-settings: "liga";
     }
 `;
-
-export default iconCss;

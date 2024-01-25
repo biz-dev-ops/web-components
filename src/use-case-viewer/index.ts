@@ -20,7 +20,7 @@ export abstract class UseCaseViewer<T extends UseCase> extends LitElement {
         return html`
             <section>
                 <header>
-                    <bdo-badge type=${this.useCaseType.type} icon=${this.useCaseType.type}>${this.useCaseType.name}</bdo-badge>
+                    <bdo-badge type=${this.useCaseType.type} icon=${this.useCaseType.icon}>${this.useCaseType.name}</bdo-badge>
                     ${this.model.name}
                 </header>
 
