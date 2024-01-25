@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Command viewer</title>
+  <link rel="stylesheet" href="../assets/style/page/style.css">
+</head>
+
+<body>
+  <main>
+    <div class="content">
+      <div class="header-container h1">
+        <div class="header">
+          <h1>Command viewer</h1>
+        </div>
+        <div class="container">
+          <command-viewer model-json='
+          {
+            "name": "Test command",
+            "description": "........",
+            "parameters": {
+              "required": [
+                "depot",
+                "colleteral",
+                "production_options"
+              ],
+              "properties": {
+                "depot": {
+                  "required": [
+                    "type_of_contruction",
+                    "orginal_deposit",
+                    "remaining_deposit"
+                  ],
+                  "properties": {
+                    "type_of_contruction": {
+                      "type": "string",
+                      "enum": [
+                        "NEW_CONSTRUCTION",
+                        "RENOVATION"
+                      ]
+                    },
+                    "orginal_deposit": {
+                      "type": "integer"
+                    },
+                    "remaining_deposit": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "colleteral": {
+                  "required": [
+                    "market_value_before_rennovation",
+                    "market_value_after_rennovation"
+                  ],
+                  "properties": {
+                    "market_value_before_rennovation": {
+                      "type": "integer"
+                    },
+                    "market_value_after_rennovation": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "production_options": {
+                  "required": [
+                    "remaining_construction_deposit_amount_threshold",
+                    "remaining_construction_deposit_percentage_threshold",
+                    "remaining_construction_deposit_adjustment_percentage"
+                  ],
+                  "properties": {
+                    "remaining_construction_deposit_amount_threshold": {
+                      "type": "integer"
+                    },
+                    "remaining_construction_deposit_percentage_threshold": {
+                      "type": "number"
+                    },
+                    "remaining_construction_deposit_adjustment_percentage": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            },
+            "exceptions": {
+              "threshold_exceeded_exception": {
+                "name": "Threshold exceeded",
+                "description": "......",
+                "parameters": {
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+          '></command-viewer>
+        </div>
+      </div>
+  </main>
+</body>
+</html>

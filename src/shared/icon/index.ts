@@ -25,15 +25,8 @@ export class Icon extends LitElement {
             const IconTag = customElements.get(this.icon);
             if (IconTag) {
                 const iconElement = new IconTag();
-                // if (this.inverted) {
-                //     iconElement.setAttribute("color", "var(--color-brand-base)");
-                // }
-                // else {
-                //     iconElement.setAttribute("color", "var(--color-white)");
-                // }
-                iconElement.setAttribute("weight", "bold");
+                iconElement.classList.add("bdo-icon__phosphor");
                 iconElement.setAttribute("size", "100%");
-                iconElement.setAttribute("style", "display: grid; place-content: center;");
                 return html`${iconElement}`;
             }
         }

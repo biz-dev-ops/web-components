@@ -6,12 +6,11 @@ export default css`
         align-items: center;
         justify-content: center;
         overflow: hidden;
+        font-size: 1em;
+        inline-size: 1em;
+        aspect-ratio: 1;
     }
-    svg {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-    }
+
     .material-symbols-outlined {
         font-family: "Material Symbols Outlined";
         font-weight: normal;
@@ -28,5 +27,14 @@ export default css`
         -moz-osx-font-smoothing: grayscale;
         text-rendering: optimizeLegibility;
         font-feature-settings: "liga";
+    }
+
+    .bdo-icon__phosphor {
+        display: inline-flex;
+        display: grid;
+        place-content: center;
+        font-weight: bold;
+        height: 100%;
+        width: 100%;
     }
 `;
