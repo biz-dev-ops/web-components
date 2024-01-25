@@ -20,12 +20,12 @@ export abstract class UseCaseViewer<T extends UseCase> extends LitElement {
         return html`
             <section>
                 <header>
-                    <bdo-badge type=${this.useCaseType.type} icon=${this.useCaseType.icon}>${this.useCaseType.name}</bdo-badge>
-                    ${this.model.name}
+                    <bdo-badge type=${this.useCaseType?.type} icon=${this.useCaseType?.icon}>${this.useCaseType?.name}</bdo-badge>
+                    ${this.model?.name}
                 </header>
 
                 <main>
-                    ${this.descriptionTemplate(this.model.description)}
+                    ${this.descriptionTemplate(this.model?.description)}
                     ${this.renderMain()}
                 </main>
             </section>
@@ -71,11 +71,11 @@ export abstract class UseCaseViewer<T extends UseCase> extends LitElement {
                 <div slot="summary">${title} <span class="count">(${this.countItems(cases)})</span></div>
                 
                 <div class="cases">
-                    ${Object.entries(cases).map(([key, exception]) => html`
+                    ${Object.entries(cases).map(([key, c]) => html`
                         <div class="case">
-                            <h2>${exception.name || key}</h2>
-                            ${this.descriptionTemplate(exception.description)}
-                            ${this.modelViewerTemplate("Parameters", exception.parameters)}
+                            <h2>${c?.name || key}</h2>
+                            ${this.descriptionTemplate(c?.description)}
+                            ${this.modelViewerTemplate("Parameters", c?.parameters)}
                         </div>
                     `)}
                 </div>
