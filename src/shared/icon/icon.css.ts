@@ -2,7 +2,7 @@ import { css } from "lit";
 
 export default css`
     :host {
-        display: inline-flex;
+        display: flex;
         align-items: center;
         justify-content: center;
         overflow: hidden;
@@ -31,7 +31,7 @@ export default css`
 
     .bdo-icon__phosphor {
         display: inline-flex;
-        display: grid; 
+        display: grid;
         place-content: center;
         font-weight: bold;
         height: 100%;

@@ -26,6 +26,7 @@ export class Icon extends LitElement {
             if (IconTag) {
                 const iconElement = new IconTag();
                 iconElement.classList.add("bdo-icon__phosphor");
+                iconElement.setAttribute("size", "100%");
                 return html`${iconElement}`;
             }
         }
