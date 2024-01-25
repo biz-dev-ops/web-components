@@ -2,8 +2,6 @@ import { customElement } from "lit/decorators.js";
 import { AbstractCanvasBox } from "../abstract-canvas-box";
 import { ModelItem } from "../models";
 
-const icon = require("./icon.svg");
-
 @customElement("value-propositions-canvas-box")
 export abstract class ValuePropositionsCanvasBox extends AbstractCanvasBox {
   constructor() {
@@ -32,5 +30,5 @@ export abstract class ValuePropositionsCanvasBox extends AbstractCanvasBox {
     ]
   ];
   
-  protected override icon: string = icon;
+  protected override icon: string = "ph-gift";
 }

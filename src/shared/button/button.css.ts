@@ -1,6 +1,6 @@
 import { css } from "lit";
 
-const buttonCss = css`
+export default css`
     /* Reset */
     :host {
         all: unset;
@@ -105,5 +105,3 @@ const buttonCss = css`
         transform: rotate(225deg);
     }
 `;
-
-export default buttonCss;

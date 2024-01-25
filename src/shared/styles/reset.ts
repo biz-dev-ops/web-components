@@ -1,6 +1,6 @@
 import { css } from "lit";
 
-const resetStyles = css`
+export default css`
   /*
   RESET
   --------------------------------------------------------- */
@@ -239,5 +239,3 @@ const resetStyles = css`
     padding: 0;
   }
 `;
-
-export default resetStyles;

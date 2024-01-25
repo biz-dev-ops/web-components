@@ -172,6 +172,7 @@ export class ArchitectureSection extends LitElement {
                 a:hover h2 {
                     text-decoration: none;
                 }
+                
                 .architecture-groups {
                     display: grid;
                     grid-template-columns: repeat(3, 1fr);
@@ -179,6 +180,7 @@ export class ArchitectureSection extends LitElement {
                     gap: var(--space-md);
                     margin-top: var(--space-sm);
                 }
+
                 * {
                     box-sizing: border-box;
                 }

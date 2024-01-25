@@ -2,7 +2,6 @@ import { customElement } from "lit/decorators.js";
 import { AbstractCanvasBox } from "../abstract-canvas-box";
 import { ModelItem } from "../models";
 
-const icon = require("./icon.svg");
 
 @customElement("key-partnerships-canvas-box")
 export abstract class KeyPartnershipsCanvasBox extends AbstractCanvasBox {
@@ -23,5 +22,5 @@ export abstract class KeyPartnershipsCanvasBox extends AbstractCanvasBox {
     ]
   ]; 
 
-  protected override icon: string = icon;
+  protected override icon: string = "ph-link";
 }

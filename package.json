@@ -1,6 +1,6 @@
 {
 	"name": "@biz-dev-ops/web-components",
-	"version": "0.0.10",
+	"version": "0.0.11",
 	"description": "Webcomponent to display business models.",
 	"keywords": [
 		"bizdevops",
@@ -21,7 +21,11 @@
 	"main": "dist/web-components.js",
 	"module": "dist/web-components.js",
 	"files": [
-		"dist/"
+		"dist/*.js",
+		"dist/*.woff2",
+		"dist/*.txt",
+		"dist/**/*.ts",
+		"dist/**/*.ts.map"
 	],
 	"scripts": {
 		"develop": "webpack-dev-server --mode development",
@@ -35,9 +39,9 @@
 		"material-symbols": "^0.14.5"
 	},
 	"devDependencies": {
+		"@biz-dev-ops/md-docs": "^1.0.115",
 		"@fortawesome/fontawesome-svg-core": "^6.5.1",
 		"@fortawesome/free-regular-svg-icons": "^6.5.1",
-		"@synion/md-docs": "^1.0.108",
 		"@webcomponents/webcomponentsjs": "^2.8.0",
 		"copy-webpack-plugin": "^12.0.0",
 		"css-loader": "^6.9.0",

@@ -1,6 +1,6 @@
 import { css } from "lit";
 
-const popoverCss = css`
+export default css`
     /* Reset */
     :host {
         font-family: var(--font-family-base);
@@ -68,5 +68,3 @@ const popoverCss = css`
         transition: var(--duration-base);
     }
 `;
-
-export default popoverCss;

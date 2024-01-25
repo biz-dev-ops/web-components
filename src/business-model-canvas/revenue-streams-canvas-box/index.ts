@@ -2,8 +2,6 @@ import { customElement } from "lit/decorators.js";
 import { AbstractCanvasBox } from "../abstract-canvas-box";
 import { ModelItem } from "../models";
 
-const icon = require("./icon.svg");
-
 @customElement("revenue-streams-canvas-box")
 export abstract class RevenueStreamsCanvasBox extends AbstractCanvasBox {
   constructor() {
@@ -19,5 +17,5 @@ export abstract class RevenueStreamsCanvasBox extends AbstractCanvasBox {
     "How much each revenue stream contributes overall?"
   ]; 
   
-  protected override icon: string = icon;
+  protected override icon: string = "ph-hand-coins";
 }
