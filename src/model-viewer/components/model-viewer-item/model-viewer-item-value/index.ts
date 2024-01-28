@@ -84,7 +84,7 @@ export class ModelViewerItemValue extends ModelViewerItem {
     }
 
     public static build(decorated: ModelItemDecorator, _itemSelectedDelegate: (event: CustomEvent<ItemSelected>) => void) : TemplateResult {
-        if(decorated.item.type != 'string' && decorated.item.type != 'number' && decorated.item.type != 'integer')
+        if(decorated.item.type != 'string' && decorated.item.type != 'number' && decorated.item.type != 'integer' && decorated.item.type != 'boolean')
             return html``;
             
         return html`
