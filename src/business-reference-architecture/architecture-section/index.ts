@@ -116,7 +116,7 @@ export class ArchitectureSection extends LitElement {
                 .architecture-section[data-section-type="streams"] {
                     padding-top: var(--space-md);
                     color: var(--color-white);
-                    border: 3px solid var(--text-color-heading);
+                    border: 3px solid var(--color-brand-secondary);
                     gap: 0;
                 }
                 
