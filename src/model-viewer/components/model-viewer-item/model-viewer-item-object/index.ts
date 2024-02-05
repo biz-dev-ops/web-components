@@ -4,6 +4,7 @@ import { ItemSelected, ModelItemDecorator } from "../../../models";
 
 import "../../../../shared/button";
 import { ModelViewerItem } from "..";
+import Util from "../../../../shared/util";
 
 @customElement('model-viewer-item-object')
 export class ModelViewerItemObject extends ModelViewerItem {
@@ -13,7 +14,7 @@ export class ModelViewerItemObject extends ModelViewerItem {
             <div class="item item--object">
                 <bdo-button type="button" direction="right" @clicked=${this._handleItemSelection}>
                     <span class="txt--property">
-                        ${this.title} 
+                        ${Util.titlelize(this.title)} 
                         ${this.required ? html`<span class="txt--required">*</span>`: ``}
                     </span>
                 </bdo-button>

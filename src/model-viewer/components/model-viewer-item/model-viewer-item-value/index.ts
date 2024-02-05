@@ -4,6 +4,7 @@ import { ItemSelected, ModelItemDecorator } from "../../../models";
 
 import "../../../../shared/popover";
 import { ModelViewerItem } from "..";
+import Util from "../../../../shared/util";
 
 @customElement('model-viewer-item-value')
 export class ModelViewerItemValue extends ModelViewerItem {
@@ -25,7 +26,7 @@ export class ModelViewerItemValue extends ModelViewerItem {
             <div class="item item--value">
                 <h3>
                     <span class="txt--property">
-                        ${this.title}
+                        ${Util.titlelize(this.title)}
                         ${this.required ? html`<span class="txt--required">*</span>` : ``}
                     </span>
                     ${

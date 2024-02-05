@@ -5,6 +5,7 @@ import { ItemSelected, ModelItemDecorator } from "../../../models";
 import "../../../../shared/button";
 import { ModelItemBuilder } from "../../../modules/model-item-builder";
 import { ModelViewerItem } from "..";
+import Util from "../../../../shared/util";
 
 @customElement('model-viewer-item-object-properties')
 export class ModelViewerItemObjectProperties extends ModelViewerItem {
@@ -14,7 +15,7 @@ export class ModelViewerItemObjectProperties extends ModelViewerItem {
             <div class="item item--object">
                 <h2>
                     <span class="txt--property">
-                        ${this.title}
+                        ${Util.titlelize(this.title)}
                         ${this.required ? html`<span class="txt--required">*</span>`: ``}
                     </span>
                 </h2>     
