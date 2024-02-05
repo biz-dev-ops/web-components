@@ -5,6 +5,7 @@ import { ItemSelected, ModelItem, ModelItemDecorator } from "../../../models";
 import "../../../../shared/button";
 import "../../../../shared/popover";
 import { ModelViewerItem } from "..";
+import Util from "../../../../shared/util";
 
 @customElement('model-viewer-item-one-of')
 export class ModelViewerItemOneOf extends ModelViewerItem {
@@ -22,7 +23,7 @@ export class ModelViewerItemOneOf extends ModelViewerItem {
                         <li>
                             <bdo-button direction="right" @clicked="${() => { this._onClicked(item); }}">
                                 <span class="button-label">
-                                <span class="txt--property">${item.title}</span>
+                                <span class="txt--property">${Util.titlelize(item.title)}</span>
                                 ${item.description ? html`
                                     <bdo-popover>
                                         ${item.description.trim()}

@@ -3,6 +3,7 @@ import { customElement, property } from "lit/decorators.js";
 import { ModelItemDecorator, PathChanged } from "../../models";
 import { ifDefined } from "lit/directives/if-defined.js";
 import modelViewerPathCss from "./model-viewer-path.css";
+import Util from "../../../shared/util";
 
 @customElement('model-viewer-path')
 export class ModelViewerPath extends LitElement {
@@ -21,7 +22,7 @@ export class ModelViewerPath extends LitElement {
     }
 
     private _renderPathItem(decorated: ModelItemDecorator, index: number) {
-        const item = html`<span class="txt--property">${decorated.title}</span>`;
+        const item = html`<span class="txt--property">${Util.titlelize(decorated.title)}</span>`;
 
         return html`
           <li class="${ifDefined(decorated.type()?.toLowerCase())}">

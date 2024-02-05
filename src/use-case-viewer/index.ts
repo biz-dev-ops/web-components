@@ -6,6 +6,7 @@ import "../shared/expansion-panel";
 import "../shared/truncate";
 import "../model-viewer";
 import { Case, UseCase, UseCaseType } from "./models";
+import Util from "../shared/util";
 
 export abstract class UseCaseViewer<T extends UseCase> extends LitElement {
     @property({ type: Object })
@@ -21,7 +22,7 @@ export abstract class UseCaseViewer<T extends UseCase> extends LitElement {
             <section>
                 <header>
                     <bdo-badge type=${this.useCaseType?.type} icon=${this.useCaseType?.icon}>${this.useCaseType?.name}</bdo-badge>
-                    ${this.model?.name}
+                    ${Util.titlelize(this.model?.name)}
                 </header>
 
                 <main>
@@ -68,12 +69,12 @@ export abstract class UseCaseViewer<T extends UseCase> extends LitElement {
 
         return html`
             <bdo-expansion-panel>
-                <div slot="summary">${title} <span class="count">(${this.countItems(cases)})</span></div>
+                <div slot="summary">${Util.titlelize(title)} <span class="count">(${this.countItems(cases)})</span></div>
                 
                 <div class="cases">
                     ${Object.entries(cases).map(([key, c]) => html`
                         <div class="case">
-                            <h2>${c?.name || key}</h2>
+                            <h2>${Util.titlelize(c?.name || key)}</h2>
                             ${this.descriptionTemplate(c?.description)}
                             ${this.modelViewerTemplate("Parameters", c?.parameters)}
                         </div>

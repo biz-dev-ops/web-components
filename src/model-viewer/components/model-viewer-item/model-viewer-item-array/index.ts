@@ -6,6 +6,7 @@ import "../../../../shared/button";
 import "../../../../shared/popover";
 import { ModelItemBuilder } from "../../../modules/model-item-builder";
 import { ModelViewerItem } from "..";
+import Util from "../../../../shared/util";
 
 @customElement('model-viewer-item-array')
 export class ModelViewerItemArray extends ModelViewerItem {
@@ -15,7 +16,7 @@ export class ModelViewerItemArray extends ModelViewerItem {
             <div class="item item--array">
                 <h3>
                     <span class="txt--property">
-                        ${this.title} ${this.required ? html`<span class="txt--required">*</span>`: ``}
+                        ${Util.titlelize(this.title)} ${this.required ? html`<span class="txt--required">*</span>`: ``}
                     </span>
                     ${
                         this.item.description ?
@@ -30,7 +31,7 @@ export class ModelViewerItemArray extends ModelViewerItem {
                 <ul class="list--array">
                     <li>
                         <bdo-button direction="right" @clicked=${this._onClicked}>
-                            <span class="txt--property">${this.item.items.title || "item"}</span>
+                            <span class="txt--property">${Util.titlelize(this.item.items.title || "item")}</span>
                         </bdo-button>
                     </li>
                 </ul>
