@@ -22,5 +22,5 @@ export abstract class KeyPartnershipsCanvasBox extends AbstractCanvasBox {
     ]
   ]; 
 
-  protected override icon: string = "ph-link";
+  protected override icon: string = "mat-share";
 }

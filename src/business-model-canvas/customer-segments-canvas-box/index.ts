@@ -22,5 +22,5 @@ export abstract class CustomerSegmentsCanvasBox extends AbstractCanvasBox {
     ]
   ]; 
   
-  protected override icon: string = "ph-users-three";
+  protected override icon: string = "mat-group";
 }

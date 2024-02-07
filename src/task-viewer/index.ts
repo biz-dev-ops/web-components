@@ -11,7 +11,7 @@ export class TaskViewer extends UseCaseViewer<Task> {
    
     useCaseType = {
         type: "task",
-        icon: "ph-check-square-offset",
+        icon: "mat-task_alt",
         name: "Task"
     };
     

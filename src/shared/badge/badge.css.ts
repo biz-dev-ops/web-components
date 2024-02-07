@@ -37,6 +37,11 @@ const buttonCss = css`
         padding-block: calc(var(--space-xxs) / 2);
         padding-inline: var(--space-xs);
     }
+
+    bdo-icon {
+        font-size: var(--font-size-sm);
+        height: 1.0rem;
+    }
 `;
 
 export default buttonCss;

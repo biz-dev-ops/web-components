@@ -30,5 +30,5 @@ export abstract class ValuePropositionsCanvasBox extends AbstractCanvasBox {
     ]
   ];
   
-  protected override icon: string = "ph-gift";
+  protected override icon: string = "mat-featured_seasonal_and_gifts";
 }
