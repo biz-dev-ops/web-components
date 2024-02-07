@@ -18,5 +18,5 @@ export abstract class ChannelsCanvasBox extends AbstractCanvasBox {
     "How are we integrating them with customer routines?"
   ];
 
-  protected override icon: string = "ph-truck";
+  protected override icon: string = "mat-local_shipping";
 }

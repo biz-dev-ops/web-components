@@ -24,5 +24,5 @@ export abstract class CustomerRelationshipsCanvasBox extends AbstractCanvasBox {
     ]
   ]; 
   
-  protected override icon: string = "ph-heart";
+  protected override icon: string = "mat-favorite";
 }

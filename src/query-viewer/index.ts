@@ -11,7 +11,7 @@ export class QueryViewer extends UseCaseViewer<Query> {
    
     useCaseType = {
         type: "query",
-        icon: "ph-magnifying-glass",
+        icon: "mat-search",
         name: "Query"
     };
     

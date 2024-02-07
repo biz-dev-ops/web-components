@@ -17,5 +17,5 @@ export abstract class RevenueStreamsCanvasBox extends AbstractCanvasBox {
     "How much each revenue stream contributes overall?"
   ]; 
   
-  protected override icon: string = "ph-hand-coins";
+  protected override icon: string = "mat-payments";
 }

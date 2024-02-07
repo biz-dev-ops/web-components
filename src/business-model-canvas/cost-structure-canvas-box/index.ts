@@ -20,5 +20,5 @@ export abstract class CostStructureCanvasBox extends AbstractCanvasBox {
     ]
   ]; 
   
-  protected override icon: string = "ph-tag";
+  protected override icon: string = "mat-sell";
 }

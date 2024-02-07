@@ -22,5 +22,5 @@ export abstract class KeyActivitiesCanvasBox extends AbstractCanvasBox {
     ]
   ]; 
 
-  protected override icon: string = "ph-check";
+  protected override icon: string = "mat-check";
 }

@@ -77,12 +77,15 @@ export abstract class AbstractArchitectureButton extends LitElement {
                     transition: all 0.2s ease-in-out;
                     position: relative;
                 }
+
                 a {
                     text-decoration: underline;
                 }
+
                 a:hover {
                     text-decoration: none;
                 }
+
                 a .inner, span .inner {
                     display: flex;
                     align-items: center;
@@ -97,6 +100,8 @@ export abstract class AbstractArchitectureButton extends LitElement {
                     height: 1.5rem;
                     margin-top: -0.5rem; /* So text determines the button height */
                     margin-bottom: -0.5rem;
+                    font-weight: 300;
+                    font-size: 1.4rem;
                 }
             `,
         ];

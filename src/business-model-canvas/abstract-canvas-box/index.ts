@@ -43,11 +43,8 @@ export abstract class AbstractCanvasBox extends LitElement {
       }
 
       bdo-icon {
-        inline-size: var(--space-md);
-        block-size: var(--space-md);
-        aspect-ratio: 1;
-        display: inline-flex;
-        align-self: end;
+        font-size: 1.4rem;
+        font-weight: 400;
       }
     `];
   }
