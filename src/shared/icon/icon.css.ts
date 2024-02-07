@@ -11,9 +11,9 @@ export default css`
         aspect-ratio: 1;
     }
 
-    .material-symbols-outlined {
+    .material-symbols {
         font-family: "Material Symbols Outlined";
-        font-weight: normal;
+        font-weight: 300;
         font-style: normal;
         font-size: 24px;
         line-height: 1;
