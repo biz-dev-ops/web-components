@@ -15,7 +15,7 @@ let multipleHtmlPlugins = glob.sync("./src/**/index.html").map((path) => {
 });
 
 const config = {
-  entry: [...glob.sync("./src/*/index.ts"), "@phosphor-icons/webcomponents"],
+  entry: [...glob.sync("./src/*/index.ts")],
   module: {
     rules: [
       {
