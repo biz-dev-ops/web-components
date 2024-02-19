@@ -35,7 +35,7 @@
 	"dependencies": {
 		"html-webpack-plugin": "^5.5.4",
 		"lit": "^3.0.2",
-		"material-symbols": "^0.14.7"
+		"material-symbols": "^0.15.0"
 	},
 	"devDependencies": {
 		"@biz-dev-ops/md-docs": "^1.0.115",
@@ -49,6 +49,6 @@
 		"typescript": "^5.3.3",
 		"webpack": "^5.88.1",
 		"webpack-cli": "^5.1.4",
-		"webpack-dev-server": "^4.15.1"
+		"webpack-dev-server": "^5.0.0"
 	}
 }
