@@ -28,7 +28,7 @@ const modelViewerPathCss = css`
     align-items: center;
   }
 
-  .list--path li:not(:last-child, .oneof)::after {
+  .list--path li:not(:last-child, .oneof, .no-title)::after {
     content: ' /';
   }
 

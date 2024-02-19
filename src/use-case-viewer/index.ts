@@ -57,7 +57,7 @@ export abstract class UseCaseViewer<T extends UseCase> extends LitElement {
         return html`
             <bdo-expansion-panel>
                 <div slot="summary">${title}</div>
-                <model-viewer name="parameters" .model=${parameters}></model-viewer>
+                <model-viewer .model=${parameters}></model-viewer>
             </bdo-expansion-panel>
         `;
     }

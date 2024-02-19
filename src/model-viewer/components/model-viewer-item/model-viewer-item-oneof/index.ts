@@ -15,7 +15,7 @@ export class ModelViewerItemOneOf extends ModelViewerItem {
         return html`
             <div class="item item--one-of">
                 <h2>
-                    <span class="txt--property">${this.title}</span>
+                    <span class="txt--property">${Util.titlelize(this.title)}</span>
                 </h2>
 
                 <ul class="list--one-of">
