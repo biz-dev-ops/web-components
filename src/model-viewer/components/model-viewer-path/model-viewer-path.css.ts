@@ -32,7 +32,7 @@ const modelViewerPathCss = css`
     content: ' /';
   }
 
-  .list--path li.oneof .txt--property::after {
+  .list--path li.oneof:not(.no-title) .txt--property::after {
     content: ':';
   }
 
