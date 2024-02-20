@@ -26,18 +26,21 @@ export class ModelViewerPath extends LitElement {
     private _renderPathItem(decorated: ModelItemDecorator, index: number) {
         const title = Util.titlelize(decorated.title || "/");
         const item = html`<span class="txt--property">${title}</span>`;
+        const last = this._isLast(index);
 
         return html`
           <li class="${ifDefined(decorated.type()?.toLowerCase())} ${ifDefined(decorated.title?.trim().length === 0 ? "no-title" : null)}">
-            ${decorated.type() !== 'array' ?
-                html`
-                <bdo-button class="button--path" .disabled="${index + 1 === this.path.length}" @clicked="${() => { this._onClick(index); }}">
+            ${decorated.type() === 'array' || last ? item : html`
+                <bdo-button class="button--path" .disabled="${last}" @clicked="${() => { this._onClick(index); }}">
                   ${item}
                 </bdo-button>
-            ` : item
-            }
+            `}
           </li>
         `
+    }
+
+    private _isLast(index: number) : boolean {
+      return index === (this.path.length -1);
     }
 
     private _onClick(index: number) {
