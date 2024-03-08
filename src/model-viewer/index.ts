@@ -20,6 +20,12 @@ export class ModelViewer extends LitElement {
   @state()
   path: ModelItemDecorator[] = [];
 
+  constructor() {
+    super();
+
+    (window as any).addEventListener("popstate", this.onPopState.bind(this));
+  }
+
   override render() {
     if(this.path.length === 0)
       return '';
@@ -37,12 +43,12 @@ export class ModelViewer extends LitElement {
       this.path = [];
       this.model = JSON.parse(this.modelJson);
       this.model.title = this.model.title || this.name;
-      this.setPath('', this.model);
+      this.addPath('', this.model);
     }
     else if(changedProperties.has("model")) {
       this.path = [];
       this.model.title = this.model.title || this.name;
-      this.setPath('', this.model);
+      this.addPath('', this.model);
     }
     
     super.update(changedProperties);
@@ -51,22 +57,33 @@ export class ModelViewer extends LitElement {
   override updated() {
     this.shadowRoot?.querySelector('model-viewer-path')?.scrollIntoView();
   }
+
+  setPath(path: ModelItemDecorator[]) {
+    this.path = path;
+    history.pushState(this.path.length, "");
+  }
   
-  setPath(property: string, item: ModelItem | undefined) {
+  addPath(property: string, item: ModelItem | undefined) {
     if(item === undefined) {
       return;
     }
 
     const parent = this.path.at(-1);
-    this.path = [...this.path, new ModelItemDecorator(item, property, parent?.isChildRequired(property))];
+    this.setPath([...this.path, new ModelItemDecorator(item, property, parent?.isChildRequired(property))]);
   }
 
   onItemSelected(event: CustomEvent<ItemSelected>) {
-    this.setPath(event.detail.property, event.detail.item)
+    this.addPath(event.detail.property, event.detail.item)
   }
 
   onPathChanged(event: CustomEvent<PathChanged>) {
-    this.path = this.path.slice(0, event.detail.index + 1);
+    this.setPath(this.path.slice(0, event.detail.index + 1));
+  }
+
+  onPopState(event: any) {
+    if(event.state) {
+      this.setPath(this.path.slice(0, -1));
+    }
   }
 
   static override get styles() {  

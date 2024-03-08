@@ -1,5 +1,5 @@
 import { customElement } from "lit/decorators.js";
-import { css, html, nothing } from "lit";
+import { css, html } from "lit";
 
 import { ItemSelected, ModelItemDecorator } from "../../../models";
 import { ModelItemBuilder } from "../../../modules/model-item-builder";
@@ -32,10 +32,10 @@ export class ModelViewerItemArray extends ModelViewerItem {
                 </h3>
                 
                 <ul class="list--array">
-                    ${[name, name].map((name, index) => 
+                    ${[...Array(2).keys()].map((_, index) => 
                         html`
                             <li>
-                                <bdo-button direction="right" @clicked=${this._onClicked} disabled="${(index > 0 ? "disabled" : null) || nothing}">
+                                <bdo-button direction="right" @clicked=${this._onClicked} ?disabled="${index > 0}">
                                     <span class="txt--property">${name}</span>
                                 </bdo-button>
                             </li>
