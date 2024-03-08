@@ -1,17 +1,20 @@
 import { customElement } from "lit/decorators.js";
 import { css, html } from "lit";
-import { ItemSelected, ModelItemDecorator } from "../../../models";
 
-import "../../../../shared/button";
-import "../../../../shared/popover";
+import { ItemSelected, ModelItemDecorator } from "../../../models";
 import { ModelItemBuilder } from "../../../modules/model-item-builder";
 import { ModelViewerItem } from "..";
 import Util from "../../../../shared/util";
+
+import "../../../../shared/button";
+import "../../../../shared/popover";
 
 @customElement('model-viewer-item-array')
 export class ModelViewerItemArray extends ModelViewerItem {
     
     override render() {
+        const name = Util.titlelize(this.item.items.title || "item");
+
         return html`
             <div class="item item--array">
                 <h3>
@@ -29,29 +32,18 @@ export class ModelViewerItemArray extends ModelViewerItem {
                 </h3>
                 
                 <ul class="list--array">
-                    <li>
-                        <bdo-button direction="right" @clicked=${this._onClicked}>
-                            <span class="txt--property">${Util.titlelize(this.item.items.title || "item")}</span>
-                        </bdo-button>
-                    </li>
+                    ${[...Array(2).keys()].map((_, index) => 
+                        html`
+                            <li>
+                                <bdo-button direction="right" @clicked=${this._onClicked} ?disabled="${index > 0}">
+                                    <span class="txt--property">${name}</span>
+                                </bdo-button>
+                            </li>
+                        `
+                    )}
                 </ul>
             </div>
         `;
-    }
-
-    override updated(_changedProperties: Map<string, unknown>): void {
-        // Duplicate array item
-        const arrayList = this.shadowRoot?.querySelector('.list--array');
-        const clone = arrayList?.querySelector('li')?.cloneNode(true);
-        
-        arrayList?.appendChild(clone as Node);
-        
-        // Disable button for cloned item
-        const cloneButton = arrayList?.querySelector('li:not(:first-child) bdo-button');
-
-        if (cloneButton) {
-            cloneButton.setAttribute('disabled', 'disabled');
-        }
     }
 
     private _onClicked() {

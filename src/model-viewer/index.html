@@ -29,1714 +29,1645 @@
 
     setTimeout(() => {
       viewer.model = {
-        "oneOf": [
-          {
-            "required": [
-              "object_type",
-              "trainset_id",
-              "type",
-              "registration_date",
-              "engines"
-            ],
-            "title": "freight trainset 1",
-            "description": "A freight trainset, cargo trainset, or goods trainset is a group of freight cars (US) or goods wagons (International Union of Railways) hauled by one or more locomotives on a railway, transporting cargo all or some of the way between the shipper and the intended destination as part of the logistics chain.\n\n  \n",
+    "title": "loan application",
+    "required": [
+        "advisory_office_id",
+        "applicants",
+        "colleterals",
+        "contract"
+    ],
+    "properties": {
+        "advisory_office": {
             "properties": {
-              "object_type": {
-                "title": "object type",
-                "description": "Object type is used the distinguish between different types of trainsets.",
-                "type": "string"
-              },
-              "is_train": {
-                "type": "boolean"
-              },
-              "trainset_id": {
-                "type": "integer",
-                "minimum": 0,
-                "description": "A unique id identifing the trainset.",
-                "example": 4051,
-                "enum": [1,3,45,6,554]
-              },
-              "type": {
-                "required": [
-                  "type_id",
-                  "name"
-                ],
-                "properties": {
-                  "type_id": {
-                    "type": "string",
-                    "format": "uuid",
-                    "description": "A unique id identifing the trainset type.",
-                    "example": "f3bb9b86-698e-46ad-9b0f-95a6b906dd57"
-                  },
-                  "name": {
-                    "type": "string",
-                    "description": "The name of the trainset type.",
-                    "example": "ICM-2a"
-                  },
-                  "array": {
+                "id": {
+                    "type": "integer",
+                    "example": 123456
+                },
+                "address": {
+                    "title": "address",
+                    "required": [
+                        "country",
+                        "street",
+                        "house_number",
+                        "postal_code",
+                        "city"
+                    ],
+                    "properties": {
+                        "country": {
+                            "type": "string",
+                            "pattern": "^[a-zA-Z]{2}$",
+                            "example": "NL",
+                            "description": "ISO-3166-1 (A2) country code respresentation."
+                        },
+                        "street": {
+                            "example": "Langestraat"
+                        },
+                        "house_number": {
+                            "type": "integer",
+                            "example": 9
+                        },
+                        "house_number_addition": {
+                            "type": "string",
+                            "example": "a"
+                        },
+                        "postal_code": {
+                            "type": "string",
+                            "example": "1000AA"
+                        },
+                        "locality": {
+                            "type": "string",
+                            "example": "Het dorp"
+                        }
+                    }
+                }
+            }
+        },
+        "applicants": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+                "title": "applicant",
+                "oneOf": [
+                    {
+                        "title": "natural person",
+                        "required": [
+                            "name",
+                            "gender",
+                            "birth_data",
+                            "nationality",
+                            "identification_document",
+                            "social_security_number",
+                            "contact_information",
+                            "financial_statement"
+                        ],
+                        "properties": {
+                            "name": {
+                                "required": [
+                                    "initials",
+                                    "first_names",
+                                    "last_name"
+                                ],
+                                "properties": {
+                                    "initials": {
+                                        "type": "string",
+                                        "example": "P.J."
+                                    },
+                                    "first_names": {
+                                        "type": "string",
+                                        "example": "Petrus Jantinus"
+                                    },
+                                    "middle_name": {
+                                        "type": "string",
+                                        "example": "van der"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "Veer"
+                                    }
+                                }
+                            },
+                            "gender": {
+                                "type": "string",
+                                "enum": [
+                                    "female",
+                                    "male",
+                                    "non binary"
+                                ],
+                                "example": "non binary"
+                            },
+                            "birth_data": {
+                                "required": [
+                                    "birth_date",
+                                    "country_of_birth",
+                                    "birthplace"
+                                ],
+                                "properties": {
+                                    "country_of_birth": {
+                                        "type": "string",
+                                        "pattern": "^[a-zA-Z]{2}$",
+                                        "example": "NL",
+                                        "description": "ISO-3166-1 (A2) country code respresentation."
+                                    },
+                                    "birthplace": {
+                                        "type": "string",
+                                        "example": "Groningen"
+                                    },
+                                    "birth_date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "1976-07-01"
+                                    }
+                                }
+                            },
+                            "nationality": {
+                                "type": "string",
+                                "pattern": "^[a-zA-Z]{2}$",
+                                "example": "NL",
+                                "description": "ISO-3166-1 (A2) country code respresentation."
+                            },
+                            "married": {
+                                "properties": {
+                                    "status": {
+                                        "type": "string",
+                                        "enum": [
+                                            "limited community of property",
+                                            "full community of property",
+                                            "prenuptial agreement"
+                                        ],
+                                        "example": "limited community of property"
+                                    }
+                                }
+                            },
+                            "divorced": {
+                                "properties": {
+                                    "date": {
+                                        "type": "string",
+                                        "example": "2020-02-03"
+                                    }
+                                }
+                            },
+                            "identification_document": {
+                                "required": [
+                                    "issued_by",
+                                    "type",
+                                    "number"
+                                ],
+                                "properties": {
+                                    "issued_by": {
+                                        "type": "string",
+                                        "pattern": "^[a-zA-Z]{2}$",
+                                        "example": "NL",
+                                        "description": "ISO-3166-1 (A2) country code respresentation."
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "enum": [
+                                            "passport",
+                                            "id card"
+                                        ],
+                                        "example": "passport"
+                                    },
+                                    "number": {
+                                        "type": "string",
+                                        "example": "WS245J9H3K"
+                                    }
+                                }
+                            },
+                            "social_security_number": {
+                                "required": [
+                                    "country",
+                                    "number"
+                                ],
+                                "properties": {
+                                    "country": {
+                                        "type": "string",
+                                        "pattern": "^[a-zA-Z]{2}$",
+                                        "example": "NL",
+                                        "description": "ISO-3166-1 (A2) country code respresentation."
+                                    },
+                                    "number": {
+                                        "type": "string",
+                                        "minimum": 0,
+                                        "example": 111222333
+                                    }
+                                }
+                            },
+                            "contact_information": {
+                                "required": [
+                                    "postal_address",
+                                    "phone_numbers",
+                                    "email_address"
+                                ],
+                                "properties": {
+                                    "postal_address": {
+                                        "title": "address",
+                                        "required": [
+                                            "country",
+                                            "street",
+                                            "house_number",
+                                            "postal_code",
+                                            "city"
+                                        ],
+                                        "properties": {
+                                            "country": {
+                                                "type": "string",
+                                                "pattern": "^[a-zA-Z]{2}$",
+                                                "example": "NL",
+                                                "description": "ISO-3166-1 (A2) country code respresentation."
+                                            },
+                                            "street": {
+                                                "example": "Langestraat"
+                                            },
+                                            "house_number": {
+                                                "type": "integer",
+                                                "example": 9
+                                            },
+                                            "house_number_addition": {
+                                                "type": "string",
+                                                "example": "a"
+                                            },
+                                            "postal_code": {
+                                                "type": "string",
+                                                "example": "1000AA"
+                                            },
+                                            "locality": {
+                                                "type": "string",
+                                                "example": "Het dorp"
+                                            }
+                                        }
+                                    },
+                                    "phone_numbers": {
+                                        "type": "array",
+                                        "items": {
+                                            "title": "phone number",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "mobile",
+                                                        "private",
+                                                        "work"
+                                                    ],
+                                                    "example": "mobile"
+                                                },
+                                                "number": {
+                                                    "required": [
+                                                        "country",
+                                                        "number"
+                                                    ],
+                                                    "properties": {
+                                                        "country": {
+                                                            "type": "string",
+                                                            "pattern": "^[a-zA-Z]{2}$",
+                                                            "example": "NL",
+                                                            "description": "ISO-3166-1 (A2) country code respresentation."
+                                                        },
+                                                        "number": {
+                                                            "type": "string",
+                                                            "example": 612345678,
+                                                            "pattern": "^[0-9]*$"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "email_address": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "p.van.der.veer@gmail.com"
+                                    }
+                                }
+                            },
+                            "financial_statement": {
+                                "required": [
+                                    "income",
+                                    "expenses",
+                                    "loans"
+                                ],
+                                "properties": {
+                                    "incomes": {
+                                        "type": "array",
+                                        "items": {
+                                            "title": "income",
+                                            "oneOf": [
+                                                {
+                                                    "title": "income from employment",
+                                                    "required": [
+                                                        "type",
+                                                        "start_date",
+                                                        "probation_period",
+                                                        "employer",
+                                                        "income"
+                                                    ],
+                                                    "properties": {
+                                                        "type": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "fixed",
+                                                                "temporary"
+                                                            ],
+                                                            "example": "fixed"
+                                                        },
+                                                        "start_date": {
+                                                            "type": "string",
+                                                            "format": "date",
+                                                            "example": "2021-09-01"
+                                                        },
+                                                        "end_date": {
+                                                            "type": "string",
+                                                            "format": "date",
+                                                            "example": "2048-09-01"
+                                                        },
+                                                        "probation_period": {
+                                                            "required": [
+                                                                "present",
+                                                                "expired"
+                                                            ],
+                                                            "properties": {
+                                                                "present": {
+                                                                    "type": "boolean",
+                                                                    "example": true
+                                                                },
+                                                                "expired": {
+                                                                    "type": "boolean",
+                                                                    "example": true
+                                                                }
+                                                            }
+                                                        },
+                                                        "employer": {
+                                                            "required": [
+                                                                "name",
+                                                                "address"
+                                                            ],
+                                                            "properties": {
+                                                                "name": {
+                                                                    "type": "string",
+                                                                    "example": "Stater N.V."
+                                                                },
+                                                                "address": {
+                                                                    "title": "address",
+                                                                    "required": [
+                                                                        "country",
+                                                                        "street",
+                                                                        "house_number",
+                                                                        "postal_code",
+                                                                        "city"
+                                                                    ],
+                                                                    "properties": {
+                                                                        "country": {
+                                                                            "type": "string",
+                                                                            "pattern": "^[a-zA-Z]{2}$",
+                                                                            "example": "NL",
+                                                                            "description": "ISO-3166-1 (A2) country code respresentation."
+                                                                        },
+                                                                        "street": {
+                                                                            "example": "Langestraat"
+                                                                        },
+                                                                        "house_number": {
+                                                                            "type": "integer",
+                                                                            "example": 9
+                                                                        },
+                                                                        "house_number_addition": {
+                                                                            "type": "string",
+                                                                            "example": "a"
+                                                                        },
+                                                                        "postal_code": {
+                                                                            "type": "string",
+                                                                            "example": "1000AA"
+                                                                        },
+                                                                        "locality": {
+                                                                            "type": "string",
+                                                                            "example": "Het dorp"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        "salary_specification": {
+                                                            "type": "array",
+                                                            "minItems": 1,
+                                                            "items": {
+                                                                "required": [
+                                                                    "type",
+                                                                    "amount",
+                                                                    "period"
+                                                                ],
+                                                                "properties": {
+                                                                    "type": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "salary",
+                                                                            "holiday allowance",
+                                                                            "irregularity allowance",
+                                                                            "thirteenth month",
+                                                                            "commission",
+                                                                            "year end bonus",
+                                                                            "overtime compensation",
+                                                                            "life course allowance",
+                                                                            "additional seizure compensation",
+                                                                            "income surcharge"
+                                                                        ],
+                                                                        "example": "salary"
+                                                                    },
+                                                                    "amount": {
+                                                                        "properties": {
+                                                                            "currency": {
+                                                                                "type": "string",
+                                                                                "enum": [
+                                                                                    "EUR"
+                                                                                ],
+                                                                                "example": "EUR"
+                                                                            },
+                                                                            "value": {
+                                                                                "type": "number",
+                                                                                "format": "decimal",
+                                                                                "minimum": 0.01,
+                                                                                "example": 5500
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "period": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "weekly",
+                                                                            "4 weekly",
+                                                                            "monthly",
+                                                                            "yearly"
+                                                                        ],
+                                                                        "example": "monthly"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "title": "income from business",
+                                                    "required": [
+                                                        "company",
+                                                        "income"
+                                                    ],
+                                                    "properties": {
+                                                        "company": {
+                                                            "required": [
+                                                                "founded_on",
+                                                                "legal_form",
+                                                                "name",
+                                                                "address",
+                                                                "staff"
+                                                            ],
+                                                            "properties": {
+                                                                "founded_on": {
+                                                                    "type": "string",
+                                                                    "format": "date",
+                                                                    "example": "2003-03-03"
+                                                                },
+                                                                "legal_form": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "sole proprietorship",
+                                                                        "general partnership",
+                                                                        "limited partnership",
+                                                                        "limited liability company",
+                                                                        "corporation"
+                                                                    ],
+                                                                    "example": "sole partnership"
+                                                                },
+                                                                "name": {
+                                                                    "type": "string",
+                                                                    "example": "Stater N.V."
+                                                                },
+                                                                "address": {
+                                                                    "title": "address",
+                                                                    "required": [
+                                                                        "country",
+                                                                        "street",
+                                                                        "house_number",
+                                                                        "postal_code",
+                                                                        "city"
+                                                                    ],
+                                                                    "properties": {
+                                                                        "country": {
+                                                                            "type": "string",
+                                                                            "pattern": "^[a-zA-Z]{2}$",
+                                                                            "example": "NL",
+                                                                            "description": "ISO-3166-1 (A2) country code respresentation."
+                                                                        },
+                                                                        "street": {
+                                                                            "example": "Langestraat"
+                                                                        },
+                                                                        "house_number": {
+                                                                            "type": "integer",
+                                                                            "example": 9
+                                                                        },
+                                                                        "house_number_addition": {
+                                                                            "type": "string",
+                                                                            "example": "a"
+                                                                        },
+                                                                        "postal_code": {
+                                                                            "type": "string",
+                                                                            "example": "1000AA"
+                                                                        },
+                                                                        "locality": {
+                                                                            "type": "string",
+                                                                            "example": "Het dorp"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "staff": {
+                                                                    "type": "boolean",
+                                                                    "example": false
+                                                                }
+                                                            }
+                                                        },
+                                                        "net_result": {
+                                                            "type": "array",
+                                                            "minItems": 3,
+                                                            "maxItems": 3,
+                                                            "items": {
+                                                                "required": [
+                                                                    "year",
+                                                                    "amount"
+                                                                ],
+                                                                "properties": {
+                                                                    "year": {
+                                                                        "type": "integer",
+                                                                        "pattern": "2[0-9][0-9][0-9]",
+                                                                        "example": 2023
+                                                                    },
+                                                                    "amount": {
+                                                                        "properties": {
+                                                                            "currency": {
+                                                                                "type": "string",
+                                                                                "enum": [
+                                                                                    "EUR"
+                                                                                ],
+                                                                                "example": "EUR"
+                                                                            },
+                                                                            "value": {
+                                                                                "type": "number",
+                                                                                "format": "decimal",
+                                                                                "minimum": 0.01,
+                                                                                "example": 5500
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "expenses": {
+                                        "type": "array",
+                                        "items": {
+                                            "title": "expense",
+                                            "required": [
+                                                "type",
+                                                "start_date",
+                                                "aount"
+                                            ],
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "Health insurance"
+                                                },
+                                                "start_date": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2024-01-01"
+                                                },
+                                                "end_date": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2025-01-01"
+                                                },
+                                                "amount": {
+                                                    "properties": {
+                                                        "currency": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "EUR"
+                                                            ],
+                                                            "example": "EUR"
+                                                        },
+                                                        "value": {
+                                                            "type": "number",
+                                                            "format": "decimal",
+                                                            "minimum": 0.01,
+                                                            "example": 5500
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "loans": {
+                                        "type": "array",
+                                        "items": {
+                                            "title": "loan",
+                                            "required": [
+                                                "line",
+                                                "purpose",
+                                                "type",
+                                                "start_date",
+                                                "end_date",
+                                                "principal_sum"
+                                            ],
+                                            "properties": {
+                                                "line": {
+                                                    "type": "string",
+                                                    "example": "open end"
+                                                },
+                                                "purpose": {
+                                                    "type": "string",
+                                                    "example": "personal"
+                                                },
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "non secured"
+                                                },
+                                                "start_date": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2010-01-01"
+                                                },
+                                                "end_date": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2025-01-01"
+                                                },
+                                                "principal_sum": {
+                                                    "properties": {
+                                                        "currency": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "EUR"
+                                                            ],
+                                                            "example": "EUR"
+                                                        },
+                                                        "value": {
+                                                            "type": "number",
+                                                            "format": "decimal",
+                                                            "minimum": 0.01,
+                                                            "example": 5500
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "title": "legal person",
+                        "required": [
+                            "name",
+                            "chamber_of_commerce_registration",
+                            "contact_information"
+                        ],
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "example": "Stater N.V."
+                            },
+                            "chamber_of_commerce_registration": {
+                                "title": "chamber of commerce registration",
+                                "required": [
+                                    "country",
+                                    "number"
+                                ],
+                                "properties": {
+                                    "country": {
+                                        "type": "string",
+                                        "pattern": "^[a-zA-Z]{2}$",
+                                        "example": "NL",
+                                        "description": "ISO-3166-1 (A2) country code respresentation."
+                                    },
+                                    "number": {
+                                        "type": "integer",
+                                        "example": 32073618
+                                    }
+                                }
+                            },
+                            "contact_information": {
+                                "required": [
+                                    "postal_address",
+                                    "phone_numbers",
+                                    "email_address"
+                                ],
+                                "properties": {
+                                    "postal_address": {
+                                        "title": "address",
+                                        "required": [
+                                            "country",
+                                            "street",
+                                            "house_number",
+                                            "postal_code",
+                                            "city"
+                                        ],
+                                        "properties": {
+                                            "country": {
+                                                "type": "string",
+                                                "pattern": "^[a-zA-Z]{2}$",
+                                                "example": "NL",
+                                                "description": "ISO-3166-1 (A2) country code respresentation."
+                                            },
+                                            "street": {
+                                                "example": "Langestraat"
+                                            },
+                                            "house_number": {
+                                                "type": "integer",
+                                                "example": 9
+                                            },
+                                            "house_number_addition": {
+                                                "type": "string",
+                                                "example": "a"
+                                            },
+                                            "postal_code": {
+                                                "type": "string",
+                                                "example": "1000AA"
+                                            },
+                                            "locality": {
+                                                "type": "string",
+                                                "example": "Het dorp"
+                                            }
+                                        }
+                                    },
+                                    "phone_numbers": {
+                                        "type": "array",
+                                        "items": {
+                                            "title": "phone number",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "mobile",
+                                                        "private",
+                                                        "work"
+                                                    ],
+                                                    "example": "mobile"
+                                                },
+                                                "number": {
+                                                    "required": [
+                                                        "country",
+                                                        "number"
+                                                    ],
+                                                    "properties": {
+                                                        "country": {
+                                                            "type": "string",
+                                                            "pattern": "^[a-zA-Z]{2}$",
+                                                            "example": "NL",
+                                                            "description": "ISO-3166-1 (A2) country code respresentation."
+                                                        },
+                                                        "number": {
+                                                            "type": "string",
+                                                            "example": 612345678,
+                                                            "pattern": "^[0-9]*$"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "email_address": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "p.van.der.veer@gmail.com"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "colleterals": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+                "title": "colleteral",
+                "oneOf": [
+                    {
+                        "title": "existing build",
+                        "required": [
+                            "type",
+                            "main_collateral",
+                            "construction_year",
+                            "address",
+                            "energy_label",
+                            "valuation",
+                            "purchase_costs",
+                            "financing_costs"
+                        ],
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "enum": [
+                                    "family house",
+                                    "apartment",
+                                    "?"
+                                ]
+                            },
+                            "main_collateral": {
+                                "type": "boolean",
+                                "example": true
+                            },
+                            "construction_year": {
+                                "type": "integer",
+                                "minimum": 1000,
+                                "maximum": 9999
+                            },
+                            "address": {
+                                "title": "address",
+                                "required": [
+                                    "country",
+                                    "street",
+                                    "house_number",
+                                    "postal_code",
+                                    "city"
+                                ],
+                                "properties": {
+                                    "country": {
+                                        "type": "string",
+                                        "pattern": "^[a-zA-Z]{2}$",
+                                        "example": "NL",
+                                        "description": "ISO-3166-1 (A2) country code respresentation."
+                                    },
+                                    "street": {
+                                        "example": "Langestraat"
+                                    },
+                                    "house_number": {
+                                        "type": "integer",
+                                        "example": 9
+                                    },
+                                    "house_number_addition": {
+                                        "type": "string",
+                                        "example": "a"
+                                    },
+                                    "postal_code": {
+                                        "type": "string",
+                                        "example": "1000AA"
+                                    },
+                                    "locality": {
+                                        "type": "string",
+                                        "example": "Het dorp"
+                                    }
+                                }
+                            },
+                            "energy_label": {
+                                "required": [
+                                    "label",
+                                    "value",
+                                    "energy_label",
+                                    "zero_net_energy",
+                                    "measurement_method",
+                                    "issued_on",
+                                    "valid_until"
+                                ],
+                                "properties": {
+                                    "label": {
+                                        "type": "string",
+                                        "example": "A"
+                                    },
+                                    "value": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "energy_neutral": {
+                                        "type": "boolean",
+                                        "example": false
+                                    },
+                                    "zero_net_energy": {
+                                        "type": "boolean",
+                                        "example": false
+                                    },
+                                    "measurement_method": {
+                                        "type": "string",
+                                        "example": "EI"
+                                    },
+                                    "issued_on": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2022-01-01"
+                                    },
+                                    "valid_until": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2032-01-01"
+                                    }
+                                }
+                            },
+                            "valuation": {
+                                "properties": {
+                                    "value": {
+                                        "properties": {
+                                            "currency": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "EUR"
+                                                ],
+                                                "example": "EUR"
+                                            },
+                                            "value": {
+                                                "type": "number",
+                                                "format": "decimal",
+                                                "minimum": 0.01,
+                                                "example": 5500
+                                            }
+                                        }
+                                    },
+                                    "before_renovation": {
+                                        "properties": {
+                                            "currency": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "EUR"
+                                                ],
+                                                "example": "EUR"
+                                            },
+                                            "value": {
+                                                "type": "number",
+                                                "format": "decimal",
+                                                "minimum": 0.01,
+                                                "example": 5500
+                                            }
+                                        }
+                                    },
+                                    "after_renovation": {
+                                        "properties": {
+                                            "currency": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "EUR"
+                                                ],
+                                                "example": "EUR"
+                                            },
+                                            "value": {
+                                                "type": "number",
+                                                "format": "decimal",
+                                                "minimum": 0.01,
+                                                "example": 5500
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "purchase_costs": {
+                                "properties": {
+                                    "purchase_price": {
+                                        "properties": {
+                                            "currency": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "EUR"
+                                                ],
+                                                "example": "EUR"
+                                            },
+                                            "value": {
+                                                "type": "number",
+                                                "format": "decimal",
+                                                "minimum": 0.01,
+                                                "example": 5500
+                                            }
+                                        }
+                                    },
+                                    "deferred_maintanance_costs": {
+                                        "properties": {
+                                            "currency": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "EUR"
+                                                ],
+                                                "example": "EUR"
+                                            },
+                                            "value": {
+                                                "type": "number",
+                                                "format": "decimal",
+                                                "minimum": 0.01,
+                                                "example": 5500
+                                            }
+                                        }
+                                    },
+                                    "renovation_costs": {
+                                        "properties": {
+                                            "currency": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "EUR"
+                                                ],
+                                                "example": "EUR"
+                                            },
+                                            "value": {
+                                                "type": "number",
+                                                "format": "decimal",
+                                                "minimum": 0.01,
+                                                "example": 5500
+                                            }
+                                        }
+                                    },
+                                    "ebv": {
+                                        "properties": {
+                                            "currency": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "EUR"
+                                                ],
+                                                "example": "EUR"
+                                            },
+                                            "value": {
+                                                "type": "number",
+                                                "format": "decimal",
+                                                "minimum": 0.01,
+                                                "example": 5500
+                                            }
+                                        }
+                                    },
+                                    "ebb": {
+                                        "properties": {
+                                            "currency": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "EUR"
+                                                ],
+                                                "example": "EUR"
+                                            },
+                                            "value": {
+                                                "type": "number",
+                                                "format": "decimal",
+                                                "minimum": 0.01,
+                                                "example": 5500
+                                            }
+                                        }
+                                    },
+                                    "transfer_tax": {
+                                        "properties": {
+                                            "currency": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "EUR"
+                                                ],
+                                                "example": "EUR"
+                                            },
+                                            "value": {
+                                                "type": "number",
+                                                "format": "decimal",
+                                                "minimum": 0.01,
+                                                "example": 5500
+                                            }
+                                        }
+                                    },
+                                    "broker_fee": {
+                                        "properties": {
+                                            "currency": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "EUR"
+                                                ],
+                                                "example": "EUR"
+                                            },
+                                            "value": {
+                                                "type": "number",
+                                                "format": "decimal",
+                                                "minimum": 0.01,
+                                                "example": 5500
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "financing_costs": {
+                                "properties": {
+                                    "bulding_inspection_costs": {
+                                        "properties": {
+                                            "currency": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "EUR"
+                                                ],
+                                                "example": "EUR"
+                                            },
+                                            "value": {
+                                                "type": "number",
+                                                "format": "decimal",
+                                                "minimum": 0.01,
+                                                "example": 5500
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "title": "new construction",
+                        "required": [
+                            "type",
+                            "main_collateral",
+                            "construction_year",
+                            "address",
+                            "energy_label",
+                            "purchase_costs"
+                        ],
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "enum": [
+                                    "family house",
+                                    "apartment",
+                                    "?"
+                                ]
+                            },
+                            "main_collateral": {
+                                "type": "boolean",
+                                "example": true
+                            },
+                            "completed_on": {
+                                "type": "string",
+                                "format": "date",
+                                "example": "2025-01-01"
+                            },
+                            "address": {
+                                "oneOf": [
+                                    {
+                                        "title": "address",
+                                        "required": [
+                                            "country",
+                                            "street",
+                                            "house_number",
+                                            "postal_code",
+                                            "city"
+                                        ],
+                                        "properties": {
+                                            "country": {
+                                                "type": "string",
+                                                "pattern": "^[a-zA-Z]{2}$",
+                                                "example": "NL",
+                                                "description": "ISO-3166-1 (A2) country code respresentation."
+                                            },
+                                            "street": {
+                                                "example": "Langestraat"
+                                            },
+                                            "house_number": {
+                                                "type": "integer",
+                                                "example": 9
+                                            },
+                                            "house_number_addition": {
+                                                "type": "string",
+                                                "example": "a"
+                                            },
+                                            "postal_code": {
+                                                "type": "string",
+                                                "example": "1000AA"
+                                            },
+                                            "locality": {
+                                                "type": "string",
+                                                "example": "Het dorp"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "title": "building location",
+                                        "properties": {
+                                            "project": {
+                                                "type": "string",
+                                                "example": "Bouwplan"
+                                            },
+                                            "identification": {
+                                                "type": "string",
+                                                "example": "BW-001"
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            "energy_label": {
+                                "required": [
+                                    "label",
+                                    "value",
+                                    "energy_label",
+                                    "zero_net_energy",
+                                    "measurement_method",
+                                    "issued_on",
+                                    "valid_until"
+                                ],
+                                "properties": {
+                                    "label": {
+                                        "type": "string",
+                                        "example": "A"
+                                    },
+                                    "value": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "energy_neutral": {
+                                        "type": "boolean",
+                                        "example": false
+                                    },
+                                    "zero_net_energy": {
+                                        "type": "boolean",
+                                        "example": false
+                                    },
+                                    "measurement_method": {
+                                        "type": "string",
+                                        "example": "EI"
+                                    },
+                                    "issued_on": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2022-01-01"
+                                    },
+                                    "valid_until": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2032-01-01"
+                                    }
+                                }
+                            },
+                            "purchase_costs": {
+                                "properties": {
+                                    "contract_price": {
+                                        "properties": {
+                                            "currency": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "EUR"
+                                                ],
+                                                "example": "EUR"
+                                            },
+                                            "value": {
+                                                "type": "number",
+                                                "format": "decimal",
+                                                "minimum": 0.01,
+                                                "example": 5500
+                                            }
+                                        }
+                                    },
+                                    "building_land": {
+                                        "required": [
+                                            "purchase_price",
+                                            "in_possession"
+                                        ],
+                                        "properties": {
+                                            "purchase_price": {
+                                                "properties": {
+                                                    "currency": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "EUR"
+                                                        ],
+                                                        "example": "EUR"
+                                                    },
+                                                    "value": {
+                                                        "type": "number",
+                                                        "format": "decimal",
+                                                        "minimum": 0.01,
+                                                        "example": 5500
+                                                    }
+                                                }
+                                            },
+                                            "in_possession": {
+                                                "type": "boolean",
+                                                "example": true
+                                            }
+                                        }
+                                    },
+                                    "additional_work_costs": {
+                                        "properties": {
+                                            "currency": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "EUR"
+                                                ],
+                                                "example": "EUR"
+                                            },
+                                            "value": {
+                                                "type": "number",
+                                                "format": "decimal",
+                                                "minimum": 0.01,
+                                                "example": 5500
+                                            }
+                                        }
+                                    },
+                                    "ebv": {
+                                        "properties": {
+                                            "currency": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "EUR"
+                                                ],
+                                                "example": "EUR"
+                                            },
+                                            "value": {
+                                                "type": "number",
+                                                "format": "decimal",
+                                                "minimum": 0.01,
+                                                "example": 5500
+                                            }
+                                        }
+                                    },
+                                    "ebb": {
+                                        "properties": {
+                                            "currency": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "EUR"
+                                                ],
+                                                "example": "EUR"
+                                            },
+                                            "value": {
+                                                "type": "number",
+                                                "format": "decimal",
+                                                "minimum": 0.01,
+                                                "example": 5500
+                                            }
+                                        }
+                                    },
+                                    "interest_costs": {
+                                        "properties": {
+                                            "currency": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "EUR"
+                                                ],
+                                                "example": "EUR"
+                                            },
+                                            "value": {
+                                                "type": "number",
+                                                "format": "decimal",
+                                                "minimum": 0.01,
+                                                "example": 5500
+                                            }
+                                        }
+                                    },
+                                    "broker_fee": {
+                                        "properties": {
+                                            "currency": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "EUR"
+                                                ],
+                                                "example": "EUR"
+                                            },
+                                            "value": {
+                                                "type": "number",
+                                                "format": "decimal",
+                                                "minimum": 0.01,
+                                                "example": 5500
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "contract": {
+            "required": [
+                "capital_needed",
+                "equities",
+                "loans"
+            ],
+            "properties": {
+                "capital_needed": {
+                    "required": [
+                        "principal_sum",
+                        "subscription_amount",
+                        "handling_costs",
+                        "advice_costs",
+                        "notary_costs",
+                        "appraisal_costs"
+                    ],
+                    "properties": {
+                        "principal_sum": {
+                            "properties": {
+                                "currency": {
+                                    "type": "string",
+                                    "enum": [
+                                        "EUR"
+                                    ],
+                                    "example": "EUR"
+                                },
+                                "value": {
+                                    "type": "number",
+                                    "format": "decimal",
+                                    "minimum": 0.01,
+                                    "example": 5500
+                                }
+                            }
+                        },
+                        "subscription_amount": {
+                            "properties": {
+                                "currency": {
+                                    "type": "string",
+                                    "enum": [
+                                        "EUR"
+                                    ],
+                                    "example": "EUR"
+                                },
+                                "value": {
+                                    "type": "number",
+                                    "format": "decimal",
+                                    "minimum": 0.01,
+                                    "example": 5500
+                                }
+                            }
+                        },
+                        "handling_costs": {
+                            "properties": {
+                                "currency": {
+                                    "type": "string",
+                                    "enum": [
+                                        "EUR"
+                                    ],
+                                    "example": "EUR"
+                                },
+                                "value": {
+                                    "type": "number",
+                                    "format": "decimal",
+                                    "minimum": 0.01,
+                                    "example": 5500
+                                }
+                            }
+                        },
+                        "advice_costs": {
+                            "properties": {
+                                "currency": {
+                                    "type": "string",
+                                    "enum": [
+                                        "EUR"
+                                    ],
+                                    "example": "EUR"
+                                },
+                                "value": {
+                                    "type": "number",
+                                    "format": "decimal",
+                                    "minimum": 0.01,
+                                    "example": 5500
+                                }
+                            }
+                        },
+                        "notary_costs": {
+                            "properties": {
+                                "currency": {
+                                    "type": "string",
+                                    "enum": [
+                                        "EUR"
+                                    ],
+                                    "example": "EUR"
+                                },
+                                "value": {
+                                    "type": "number",
+                                    "format": "decimal",
+                                    "minimum": 0.01,
+                                    "example": 5500
+                                }
+                            }
+                        },
+                        "appraisal_costs": {
+                            "properties": {
+                                "currency": {
+                                    "type": "string",
+                                    "enum": [
+                                        "EUR"
+                                    ],
+                                    "example": "EUR"
+                                },
+                                "value": {
+                                    "type": "number",
+                                    "format": "decimal",
+                                    "minimum": 0.01,
+                                    "example": 5500
+                                }
+                            }
+                        }
+                    }
+                },
+                "equities": {
                     "type": "array",
                     "items": {
-                      "title": "item",
-                      "oneOf": [{
-                        "type": "string"
-                      }, {
-                        "type": "boolean"
-                      }]
+                        "title": "equity",
+                        "required": [
+                            "type",
+                            "amount"
+                        ],
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "example": "bank account balance"
+                            },
+                            "amount": {
+                                "properties": {
+                                    "currency": {
+                                        "type": "string",
+                                        "enum": [
+                                            "EUR"
+                                        ],
+                                        "example": "EUR"
+                                    },
+                                    "value": {
+                                        "type": "number",
+                                        "format": "decimal",
+                                        "minimum": 0.01,
+                                        "example": 5500
+                                    }
+                                }
+                            }
+                        }
                     }
-                  }
-                }
-              },
-              "registration_date": {
-                "type": "string",
-                "format": "date",
-                "description": "The registration date of the trainset.",
-                "example": "1981-01-05"
-              },
-              "engines": {
-                "title": "engines",
-                "type": "array",
-                "description": "Lorem ipsum etc.",
-                "items": {
-                  "title": "engine",
-                  "oneOf": [
-                    {
-                      "required": [
-                        "object_type",
-                        "engine_id",
-                        "horsepower",
-                        "type",
-                        "registration_date"
-                      ],
-                      "title": "electric engine",
-                      "properties": {
-                        "object_type": {
-                          "title": "object type",
-                          "description": "Object type is used the distinguish between different types of engines.",
-                          "type": "string"
-                        },
-                        "engine_id": {
-                          "type": "integer",
-                          "minimum": 0,
-                          "description": "A unique id identifing the engine.",
-                          "example": 9865
-                        },
-                        "horsepower": {
-                          "type": "integer",
-                          "minimum": 0,
-                          "description": "The engines horsepower.",
-                          "example": 2500
-                        },
-                        "type": {
-                          "required": [
-                            "type_id",
-                            "manufacturer",
-                            "name"
-                          ],
-                          "properties": {
-                            "type_id": {
-                              "type": "string",
-                              "format": "uuid",
-                              "description": "A unique id identifing the engine type.",
-                              "example": "f7269ba2-124d-4de7-9497-f6ef01515d88"
+                },
+                "loans": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "title": "loan",
+                        "required": [
+                            "product",
+                            "tax_box",
+                            "principal_sum",
+                            "duration_in_months",
+                            "fixed_end_date",
+                            "interest_type",
+                            "interest_period_in_months",
+                            "intervals"
+                        ],
+                        "properties": {
+                            "product": {
+                                "type": "string",
+                                "example": "?"
                             },
-                            "manufacturer": {
-                              "type": "string",
-                              "description": "The name of the manufacturing company.",
-                              "example": "Bombardier TRAXX"
+                            "tax_box": {
+                                "type": "string",
+                                "example": "1"
                             },
-                            "name": {
-                              "type": "string",
-                              "description": "The name of the engine type.",
-                              "example": "F140 MS2"
+                            "principal_sum": {
+                                "properties": {
+                                    "currency": {
+                                        "type": "string",
+                                        "enum": [
+                                            "EUR"
+                                        ],
+                                        "example": "EUR"
+                                    },
+                                    "value": {
+                                        "type": "number",
+                                        "format": "decimal",
+                                        "minimum": 0.01,
+                                        "example": 5500
+                                    }
+                                }
+                            },
+                            "duration_in_months": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "example": 360
+                            },
+                            "fixed_end_date": {
+                                "type": "boolean",
+                                "example": true
+                            },
+                            "end_date": {
+                                "type": "string",
+                                "format": "date",
+                                "example": "2034-01-01"
+                            },
+                            "interest_type": {
+                                "type": "string",
+                                "enum": [
+                                    "day interest",
+                                    "?"
+                                ]
+                            },
+                            "interest_period_in_months": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "example": 120
+                            },
+                            "intervals": {
+                                "required": [
+                                    "collection",
+                                    "residual_debt_determination",
+                                    "start_residual_debt_determination"
+                                ],
+                                "properties": {
+                                    "collection": {
+                                        "type": "string",
+                                        "enum": [
+                                            "monthly",
+                                            "?"
+                                        ]
+                                    },
+                                    "residual_debt_determination": {
+                                        "type": "string",
+                                        "enum": [
+                                            "monthly",
+                                            "?"
+                                        ]
+                                    },
+                                    "start_residual_debt_determination": {
+                                        "type": "string",
+                                        "enum": [
+                                            "monthly",
+                                            "?"
+                                        ]
+                                    }
+                                }
                             }
-                          }
-                        },
-                        "registration_date": {
-                          "type": "string",
-                          "format": "date",
-                          "description": "The registration date of the engine.",
-                          "example": "1981-01-05"
                         }
-                      }
-                    },
-                    {
-                      "required": [
-                        "object_type",
-                        "engine_id",
-                        "horsepower",
-                        "type",
-                        "registration_date"
-                      ],
-                      "title": "diesel engine",
-                      "properties": {
-                        "object_type": {
-                          "title": "object type",
-                          "description": "Object type is used the distinguish between different types of engines.",
-                          "type": "string"
-                        },
-                        "engine_id": {
-                          "type": "integer",
-                          "minimum": 0,
-                          "description": "A unique id identifing the engine.",
-                          "example": 9865
-                        },
-                        "horsepower": {
-                          "type": "integer",
-                          "minimum": 0,
-                          "description": "The engines horsepower.",
-                          "example": 2500
-                        },
-                        "type": {
-                          "required": [
-                            "type_id",
-                            "manufacturer",
-                            "name"
-                          ],
-                          "properties": {
-                            "type_id": {
-                              "type": "string",
-                              "format": "uuid",
-                              "description": "A unique id identifing the engine type.",
-                              "example": "f7269ba2-124d-4de7-9497-f6ef01515d88"
-                            },
-                            "manufacturer": {
-                              "type": "string",
-                              "description": "The name of the manufacturing company.",
-                              "example": "Bombardier TRAXX"
-                            },
-                            "name": {
-                              "type": "string",
-                              "description": "The name of the engine type.",
-                              "example": "F140 MS2"
-                            }
-                          }
-                        },
-                        "registration_date": {
-                          "type": "string",
-                          "format": "date",
-                          "description": "The registration date of the engine.",
-                          "example": "1981-01-05"
-                        }
-                      }
-                    },
-                    {
-                      "required": [
-                        "object_type",
-                        "engine_id",
-                        "horsepower",
-                        "type",
-                        "registration_date"
-                      ],
-                      "title": "hydrogen engine",
-                      "properties": {
-                        "object_type": {
-                          "title": "object type",
-                          "description": "Object type is used the distinguish between different types of engines.",
-                          "type": "string"
-                        },
-                        "engine_id": {
-                          "type": "integer",
-                          "minimum": 0,
-                          "description": "A unique id identifing the engine.",
-                          "example": 9865
-                        },
-                        "horsepower": {
-                          "type": "integer",
-                          "minimum": 0,
-                          "description": "The engines horsepower.",
-                          "example": 2500
-                        },
-                        "type": {
-                          "required": [
-                            "type_id",
-                            "manufacturer",
-                            "name"
-                          ],
-                          "properties": {
-                            "type_id": {
-                              "type": "string",
-                              "format": "uuid",
-                              "description": "A unique id identifing the engine type.",
-                              "example": "f7269ba2-124d-4de7-9497-f6ef01515d88"
-                            },
-                            "manufacturer": {
-                              "type": "string",
-                              "description": "The name of the manufacturing company.",
-                              "example": "Bombardier TRAXX"
-                            },
-                            "name": {
-                              "type": "string",
-                              "description": "The name of the engine type.",
-                              "example": "F140 MS2"
-                            }
-                          }
-                        },
-                        "registration_date": {
-                          "type": "string",
-                          "format": "date",
-                          "description": "The registration date of the engine.",
-                          "example": "1981-01-05"
-                        }
-                      }
                     }
-                  ],
-                  "discriminator": {
-                    "propertyName": "object_type"
-                  }
                 }
-              },
-              "carriages": {
-                "title": "carriages",
-                "type": "array",
-                "items": {
-                  "title": "carriage",
-                  "oneOf": [
-                    {
-                      "required": [
-                        "object_type",
-                        "carriage_id",
-                        "type",
-                        "registration_date"
-                      ],
-                      "title": "passenger carriage",
-                      "description": "A passenger railroad car or passenger car (American English), also called a passenger carriage, passenger coach (British English and International Union of Railways), or passenger bogie (Indian English)[1] is a railroad car that is designed to carry passengers. The term passenger car can also be associated with a sleeping car, a baggage car, a dining car, railway post office and prisoner transport cars.",
-                      "properties": {
-                        "object_type": {
-                          "title": "object type",
-                          "description": "Object type is used the distinguish between different types of carriages.",
-                          "type": "string"
-                        },
-                        "carriage_id": {
-                          "type": "integer",
-                          "minimum": 0,
-                          "description": "A unique id identifing the carriage.",
-                          "example": 8765
-                        },
-                        "type": {
-                          "required": [
-                            "type_id",
-                            "manufacturer",
-                            "name"
-                          ],
-                          "properties": {
-                            "type_id": {
-                              "type": "string",
-                              "format": "uuid",
-                              "description": "A unique id identifing the carriage type.",
-                              "example": "6a88f3f2-7377-4bca-b5ad-62a2c634320b"
-                            },
-                            "manufacturer": {
-                              "type": "string",
-                              "description": "The name of the manufacturing company.",
-                              "example": "United Wagon Europe GmbH"
-                            },
-                            "name": {
-                              "type": "string",
-                              "description": "The name of the carriage type.",
-                              "example": "19-9549"
-                            }
-                          }
-                        },
-                        "registration_date": {
-                          "type": "string",
-                          "format": "date",
-                          "description": "The registration date of the carriage.",
-                          "example": "1981-01-05"
-                        },
-                        "capacity": {
-                          "title": "capacity",
-                          "properties": {
-                            "seated": {
-                              "title": "seated",
-                              "type": "integer",
-                              "minimum": 0
-                            },
-                            "standing": {
-                              "title": "standing",
-                              "type": "integer",
-                              "minimum": 0
-                            }
-                          }
-                        }
-                      }
-                    },
-                    {
-                      "required": [
-                        "object_type",
-                        "carriage_id",
-                        "type",
-                        "registration_date"
-                      ],
-                      "title": "container freight carriage",
-                      "properties": {
-                        "object_type": {
-                          "title": "object type",
-                          "description": "Object type is used the distinguish between different types of carriages.",
-                          "type": "string"
-                        },
-                        "carriage_id": {
-                          "type": "integer",
-                          "minimum": 0,
-                          "description": "A unique id identifing the carriage.",
-                          "example": 8765
-                        },
-                        "type": {
-                          "required": [
-                            "type_id",
-                            "manufacturer",
-                            "name"
-                          ],
-                          "properties": {
-                            "type_id": {
-                              "type": "string",
-                              "format": "uuid",
-                              "description": "A unique id identifing the carriage type.",
-                              "example": "6a88f3f2-7377-4bca-b5ad-62a2c634320b"
-                            },
-                            "manufacturer": {
-                              "type": "string",
-                              "description": "The name of the manufacturing company.",
-                              "example": "United Wagon Europe GmbH"
-                            },
-                            "name": {
-                              "type": "string",
-                              "description": "The name of the carriage type.",
-                              "example": "19-9549"
-                            }
-                          }
-                        },
-                        "registration_date": {
-                          "type": "string",
-                          "format": "date",
-                          "description": "The registration date of the carriage.",
-                          "example": "1981-01-05"
-                        },
-                        "capacity": {
-                          "title": "capacity",
-                          "description": "The number of container which can be loaded onto the carriage.",
-                          "type": "integer",
-                          "minimum": 0,
-                          "example": 2
-                        }
-                      }
-                    },
-                    {
-                      "required": [
-                        "object_type",
-                        "carriage_id",
-                        "type",
-                        "registration_date"
-                      ],
-                      "title": "liquid freight carriage",
-                      "properties": {
-                        "object_type": {
-                          "title": "object type",
-                          "description": "Object type is used the distinguish between different types of carriages.",
-                          "type": "string"
-                        },
-                        "carriage_id": {
-                          "type": "integer",
-                          "minimum": 0,
-                          "description": "A unique id identifing the carriage.",
-                          "example": 8765
-                        },
-                        "type": {
-                          "required": [
-                            "type_id",
-                            "manufacturer",
-                            "name"
-                          ],
-                          "properties": {
-                            "type_id": {
-                              "type": "string",
-                              "format": "uuid",
-                              "description": "A unique id identifing the carriage type.",
-                              "example": "6a88f3f2-7377-4bca-b5ad-62a2c634320b"
-                            },
-                            "manufacturer": {
-                              "type": "string",
-                              "description": "The name of the manufacturing company.",
-                              "example": "United Wagon Europe GmbH"
-                            },
-                            "name": {
-                              "type": "string",
-                              "description": "The name of the carriage type.",
-                              "example": "19-9549"
-                            }
-                          }
-                        },
-                        "registration_date": {
-                          "type": "string",
-                          "format": "date",
-                          "description": "The registration date of the carriage.",
-                          "example": "1981-01-05"
-                        },
-                        "capacity": {
-                          "title": "capacity",
-                          "description": "The number liters which can be loaded onto the carriage.",
-                          "type": "integer",
-                          "minimum": 0,
-                          "example": 4000
-                        }
-                      }
-                    },
-                    {
-                      "required": [
-                        "object_type",
-                        "carriage_id",
-                        "type",
-                        "registration_date"
-                      ],
-                      "title": "autorack carriage",
-                      "properties": {
-                        "object_type": {
-                          "title": "object type",
-                          "description": "Object type is used the distinguish between different types of carriages.",
-                          "type": "string"
-                        },
-                        "carriage_id": {
-                          "type": "integer",
-                          "minimum": 0,
-                          "description": "A unique id identifing the carriage.",
-                          "example": 8765
-                        },
-                        "type": {
-                          "required": [
-                            "type_id",
-                            "manufacturer",
-                            "name"
-                          ],
-                          "properties": {
-                            "type_id": {
-                              "type": "string",
-                              "format": "uuid",
-                              "description": "A unique id identifing the carriage type.",
-                              "example": "6a88f3f2-7377-4bca-b5ad-62a2c634320b"
-                            },
-                            "manufacturer": {
-                              "type": "string",
-                              "description": "The name of the manufacturing company.",
-                              "example": "United Wagon Europe GmbH"
-                            },
-                            "name": {
-                              "type": "string",
-                              "description": "The name of the carriage type.",
-                              "example": "19-9549"
-                            }
-                          }
-                        },
-                        "registration_date": {
-                          "type": "string",
-                          "format": "date",
-                          "description": "The registration date of the carriage.",
-                          "example": "1981-01-05"
-                        },
-                        "capacity": {
-                          "title": "capacity",
-                          "description": "The number of cars which can be loaded onto the carriage.",
-                          "type": "integer",
-                          "minimum": 0,
-                          "example": 36
-                        }
-                      }
-                    },
-                    {
-                      "required": [
-                        "object_type",
-                        "carriage_id",
-                        "type",
-                        "registration_date"
-                      ],
-                      "title": "boxcar",
-                      "properties": {
-                        "object_type": {
-                          "title": "object type",
-                          "description": "Object type is used the distinguish between different types of carriages.",
-                          "type": "string"
-                        },
-                        "carriage_id": {
-                          "type": "integer",
-                          "minimum": 0,
-                          "description": "A unique id identifing the carriage.",
-                          "example": 8765
-                        },
-                        "type": {
-                          "required": [
-                            "type_id",
-                            "manufacturer",
-                            "name"
-                          ],
-                          "properties": {
-                            "type_id": {
-                              "type": "string",
-                              "format": "uuid",
-                              "description": "A unique id identifing the carriage type.",
-                              "example": "6a88f3f2-7377-4bca-b5ad-62a2c634320b"
-                            },
-                            "manufacturer": {
-                              "type": "string",
-                              "description": "The name of the manufacturing company.",
-                              "example": "United Wagon Europe GmbH"
-                            },
-                            "name": {
-                              "type": "string",
-                              "description": "The name of the carriage type.",
-                              "example": "19-9549"
-                            }
-                          }
-                        },
-                        "registration_date": {
-                          "type": "string",
-                          "format": "date",
-                          "description": "The registration date of the carriage.",
-                          "example": "1981-01-05"
-                        },
-                        "capacity": {
-                          "title": "capacity",
-                          "description": "The tonnage which can be loaded onto the carriage.",
-                          "type": "integer",
-                          "minimum": 0,
-                          "example": 5500
-                        }
-                      }
-                    }
-                  ],
-                  "discriminator": {
-                    "propertyName": "object_type"
-                  }
-                }
-              }
             }
-          },
-          {
-            "required": [
-              "object_type",
-              "trainset_id",
-              "type",
-              "registration_date"
-            ],
-            "title": "passenger trainset",
-            "description": "A passenger trainset is a trainset used to transport people along a railroad line. These trainsets may consist of unpowered passenger railroad cars (also known as coaches or carriages) hauled by one or more locomotives, or may be self-propelled; self propelled passenger trainsets are known as multiple units or railcars.\n",
-            "properties": {
-              "object_type": {
-                "title": "object type",
-                "description": "Object type is used the distinguish between different types of trainsets.",
-                "type": "string"
-              },
-              "trainset_id": {
-                "type": "integer",
-                "minimum": 0,
-                "description": "A unique id identifing the trainset.",
-                "example": 4051
-              },
-              "type": {
-                "required": [
-                  "type_id",
-                  "name"
-                ],
-                "properties": {
-                  "type_id": {
-                    "type": "string",
-                    "format": "uuid",
-                    "description": "A unique id identifing the trainset type.",
-                    "example": "f3bb9b86-698e-46ad-9b0f-95a6b906dd57"
-                  },
-                  "name": {
-                    "type": "string",
-                    "description": "The name of the trainset type.",
-                    "example": "ICM-2"
-                  }
-                }
-              },
-              "registration_date": {
-                "type": "string",
-                "format": "date",
-                "description": "The registration date of the trainset.",
-                "example": "1981-01-05"
-              },
-              "engines": {
-                "title": "engines",
-                "description": "Lorem ipsum etc.",
-                "type": "array",
-                "items": {
-                  "title": "engine",
-                  "oneOf": [
-                    {
-                      "required": [
-                        "object_type",
-                        "engine_id",
-                        "horsepower",
-                        "type",
-                        "registration_date"
-                      ],
-                      "title": "electric engine",
-                      "properties": {
-                        "object_type": {
-                          "title": "object type",
-                          "description": "Object type is used the distinguish between different types of engines.",
-                          "type": "string"
-                        },
-                        "engine_id": {
-                          "type": "integer",
-                          "minimum": 0,
-                          "description": "A unique id identifing the engine.",
-                          "example": 9865
-                        },
-                        "horsepower": {
-                          "type": "integer",
-                          "minimum": 0,
-                          "description": "The engines horsepower.",
-                          "example": 2500
-                        },
-                        "type": {
-                          "required": [
-                            "type_id",
-                            "manufacturer",
-                            "name"
-                          ],
-                          "properties": {
-                            "type_id": {
-                              "type": "string",
-                              "format": "uuid",
-                              "description": "A unique id identifing the engine type.",
-                              "example": "f7269ba2-124d-4de7-9497-f6ef01515d88"
-                            },
-                            "manufacturer": {
-                              "type": "string",
-                              "description": "The name of the manufacturing company.",
-                              "example": "Bombardier TRAXX"
-                            },
-                            "name": {
-                              "type": "string",
-                              "description": "The name of the engine type.",
-                              "example": "F140 MS2"
-                            }
-                          }
-                        },
-                        "registration_date": {
-                          "type": "string",
-                          "format": "date",
-                          "description": "The registration date of the engine.",
-                          "example": "1981-01-05"
-                        }
-                      }
-                    },
-                    {
-                      "required": [
-                        "object_type",
-                        "engine_id",
-                        "horsepower",
-                        "type",
-                        "registration_date"
-                      ],
-                      "title": "diesel engine",
-                      "properties": {
-                        "object_type": {
-                          "title": "object type",
-                          "description": "Object type is used the distinguish between different types of engines.",
-                          "type": "string"
-                        },
-                        "engine_id": {
-                          "type": "integer",
-                          "minimum": 0,
-                          "description": "A unique id identifing the engine.",
-                          "example": 9865
-                        },
-                        "horsepower": {
-                          "type": "integer",
-                          "minimum": 0,
-                          "description": "The engines horsepower.",
-                          "example": 2500
-                        },
-                        "type": {
-                          "required": [
-                            "type_id",
-                            "manufacturer",
-                            "name"
-                          ],
-                          "properties": {
-                            "type_id": {
-                              "type": "string",
-                              "format": "uuid",
-                              "description": "A unique id identifing the engine type.",
-                              "example": "f7269ba2-124d-4de7-9497-f6ef01515d88"
-                            },
-                            "manufacturer": {
-                              "type": "string",
-                              "description": "The name of the manufacturing company.",
-                              "example": "Bombardier TRAXX"
-                            },
-                            "name": {
-                              "type": "string",
-                              "description": "The name of the engine type.",
-                              "example": "F140 MS2"
-                            }
-                          }
-                        },
-                        "registration_date": {
-                          "type": "string",
-                          "format": "date",
-                          "description": "The registration date of the engine.",
-                          "example": "1981-01-05"
-                        }
-                      }
-                    },
-                    {
-                      "required": [
-                        "object_type",
-                        "engine_id",
-                        "horsepower",
-                        "type",
-                        "registration_date"
-                      ],
-                      "title": "hydrogen engine",
-                      "properties": {
-                        "object_type": {
-                          "title": "object type",
-                          "description": "Object type is used the distinguish between different types of engines.",
-                          "type": "string"
-                        },
-                        "engine_id": {
-                          "type": "integer",
-                          "minimum": 0,
-                          "description": "A unique id identifing the engine.",
-                          "example": 9865
-                        },
-                        "horsepower": {
-                          "type": "integer",
-                          "minimum": 0,
-                          "description": "The engines horsepower.",
-                          "example": 2500
-                        },
-                        "type": {
-                          "required": [
-                            "type_id",
-                            "manufacturer",
-                            "name"
-                          ],
-                          "properties": {
-                            "type_id": {
-                              "type": "string",
-                              "format": "uuid",
-                              "description": "A unique id identifing the engine type.",
-                              "example": "f7269ba2-124d-4de7-9497-f6ef01515d88"
-                            },
-                            "manufacturer": {
-                              "type": "string",
-                              "description": "The name of the manufacturing company.",
-                              "example": "Bombardier TRAXX"
-                            },
-                            "name": {
-                              "type": "string",
-                              "description": "The name of the engine type.",
-                              "example": "F140 MS2"
-                            }
-                          }
-                        },
-                        "registration_date": {
-                          "type": "string",
-                          "format": "date",
-                          "description": "The registration date of the engine.",
-                          "example": "1981-01-05"
-                        }
-                      }
-                    }
-                  ],
-                  "discriminator": {
-                    "propertyName": "object_type"
-                  }
-                }
-              },
-              "carriages": {
-                "title": "carriages",
-                "type": "array",
-                "items": {
-                  "title": "carriage",
-                  "oneOf": [
-                    {
-                      "required": [
-                        "object_type",
-                        "carriage_id",
-                        "type",
-                        "registration_date"
-                      ],
-                      "title": "passenger carriage",
-                      "description": "A passenger railroad car or passenger car (American English), also called a passenger carriage, passenger coach (British English and International Union of Railways), or passenger bogie (Indian English)[1] is a railroad car that is designed to carry passengers. The term passenger car can also be associated with a sleeping car, a baggage car, a dining car, railway post office and prisoner transport cars.",
-                      "properties": {
-                        "object_type": {
-                          "title": "object type",
-                          "description": "Object type is used the distinguish between different types of carriages.",
-                          "type": "string"
-                        },
-                        "carriage_id": {
-                          "type": "integer",
-                          "minimum": 0,
-                          "description": "A unique id identifing the carriage.",
-                          "example": 8765
-                        },
-                        "type": {
-                          "required": [
-                            "type_id",
-                            "manufacturer",
-                            "name"
-                          ],
-                          "properties": {
-                            "type_id": {
-                              "type": "string",
-                              "format": "uuid",
-                              "description": "A unique id identifing the carriage type.",
-                              "example": "6a88f3f2-7377-4bca-b5ad-62a2c634320b"
-                            },
-                            "manufacturer": {
-                              "type": "string",
-                              "description": "The name of the manufacturing company.",
-                              "example": "United Wagon Europe GmbH"
-                            },
-                            "name": {
-                              "type": "string",
-                              "description": "The name of the carriage type.",
-                              "example": "19-9549"
-                            }
-                          }
-                        },
-                        "registration_date": {
-                          "type": "string",
-                          "format": "date",
-                          "description": "The registration date of the carriage.",
-                          "example": "1981-01-05"
-                        },
-                        "capacity": {
-                          "title": "capacity",
-                          "properties": {
-                            "seated": {
-                              "title": "seated",
-                              "type": "integer",
-                              "minimum": 0
-                            },
-                            "standing": {
-                              "title": "standing",
-                              "type": "integer",
-                              "minimum": 0
-                            }
-                          }
-                        }
-                      }
-                    },
-                    {
-                      "required": [
-                        "object_type",
-                        "carriage_id",
-                        "type",
-                        "registration_date"
-                      ],
-                      "title": "container freight carriage",
-                      "properties": {
-                        "object_type": {
-                          "title": "object type",
-                          "description": "Object type is used the distinguish between different types of carriages.",
-                          "type": "string"
-                        },
-                        "carriage_id": {
-                          "type": "integer",
-                          "minimum": 0,
-                          "description": "A unique id identifing the carriage.",
-                          "example": 8765
-                        },
-                        "type": {
-                          "required": [
-                            "type_id",
-                            "manufacturer",
-                            "name"
-                          ],
-                          "properties": {
-                            "type_id": {
-                              "type": "string",
-                              "format": "uuid",
-                              "description": "A unique id identifing the carriage type.",
-                              "example": "6a88f3f2-7377-4bca-b5ad-62a2c634320b"
-                            },
-                            "manufacturer": {
-                              "type": "string",
-                              "description": "The name of the manufacturing company.",
-                              "example": "United Wagon Europe GmbH"
-                            },
-                            "name": {
-                              "type": "string",
-                              "description": "The name of the carriage type.",
-                              "example": "19-9549"
-                            }
-                          }
-                        },
-                        "registration_date": {
-                          "type": "string",
-                          "format": "date",
-                          "description": "The registration date of the carriage.",
-                          "example": "1981-01-05"
-                        },
-                        "capacity": {
-                          "title": "capacity",
-                          "description": "The number of container which can be loaded onto the carriage.",
-                          "type": "integer",
-                          "minimum": 0,
-                          "example": 2
-                        }
-                      }
-                    },
-                    {
-                      "required": [
-                        "object_type",
-                        "carriage_id",
-                        "type",
-                        "registration_date"
-                      ],
-                      "title": "liquid freight carriage",
-                      "properties": {
-                        "object_type": {
-                          "title": "object type",
-                          "description": "Object type is used the distinguish between different types of carriages.",
-                          "type": "string"
-                        },
-                        "carriage_id": {
-                          "type": "integer",
-                          "minimum": 0,
-                          "description": "A unique id identifing the carriage.",
-                          "example": 8765
-                        },
-                        "type": {
-                          "required": [
-                            "type_id",
-                            "manufacturer",
-                            "name"
-                          ],
-                          "properties": {
-                            "type_id": {
-                              "type": "string",
-                              "format": "uuid",
-                              "description": "A unique id identifing the carriage type.",
-                              "example": "6a88f3f2-7377-4bca-b5ad-62a2c634320b"
-                            },
-                            "manufacturer": {
-                              "type": "string",
-                              "description": "The name of the manufacturing company.",
-                              "example": "United Wagon Europe GmbH"
-                            },
-                            "name": {
-                              "type": "string",
-                              "description": "The name of the carriage type.",
-                              "example": "19-9549"
-                            }
-                          }
-                        },
-                        "registration_date": {
-                          "type": "string",
-                          "format": "date",
-                          "description": "The registration date of the carriage.",
-                          "example": "1981-01-05"
-                        },
-                        "capacity": {
-                          "title": "capacity",
-                          "description": "The number liters which can be loaded onto the carriage.",
-                          "type": "integer",
-                          "minimum": 0,
-                          "example": 4000
-                        }
-                      }
-                    },
-                    {
-                      "required": [
-                        "object_type",
-                        "carriage_id",
-                        "type",
-                        "registration_date"
-                      ],
-                      "title": "autorack carriage",
-                      "properties": {
-                        "object_type": {
-                          "title": "object type",
-                          "description": "Object type is used the distinguish between different types of carriages.",
-                          "type": "string"
-                        },
-                        "carriage_id": {
-                          "type": "integer",
-                          "minimum": 0,
-                          "description": "A unique id identifing the carriage.",
-                          "example": 8765
-                        },
-                        "type": {
-                          "required": [
-                            "type_id",
-                            "manufacturer",
-                            "name"
-                          ],
-                          "properties": {
-                            "type_id": {
-                              "type": "string",
-                              "format": "uuid",
-                              "description": "A unique id identifing the carriage type.",
-                              "example": "6a88f3f2-7377-4bca-b5ad-62a2c634320b"
-                            },
-                            "manufacturer": {
-                              "type": "string",
-                              "description": "The name of the manufacturing company.",
-                              "example": "United Wagon Europe GmbH"
-                            },
-                            "name": {
-                              "type": "string",
-                              "description": "The name of the carriage type.",
-                              "example": "19-9549"
-                            }
-                          }
-                        },
-                        "registration_date": {
-                          "type": "string",
-                          "format": "date",
-                          "description": "The registration date of the carriage.",
-                          "example": "1981-01-05"
-                        },
-                        "capacity": {
-                          "title": "capacity",
-                          "description": "The number of cars which can be loaded onto the carriage.",
-                          "type": "integer",
-                          "minimum": 0,
-                          "example": 36
-                        }
-                      }
-                    },
-                    {
-                      "required": [
-                        "object_type",
-                        "carriage_id",
-                        "type",
-                        "registration_date"
-                      ],
-                      "title": "boxcar",
-                      "properties": {
-                        "object_type": {
-                          "title": "object type",
-                          "description": "Object type is used the distinguish between different types of carriages.",
-                          "type": "string"
-                        },
-                        "carriage_id": {
-                          "type": "integer",
-                          "minimum": 0,
-                          "description": "A unique id identifing the carriage.",
-                          "example": 8765
-                        },
-                        "type": {
-                          "required": [
-                            "type_id",
-                            "manufacturer",
-                            "name"
-                          ],
-                          "properties": {
-                            "type_id": {
-                              "type": "string",
-                              "format": "uuid",
-                              "description": "A unique id identifing the carriage type.",
-                              "example": "6a88f3f2-7377-4bca-b5ad-62a2c634320b"
-                            },
-                            "manufacturer": {
-                              "type": "string",
-                              "description": "The name of the manufacturing company.",
-                              "example": "United Wagon Europe GmbH"
-                            },
-                            "name": {
-                              "type": "string",
-                              "description": "The name of the carriage type.",
-                              "example": "19-9549"
-                            }
-                          }
-                        },
-                        "registration_date": {
-                          "type": "string",
-                          "format": "date",
-                          "description": "The registration date of the carriage.",
-                          "example": "1981-01-05"
-                        },
-                        "capacity": {
-                          "title": "capacity",
-                          "description": "The tonnage which can be loaded onto the carriage.",
-                          "type": "integer",
-                          "minimum": 0,
-                          "example": 5500
-                        }
-                      }
-                    }
-                  ],
-                  "discriminator": {
-                    "propertyName": "object_type"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "required": [
-              "object_type",
-              "trainset_id",
-              "type",
-              "registration_date"
-            ],
-            "title": "work trainset",
-            "description": "A work trainset or departmental trainset (engineering trainset in the UK) is one or more rail cars intended for internal non-revenue use by the railroad's operator. Work trainsets serve functions such as track maintenance, maintenance of way, revenue collection, system cleanup and waste removal, heavy duty hauling, and crew member transport.\n",
-            "properties": {
-              "object_type": {
-                "title": "object type",
-                "description": "Object type is used the distinguish between different types of trainsets.",
-                "type": "string"
-              },
-              "trainset_id": {
-                "type": "integer",
-                "minimum": 0,
-                "description": "A unique id identifing the trainset.",
-                "example": 4051
-              },
-              "type": {
-                "required": [
-                  "type_id",
-                  "name"
-                ],
-                "properties": {
-                  "type_id": {
-                    "type": "string",
-                    "format": "uuid",
-                    "description": "A unique id identifing the trainset type.",
-                    "example": "f3bb9b86-698e-46ad-9b0f-95a6b906dd57"
-                  },
-                  "name": {
-                    "type": "string",
-                    "description": "The name of the trainset type.",
-                    "example": "ICM-2"
-                  }
-                }
-              },
-              "registration_date": {
-                "type": "string",
-                "format": "date",
-                "description": "The registration date of the trainset.",
-                "example": "1981-01-05"
-              },
-              "engines": {
-                "title": "engines",
-                "description": "Lorem ipsum etc.",
-                "type": "array",
-                "items": {
-                  "title": "engine",
-                  "oneOf": [
-                    {
-                      "required": [
-                        "object_type",
-                        "engine_id",
-                        "horsepower",
-                        "type",
-                        "registration_date"
-                      ],
-                      "title": "electric engine",
-                      "properties": {
-                        "object_type": {
-                          "title": "object type",
-                          "description": "Object type is used the distinguish between different types of engines.",
-                          "type": "string"
-                        },
-                        "engine_id": {
-                          "type": "integer",
-                          "minimum": 0,
-                          "description": "A unique id identifing the engine.",
-                          "example": 9865
-                        },
-                        "horsepower": {
-                          "type": "integer",
-                          "minimum": 0,
-                          "description": "The engines horsepower.",
-                          "example": 2500
-                        },
-                        "type": {
-                          "required": [
-                            "type_id",
-                            "manufacturer",
-                            "name"
-                          ],
-                          "properties": {
-                            "type_id": {
-                              "type": "string",
-                              "format": "uuid",
-                              "description": "A unique id identifing the engine type.",
-                              "example": "f7269ba2-124d-4de7-9497-f6ef01515d88"
-                            },
-                            "manufacturer": {
-                              "type": "string",
-                              "description": "The name of the manufacturing company.",
-                              "example": "Bombardier TRAXX"
-                            },
-                            "name": {
-                              "type": "string",
-                              "description": "The name of the engine type.",
-                              "example": "F140 MS2"
-                            }
-                          }
-                        },
-                        "registration_date": {
-                          "type": "string",
-                          "format": "date",
-                          "description": "The registration date of the engine.",
-                          "example": "1981-01-05"
-                        }
-                      }
-                    },
-                    {
-                      "required": [
-                        "object_type",
-                        "engine_id",
-                        "horsepower",
-                        "type",
-                        "registration_date"
-                      ],
-                      "title": "diesel engine",
-                      "properties": {
-                        "object_type": {
-                          "title": "object type",
-                          "description": "Object type is used the distinguish between different types of engines.",
-                          "type": "string"
-                        },
-                        "engine_id": {
-                          "type": "integer",
-                          "minimum": 0,
-                          "description": "A unique id identifing the engine.",
-                          "example": 9865
-                        },
-                        "horsepower": {
-                          "type": "integer",
-                          "minimum": 0,
-                          "description": "The engines horsepower.",
-                          "example": 2500
-                        },
-                        "type": {
-                          "required": [
-                            "type_id",
-                            "manufacturer",
-                            "name"
-                          ],
-                          "properties": {
-                            "type_id": {
-                              "type": "string",
-                              "format": "uuid",
-                              "description": "A unique id identifing the engine type.",
-                              "example": "f7269ba2-124d-4de7-9497-f6ef01515d88"
-                            },
-                            "manufacturer": {
-                              "type": "string",
-                              "description": "The name of the manufacturing company.",
-                              "example": "Bombardier TRAXX"
-                            },
-                            "name": {
-                              "type": "string",
-                              "description": "The name of the engine type.",
-                              "example": "F140 MS2"
-                            }
-                          }
-                        },
-                        "registration_date": {
-                          "type": "string",
-                          "format": "date",
-                          "description": "The registration date of the engine.",
-                          "example": "1981-01-05"
-                        }
-                      }
-                    },
-                    {
-                      "required": [
-                        "object_type",
-                        "engine_id",
-                        "horsepower",
-                        "type",
-                        "registration_date"
-                      ],
-                      "title": "hydrogen engine",
-                      "properties": {
-                        "object_type": {
-                          "title": "object type",
-                          "description": "Object type is used the distinguish between different types of engines.",
-                          "type": "string"
-                        },
-                        "engine_id": {
-                          "type": "integer",
-                          "minimum": 0,
-                          "description": "A unique id identifing the engine.",
-                          "example": 9865
-                        },
-                        "horsepower": {
-                          "type": "integer",
-                          "minimum": 0,
-                          "description": "The engines horsepower.",
-                          "example": 2500
-                        },
-                        "type": {
-                          "required": [
-                            "type_id",
-                            "manufacturer",
-                            "name"
-                          ],
-                          "properties": {
-                            "type_id": {
-                              "type": "string",
-                              "format": "uuid",
-                              "description": "A unique id identifing the engine type.",
-                              "example": "f7269ba2-124d-4de7-9497-f6ef01515d88"
-                            },
-                            "manufacturer": {
-                              "type": "string",
-                              "description": "The name of the manufacturing company.",
-                              "example": "Bombardier TRAXX"
-                            },
-                            "name": {
-                              "type": "string",
-                              "description": "The name of the engine type.",
-                              "example": "F140 MS2"
-                            }
-                          }
-                        },
-                        "registration_date": {
-                          "type": "string",
-                          "format": "date",
-                          "description": "The registration date of the engine.",
-                          "example": "1981-01-05"
-                        }
-                      }
-                    }
-                  ],
-                  "discriminator": {
-                    "propertyName": "object_type"
-                  }
-                }
-              },
-              "carriages": {
-                "title": "carriages",
-                "type": "array",
-                "items": {
-                  "title": "carriage",
-                  "oneOf": [
-                    {
-                      "required": [
-                        "object_type",
-                        "carriage_id",
-                        "type",
-                        "registration_date"
-                      ],
-                      "title": "passenger carriage",
-                      "description": "A passenger railroad car or passenger car (American English), also called a passenger carriage, passenger coach (British English and International Union of Railways), or passenger bogie (Indian English)[1] is a railroad car that is designed to carry passengers. The term passenger car can also be associated with a sleeping car, a baggage car, a dining car, railway post office and prisoner transport cars.",
-                      "properties": {
-                        "object_type": {
-                          "title": "object type",
-                          "description": "Object type is used the distinguish between different types of carriages.",
-                          "type": "string"
-                        },
-                        "carriage_id": {
-                          "type": "integer",
-                          "minimum": 0,
-                          "description": "A unique id identifing the carriage.",
-                          "example": 8765
-                        },
-                        "type": {
-                          "required": [
-                            "type_id",
-                            "manufacturer",
-                            "name"
-                          ],
-                          "properties": {
-                            "type_id": {
-                              "type": "string",
-                              "format": "uuid",
-                              "description": "A unique id identifing the carriage type.",
-                              "example": "6a88f3f2-7377-4bca-b5ad-62a2c634320b"
-                            },
-                            "manufacturer": {
-                              "type": "string",
-                              "description": "The name of the manufacturing company.",
-                              "example": "United Wagon Europe GmbH"
-                            },
-                            "name": {
-                              "type": "string",
-                              "description": "The name of the carriage type.",
-                              "example": "19-9549"
-                            }
-                          }
-                        },
-                        "registration_date": {
-                          "type": "string",
-                          "format": "date",
-                          "description": "The registration date of the carriage.",
-                          "example": "1981-01-05"
-                        },
-                        "capacity": {
-                          "title": "capacity",
-                          "properties": {
-                            "seated": {
-                              "title": "seated",
-                              "type": "integer",
-                              "minimum": 0
-                            },
-                            "standing": {
-                              "title": "standing",
-                              "type": "integer",
-                              "minimum": 0
-                            }
-                          }
-                        }
-                      }
-                    },
-                    {
-                      "required": [
-                        "object_type",
-                        "carriage_id",
-                        "type",
-                        "registration_date"
-                      ],
-                      "title": "container freight carriage",
-                      "properties": {
-                        "object_type": {
-                          "title": "object type",
-                          "description": "Object type is used the distinguish between different types of carriages.",
-                          "type": "string"
-                        },
-                        "carriage_id": {
-                          "type": "integer",
-                          "minimum": 0,
-                          "description": "A unique id identifing the carriage.",
-                          "example": 8765
-                        },
-                        "type": {
-                          "required": [
-                            "type_id",
-                            "manufacturer",
-                            "name"
-                          ],
-                          "properties": {
-                            "type_id": {
-                              "type": "string",
-                              "format": "uuid",
-                              "description": "A unique id identifing the carriage type.",
-                              "example": "6a88f3f2-7377-4bca-b5ad-62a2c634320b"
-                            },
-                            "manufacturer": {
-                              "type": "string",
-                              "description": "The name of the manufacturing company.",
-                              "example": "United Wagon Europe GmbH"
-                            },
-                            "name": {
-                              "type": "string",
-                              "description": "The name of the carriage type.",
-                              "example": "19-9549"
-                            }
-                          }
-                        },
-                        "registration_date": {
-                          "type": "string",
-                          "format": "date",
-                          "description": "The registration date of the carriage.",
-                          "example": "1981-01-05"
-                        },
-                        "capacity": {
-                          "title": "capacity",
-                          "description": "The number of container which can be loaded onto the carriage.",
-                          "type": "integer",
-                          "minimum": 0,
-                          "example": 2
-                        }
-                      }
-                    },
-                    {
-                      "required": [
-                        "object_type",
-                        "carriage_id",
-                        "type",
-                        "registration_date"
-                      ],
-                      "title": "liquid freight carriage",
-                      "properties": {
-                        "object_type": {
-                          "title": "object type",
-                          "description": "Object type is used the distinguish between different types of carriages.",
-                          "type": "string"
-                        },
-                        "carriage_id": {
-                          "type": "integer",
-                          "minimum": 0,
-                          "description": "A unique id identifing the carriage.",
-                          "example": 8765
-                        },
-                        "type": {
-                          "required": [
-                            "type_id",
-                            "manufacturer",
-                            "name"
-                          ],
-                          "properties": {
-                            "type_id": {
-                              "type": "string",
-                              "format": "uuid",
-                              "description": "A unique id identifing the carriage type.",
-                              "example": "6a88f3f2-7377-4bca-b5ad-62a2c634320b"
-                            },
-                            "manufacturer": {
-                              "type": "string",
-                              "description": "The name of the manufacturing company.",
-                              "example": "United Wagon Europe GmbH"
-                            },
-                            "name": {
-                              "type": "string",
-                              "description": "The name of the carriage type.",
-                              "example": "19-9549"
-                            }
-                          }
-                        },
-                        "registration_date": {
-                          "type": "string",
-                          "format": "date",
-                          "description": "The registration date of the carriage.",
-                          "example": "1981-01-05"
-                        },
-                        "capacity": {
-                          "title": "capacity",
-                          "description": "The number liters which can be loaded onto the carriage.",
-                          "type": "integer",
-                          "minimum": 0,
-                          "example": 4000
-                        }
-                      }
-                    },
-                    {
-                      "required": [
-                        "object_type",
-                        "carriage_id",
-                        "type",
-                        "registration_date"
-                      ],
-                      "title": "autorack carriage",
-                      "properties": {
-                        "object_type": {
-                          "title": "object type",
-                          "description": "Object type is used the distinguish between different types of carriages.",
-                          "type": "string"
-                        },
-                        "carriage_id": {
-                          "type": "integer",
-                          "minimum": 0,
-                          "description": "A unique id identifing the carriage.",
-                          "example": 8765
-                        },
-                        "type": {
-                          "required": [
-                            "type_id",
-                            "manufacturer",
-                            "name"
-                          ],
-                          "properties": {
-                            "type_id": {
-                              "type": "string",
-                              "format": "uuid",
-                              "description": "A unique id identifing the carriage type.",
-                              "example": "6a88f3f2-7377-4bca-b5ad-62a2c634320b"
-                            },
-                            "manufacturer": {
-                              "type": "string",
-                              "description": "The name of the manufacturing company.",
-                              "example": "United Wagon Europe GmbH"
-                            },
-                            "name": {
-                              "type": "string",
-                              "description": "The name of the carriage type.",
-                              "example": "19-9549"
-                            }
-                          }
-                        },
-                        "registration_date": {
-                          "type": "string",
-                          "format": "date",
-                          "description": "The registration date of the carriage.",
-                          "example": "1981-01-05"
-                        },
-                        "capacity": {
-                          "title": "capacity",
-                          "description": "The number of cars which can be loaded onto the carriage.",
-                          "type": "integer",
-                          "minimum": 0,
-                          "example": 36
-                        }
-                      }
-                    },
-                    {
-                      "required": [
-                        "object_type",
-                        "carriage_id",
-                        "type",
-                        "registration_date"
-                      ],
-                      "title": "boxcar",
-                      "properties": {
-                        "object_type": {
-                          "title": "object type",
-                          "description": "Object type is used the distinguish between different types of carriages.",
-                          "type": "string"
-                        },
-                        "carriage_id": {
-                          "type": "integer",
-                          "minimum": 0,
-                          "description": "A unique id identifing the carriage.",
-                          "example": 8765
-                        },
-                        "type": {
-                          "required": [
-                            "type_id",
-                            "manufacturer",
-                            "name"
-                          ],
-                          "properties": {
-                            "type_id": {
-                              "type": "string",
-                              "format": "uuid",
-                              "description": "A unique id identifing the carriage type.",
-                              "example": "6a88f3f2-7377-4bca-b5ad-62a2c634320b"
-                            },
-                            "manufacturer": {
-                              "type": "string",
-                              "description": "The name of the manufacturing company.",
-                              "example": "United Wagon Europe GmbH"
-                            },
-                            "name": {
-                              "type": "string",
-                              "description": "The name of the carriage type.",
-                              "example": "19-9549"
-                            }
-                          }
-                        },
-                        "registration_date": {
-                          "type": "string",
-                          "format": "date",
-                          "description": "The registration date of the carriage.",
-                          "example": "1981-01-05"
-                        },
-                        "capacity": {
-                          "title": "capacity",
-                          "description": "The tonnage which can be loaded onto the carriage.",
-                          "type": "integer",
-                          "minimum": 0,
-                          "example": 5500
-                        }
-                      }
-                    }
-                  ],
-                  "discriminator": {
-                    "propertyName": "object_type"
-                  }
-                }
-              }
-            }
-          }
-        ],
-        "discriminator": {
-          "propertyName": "object_type"
         }
-      };
+    }
+};
+      
     }, 2000);
   </script>
 </body>
