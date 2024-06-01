@@ -1,4 +1,4 @@
-import { css, html, LitElement, unsafeCSS } from 'lit';
+import { css, LitElement, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import styles from "../shared/styles/reset";
 
@@ -17,15 +17,9 @@ export class ArchimateViewer extends LitElement {
     super();
   }
 
-  override render() {
-    return html`
-       <div id="canvas" tabindex="0"></div>
-    `;
-  }
-
   override async firstUpdated() {
     this._viewer = new Viewer({
-      container: this.renderRoot.querySelector("#canvas") as HTMLElement
+      container: this.renderRoot as HTMLElement
     });
 
     try {
@@ -33,7 +27,8 @@ export class ArchimateViewer extends LitElement {
 
       if (warnings.length) {
         console.log('import with warnings', warnings);
-      } else {
+      } 
+      else {
         console.log('import successful');
       }
 
@@ -51,13 +46,7 @@ export class ArchimateViewer extends LitElement {
     return [
       styles,
       css`${unsafeCSS(ViewerArchimateJsCss)}`, 
-      css`${unsafeCSS(ViewerPaletteIconsCss) }`,
-      css`
-        :host,
-        #canvas {
-          height: 100%;  
-        }
-      `
+      css`${unsafeCSS(ViewerPaletteIconsCss) }`
     ];
   }
 }

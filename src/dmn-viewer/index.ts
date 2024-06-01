@@ -1,4 +1,4 @@
-import { css, html, LitElement, unsafeCSS } from 'lit';
+import { css, LitElement, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import styles from "../shared/styles/reset";
 
@@ -20,25 +20,18 @@ export class DMNViewer extends LitElement {
     super();
   }
 
-  override render() {
-    return html`
-       <div id="canvas" tabindex="0"></div>
-    `;
-  }
-
   override async firstUpdated() {
     this._viewer = new Viewer({
-      container: this.renderRoot.querySelector("#canvas")
+      container: this.renderRoot as HTMLElement
     });
-
-    console.dirxml(this.xml);
 
     try {
       const { warnings } = await this._viewer.importXML(this.xml);
 
       if (warnings.length) {
         console.log('import with warnings', warnings);
-      } else {
+      }
+      else {
         console.log('import successful');
       }
 
@@ -55,17 +48,11 @@ export class DMNViewer extends LitElement {
   static override get styles() {
     return [
       styles,
-      css`${unsafeCSS(ViewerSharedCss)}`, 
-      css`${unsafeCSS(ViewerDrdCss) }`,
+      css`${unsafeCSS(ViewerSharedCss)}`,
+      css`${unsafeCSS(ViewerDrdCss)}`,
       css`${unsafeCSS(ViewerDecisionTableCss)}`,
-      css`${unsafeCSS(ViewerLiteralExpressionCss) }`,
-      css`${unsafeCSS(ViewerDMNCss) }`,
-      css`
-        :host,
-        #canvas {
-          height: 100%;  
-        }
-      `
+      css`${unsafeCSS(ViewerLiteralExpressionCss)}`,
+      css`${unsafeCSS(ViewerDMNCss)}`
     ];
   }
 }

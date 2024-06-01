@@ -1,4 +1,4 @@
-import { css, html, LitElement, unsafeCSS } from 'lit';
+import { css, LitElement, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import styles from "../shared/styles/reset";
 
@@ -17,15 +17,9 @@ export class BPMNViewer extends LitElement {
     super();
   }
 
-  override render() {
-    return html`
-       <div id="canvas" tabindex="0"></div>
-    `;
-  }
-
   override async firstUpdated() {
     this._viewer = new Viewer({
-      container: this.renderRoot.querySelector("#canvas") as HTMLElement
+      container: this.renderRoot as HTMLElement
     });
 
     try {
@@ -51,13 +45,7 @@ export class BPMNViewer extends LitElement {
     return [
       styles,
       css`${unsafeCSS(ViewerDiagramJsCss)}`, 
-      css`${unsafeCSS(ViewerBpmnJsCss) }`,
-      css`
-        :host,
-        #canvas {
-          height: 100%;  
-        }
-      `
+      css`${unsafeCSS(ViewerBpmnJsCss) }`
     ];
   }
 }
