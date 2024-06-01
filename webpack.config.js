@@ -20,7 +20,12 @@ const config = {
     rules: [
       {
         test: /\.ts?$/,
+        use: ["ts-loader"],
+        /* 
+        Removed minify-html-literals-loader because if high security issue:
+        https://github.com/asyncLiz/minify-html-literals/issues/56
         use: ["ts-loader", "minify-html-literals-loader"],
+        */
         exclude: /node_modules/,
       },
       {
