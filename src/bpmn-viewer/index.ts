@@ -27,12 +27,12 @@ export class BPMNViewer extends LitElement {
 
       if (warnings.length) {
         console.log('import with warnings', warnings);
-      } else {
+      }
+      else {
         console.log('import successful');
       }
-
+      
       this._viewer
-        .getActiveViewer()
         .get('canvas')
         .zoom('fit-viewport');
     }

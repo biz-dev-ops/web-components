@@ -35,6 +35,7 @@ export class DMNViewer extends LitElement {
         console.log('import successful');
       }
 
+      //Why is getActiveViewer necessary?
       this._viewer
         .getActiveViewer()
         .get('canvas')

@@ -2,9 +2,8 @@ import { css, LitElement, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import styles from "../shared/styles/reset";
 
-import Viewer from 'archimate-js/lib/NavigatedViewer'; 
-import ViewerArchimateJsCss from 'archimate-js/assets/archimate-js.css';
-import ViewerPaletteIconsCss from 'archimate-js/assets/palette-icons.css';
+import Viewer from 'archimate-js/lib/Modeler'; 
+import viewerStyles from 'archimate-js/assets/archimate-js.css';
 
 @customElement('archimate-viewer')
 export class ArchimateViewer extends LitElement {
@@ -31,11 +30,13 @@ export class ArchimateViewer extends LitElement {
       else {
         console.log('import successful');
       }
-
+      
+      //Why is this necessary?
+      await this._viewer.openView();
+      
       this._viewer
-        .getActiveViewer()
-        .get('canvas')
-        .zoom('fit-viewport');
+         .get('canvas')
+         .zoom('fit-viewport');
     }
     catch (err) {
       console.log('something went wrong:', err);
@@ -45,8 +46,7 @@ export class ArchimateViewer extends LitElement {
   static override get styles() {
     return [
       styles,
-      css`${unsafeCSS(ViewerArchimateJsCss)}`, 
-      css`${unsafeCSS(ViewerPaletteIconsCss) }`
+      css`${unsafeCSS(viewerStyles)}`
     ];
   }
 }
