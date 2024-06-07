@@ -8,14 +8,10 @@ import ViewerBpmnJsCss from 'bpmn-js/dist/assets/bpmn-js.css';
 
 @customElement('bpmn-viewer')
 export class BPMNViewer extends LitElement {
-  private _viewer!: any;
+  private _viewer!: Viewer;
 
   @property({ attribute: "data-xml" })
   xml!: string
-
-  constructor() {
-    super();
-  }
 
   override async firstUpdated() {
     this._viewer = new Viewer({
