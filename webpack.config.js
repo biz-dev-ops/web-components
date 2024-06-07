@@ -20,7 +20,7 @@ const config = {
     rules: [
       {
         test: /\.ts?$/,
-        use: ["ts-loader", "minify-html-literals-loader"],
+        use: ["ts-loader"],
         exclude: /node_modules/,
       },
       {
