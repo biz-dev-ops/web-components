@@ -11,14 +11,10 @@ import ViewerDMNCss from 'dmn-js/dist/assets/dmn-font/css/dmn.css';
 
 @customElement('dmn-viewer')
 export class DMNViewer extends LitElement {
-  private _viewer!: any;
+  private _viewer!: Viewer;
 
   @property({ attribute: "data-xml" })
   xml!: string
-
-  constructor() {
-    super();
-  }
 
   override async firstUpdated() {
     this._viewer = new Viewer({
