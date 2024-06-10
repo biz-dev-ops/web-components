@@ -5,6 +5,7 @@ import { Model } from "./models";
 import "./canvas-box";
 import { data } from "./data";
 import "../../assets/style/layout.css";
+import "material-symbols/outlined.css";
 
 @customElement("business-model-canvas")
 export class BusinessModelCanvasComponent extends LitElement {
