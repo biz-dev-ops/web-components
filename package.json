@@ -30,9 +30,7 @@
   "scripts": {
     "develop": "webpack-dev-server --mode development",
     "build": "webpack --mode production",
-    "build:test": "tsc -p tsconfig.test.json",
-    "test": "tsc -p tsconfig.test.json && wtr --coverage",
-    "test:ci": "wtr --coverage"
+    "test": "tsc -p tsconfig.test.json && wtr --coverage"
   },
   "dependencies": {
     "html-webpack-plugin": "^5.5.4",
