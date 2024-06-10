@@ -1,13 +1,13 @@
 name: Install dependencies
 
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
     - name: Install node
       uses: actions/setup-node@v2
-        with:
-          node-version: "18.x"
-          registry-url: "https://registry.npmjs.org"
+      with:
+        node-version: "18.x"
+        registry-url: "https://registry.npmjs.org"
 
     - name: Install project dependencies
       shell: bash
