@@ -30,6 +30,7 @@ runs:
       uses: ./.github/actions/install_dependencies
 
     - name: push tag
+      shell: bash
       run: |
         git config user.name "${{ inputs.github_actor }}"
         git config user.email "${{ inputs.github_actor }}@users.noreply.github.com"
@@ -38,6 +39,7 @@ runs:
         git push origin "${{ inputs.verion }}"
 
     - name: npm publish
+      shell: bash
       run: |
         npm run build
         npm publish --access public
