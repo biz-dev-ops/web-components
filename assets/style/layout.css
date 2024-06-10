@@ -1,0 +1,48 @@
+main {
+  position: relative;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 100%;
+  padding-left: var(--space-xs);
+  padding-right: var(--space-xs);
+}
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1320px;
+  }
+}
+
+.canvas-wrapper {
+  background: #ffffff;
+  margin-top: var(--space-md);
+  border-radius: var(--radius-base) var(--radius-base) 0 0;
+  padding: var(--space-lg) var(--content-padding-inline)
+    calc(var(--space-lg) * 2);
+}

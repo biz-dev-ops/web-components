@@ -2,63 +2,89 @@ import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import styles from "../shared/styles/reset";
 import { Model } from "./models";
-
-import "./channels-canvas-box";
-import "./cost-structure-canvas-box";
-import "./customer-relationships-canvas-box";
-import "./customer-segments-canvas-box";
-import "./key-activities-canvas-box";
-import "./key-partnerships-canvas-box";
-import "./key-resources-canvas-box";
-import "./revenue-streams-canvas-box";
-import "./value-propositions-canvas-box/";
+import "./canvas-box";
+import { data } from "./data";
+import "../../assets/style/layout.css";
 
 @customElement("business-model-canvas")
 export class BusinessModelCanvasComponent extends LitElement {
   @property({ type: Object })
-  model!: Model
+  model!: Model;
 
   @property({ attribute: "model-json" })
-  modelJson!: string
+  modelJson!: string;
 
   override render() {
-    return html`  
-    <table cellspacing="0">
-      <tr>
-        <td colspan="2" rowspan="3">
-          <key-partnerships-canvas-box .items=${this.model.keyPartnerships}></key-partnerships-canvas-box>
-        </td>
-        <td colspan="2" rowspan="1">
-          <key-activities-canvas-box .items=${this.model.keyActivities}></key-activities-canvas-box>
-        </td>
-        <td colspan="2" rowspan="3">
-          <value-propositions-canvas-box .items=${this.model.valuePropositions}></value-propositions-canvas-box>
-        </td>
-        <td colspan="2" rowspan="1">
-          <customer-relationships-canvas-box .items=${this.model.customerRelationships}></customer-relationships-canvas-box>
-        </td>
-        <td colspan="2" rowspan="3">
-          <customer-segments-canvas-box .items=${this.model.customerSegments}></customer-segments-canvas-box>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          <key-resources-canvas-box .items=${this.model.keyResources}></key-resources-canvas-box>
-        </td>
-        <td colspan="2">
-          <channels-canvas-box .items=${this.model.keyResources}></channels-canvas-box>
-        </td>
-      </tr>
-      <tr>
-      <tr>
-        <td colspan="5">
-          <cost-structure-canvas-box .items=${this.model.costStructure}></cost-structure-canvas-box>
-        </td>
-        <td colspan="5">
-          <revenue-streams-canvas-box .items=${this.model.revenueStreams}></revenue-streams-canvas-box>
-        </td>
-      </tr>
-    </table>`;
+    return html` <div class="canvas-grid">
+      <div class="canvas-grid__item">
+        <canvas-box
+          .items=${this.model.keyPartnerships ||
+          data.keyPartnerships.defaultItems}
+          .icon=${data.keyPartnerships.icon}
+          .title=${data.keyPartnerships.title}
+        />
+      </div>
+      <div class="canvas-grid__item">
+        <canvas-box
+          .items=${this.model.keyActivities || data.keyActivities.defaultItems}
+          .icon=${data.keyActivities.icon}
+          .title=${data.keyActivities.title}
+        />
+      </div>
+      <div class="canvas-grid__item">
+        <canvas-box
+          .items=${this.model.valuePropositions ||
+          data.valuePropositions.defaultItems}
+          .icon=${data.valuePropositions.icon}
+          .title=${data.valuePropositions.title}
+        />
+      </div>
+      <div class="canvas-grid__item">
+        <canvas-box
+          .items=${this.model.customerRelationships ||
+          data.customerRelationships.defaultItems}
+          .icon=${data.customerRelationships.icon}
+          .title=${data.customerRelationships.title}
+        />
+      </div>
+      <div class="canvas-grid__item">
+        <canvas-box
+          .items=${this.model.customerSegments ||
+          data.customerSegments.defaultItems}
+          .icon=${data.customerSegments.icon}
+          .title=${data.customerSegments.title}
+        />
+      </div>
+      <div class="canvas-grid__item">
+        <canvas-box
+          .items=${this.model.keyResources || data.keyResources.defaultItems}
+          .icon=${data.keyResources.icon}
+          .title=${data.keyResources.title}
+        />
+      </div>
+      <div class="canvas-grid__item">
+        <canvas-box
+          .items=${this.model.channels || data.channels.defaultItems}
+          .icon=${data.channels.icon}
+          .title=${data.channels.title}
+        />
+      </div>
+      <div class="canvas-grid__item">
+        <canvas-box
+          .items=${this.model.costStructure || data.costStructure.defaultItems}
+          .icon=${data.costStructure.icon}
+          .title=${data.costStructure.title}
+        />
+      </div>
+      <div class="canvas-grid__item">
+        <canvas-box
+          .items=${this.model.revenueStreams ||
+          data.revenueStreams.defaultItems}
+          .icon=${data.revenueStreams.icon}
+          .title=${data.revenueStreams.title}
+        />
+      </div>
+    </div>`;
   }
 
   override update(changedProperties: Map<string, unknown>) {
@@ -70,24 +96,37 @@ export class BusinessModelCanvasComponent extends LitElement {
   }
 
   static override get styles() {
-    return [styles, css`
-      table {
-        border: none;
-        border: var(--line-base) solid var(--color-brand-a40);
-        border-radius: var(--radius-base);
-        width: 100%;
-      }
+    return [
+      styles,
+      css`
+        .canvas-grid {
+          width: 100%;
+          background: pink;
+          display: grid;
+          grid-gap: var(--line-base);
+          background-color: var(--color-brand-a40);
+          grid-template-columns: repeat(10, 1fr);
+          border: var(--line-base) solid var(--color-brand-a40);
+          margin-top: var(--space-md);
+        }
 
-      td {
-        border: none;
-        border-top: var(--line-base) solid var(--color-brand-a40);
-        border-left: var(--line-base) solid var(--color-brand-a40);
-        text-align: left;
-        vertical-align: top;
-        height: 200px;
-        width: 200px;
-        padding: var(--space-xs);
-      }
-  `];
+        .canvas-grid__item {
+          grid-column: auto / span 2;
+          background-color: #ffffff;
+          padding: var(--space-xs);
+        }
+
+        .canvas-grid__item:nth-child(1),
+        .canvas-grid__item:nth-child(3),
+        .canvas-grid__item:nth-child(5) {
+          grid-row: auto / span 2;
+        }
+
+        .canvas-grid__item:nth-child(8),
+        .canvas-grid__item:nth-child(9) {
+          grid-column: auto / span 5;
+        }
+      `,
+    ];
   }
 }

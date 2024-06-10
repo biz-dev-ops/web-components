@@ -1,58 +1,24 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Business model canvas</title>
+    <link rel="stylesheet" href="../assets/style/page/style.css" />
+  </head>
 
-<head>
-  <meta charset="utf-8" />
-  <title>Business model canvas</title>
-  <link rel="stylesheet" href="../assets/style/page/style.css">
-</head>
-
-<body>
-  <main>
-    <div class="content">
-      <div class="header-container h2">
-        <div class="header">
-          <h2 id="h2" tabindex="-1">Business model canvas <a class="header-anchor" href="#h2">¶</a></h2>
+  <body>
+    <div class="container">
+      <div class="canvas-wrapper">
+        <div class="header-container h2">
+          <div class="header">
+            <h2 id="h2" tabindex="-1">
+              Business model canvas
+              <a class="header-anchor" href="#h2">¶</a>
+            </h2>
+          </div>
         </div>
-        <div class="container">
-          <business-model-canvas id="business-model-canvas" model-json="{&quot;keyPartnerships&quot;:[&quot;key partnership 1&quot;,&quot;key partnership 2&quot;,&quot;key partnership 3&quot;],&quot;keyActivities&quot;:[&quot;key activity 1&quot;,&quot;key activity 2&quot;,&quot;key activity 3&quot;],&quot;keyResources&quot;:[&quot;key resource 1&quot;,&quot;key resource 2&quot;,&quot;key resource 3&quot;],&quot;valuePropositions&quot;:[&quot;value propposition 1&quot;,&quot;value propposition 2&quot;,&quot;value propposition 3&quot;],&quot;customerRelationships&quot;:[&quot;customer relationship 1&quot;,&quot;customer relationship 2&quot;,&quot;customer relationship 3&quot;],&quot;channels&quot;:[&quot;channels 1&quot;,&quot;channels 2&quot;,&quot;channels 3&quot;],&quot;customerSegments&quot;:[&quot;customer segments 1&quot;,&quot;customer segments 2&quot;,&quot;customer segments 3&quot;],&quot;costStructure&quot;:[&quot;cost structure 1&quot;,&quot;cost structure 2&quot;,&quot;cost structure 3&quot;],&quot;revenueStreams&quot;:[&quot;revenue stream 1&quot;,&quot;revenue stream 2&quot;,&quot;revenue stream 3&quot;]}" />
-        </div>
+        <business-model-canvas id="business-model-canvas" model-json="{}" />
       </div>
-  </main>
-  
-  <script>
-
-    const component = document.getElementById('business-model-canvas');
-
-    setTimeout(() => {
-      component.model = {
-        keyPartnerships: [ 
-          "test 1", 
-          "test 2", {
-            text: "test 4"
-          },  { 
-            head: "head"
-          }, [
-             "item 1", 
-             "item 2"
-          ], {
-            items: [
-              "item 1", 
-              "item 2"
-            ]
-          }
-        ],
-        keyActivities: null,
-        keyResources: null,
-        valuePropositions: null,
-        customerRelationships: null,
-        channels: null,
-        customerSegments: null,
-        costStructure: null,
-        revenueStreams: null
-      };
-    }, 3000);
-  </script>
-</body>
-
+    </div>
+  </body>
 </html>
