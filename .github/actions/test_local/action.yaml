@@ -2,6 +2,7 @@ name: Local tests
 
 runs:
   using: "composite"
+  runs-on: macos-14
   steps:
     - name: Unit tests
       shell: bash
