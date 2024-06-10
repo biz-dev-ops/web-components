@@ -3,6 +3,10 @@ name: Local tests
 runs:
   using: "composite"
   steps:
+    - name: Build
+      shell: bash
+      run: npm run build:test
+
     - name: Unit tests
       shell: bash
-      run: npm run test
+      run: npm run test:ci
