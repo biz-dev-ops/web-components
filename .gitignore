@@ -116,7 +116,3 @@ tests/release/
 .DS_Store
 
 private/
-
-# Test artifacts
-
-out-tsc

@@ -1,30 +1,24 @@
-// import { html } from "lit";
-import { html, fixture, expect, elementUpdated } from "@open-wc/testing";
-import "./index.js";
-import type { Icon } from "./index.js";
+import { $, expect } from "@wdio/globals";
+import "./index";
 
 describe("Icon", () => {
-  it("renders", async () => {
-    const element = await fixture<Icon>(
-      html`<bdo-icon .icon=${"mat-check"}></bdo-icon>`
-    );
-    expect(element).shadowDom.to.equal(`
-       <span class="material-symbols">
-         check
-       </span>`);
+  let element: HTMLElement;
+
+  beforeEach(() => {
+    element = document.createElement("bdo-icon");
   });
 
-  it("updates", async () => {
-    const element = await fixture<Icon>(html`<bdo-icon></bdo-icon>`);
+  it("should render and update component", async () => {
+    element.setAttribute("icon", "mat-check");
 
-    expect(element).shadowDom.to.equal("");
+    document.body.appendChild(element);
+    await expect($(element)).toHaveText("check");
 
-    element.icon = "mat-check";
-    await elementUpdated(element);
+    element.setAttribute("icon", "mat-share");
+    await expect($(element)).toHaveText("share");
+  });
 
-    expect(element).shadowDom.to.equal(`
-       <span class="material-symbols">
-         check
-       </span>`);
+  afterEach(() => {
+    element.remove();
   });
 });
