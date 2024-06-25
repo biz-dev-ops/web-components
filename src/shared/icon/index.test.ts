@@ -8,7 +8,7 @@ describe("Icon", () => {
     element = document.createElement("bdo-icon");
   });
 
-  it("should render and update component", async () => {
+  it("renders and updates the component", async () => {
     element.setAttribute("icon", "mat-check");
 
     document.body.appendChild(element);
