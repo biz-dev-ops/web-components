@@ -2,6 +2,7 @@ import { html } from "lit";
 import { customElement } from "lit/decorators.js";
 
 import "@biz-dev-ops/md-docs/assets/style/page/style.css";
+import "../../assets/style/custom-theme.css";
 
 import { UseCaseViewer } from "../use-case-viewer";
 import { Query } from "./models";

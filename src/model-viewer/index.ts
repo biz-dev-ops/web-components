@@ -12,6 +12,7 @@ import { ModelItemBuilder } from "./modules/model-item-builder";
 import "./components/model-viewer-path";
 
 import "@biz-dev-ops/md-docs/assets/style/page/style.css";
+import "../../assets/style/custom-theme.css";
 
 @customElement("model-viewer")
 export class ModelViewer extends LitElement {

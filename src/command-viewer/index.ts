@@ -7,6 +7,7 @@ import commandViewerCss from "./command-viewer.css";
 import "../model-viewer";
 
 import "@biz-dev-ops/md-docs/assets/style/page/style.css";
+import "../../assets/style/custom-theme.css";
 
 @customElement("command-viewer")
 export class CommandViewer extends UseCaseViewer<Command> {

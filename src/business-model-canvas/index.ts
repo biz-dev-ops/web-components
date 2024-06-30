@@ -4,6 +4,7 @@ import styles from "../shared/styles/reset";
 import { Model } from "./models";
 
 import "@biz-dev-ops/md-docs/assets/style/page/style.css";
+import "../../assets/style/custom-theme.css";
 
 import "./channels-canvas-box";
 import "./cost-structure-canvas-box";

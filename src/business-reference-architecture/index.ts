@@ -5,6 +5,7 @@ import resetStyles from "../shared/styles/reset";
 import { Section } from "./models";
 
 import "@biz-dev-ops/md-docs/assets/style/page/style.css";
+import "../../assets/style/custom-theme.css";
 
 import "./architecture-section";
 
