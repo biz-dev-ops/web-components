@@ -19,71 +19,66 @@ export class BusinessModelCanvasComponent extends LitElement {
     return html` <div class="canvas-grid">
       <div class="canvas-grid__item">
         <canvas-box
-          .items=${this.model.keyPartnerships ||
-          data.keyPartnerships.defaultItems}
+          .items=${this.model.keyPartnerships || data.keyPartnerships.defaultItems}
           .icon=${data.keyPartnerships.icon}
           .title=${data.keyPartnerships.title}
-        />
+        ></canvas-box>
       </div>
       <div class="canvas-grid__item">
         <canvas-box
           .items=${this.model.keyActivities || data.keyActivities.defaultItems}
           .icon=${data.keyActivities.icon}
           .title=${data.keyActivities.title}
-        />
+        ></canvas-box>
       </div>
       <div class="canvas-grid__item">
         <canvas-box
           .items=${this.model.keyResources || data.keyResources.defaultItems}
           .icon=${data.keyResources.icon}
           .title=${data.keyResources.title}
-        />
+        ></canvas-box>
       </div>
       <div class="canvas-grid__item">
         <canvas-box
-          .items=${this.model.valuePropositions ||
-          data.valuePropositions.defaultItems}
+          .items=${this.model.valuePropositions || data.valuePropositions.defaultItems}
           .icon=${data.valuePropositions.icon}
           .title=${data.valuePropositions.title}
-        />
+        ></canvas-box>
       </div>
       <div class="canvas-grid__item">
         <canvas-box
-          .items=${this.model.customerRelationships ||
-          data.customerRelationships.defaultItems}
+          .items=${this.model.customerRelationships || data.customerRelationships.defaultItems}
           .icon=${data.customerRelationships.icon}
           .title=${data.customerRelationships.title}
-        />
+        ></canvas-box>
       </div>
       <div class="canvas-grid__item">
         <canvas-box
-          .items=${this.model.customerSegments ||
-          data.customerSegments.defaultItems}
+          .items=${this.model.customerSegments || data.customerSegments.defaultItems}
           .icon=${data.customerSegments.icon}
           .title=${data.customerSegments.title}
-        />
+        ></canvas-box>
       </div>
       <div class="canvas-grid__item">
         <canvas-box
           .items=${this.model.channels || data.channels.defaultItems}
           .icon=${data.channels.icon}
           .title=${data.channels.title}
-        />
+        ></canvas-box>
       </div>
       <div class="canvas-grid__item">
         <canvas-box
           .items=${this.model.costStructure || data.costStructure.defaultItems}
           .icon=${data.costStructure.icon}
           .title=${data.costStructure.title}
-        />
+        ></canvas-box>
       </div>
       <div class="canvas-grid__item">
         <canvas-box
-          .items=${this.model.revenueStreams ||
-          data.revenueStreams.defaultItems}
+          .items=${this.model.revenueStreams || data.revenueStreams.defaultItems}
           .icon=${data.revenueStreams.icon}
           .title=${data.revenueStreams.title}
-        />
+        ></canvas-box>
       </div>
     </div>`;
   }
