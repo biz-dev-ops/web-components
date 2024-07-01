@@ -29,7 +29,16 @@ const config = {
       },
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"],
+        use: [
+          "style-loader", // Injects styles into DOM
+          {
+            loader: "css-loader", // Translates CSS into CommonJS
+            options: {
+              importLoaders: 1,
+            },
+          },
+          "postcss-loader", // Process CSS with PostCSS if needed
+        ],
       },
     ],
   },
@@ -42,10 +51,7 @@ const config = {
   },
   plugins: [
     new CopyPlugin({
-      patterns: [
-        { from: "node_modules/@biz-dev-ops/md-docs/assets", to: "assets" },
-        { from: "assets", to: "assets", force: true },
-      ],
+      patterns: [{ from: "assets", to: "assets" }],
     }),
   ].concat(multipleHtmlPlugins),
   optimization: {
