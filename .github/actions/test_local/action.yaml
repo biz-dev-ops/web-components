@@ -1,0 +1,8 @@
+name: Local tests
+
+runs:
+  using: "composite"
+  steps:
+    - name: Unit tests
+      shell: bash
+      run: npm run test
