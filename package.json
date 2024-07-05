@@ -52,6 +52,7 @@
     "autoprefixer": "^10.4.19",
     "copy-webpack-plugin": "^12.0.0",
     "css-loader": "^7.0.0",
+    "postcss-loader": "^8.1.1",
     "style-loader": "^4.0.0",
     "svg-inline-loader": "^0.8.2",
     "ts-loader": "^9.4.4",
