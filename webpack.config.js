@@ -44,6 +44,7 @@ const config = {
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
+    preferRelative: true,
   },
   output: {
     filename: "web-components.js",
