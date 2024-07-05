@@ -1,0 +1,37 @@
+{
+  "name": "BizDevOps",
+  "prefix": "bizdevops",
+  "uri": "http://bizdevops",
+  "xml": {
+    "tagAlias": "lowerCase"
+  },
+  "types": [
+    {
+      "name": "Links",
+      "superClass": ["Element"],
+      "properties": [
+        {
+          "name": "links",
+          "type": "Link",
+          "isMany": true
+        }
+      ]
+    },
+    {
+      "name": "Link",
+      "superClass": ["Element"],
+      "properties": [
+        {
+          "name": "name",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "value",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    }
+  ]
+}
