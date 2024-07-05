@@ -41,7 +41,7 @@
     "material-symbols": "^0.20.0"
   },
   "devDependencies": {
-    "@biz-dev-ops/md-docs": "^1.0.115",
+    "@biz-dev-ops/md-docs": "^1.1.18",
     "@testing-library/webdriverio": "^3.2.1",
     "@types/mocha": "^10.0.6",
     "@wdio/browser-runner": "^8.39.0",
