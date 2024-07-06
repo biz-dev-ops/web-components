@@ -1,21 +1,29 @@
-import { css, html, LitElement } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { css, html, LitElement } from "lit";
+import { customElement, property, state } from "lit/decorators.js";
 
-import { ItemSelected, ModelItem, ModelItemDecorator, PathChanged } from './models';
-import { ModelItemBuilder } from './modules/model-item-builder';
+import {
+  ItemSelected,
+  ModelItem,
+  ModelItemDecorator,
+  PathChanged,
+} from "./models";
+import { ModelItemBuilder } from "./modules/model-item-builder";
 
 import "./components/model-viewer-path";
 
-@customElement('model-viewer')
-export class ModelViewer extends LitElement {
-  @property() 
-  name!: string
+import "@biz-dev-ops/md-docs/assets/style/page/style.css";
+import "../../assets/style/custom-theme.css";
 
-  @property({type: Object}) 
-  model!: ModelItem
+@customElement("model-viewer")
+export class ModelViewer extends LitElement {
+  @property()
+  name!: string;
+
+  @property({ type: Object })
+  model!: ModelItem;
 
   @property({ attribute: "model-json" })
-  modelJson!: string
+  modelJson!: string;
 
   @state()
   path: ModelItemDecorator[] = [];
@@ -27,53 +35,61 @@ export class ModelViewer extends LitElement {
   }
 
   override render() {
-    if(this.path.length === 0)
-      return '';
+    if (this.path.length === 0) return "";
 
     return html`
-      <model-viewer-path .path=${this.path} @pathChanged=${this.onPathChanged}></model-viewer-path>
+      <model-viewer-path
+        .path=${this.path}
+        @pathChanged=${this.onPathChanged}
+      ></model-viewer-path>
       <main>
-        ${ModelItemBuilder.build(this.path.at(-1) as ModelItemDecorator, this.onItemSelected.bind(this), false)}
+        ${ModelItemBuilder.build(
+          this.path.at(-1) as ModelItemDecorator,
+          this.onItemSelected.bind(this),
+          false
+        )}
       </main>
     `;
   }
 
   override update(changedProperties: Map<string, unknown>) {
-    if(changedProperties.has("modelJson")) {
+    if (changedProperties.has("modelJson")) {
       this.path = [];
       this.model = JSON.parse(this.modelJson);
       this.model.title = this.model.title || this.name;
-      this.addPath('', this.model);
-    }
-    else if(changedProperties.has("model")) {
+      this.addPath("", this.model);
+    } else if (changedProperties.has("model")) {
       this.path = [];
       this.model.title = this.model.title || this.name;
-      this.addPath('', this.model);
+      this.addPath("", this.model);
     }
-    
+
     super.update(changedProperties);
   }
 
   override updated() {
-    this.shadowRoot?.querySelector('model-viewer-path')?.scrollIntoView();
+    this.shadowRoot?.querySelector("model-viewer-path")?.scrollIntoView();
   }
 
   setPath(path: ModelItemDecorator[]) {
     this.path = path;
     history.pushState(this.path.length, "");
   }
-  
+
   addPath(property: string, item: ModelItem | undefined) {
-    if(item === undefined) {
+    if (item === undefined) {
       return;
     }
 
     const parent = this.path.at(-1);
-    this.setPath([...this.path, new ModelItemDecorator(item, property, parent?.isChildRequired(property))]);
+    this.setPath([
+      ...this.path,
+      new ModelItemDecorator(item, property, parent?.isChildRequired(property)),
+    ]);
   }
 
   onItemSelected(event: CustomEvent<ItemSelected>) {
-    this.addPath(event.detail.property, event.detail.item)
+    this.addPath(event.detail.property, event.detail.item);
   }
 
   onPathChanged(event: CustomEvent<PathChanged>) {
@@ -81,12 +97,12 @@ export class ModelViewer extends LitElement {
   }
 
   onPopState(event: any) {
-    if(event.state) {
+    if (event.state) {
       this.setPath(this.path.slice(0, -1));
     }
   }
 
-  static override get styles() {  
+  static override get styles() {
     return css`
       :host {
         border: var(--line-base) solid var(--color-brand-a40);
