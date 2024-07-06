@@ -1,56 +1,68 @@
 {
-	"name": "@biz-dev-ops/web-components",
-	"version": "0.0.23",
-	"description": "Webcomponent to display business models.",
-	"keywords": [
-		"bizdevops",
-		"webcomponent",
-		"html5"
-	],
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/biz-dev-ops/web-components"
-	},
-	"author": "Arjan Geertsema",
-	"license": "Apache 2.0",
-	"bugs": {
-		"url": "https://github.com/biz-dev-ops/web-components/issues"
-	},
-	"homepage": "https://github.com/biz-dev-ops/web-components/blob/main/README.md",
-	"type": "module",
-	"main": "dist/web-components.js",
-	"module": "dist/web-components.js",
-	"files": [
-		"dist/*.js",
-		"dist/*.woff2",
-		"dist/*.txt",
-		"dist/**/*.ts",
-		"dist/**/*.ts.map"
-	],
-	"scripts": {
-		"develop": "webpack-dev-server --mode development",
-		"build": "webpack --mode production",
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	"dependencies": {
-		"archimate-js": "^0.0.4",
-		"bpmn-js": "^17.8.1",
-		"dmn-js": "^16.4.0",
-		"lit": "^3.0.2",
-		"material-symbols": "^0.20.0"
-	},
-	"devDependencies": {
-		"@biz-dev-ops/md-docs": "^1.0.115",
-		"@webcomponents/webcomponentsjs": "^2.8.0",
-		"copy-webpack-plugin": "^12.0.0",
-		"css-loader": "^7.0.0",
-		"style-loader": "^4.0.0",
-		"svg-inline-loader": "^0.8.2",
-		"to-string-loader": "^1.2.0",
-		"ts-loader": "^9.4.4",
-		"typescript": "^5.3.3",
-		"webpack": "^5.88.1",
-		"webpack-cli": "^5.1.4",
-		"webpack-dev-server": "^5.0.0"
-	}
+  "name": "@biz-dev-ops/web-components",
+  "version": "0.0.23",
+  "description": "Webcomponent to display business models.",
+  "keywords": [
+    "bizdevops",
+    "webcomponent",
+    "html5"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/biz-dev-ops/web-components"
+  },
+  "author": "Arjan Geertsema",
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/biz-dev-ops/web-components/issues"
+  },
+  "homepage": "https://github.com/biz-dev-ops/web-components/blob/main/README.md",
+  "type": "module",
+  "main": "dist/web-components.js",
+  "module": "dist/web-components.js",
+  "files": [
+    "dist/*.js",
+    "dist/*.woff2",
+    "dist/*.txt",
+    "dist/**/*.ts",
+    "dist/**/*.ts.map"
+  ],
+  "scripts": {
+    "develop": "webpack-dev-server --mode development",
+    "build": "webpack --mode production",
+    "test": "wdio run ./wdio.conf.ts"
+  },
+  "dependencies": {
+    "lit": "^3.0.2",
+    "lit-element": "^4.0.6",
+    "lit-html": "^3.1.4",
+    "material-symbols": "^0.21.0"
+  },
+  "devDependencies": {
+    "@biz-dev-ops/md-docs": "^1.1.18",
+    "@testing-library/webdriverio": "^3.2.1",
+    "@types/mocha": "^10.0.6",
+    "@wdio/browser-runner": "^8.39.0",
+    "@wdio/cli": "^8.39.0",
+    "@wdio/mocha-framework": "^8.39.0",
+    "@wdio/spec-reporter": "^8.39.0",
+    "@webcomponents/webcomponentsjs": "^2.8.0",
+    "autoprefixer": "^10.4.19",
+    "copy-webpack-plugin": "^12.0.0",
+    "css-loader": "^7.0.0",
+    "glob": "^10.4.2",
+    "html-webpack-plugin": "^5.5.4",
+    "postcss-loader": "^8.1.1",
+    "style-loader": "^4.0.0",
+    "svg-inline-loader": "^0.8.2",
+    "ts-loader": "^9.4.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3",
+    "webpack": "^5.88.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.0"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "^4.18.0"
+  }
 }
