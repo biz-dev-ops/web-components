@@ -10,7 +10,7 @@ const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 let multipleHtmlPlugins = globSync("./src/**/index.html").map((path) => {
   return new HtmlWebpackPlugin({
     template: path,
-    filename: path.substring(6),
+    filename: path.substring(4),
   });
 });
 
@@ -29,9 +29,6 @@ const config = {
       },
       {
         test: /\.css$/,
-<<<<<<< HEAD
-        use: ["to-string-loader", "css-loader"],
-=======
         use: [
           "style-loader", // Injects styles into DOM
           {
@@ -42,7 +39,6 @@ const config = {
           },
           "postcss-loader", // Process CSS with PostCSS if needed
         ],
->>>>>>> main
       },
     ],
   },
