@@ -3,11 +3,11 @@ import TerserPlugin from "terser-webpack-plugin";
 import CopyPlugin from "copy-webpack-plugin";
 import path from "path";
 import * as url from "url";
-import glob from "glob";
+import { globSync } from "glob";
 
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 
-let multipleHtmlPlugins = glob.sync("./src/**/index.html").map((path) => {
+let multipleHtmlPlugins = globSync("./src/**/index.html").map((path) => {
   return new HtmlWebpackPlugin({
     template: path,
     filename: path.substring(6),
@@ -15,7 +15,7 @@ let multipleHtmlPlugins = glob.sync("./src/**/index.html").map((path) => {
 });
 
 const config = {
-  entry: [...glob.sync("./src/*/index.ts")],
+  entry: globSync("./src/*/index.ts"),
   module: {
     rules: [
       {
@@ -44,6 +44,7 @@ const config = {
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
+    preferRelative: true,
   },
   output: {
     filename: "web-components.js",
