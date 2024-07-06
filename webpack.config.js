@@ -29,9 +29,6 @@ const config = {
       },
       {
         test: /\.css$/,
-<<<<<<< HEAD
-        use: ["to-string-loader", "css-loader"],
-=======
         use: [
           "style-loader", // Injects styles into DOM
           {
@@ -42,7 +39,6 @@ const config = {
           },
           "postcss-loader", // Process CSS with PostCSS if needed
         ],
->>>>>>> main
       },
     ],
   },
