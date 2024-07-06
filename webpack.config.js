@@ -10,7 +10,7 @@ const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 let multipleHtmlPlugins = globSync("./src/**/index.html").map((path) => {
   return new HtmlWebpackPlugin({
     template: path,
-    filename: path.substring(6),
+    filename: path.substring(4),
   });
 });
 
