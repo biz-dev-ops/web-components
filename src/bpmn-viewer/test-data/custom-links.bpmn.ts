@@ -24,22 +24,22 @@ export default `
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_0pr0dze">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="179" y="99" width="36" height="36" />
+        <dc:Bounds x="279" y="99" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0vl2m4j_di" bpmnElement="Activity_0vl2m4j">
-        <dc:Bounds x="270" y="77" width="100" height="80" />
+        <dc:Bounds x="370" y="77" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_05d9n1q_di" bpmnElement="Event_05d9n1q">
-        <dc:Bounds x="422" y="99" width="36" height="36" />
+        <dc:Bounds x="522" y="99" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1ibejop_di" bpmnElement="Flow_1ibejop">
-        <di:waypoint x="370" y="117" />
-        <di:waypoint x="422" y="117" />
+        <di:waypoint x="470" y="117" />
+        <di:waypoint x="522" y="117" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_09122oy_di" bpmnElement="Flow_09122oy">
-        <di:waypoint x="215" y="117" />
-        <di:waypoint x="270" y="117" />
+        <di:waypoint x="315" y="117" />
+        <di:waypoint x="370" y="117" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

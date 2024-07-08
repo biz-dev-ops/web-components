@@ -27,13 +27,17 @@ export class BPMNViewer extends LitElement {
   @property({ attribute: "data-xml" })
   xml!: string;
 
+  @property({ attribute: "enable-simulator" })
+  enableSimulator: string = "true";
+
   override async firstUpdated() {
     this._viewer = new Viewer({
       container: this.renderRoot as HTMLElement,
       moddleExtensions: {
         bizdevops,
       },
-      additionalModules: [TokenSimulationModule],
+      additionalModules:
+        this.enableSimulator === "true" ? [TokenSimulationModule] : [],
     });
 
     try {
@@ -44,8 +48,6 @@ export class BPMNViewer extends LitElement {
       } else {
         console.log("import successful");
       }
-
-      this._viewer.get("canvas").zoom("fit-viewport");
 
       this._makeElementsClickable();
       this.zoomReset();
