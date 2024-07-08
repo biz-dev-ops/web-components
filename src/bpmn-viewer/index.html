@@ -33,14 +33,20 @@
       const element = document.createElement('bpmn-viewer');
       element.setAttribute('data-xml', `
         <?xml version="1.0" encoding="UTF-8"?>
-        <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0370cz7" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.24.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.21.0">
+        <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0370cz7" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.24.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.21.0" xmlns:bizdevops="http://bizdevops">
           <bpmn:process id="Process_1jwc27w" isExecutable="true">
             <bpmn:startEvent id="StartEvent_1">
               <bpmn:outgoing>Flow_1mwlv9a</bpmn:outgoing>
             </bpmn:startEvent>
-            <bpmn:subProcess id="Activity_0d5g08j">
+            <bpmn:subProcess id="Activity_0d5g08j" name="Test">
               <bpmn:incoming>Flow_1mwlv9a</bpmn:incoming>
               <bpmn:outgoing>Flow_0nkblsz</bpmn:outgoing>
+              <bpmn:extensionElements>
+                <bizdevops:links>
+                  <bizdevops:link name="Test" value="www.test.com" />
+                  <bizdevops:link value="www.test2.com" />
+                </bizdevops:links>
+              </bpmn:extensionElements>
               <bpmn:startEvent id="Event_0akz001">
                 <bpmn:outgoing>Flow_1175eqo</bpmn:outgoing>
               </bpmn:startEvent>
@@ -128,13 +134,16 @@
         document.getElementById('container').appendChild(element);
         document.getElementById('zoom-in').addEventListener('click', () => {
           element.zoomIn();
-        })
+        });
         document.getElementById('zoom-out').addEventListener('click', () => {
           element.zoomOut();
-        })
+        });
         document.getElementById('reset-zoom').addEventListener('click', () => {
           element.zoomReset();
-        })
+        });
+        element.addEventListener('onelementclick', (event) => {
+          console.log(event.detail)
+        });
     })
   </script>
 </body>

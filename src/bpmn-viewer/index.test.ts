@@ -13,6 +13,7 @@ describe("BPMNViewer", () => {
 
   it("emits an event when an element with custom links is clicked", async () => {
     element.setAttribute("data-xml", customLinksProcess);
+    element.setAttribute("enable-simulator", "false");
     let callbackTriggered = false;
     element.addEventListener("onelementclick", (event) => {
       // @ts-ignore
@@ -29,7 +30,7 @@ describe("BPMNViewer", () => {
     await $('>>>[data-element-id="Activity_0vl2m4j"]').click();
     await expect(callbackTriggered).toBeTruthy();
   });
-  
+
   it("renders without data", async () => {
     document.body.appendChild(element);
     await expect($(">>>.bjs-container svg")).not.toBeNull();
