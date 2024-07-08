@@ -22,17 +22,19 @@ export class BPMNViewer extends LitElement {
     });
 
     try {
-      const { warnings } = await this._viewer.importXML(this.xml);
+      const { warnings } = await this._viewer.importXML(this.xml.replace(/\\"/g, '"'));
 
       if (warnings.length) {
-        console.log("import with warnings", warnings);
-      } else {
-        console.log("import successful");
+        console.log("bpmn import with warnings", warnings);
+      } 
+      else {
+        console.log("bpmn import successful");
       }
 
       this.zoomReset();
-    } catch (err) {
-      console.log("something went wrong:", err);
+    } 
+    catch (err) {
+      console.log("something went wrong while importing bpmn:", err);
     }
   }
 
