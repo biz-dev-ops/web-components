@@ -30,17 +30,14 @@ export class BPMNViewer extends LitElement {
   override async firstUpdated() {
     this._viewer = new Viewer({
       container: this.renderRoot as HTMLElement,
-<<<<<<< HEAD
       moddleExtensions: {
         bizdevops,
       },
-=======
       additionalModules: [TokenSimulationModule],
->>>>>>> feature/bpmn-viewer
     });
 
     try {
-      const { warnings } = await this._viewer.importXML(this.xml);
+      const { warnings } = await this._viewer.importXML(this.xml.replace(/\\"/g, '"'));
 
       if (warnings.length) {
         console.log("import with warnings", warnings);
@@ -48,13 +45,10 @@ export class BPMNViewer extends LitElement {
         console.log("import successful");
       }
 
-<<<<<<< HEAD
       this._viewer.get("canvas").zoom("fit-viewport");
 
       this._makeElementsClickable();
-=======
       this.zoomReset();
->>>>>>> feature/bpmn-viewer
     } catch (err) {
       console.log("something went wrong:", err);
     }
