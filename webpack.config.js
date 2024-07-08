@@ -29,15 +29,23 @@ const config = {
       },
       {
         test: /\.css$/,
-        use: [
-          "style-loader", // Injects styles into DOM
+        oneOf: [
           {
-            loader: "css-loader", // Translates CSS into CommonJS
-            options: {
-              importLoaders: 1,
-            },
+            resourceQuery: /shadow/, // foo.css?shadow
+            use: ["css-loader"],
           },
-          "postcss-loader", // Process CSS with PostCSS if needed
+          {
+            use: [
+              "style-loader",
+              {
+                loader: "css-loader",
+                options: {
+                  importLoaders: 1,
+                },
+              },
+              "postcss-loader",
+            ],
+          },
         ],
       },
     ],
