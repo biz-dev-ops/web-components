@@ -1,7 +1,7 @@
 {
   "name": "BizDevOps",
   "prefix": "bizdevops",
-  "uri": "http://bizdevops",
+  "uri": "https://github.com/biz-dev-ops/web-components/schema/1.0",
   "xml": {
     "tagAlias": "lowerCase"
   },
