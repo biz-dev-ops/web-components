@@ -1,3 +1,8 @@
+[![test](https://github.com/biz-dev-ops/web-components/actions/workflows/pr_commit.yaml/badge.svg)](https://github.com/biz-dev-ops/web-components/actions/workflows/pr_commit.yaml)
+[![release](https://github.com/biz-dev-ops/web-components/actions/workflows/pr_merged.yml/badge.svg)](https://github.com/biz-dev-ops/web-components/actions/workflows/pr_merged.yml)
+[![npm](https://img.shields.io/npm/v/@biz-dev-ops/web-components.svg)](https://npmjs.org/package/@biz-dev-ops/web-components)
+[![npm](https://img.shields.io/npm/dm/@biz-dev-ops/web-components.svg)](https://npmjs.org/package/@biz-dev-ops/web-components)
+
 # web-components
 
 Webcomponents to display business models.
