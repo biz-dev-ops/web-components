@@ -69,7 +69,8 @@ export class BPMNViewer extends LitElement {
 
       if (warnings.length) {
         console.log("bpmn import with warnings", warnings);
-      } else {
+      } 
+      else {
         console.log("bpmn import successful");
       }
 
@@ -80,7 +81,8 @@ export class BPMNViewer extends LitElement {
       }
 
       this.zoomReset();
-    } catch (err) {
+    } 
+    catch (err) {
       console.log("something went wrong while importing bpmn:", err);
     }
   }
@@ -125,15 +127,16 @@ export class BPMNViewer extends LitElement {
     eventBus.on("element.click", (event: any) => {
       const links = this._getLinks(event.element.di);
 
-      if (links.length > 0) {
-        this.dispatchEvent(
-          new CustomEvent("onelementclick", {
-            detail: { element: event.element, links },
-            bubbles: true,
-            composed: true,
-          })
-        );
+      if (links.length === 0) {
+        return;
       }
+      this.dispatchEvent(
+        new CustomEvent("onelementclick", {
+          detail: { element: event.element, links },
+          bubbles: true,
+          composed: true,
+        })
+      );
     });
 
     elementRegistry.forEach((element: Element) => {
