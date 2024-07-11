@@ -33,6 +33,9 @@ export class BPMNViewer extends LitElement {
   @property({ attribute: "enable-simulator", reflect: true, type: Boolean })
   enableSimulator: boolean = false;
 
+  @property({ attribute: "disable-interaction", reflect: true, type: Boolean })
+  disableInteraction: boolean = false;
+
   override render() {
     return html`<div id="bpmn-container"></div>`;
   }
@@ -81,6 +84,10 @@ export class BPMNViewer extends LitElement {
       }
 
       this.zoomReset();
+
+      if(this.disableInteraction) {
+        this.toggleInteraction(false);
+      }
     } 
     catch (err) {
       console.log("something went wrong while importing bpmn:", err);
@@ -198,5 +205,9 @@ export class BPMNViewer extends LitElement {
 
   public zoomReset() {
     this._viewer.get("canvas").zoom("fit-viewport", "auto");
+  }
+
+  public toggleInteraction(enable) {
+    this._viewer.get('zoomScroll').toggle(enable);
   }
 }
