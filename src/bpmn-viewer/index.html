@@ -131,6 +131,8 @@
           </bpmndi:BPMNDiagram>
         </bpmn:definitions>
         `);
+        element.setAttribute('show-process', 'Activity_0d5g08j');
+        element.setAttribute('enable-simulator', 'true');
         document.getElementById('container').appendChild(element);
         document.getElementById('zoom-in').addEventListener('click', () => {
           element.zoomIn();
