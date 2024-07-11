@@ -29,5 +29,5 @@ npm run develop
 In the root of the project execute the following terminal command to run the tests.
 
 ```bash
-npm test
+npm run test
 ```
