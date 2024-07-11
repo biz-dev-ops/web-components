@@ -27,6 +27,9 @@ export class BPMNViewer extends LitElement {
   @property({ attribute: "data-xml" })
   xml!: string;
 
+  @property({ attribute: "show-process" })
+  showProcess!: string;
+
   @property({ attribute: "enable-simulator" })
   enableSimulator: string = "true";
 
@@ -41,20 +44,36 @@ export class BPMNViewer extends LitElement {
     });
 
     try {
-      const { warnings } = await this._viewer.importXML(this.xml.replace(/\\"/g, '"'));
+      const { warnings } = await this._viewer.importXML(
+        this.xml.replace(/\\"/g, '"')
+      );
 
       if (warnings.length) {
         console.log("bpmn import with warnings", warnings);
-      } 
-      else {
+      } else {
         console.log("bpmn import successful");
       }
 
       this._makeElementsClickable();
+
+      if (this.showProcess) {
+        this._expandSubProcess();
+      }
+
       this.zoomReset();
-    } 
-    catch (err) {
+    } catch (err) {
       console.log("something went wrong while importing bpmn:", err);
+    }
+  }
+
+  private _expandSubProcess() {
+    try {
+      const subProcessId = this.showProcess.split("/").pop();
+      const elementRegistry = this._viewer.get("elementRegistry");
+      const element = elementRegistry.get(`${subProcessId}_plane`);
+      this._viewer.get("canvas").setRootElement(element);
+    } catch (error: unknown) {
+      console.log(error instanceof Error ? error.message : "Unknown error");
     }
   }
 
@@ -109,6 +128,11 @@ export class BPMNViewer extends LitElement {
   static override get styles() {
     return [
       styles,
+      css`
+        .error {
+          border: 3px solid red;
+        }
+      `,
       css`
         ${unsafeCSS(ViewerDiagramJsCss)}
       `,
