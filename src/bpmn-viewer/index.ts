@@ -1,4 +1,4 @@
-import { css, LitElement, unsafeCSS } from "lit";
+import { css, html, LitElement, unsafeCSS } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import TokenSimulationModule from "bpmn-js-token-simulation/lib/viewer";
 import Viewer from "bpmn-js/lib/NavigatedViewer";
@@ -30,19 +30,38 @@ export class BPMNViewer extends LitElement {
   @property({ attribute: "show-process" })
   showProcess!: string;
 
-  @property({ attribute: "enable-simulator" })
-  enableSimulator: string = "true";
+  @property({ attribute: "enable-simulator", reflect: true })
+  enableSimulator: boolean = false;
+
+  override render() {
+    return html`<div id="bpmn-container"></div>`;
+  }
 
   override async firstUpdated() {
     this._viewer = new Viewer({
-      container: this.renderRoot as HTMLElement,
+      container: this.shadowRoot?.querySelector(
+        "#bpmn-container"
+      ) as HTMLElement,
       moddleExtensions: {
         bizdevops,
       },
-      additionalModules:
-        this.enableSimulator === "true" ? [TokenSimulationModule] : [],
+      additionalModules: this.enableSimulator ? [TokenSimulationModule] : [],
     });
 
+    this._updateDiagram();
+  }
+
+  override updated(changedProperties) {
+    if (changedProperties.has("xml")) {
+      this._updateDiagram();
+    }
+
+    if (changedProperties.has("enable-simulator")) {
+      this.firstUpdated();
+    }
+  }
+
+  private async _updateDiagram() {
     try {
       const { warnings } = await this._viewer.importXML(
         this.xml.replace(/\\"/g, '"')
@@ -74,6 +93,9 @@ export class BPMNViewer extends LitElement {
       this._viewer.get("canvas").setRootElement(element);
     } catch (error: unknown) {
       console.log(error instanceof Error ? error.message : "Unknown error");
+      (
+        this.shadowRoot?.querySelector("#bpmn-container") as HTMLElement
+      ).classList.add("error");
     }
   }
 
@@ -129,6 +151,15 @@ export class BPMNViewer extends LitElement {
     return [
       styles,
       css`
+        :host {
+          display: block;
+          width: 100%;
+          height: 100%;
+        }
+        #bpmn-container {
+          width: 100%;
+          height: 100%;
+        }
         .error {
           border: 3px solid red;
         }

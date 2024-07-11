@@ -44,7 +44,6 @@ describe("BPMNViewer", () => {
 
   it("emits an event when an element with custom links is clicked", async () => {
     element.setAttribute("data-xml", customLinksProcess);
-    element.setAttribute("enable-simulator", "false");
     let callbackTriggered = false;
     element.addEventListener("onelementclick", (event) => {
       // @ts-ignore
@@ -64,6 +63,7 @@ describe("BPMNViewer", () => {
 
   it("simulates a process", async () => {
     element.setAttribute("data-xml", bpmnSubProcesses);
+    element.setAttribute("enable-simulator", "true");
 
     document.body.appendChild(element);
 
@@ -117,6 +117,7 @@ describe("BPMNViewer", () => {
     document.body.appendChild(element);
 
     await expect($$(">>>.bjs-breadcrumbs li")).toBeElementsArrayOfSize(1);
+    await expect($(">>>#bpmn-container.error")).toBeExisting();
   });
 
   afterEach(() => {
