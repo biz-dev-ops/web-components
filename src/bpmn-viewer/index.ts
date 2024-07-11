@@ -137,13 +137,14 @@ export class BPMNViewer extends LitElement {
     });
 
     elementRegistry.forEach((element: Element) => {
-      const links = this._getLinks(element.di);
       const gfx = elementRegistry.getGraphics(element);
+      if (!gfx) return;
 
-      if (gfx && links.length > 0) {
-        gfx.style.cursor = "pointer"; // has no effect
-        gfx.style.textDecoration = "underline";
-      }
+      const links = this._getLinks(element.di);
+      if (links.length === 0) return;
+
+      gfx.style.cursor = "pointer"; // has no effect
+      gfx.style.textDecoration = "underline";
     });
   }
 
