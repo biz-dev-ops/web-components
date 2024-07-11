@@ -93,7 +93,8 @@ export class BPMNViewer extends LitElement {
       const elementRegistry = this._viewer.get("elementRegistry");
       const element = elementRegistry.get(`${subProcessId}_plane`);
       this._viewer.get("canvas").setRootElement(element);
-    } catch (error: unknown) {
+    }
+    catch (error: unknown) {
       console.log(error instanceof Error ? error.message : "Unknown error");
       (
         this.shadowRoot?.querySelector("#bpmn-container") as HTMLElement
@@ -167,6 +168,9 @@ export class BPMNViewer extends LitElement {
         .error {
           border: 3px solid red;
         }
+        .bjs-powered-by {
+            display: none;
+        }
       `,
       css`
         ${unsafeCSS(ViewerDiagramJsCss)}
@@ -193,6 +197,6 @@ export class BPMNViewer extends LitElement {
   }
 
   public zoomReset() {
-    this._viewer.get("canvas").zoom("fit-viewport");
+    this._viewer.get("canvas").zoom("fit-viewport", "auto");
   }
 }
