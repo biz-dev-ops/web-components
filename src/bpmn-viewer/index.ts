@@ -30,7 +30,7 @@ export class BPMNViewer extends LitElement {
   @property({ attribute: "show-process" })
   showProcess!: string;
 
-  @property({ attribute: "enable-simulator", reflect: true })
+  @property({ attribute: "enable-simulator", reflect: true, type: Boolean })
   enableSimulator: boolean = false;
 
   override render() {
