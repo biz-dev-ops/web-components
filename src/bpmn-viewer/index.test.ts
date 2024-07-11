@@ -6,26 +6,31 @@ import bpmnSubProcesses from "./test-data/test_subprocesses.bpmn";
 
 describe("BPMNViewer", () => {
   let element: HTMLElement;
+  let container: HTMLElement;
 
   beforeEach(() => {
+    container = document.createElement("div");
+    container.style.width = "500px";
+    container.style.height = "500px";
+    document.body.appendChild(container);
     element = document.createElement("bpmn-viewer");
   });
 
   it("renders without data", async () => {
-    document.body.appendChild(element);
+    container.appendChild(element);
     await expect($(">>>.bjs-container svg")).not.toBeNull();
   });
 
   it("renders with a bpmn file", async () => {
     element.setAttribute("data-xml", bpmnSubProcesses);
 
-    document.body.appendChild(element);
+    container.appendChild(element);
     await expect($(">>>.bjs-container svg g g .djs-group")).not.toBeNull();
   });
 
   it("zooms in and out and resets zoom level", async () => {
     element.setAttribute("data-xml", bpmnSubProcesses);
-    document.body.appendChild(element);
+    container.appendChild(element);
     await expect($(">>>.bjs-container svg")).not.toBeNull();
 
     const viewer = element as BPMNViewer;
@@ -56,7 +61,7 @@ describe("BPMNViewer", () => {
       expect(links[1].value).toBe("www.test2.com");
       callbackTriggered = true;
     });
-    document.body.appendChild(element);
+    container.appendChild(element);
     await $('>>>[data-element-id="Activity_0vl2m4j"]').click();
     await expect(callbackTriggered).toBeTruthy();
   });
@@ -65,7 +70,7 @@ describe("BPMNViewer", () => {
     element.setAttribute("data-xml", bpmnSubProcesses);
     element.setAttribute("enable-simulator", "true");
 
-    document.body.appendChild(element);
+    container.appendChild(element);
 
     (await $(">>>.bts-toggle-mode")).click();
     (
@@ -81,7 +86,7 @@ describe("BPMNViewer", () => {
   it("drills down to collapsed subprocesses and navigates back via breadcrumbs", async () => {
     element.setAttribute("data-xml", bpmnSubProcesses);
 
-    document.body.appendChild(element);
+    container.appendChild(element);
 
     await expect($$(">>>.bjs-breadcrumbs li")).toBeElementsArrayOfSize(1);
 
@@ -96,7 +101,7 @@ describe("BPMNViewer", () => {
     element.setAttribute("data-xml", bpmnSubProcesses);
     element.setAttribute("show-process", "Activity_0d5g08j");
 
-    document.body.appendChild(element);
+    container.appendChild(element);
 
     await expect($$(">>>.bjs-breadcrumbs li")).toBeElementsArrayOfSize(2);
   });
@@ -105,7 +110,7 @@ describe("BPMNViewer", () => {
     element.setAttribute("data-xml", bpmnSubProcesses);
     element.setAttribute("show-process", "Activity_0d5g08j/Activity_0m8usba");
 
-    document.body.appendChild(element);
+    container.appendChild(element);
 
     await expect($$(">>>.bjs-breadcrumbs li")).toBeElementsArrayOfSize(3);
   });
@@ -114,7 +119,7 @@ describe("BPMNViewer", () => {
     element.setAttribute("data-xml", bpmnSubProcesses);
     element.setAttribute("show-process", "Activity_0d5g08j_does_not_exist");
 
-    document.body.appendChild(element);
+    container.appendChild(element);
 
     await expect($$(">>>.bjs-breadcrumbs li")).toBeElementsArrayOfSize(1);
     await expect($(">>>#bpmn-container.error")).toBeExisting();
