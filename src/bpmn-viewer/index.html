@@ -33,12 +33,12 @@
       const element = document.createElement('bpmn-viewer');
       element.setAttribute('data-xml', `
         <?xml version="1.0" encoding="UTF-8"?>
-        <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0370cz7" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.24.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.21.0" xmlns:bizdevops="http://bizdevops">
+        <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0370cz7" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.24.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.21.0" xmlns:bizdevops="https://github.com/biz-dev-ops/web-components/schema/1.0">
           <bpmn:process id="Process_1jwc27w" isExecutable="true">
             <bpmn:startEvent id="StartEvent_1">
               <bpmn:outgoing>Flow_1mwlv9a</bpmn:outgoing>
             </bpmn:startEvent>
-            <bpmn:subProcess id="Activity_0d5g08j" name="Test">
+            <bpmn:subProcess id="Activity_0d5g08j" name="Test met links">
               <bpmn:incoming>Flow_1mwlv9a</bpmn:incoming>
               <bpmn:outgoing>Flow_0nkblsz</bpmn:outgoing>
               <bpmn:extensionElements>
@@ -132,6 +132,7 @@
         </bpmn:definitions>
         `);
         element.setAttribute('show-process', 'Activity_0d5g08j');
+        element.setAttribute('disable-interaction', 'true');
         element.setAttribute('enable-simulator', 'true');
         document.getElementById('container').appendChild(element);
         document.getElementById('zoom-in').addEventListener('click', () => {

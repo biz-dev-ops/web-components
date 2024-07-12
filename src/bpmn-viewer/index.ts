@@ -41,14 +41,18 @@ export class BPMNViewer extends LitElement {
   }
 
   override async firstUpdated() {
+    const modules = [ { moveCanvas: [ "value", null ] } ];
+    
+    if(this.enableSimulator) {
+      modules.push(TokenSimulationModule);
+    }
+    
     this._viewer = new Viewer({
-      container: this.shadowRoot?.querySelector(
-        "#bpmn-container"
-      ) as HTMLElement,
+      container: this.shadowRoot?.querySelector("#bpmn-container") as HTMLElement,
       moddleExtensions: {
         bizdevops,
       },
-      additionalModules: this.enableSimulator ? [TokenSimulationModule] : [],
+      additionalModules: modules,
     });
 
     this._updateDiagram();
@@ -133,6 +137,10 @@ export class BPMNViewer extends LitElement {
     const eventBus = this._viewer.get("eventBus");
 
     eventBus.on("element.click", (event: any) => {
+      if(event.gfx.style.textDecoration !== "underline") {
+        return;
+      }
+
       const links = this._getLinks(event.element.di);
 
       if (links.length === 0) {
@@ -154,7 +162,7 @@ export class BPMNViewer extends LitElement {
       const links = this._getLinks(element.di);
       if (links.length === 0) return;
 
-      gfx.style.cursor = "pointer"; // has no effect
+      gfx.style.cursor = "pointer";
       gfx.style.textDecoration = "underline";
     });
   }
@@ -168,15 +176,22 @@ export class BPMNViewer extends LitElement {
           width: 100%;
           height: 100%;
         }
+
         #bpmn-container {
           width: 100%;
           height: 100%;
         }
+
         .error {
           border: 3px solid red;
         }
+        
         .bjs-powered-by {
             display: none;
+        }
+
+        .djs-element .djs-hit-all {
+          cursor: inherit !important;
         }
       `,
       css`
@@ -208,6 +223,6 @@ export class BPMNViewer extends LitElement {
   }
 
   public toggleInteraction(enable) {
-    this._viewer.get('zoomScroll').toggle(enable);
+    this._viewer.get("zoomScroll").toggle(enable);
   }
 }
