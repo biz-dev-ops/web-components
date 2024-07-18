@@ -36,7 +36,7 @@ runs:
         git config user.email "${{ inputs.github_actor }}@users.noreply.github.com"
 
         git tag -a "${{ inputs.version }}" -m "${{ inputs.version }}: PR #${{ inputs.pr_number }} ${{ inputs.pr_title }}"
-        git push origin "${{ inputs.verion }}"
+        git push origin "${{ inputs.version }}"
 
     - name: npm publish
       shell: bash
