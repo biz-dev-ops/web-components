@@ -35,6 +35,10 @@ export class ModelViewerItemObjectProperties extends ModelViewerItem {
           flex-direction: column;
           gap: var(--space-md);
         }
+
+        p {
+          white-space: pre-wrap;
+        }
       `,
     ];
   }
