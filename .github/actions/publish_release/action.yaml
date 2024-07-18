@@ -1,5 +1,5 @@
 name: Publish release
-
+description: Publish a release.
 inputs:
   version:
     description: "Package version"

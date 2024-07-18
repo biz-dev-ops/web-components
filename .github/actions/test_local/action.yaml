@@ -1,5 +1,5 @@
 name: Local tests
-
+description: Run tests.
 runs:
   using: "composite"
   steps:
