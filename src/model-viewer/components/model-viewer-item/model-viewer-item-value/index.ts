@@ -55,7 +55,8 @@ export class ModelViewerItemValue extends ModelViewerItem {
             }
 
             dd {
-                margin-inline-start: 0
+                margin-inline-start: 0;
+                white-space: pre-wrap;
             }
 
             dd + dt {
