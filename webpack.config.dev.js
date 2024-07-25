@@ -29,7 +29,24 @@ const config = {
       },
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"],
+        oneOf: [
+          {
+            resourceQuery: /shadow/, // foo.css?shadow
+            use: ["css-loader"],
+          },
+          {
+            use: [
+              "style-loader",
+              {
+                loader: "css-loader",
+                options: {
+                  importLoaders: 1,
+                },
+              },
+              "postcss-loader",
+            ],
+          },
+        ],
       },
     ],
   },
@@ -43,14 +60,16 @@ const config = {
   },
   plugins: [
     new CopyPlugin({
-      patterns: [
-        { from: "node_modules/@biz-dev-ops/md-docs/assets", to: "assets" },
-        { from: "assets", to: "assets", force: true },
-      ],
+      patterns: [{ from: "assets", to: "assets" }],
     }),
   ].concat(multipleHtmlPlugins),
   optimization: {
     minimizer: [new TerserPlugin()],
+  },
+  devServer: {
+    static: path.join(__dirname, "./dist"),
+    compress: true,
+    port: 4000,
   },
 };
 

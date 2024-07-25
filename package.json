@@ -28,8 +28,8 @@
     "dist/**/*.ts.map"
   ],
   "scripts": {
-    "develop": "webpack-dev-server --mode development",
-    "build": "webpack --mode production",
+    "develop": "webpack-dev-server --mode development --config webpack.config.dev.js",
+    "build": "webpack --mode production --config webpack.config.js",
     "test": "wdio run ./wdio.conf.ts"
   },
   "dependencies": {
