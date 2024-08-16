@@ -45,7 +45,7 @@
     "@testing-library/webdriverio": "^3.2.1",
     "@types/mocha": "^10.0.6",
     "@wdio/browser-runner": "^8.39.1",
-    "@wdio/cli": "^8.39.1",
+    "@wdio/cli": "^9.0.1",
     "@wdio/mocha-framework": "^8.39.0",
     "@wdio/spec-reporter": "^8.39.0",
     "@webcomponents/webcomponentsjs": "^2.8.0",
