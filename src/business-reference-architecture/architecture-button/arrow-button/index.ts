@@ -29,7 +29,7 @@ export class ArrowArchitectureButton extends AbstractArchitectureButton {
 
                 .before {
                     flex: none;
-                    margin-right: -1px;
+                    margin-right: -2px;
                     display: block;
                     height: 54px; /* Make dynamic */
                     color: var(--color-brand-secondary);
