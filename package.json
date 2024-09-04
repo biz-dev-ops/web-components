@@ -38,16 +38,16 @@
     "lit": "^3.1.4",
     "lit-element": "^4.0.6",
     "lit-html": "^3.1.4",
-    "material-symbols": "^0.21.0"
+    "material-symbols": "^0.22.0"
   },
   "devDependencies": {
     "@biz-dev-ops/md-docs": "^1.1.18",
     "@testing-library/webdriverio": "^3.2.1",
     "@types/mocha": "^10.0.6",
-    "@wdio/browser-runner": "^8.39.1",
-    "@wdio/cli": "^8.39.1",
-    "@wdio/mocha-framework": "^8.39.0",
-    "@wdio/spec-reporter": "^8.39.0",
+    "@wdio/browser-runner": "^9.0.4",
+    "@wdio/cli": "^9.0.4",
+    "@wdio/mocha-framework": "^9.0.4",
+    "@wdio/spec-reporter": "^9.0.4",
     "@webcomponents/webcomponentsjs": "^2.8.0",
     "autoprefixer": "^10.4.19",
     "copy-webpack-plugin": "^12.0.0",
