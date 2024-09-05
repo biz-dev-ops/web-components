@@ -1,5 +1,6 @@
 import { customElement } from "lit/decorators.js";
 import { css, html } from "lit";
+import { unsafeHTML } from "lit/directives/unsafe-html.js";
 
 import { ItemSelected, ModelItemDecorator } from "../../../models";
 import { ModelItemBuilder } from "../../../modules/model-item-builder";
@@ -25,7 +26,7 @@ export class ModelViewerItemArray extends ModelViewerItem {
                         this.item.description ?
                         html`
                             <bdo-popover>
-                                ${this.item.description.trim()}
+                                ${unsafeHTML(Util.parseMarkdown(this.item.description.trim()))}
                             </bdo-popover>
                         ` : null
                     }
@@ -112,7 +113,7 @@ export class ModelViewerItemArray extends ModelViewerItem {
         return html`
             <model-viewer-item-array
                 property=${decorated.property}
-                title=${decorated.title}
+                title=${Util.titlelize(decorated.title)}
                 .item=${decorated.item}
                 .required=${decorated.required}
                 @itemSelected=${itemSelectedDelegate}
