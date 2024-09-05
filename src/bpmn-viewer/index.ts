@@ -4,9 +4,9 @@ import TokenSimulationModule from "bpmn-js-token-simulation/lib/viewer";
 import Viewer from "bpmn-js/lib/NavigatedViewer";
 
 import styles from "../shared/styles/reset";
-import ViewerDiagramJsCss from "bpmn-js/dist/assets/diagram-js.css?shadow";
-import ViewerBpmnJsCss from "bpmn-js/dist/assets/bpmn-js.css?shadow";
-import SimulatorCss from "bpmn-js-token-simulation/assets/css/bpmn-js-token-simulation.css?shadow";
+import * as ViewerDiagramJsCss from "bpmn-js/dist/assets/diagram-js.css?shadow";
+import * as ViewerBpmnJsCss from "bpmn-js/dist/assets/bpmn-js.css?shadow";
+import * as SimulatorCss from "bpmn-js-token-simulation/assets/css/bpmn-js-token-simulation.css?shadow";
 
 import * as bizdevops from "./bizdevops.json";
 import { Element, ModdleElement } from "bpmn-js/lib/model/Types";
@@ -180,13 +180,13 @@ export class BPMNViewer extends LitElement {
         }
       `,
       css`
-        ${unsafeCSS(ViewerDiagramJsCss)}
+        ${unsafeCSS(ViewerDiagramJsCss.default)}
       `,
       css`
-        ${unsafeCSS(ViewerBpmnJsCss)}
+        ${unsafeCSS(ViewerBpmnJsCss.default)}
       `,
       css`
-        ${unsafeCSS(SimulatorCss)}
+        ${unsafeCSS(SimulatorCss.default)}
       `,
     ];
   }
