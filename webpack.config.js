@@ -1,5 +1,5 @@
 import TerserPlugin from "terser-webpack-plugin";
-import CopyPlugin from "copy-webpack-plugin";
+// import CopyPlugin from "copy-webpack-plugin";
 import path from "path";
 import * as url from "url";
 import { globSync } from "glob";
@@ -23,7 +23,24 @@ export default (env, argv) => {
         },
         {
           test: /\.css$/,
-          use: ["style-loader", "css-loader"],
+          oneOf: [
+            {
+              use: ["css-loader"],
+            },
+            {
+              resourceQuery: /dev/, // foo.css?shadow
+              use: [
+                "style-loader",
+                {
+                  loader: "css-loader",
+                  options: {
+                    importLoaders: 1,
+                  },
+                },
+                "postcss-loader",
+              ],
+            },
+          ],
         },
       ],
     },
@@ -36,12 +53,12 @@ export default (env, argv) => {
       path: path.resolve(__dirname, "./dist"),
     },
     plugins: [
-      new CopyPlugin({
-        patterns: [
-          { from: "node_modules/@biz-dev-ops/md-docs/assets", to: "assets" },
-          { from: "assets", to: "assets", force: true },
-        ],
-      }),
+      // new CopyPlugin({
+      //   patterns: [
+      //     { from: "node_modules/@biz-dev-ops/md-docs/assets", to: "assets" },
+      //     { from: "assets", to: "assets", force: true },
+      //   ],
+      // }),
       new webpack.DefinePlugin({
         "process.env.NODE_ENV": JSON.stringify(argv.mode),
       }),
