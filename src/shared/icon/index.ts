@@ -2,7 +2,7 @@ import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
 import styles from "./icon.css";
-import "material-symbols/outlined.css";
+import "material-symbols/outlined.css?dev";
 
 @customElement("bdo-icon")
 export class Icon extends LitElement {
