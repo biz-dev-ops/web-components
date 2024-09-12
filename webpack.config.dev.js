@@ -1,6 +1,5 @@
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import TerserPlugin from "terser-webpack-plugin";
-import CopyPlugin from "copy-webpack-plugin";
 import path from "path";
 import * as url from "url";
 import { globSync } from "glob";
@@ -31,10 +30,10 @@ const config = {
         test: /\.css$/,
         oneOf: [
           {
-            resourceQuery: /shadow/, // foo.css?shadow
             use: ["css-loader"],
           },
           {
+            resourceQuery: /dev/,
             use: [
               "style-loader",
               {
@@ -58,11 +57,7 @@ const config = {
     filename: "web-components.js",
     path: path.resolve(__dirname, "./dist"),
   },
-  plugins: [
-    new CopyPlugin({
-      patterns: [{ from: "assets", to: "assets" }],
-    }),
-  ].concat(multipleHtmlPlugins),
+  plugins: multipleHtmlPlugins,
   optimization: {
     minimizer: [new TerserPlugin()],
   },

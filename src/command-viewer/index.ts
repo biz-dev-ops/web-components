@@ -7,8 +7,8 @@ import commandViewerCss from "./command-viewer.css";
 import "../model-viewer";
 
 if (process.env.NODE_ENV !== "production") {
-  require("@biz-dev-ops/md-docs/assets/style/page/style.css");
-  require("../../assets/style/custom-theme.css");
+  require("@biz-dev-ops/md-docs/assets/style/page/style.css?dev");
+  require("../../assets/style/custom-theme.css?dev");
 }
 
 @customElement("command-viewer")
