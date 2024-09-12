@@ -24,9 +24,6 @@ export default (env, argv) => {
           test: /\.css$/,
           oneOf: [
             {
-              use: ["css-loader"],
-            },
-            {
               resourceQuery: /dev/,
               use: [
                 "style-loader",
@@ -38,6 +35,9 @@ export default (env, argv) => {
                 },
                 "postcss-loader",
               ],
+            },
+            {
+              use: ["css-loader"],
             },
           ],
         },
