@@ -1,0 +1,37 @@
+{
+  "name": "BizDevOps",
+  "prefix": "bizdevops",
+  "uri": "https://github.com/biz-dev-ops/web-components/schema/1.0",
+  "xml": {
+    "tagAlias": "lowerCase"
+  },
+  "types": [
+    {
+      "name": "Links",
+      "superClass": ["Element"],
+      "properties": [
+        {
+          "name": "links",
+          "type": "Link",
+          "isMany": true
+        }
+      ]
+    },
+    {
+      "name": "Link",
+      "superClass": ["Element"],
+      "properties": [
+        {
+          "name": "name",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "value",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    }
+  ]
+}

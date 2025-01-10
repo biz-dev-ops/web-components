@@ -1,1 +1,1 @@
-dmn-viewer
+bpmn-viewer

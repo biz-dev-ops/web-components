@@ -1,0 +1,62 @@
+name: Publish release
+description: Publish a release.
+inputs:
+  version:
+    description: "Package version"
+    required: true
+  pr_number:
+    description: "Pull request number"
+    required: true
+  pr_title:
+    description: "Pull request title"
+    required: true
+  tag:
+    description: "Git tag"
+    required: true
+  github_actor:
+    description: "Github actor"
+    required: true
+  github_token:
+    description: "Github token"
+    required: true
+  npm_token:
+    description: "NPM token"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install dependencies
+      uses: ./.github/actions/install_dependencies
+
+    - name: push tag
+      shell: bash
+      run: |
+        git config user.name "${{ inputs.github_actor }}"
+        git config user.email "${{ inputs.github_actor }}@users.noreply.github.com"
+
+        git tag -a "${{ inputs.version }}" -m "${{ inputs.version }}: PR #${{ inputs.pr_number }} ${{ inputs.pr_title }}"
+        git push origin "${{ inputs.version }}"
+
+    - name: npm publish
+      shell: bash
+      run: |
+        npm run build
+        npm publish --access public
+      env:
+        NODE_AUTH_TOKEN: ${{ inputs.npm_token }}
+
+    - name: build release notes
+      id: release_notes
+      uses: mikepenz/release-changelog-builder-action@v3.6.0
+      env:
+        GITHUB_TOKEN: ${{ inputs.github_token }}
+
+    - name: create release
+      uses: softprops/action-gh-release@v1
+      env:
+        GITHUB_TOKEN: ${{ inputs.github_token }}
+      with:
+        tag_name: ${{ inputs.version }}
+        title: "${{ inputs.version }}: PR #${{ inputs.pr_number }} ${{ inputs.pr_title }}"
+        body: ${{steps.release_notes.outputs.changelog}}

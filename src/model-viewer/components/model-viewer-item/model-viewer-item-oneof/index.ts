@@ -1,5 +1,6 @@
 import { customElement, property } from "lit/decorators.js";
 import { TemplateResult, css, html } from "lit";
+import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ItemSelected, ModelItem, ModelItemDecorator } from "../../../models";
 
 import "../../../../shared/button";
@@ -29,7 +30,7 @@ export class ModelViewerItemOneOf extends ModelViewerItem {
                                 <span class="txt--property">${Util.titlelize(item.title)}</span>
                                 ${item.description ? html`
                                     <bdo-popover>
-                                        ${item.description.trim()}
+                                        ${unsafeHTML(Util.parseMarkdown(item.description.trim()))}
                                     </bdo-popover>
                                 ` : null}
                                 </span>
@@ -89,7 +90,7 @@ export class ModelViewerItemOneOf extends ModelViewerItem {
         return html`
             <model-viewer-item-one-of
                 property=${decorated.property}
-                title=${decorated.title}
+                title=${Util.titlelize(decorated.title)}
                 .items=${decorated.item.oneOf}
                 .required=${decorated.required}
                 @itemSelected=${itemSelectedDelegate}

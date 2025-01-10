@@ -1,3 +1,5 @@
+import { marked } from "marked";
+
 export default class Util {
     static titlelize(name: string) {
         if(!name)
@@ -7,4 +9,8 @@ export default class Util {
             .replaceAll("_", " ")
             .replaceAll("-", " ");
     }
+
+    static parseMarkdown(markdown: string) : string {
+        return marked.parse(markdown) as string;
+    } 
 }

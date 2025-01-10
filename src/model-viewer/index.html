@@ -4,7 +4,6 @@
 <head>
   <meta charset="utf-8" />
   <title>Model viewer</title>
-  <link rel="stylesheet" href="../assets/style/page/style.css">
 </head>
 
 <body>
@@ -22,14 +21,13 @@
       </div>
   </main>
   
-
-  
   <script>
     const viewer = document.getElementById('trainset');
 
     setTimeout(() => {
       viewer.model = {
     "title": "loan application",
+    "description": "test\ntest\ntest\ntest\n",
     "required": [
         "advisory_office_id",
         "applicants",
@@ -53,6 +51,10 @@
                         "city"
                     ],
                     "properties": {
+                        "full": {
+                            "type": "string",
+                            "example": "Langestraat 9-a\n1000AA Het dorp",
+                        },
                         "country": {
                             "type": "string",
                             "pattern": "^[a-zA-Z]{2}$",
