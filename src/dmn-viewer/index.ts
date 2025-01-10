@@ -30,12 +30,8 @@ export class DMNViewer extends LitElement {
       else {
         console.log('import successful');
       }
-
-      //Why is getActiveViewer necessary?
-      this._viewer
-        .getActiveViewer()
-        .get('canvas')
-        .zoom('fit-viewport');
+      
+      this.zoomReset();
     }
     catch (err) {
       console.log('something went wrong:', err);
@@ -45,11 +41,32 @@ export class DMNViewer extends LitElement {
   static override get styles() {
     return [
       styles,
+      css`
+        :host {
+          display: block;
+          width: 100%;
+          height: 100%;
+        }
+        #dmn-container {
+          width: 100%;
+          height: 100%;
+        }
+        .error {
+          border: 3px solid red;
+        }
+        .bjs-powered-by {
+            display: none;
+        }
+      `,
       css`${unsafeCSS(ViewerSharedCss)}`,
       css`${unsafeCSS(ViewerDrdCss)}`,
       css`${unsafeCSS(ViewerDecisionTableCss)}`,
       css`${unsafeCSS(ViewerLiteralExpressionCss)}`,
       css`${unsafeCSS(ViewerDMNCss)}`
     ];
+  }
+
+  public zoomReset() {
+    this._viewer.getActiveViewer().get("canvas").zoom("fit-viewport", "auto");
   }
 }

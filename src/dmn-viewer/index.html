@@ -10,7 +10,6 @@
     body,
     dmn-viewer {
       height: 500px;
-      display: block;
     }
 
     @font-face {
@@ -30,11 +29,75 @@
         <div class="header">
           <h1>DMN Viewer</h1>
         </div>
-        <div class="container">
-          <dmn-viewer data-xml="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; &lt;definitions xmlns=&quot;https://www.omg.org/spec/DMN/20191111/MODEL/&quot; xmlns:dmndi=&quot;https://www.omg.org/spec/DMN/20191111/DMNDI/&quot; xmlns:dc=&quot;http://www.omg.org/spec/DMN/20180521/DC/&quot; xmlns:di=&quot;http://www.omg.org/spec/DMN/20180521/DI/&quot; xmlns:modeler=&quot;http://camunda.org/schema/modeler/1.0&quot; id=&quot;Definitions_1y42u6n&quot; name=&quot;DRD&quot; namespace=&quot;http://camunda.org/schema/1.0/dmn&quot; exporter=&quot;Camunda Modeler&quot; exporterVersion=&quot;5.8.0&quot; modeler:executionPlatform=&quot;Camunda Platform&quot; modeler:executionPlatformVersion=&quot;7.18.0&quot;&gt; &lt;decision id=&quot;Decision_16wqg49&quot; name=&quot;Decision 1&quot;&gt; &lt;informationRequirement id=&quot;InformationRequirement_139spcv&quot;&gt; &lt;requiredInput href=&quot;#InputData_1029ovb&quot; /&gt; &lt;/informationRequirement&gt; &lt;knowledgeRequirement id=&quot;KnowledgeRequirement_11rexb3&quot;&gt; &lt;requiredKnowledge href=&quot;#BusinessKnowledgeModel_1j6tzvf&quot; /&gt; &lt;/knowledgeRequirement&gt; &lt;authorityRequirement id=&quot;AuthorityRequirement_0ttokok&quot;&gt; &lt;requiredAuthority href=&quot;#KnowledgeSource_0ufj5ng&quot; /&gt; &lt;/authorityRequirement&gt; &lt;decisionTable id=&quot;DecisionTable_1wi1sbd&quot;&gt; &lt;input id=&quot;Input_1&quot;&gt; &lt;inputExpression id=&quot;InputExpression_1&quot; typeRef=&quot;string&quot;&gt; &lt;text&gt;&lt;/text&gt; &lt;/inputExpression&gt; &lt;/input&gt; &lt;output id=&quot;Output_1&quot; typeRef=&quot;string&quot; /&gt; &lt;/decisionTable&gt; &lt;/decision&gt; &lt;inputData id=&quot;InputData_1029ovb&quot; /&gt; &lt;businessKnowledgeModel id=&quot;BusinessKnowledgeModel_1j6tzvf&quot;&gt; &lt;variable id=&quot;InformationItem_08hmx5m&quot; /&gt; &lt;encapsulatedLogic id=&quot;FunctionDefinition_18otr4y&quot;&gt; &lt;literalExpression id=&quot;LiteralExpression_1sdpl2e&quot; /&gt; &lt;/encapsulatedLogic&gt; &lt;/businessKnowledgeModel&gt; &lt;knowledgeSource id=&quot;KnowledgeSource_0ufj5ng&quot; /&gt; &lt;dmndi:DMNDI&gt; &lt;dmndi:DMNDiagram&gt; &lt;dmndi:DMNShape dmnElementRef=&quot;Decision_16wqg49&quot;&gt; &lt;dc:Bounds height=&quot;80&quot; width=&quot;180&quot; x=&quot;260&quot; y=&quot;160&quot; /&gt; &lt;/dmndi:DMNShape&gt; &lt;dmndi:DMNShape id=&quot;DMNShape_18ve2rd&quot; dmnElementRef=&quot;InputData_1029ovb&quot;&gt; &lt;dc:Bounds height=&quot;45&quot; width=&quot;125&quot; x=&quot;288&quot; y=&quot;338&quot; /&gt; &lt;/dmndi:DMNShape&gt; &lt;dmndi:DMNEdge id=&quot;DMNEdge_1tldqrq&quot; dmnElementRef=&quot;InformationRequirement_139spcv&quot;&gt; &lt;di:waypoint x=&quot;351&quot; y=&quot;338&quot; /&gt; &lt;di:waypoint x=&quot;350&quot; y=&quot;260&quot; /&gt; &lt;di:waypoint x=&quot;350&quot; y=&quot;240&quot; /&gt; &lt;/dmndi:DMNEdge&gt; &lt;dmndi:DMNEdge id=&quot;DMNEdge_18by0zj&quot; dmnElementRef=&quot;KnowledgeRequirement_11rexb3&quot;&gt; &lt;di:waypoint x=&quot;595&quot; y=&quot;338&quot; /&gt; &lt;di:waypoint x=&quot;440&quot; y=&quot;199&quot; /&gt; &lt;/dmndi:DMNEdge&gt; &lt;dmndi:DMNShape id=&quot;DMNShape_00l7wpp&quot; dmnElementRef=&quot;BusinessKnowledgeModel_1j6tzvf&quot;&gt; &lt;dc:Bounds height=&quot;46&quot; width=&quot;135&quot; x=&quot;553&quot; y=&quot;338&quot; /&gt; &lt;/dmndi:DMNShape&gt; &lt;dmndi:DMNShape id=&quot;DMNShape_0zmszs6&quot; dmnElementRef=&quot;KnowledgeSource_0ufj5ng&quot;&gt; &lt;dc:Bounds height=&quot;63&quot; width=&quot;100&quot; x=&quot;50&quot; y=&quot;330&quot; /&gt; &lt;/dmndi:DMNShape&gt; &lt;dmndi:DMNEdge id=&quot;DMNEdge_0xbzuim&quot; dmnElementRef=&quot;AuthorityRequirement_0ttokok&quot;&gt; &lt;di:waypoint x=&quot;145&quot; y=&quot;330&quot; /&gt; &lt;di:waypoint x=&quot;272&quot; y=&quot;240&quot; /&gt; &lt;/dmndi:DMNEdge&gt; &lt;/dmndi:DMNDiagram&gt; &lt;/dmndi:DMNDI&gt; &lt;/definitions&gt;"></dmn-viewer>
-        </div>
+        <div class="container" id="container"></div>
       </div>
   </main>
-</body>
 
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const element = document.createElement('dmn-viewer');
+      element.setAttribute('data-xml', `<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1y42u6n" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.8.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
+  <decision id="Decision_16wqg49" name="Decision 1">
+    <informationRequirement id="InformationRequirement_139spcv">
+      <requiredInput href="#InputData_1029ovb" />
+    </informationRequirement>
+    <knowledgeRequirement id="KnowledgeRequirement_11rexb3">
+      <requiredKnowledge href="#BusinessKnowledgeModel_1j6tzvf" />
+    </knowledgeRequirement>
+    <authorityRequirement id="AuthorityRequirement_0ttokok">
+      <requiredAuthority href="#KnowledgeSource_0ufj5ng" />
+    </authorityRequirement>
+    <decisionTable id="DecisionTable_1wi1sbd">
+      <input id="Input_1">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" typeRef="string" />
+    </decisionTable>
+  </decision>
+  <inputData id="InputData_1029ovb" />
+  <businessKnowledgeModel id="BusinessKnowledgeModel_1j6tzvf">
+    <variable id="InformationItem_08hmx5m" />
+    <encapsulatedLogic id="FunctionDefinition_18otr4y">
+      <literalExpression id="LiteralExpression_1sdpl2e" />
+    </encapsulatedLogic>
+  </businessKnowledgeModel>
+  <knowledgeSource id="KnowledgeSource_0ufj5ng" />
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="Decision_16wqg49">
+        <dc:Bounds height="80" width="180" x="260" y="160" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_18ve2rd" dmnElementRef="InputData_1029ovb">
+        <dc:Bounds height="45" width="125" x="288" y="338" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1tldqrq" dmnElementRef="InformationRequirement_139spcv">
+        <di:waypoint x="351" y="338" />
+        <di:waypoint x="350" y="260" />
+        <di:waypoint x="350" y="240" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_18by0zj" dmnElementRef="KnowledgeRequirement_11rexb3">
+        <di:waypoint x="595" y="338" />
+        <di:waypoint x="440" y="199" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_00l7wpp" dmnElementRef="BusinessKnowledgeModel_1j6tzvf">
+        <dc:Bounds height="46" width="135" x="553" y="338" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0zmszs6" dmnElementRef="KnowledgeSource_0ufj5ng">
+        <dc:Bounds height="63" width="100" x="50" y="330" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0xbzuim" dmnElementRef="AuthorityRequirement_0ttokok">
+        <di:waypoint x="145" y="330" />
+        <di:waypoint x="272" y="240" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>`);
+
+      document.getElementById('container').appendChild(element);
+    })
+  </script>
+</body>
 </html>
