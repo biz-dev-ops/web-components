@@ -11,7 +11,7 @@ import ViewerDMNCss from 'dmn-js/dist/assets/dmn-font/css/dmn.css';
 
 @customElement('dmn-viewer')
 export class DMNViewer extends LitElement {
-  private _viewer!: Viewer;
+  private _viewer!: any;
 
   @property({ attribute: "data-xml" })
   xml!: string
