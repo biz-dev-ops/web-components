@@ -1,6 +1,6 @@
 {
   "name": "@biz-dev-ops/web-components",
-  "version": "0.0.27",
+  "version": "0.1.0",
   "description": "Webcomponent to display business models.",
   "keywords": [
     "bizdevops",
@@ -35,13 +35,14 @@
   "dependencies": {
     "bpmn-js": "^18.0.0",
     "bpmn-js-token-simulation": "^0.36.0",
+    "dmn-js": "^17.0.3",
     "lit": "^3.1.4",
     "lit-element": "^4.0.6",
     "lit-html": "^3.1.4",
     "material-symbols": "^0.22.0"
   },
   "devDependencies": {
-    "@biz-dev-ops/md-docs": "^1.1.18",
+    "@biz-dev-ops/md-docs": "^1.1.43",
     "@testing-library/webdriverio": "^3.2.1",
     "@types/mocha": "^10.0.6",
     "@wdio/browser-runner": "8.39.1",
