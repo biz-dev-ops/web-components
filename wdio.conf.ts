@@ -29,7 +29,7 @@ export const config: Options.Testrunner = {
   // The path of the spec files will be resolved relative from the directory of
   // of the config file unless it's absolute.
   //
-  specs: ["./src/dmn-viewer/*.test.ts"],
+  specs: ["./src/**/*.test.ts"],
   // Patterns to exclude.
   exclude: [
     // 'path/to/excluded/files'
