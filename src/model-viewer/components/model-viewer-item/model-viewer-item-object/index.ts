@@ -29,7 +29,7 @@ export class ModelViewerItemObject extends ModelViewerItem {
          return html`
             <model-viewer-item-object
                 property=${decorated.property}
-                title=${decorated.title}
+                title=${Util.titlelize(decorated.title)}
                 .item=${decorated.item}
                 .required=${decorated.required}
                 @itemSelected=${itemSelectedDelegate}

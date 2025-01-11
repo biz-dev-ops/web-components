@@ -1,5 +1,6 @@
 import { css, html, TemplateResult } from "lit";
 import { customElement } from "lit/decorators.js";
+import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ItemSelected, ModelItemDecorator } from "../../../models";
 
 import "../../../../shared/popover";
@@ -11,17 +12,23 @@ export class ModelViewerItemValue extends ModelViewerItem {
 
     override render() {
         const properties: TemplateResult[] = [];
-    
+
         for (const property in this.item) {
             if (property !== 'description' && property !== 'title' && property !== 'type' && property !== 'format') {
-              const value = Array.isArray(this.item[property]) ? this.item[property].join(", ") : this.item[property];
-              properties.push(html`
-                <dt>${property}</dt>
-                <dd>${value}</dd>
+                properties.push(html`
+                    <dt>${property}</dt>
+                    ${Array.isArray(this.item[property]) ?
+                        html`
+                            <ul>
+                                ${this.item[property].map(item => html`<li>${item}</li>`)}
+                            </ul>
+                        `
+                        : html`<dd>${this.item[property]}</dd>`
+                    }
               `);
             }
         }
-    
+
         return html`
             <div class="item item--value">
                 <h3>
@@ -29,14 +36,13 @@ export class ModelViewerItemValue extends ModelViewerItem {
                         ${Util.titlelize(this.title)}
                         ${this.required ? html`<span class="txt--required">*</span>` : ``}
                     </span>
-                    ${
-                        this.item.description ?
-                        html`
+                    ${this.item.description ?
+                html`
                             <bdo-popover>
-                                ${this.item.description.trim()}
+                                ${unsafeHTML(Util.parseMarkdown(this.item.description.trim()))}
                             </bdo-popover>
                         ` : null
-                    }
+            }
                     <span class="icon--type">
                         ${this.item.type}${this.item.format ? html`: <em>${this.item.format}</em>` : ''}
                     </span>
@@ -55,7 +61,8 @@ export class ModelViewerItemValue extends ModelViewerItem {
             }
 
             dd {
-                margin-inline-start: 0
+                margin-inline-start: 0;
+                white-space: pre-wrap;
             }
 
             dd + dt {
@@ -84,14 +91,14 @@ export class ModelViewerItemValue extends ModelViewerItem {
         `];
     }
 
-    public static build(decorated: ModelItemDecorator, _itemSelectedDelegate: (event: CustomEvent<ItemSelected>) => void) : TemplateResult {
-        if(decorated.item.type != 'string' && decorated.item.type != 'number' && decorated.item.type != 'integer' && decorated.item.type != 'boolean')
+    public static build(decorated: ModelItemDecorator, _itemSelectedDelegate: (event: CustomEvent<ItemSelected>) => void): TemplateResult {
+        if (decorated.item.type != 'string' && decorated.item.type != 'number' && decorated.item.type != 'integer' && decorated.item.type != 'boolean')
             return html``;
-            
+
         return html`
             <model-viewer-item-value
               property=${decorated.property}
-              title=${decorated.title}
+              title=${Util.titlelize(decorated.title)}
               .item=${decorated.item}
               .required=${decorated.required}
             ></model-viewer-item-value>

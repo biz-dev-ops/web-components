@@ -1,5 +1,6 @@
 import { customElement } from "lit/decorators.js";
-import { TemplateResult, css, html } from "lit";
+import { TemplateResult, css, html } from "lit";  
+import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ItemSelected, ModelItemDecorator } from "../../../models";
 
 import "../../../../shared/button";
@@ -18,7 +19,7 @@ export class ModelViewerItemObjectProperties extends ModelViewerItem {
             ${this.required ? html`<span class="txt--required">*</span>` : ``}
           </span>
         </h2>
-        ${this.item.description ? html`<p>${this.item.description}</p>` : null}
+        ${this.item.description ? html`${unsafeHTML(Util.parseMarkdown(this.item.description))}` : null}
         <div class="items" slot="items">
           <slot></slot>
         </div>
@@ -34,6 +35,10 @@ export class ModelViewerItemObjectProperties extends ModelViewerItem {
           display: flex;
           flex-direction: column;
           gap: var(--space-md);
+        }
+
+        p {
+          white-space: pre-wrap;
         }
       `,
     ];
@@ -61,7 +66,7 @@ export class ModelViewerItemObjectProperties extends ModelViewerItem {
     return html`
       <model-viewer-item-object-properties
         property=${decorated.property}
-        title=${decorated.title}
+        title=${Util.titlelize(decorated.title)}
         .item=${decorated.item}
         .required=${decorated.required}
       >

@@ -1,6 +1,6 @@
 {
   "name": "@biz-dev-ops/web-components",
-  "version": "0.0.23",
+  "version": "0.1.1",
   "description": "Webcomponent to display business models.",
   "keywords": [
     "bizdevops",
@@ -28,32 +28,33 @@
     "dist/**/*.ts.map"
   ],
   "scripts": {
-    "develop": "webpack-dev-server --mode development",
-    "build": "webpack --mode production",
+    "develop": "webpack-dev-server --mode development --config webpack.config.dev.js",
+    "build": "webpack --mode production --config webpack.config.js",
     "test": "wdio run ./wdio.conf.ts"
   },
   "dependencies": {
-    "bpmn-js": "^17.9.1",
-    "bpmn-js-token-simulation": "^0.34.2",
+    "bpmn-js": "^18.0.0",
+    "bpmn-js-token-simulation": "^0.36.0",
+    "dmn-js": "^17.0.3",
     "lit": "^3.1.4",
     "lit-element": "^4.0.6",
     "lit-html": "^3.1.4",
-    "material-symbols": "^0.21.0"
+    "material-symbols": "^0.22.0"
   },
   "devDependencies": {
-    "@biz-dev-ops/md-docs": "^1.1.18",
+    "@biz-dev-ops/md-docs": "^1.1.43",
     "@testing-library/webdriverio": "^3.2.1",
     "@types/mocha": "^10.0.6",
-    "@wdio/browser-runner": "^8.39.1",
-    "@wdio/cli": "^8.39.1",
-    "@wdio/mocha-framework": "^8.39.0",
-    "@wdio/spec-reporter": "^8.39.0",
+    "@wdio/browser-runner": "8.39.1",
+    "@wdio/cli": "9.2.1",
+    "@wdio/mocha-framework": "9.1.3",
+    "@wdio/spec-reporter": "9.1.3",
     "@webcomponents/webcomponentsjs": "^2.8.0",
     "autoprefixer": "^10.4.19",
-    "copy-webpack-plugin": "^12.0.0",
     "css-loader": "^7.0.0",
     "glob": "^11.0.0",
     "html-webpack-plugin": "^5.5.4",
+    "marked": "^14.1.1",
     "postcss-loader": "^8.1.1",
     "style-loader": "^4.0.0",
     "svg-inline-loader": "^0.8.2",
