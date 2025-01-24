@@ -48,7 +48,7 @@
     "@wdio/browser-runner": "8.39.1",
     "@wdio/cli": "9.6.1",
     "@wdio/mocha-framework": "9.6.3",
-    "@wdio/spec-reporter": "9.5.0",
+    "@wdio/spec-reporter": "9.6.3",
     "@webcomponents/webcomponentsjs": "^2.8.0",
     "autoprefixer": "^10.4.19",
     "css-loader": "^7.0.0",
