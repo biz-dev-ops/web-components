@@ -36,6 +36,10 @@ export class BPMNViewer extends LitElement {
   @property({ attribute: "disable-interaction", reflect: true, type: Boolean })
   disableInteraction: boolean = false;
 
+  public static canRender(src: string) : boolean {
+    return src.endsWith(".bpmn");
+  }
+
   override render() {
     return html`<div id="bpmn-container"></div>`;
   }
