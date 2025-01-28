@@ -24,8 +24,8 @@ interface ModdleLinks {
 export class BPMNViewer extends LitElement {
   private _viewer!: any;
 
-  @property({ attribute: "data-xml" })
-  xml!: string;
+  @property({ attribute: "src" })
+  src!: string
 
   @property({ attribute: "show-process" })
   showProcess!: string;
@@ -55,7 +55,7 @@ export class BPMNViewer extends LitElement {
   }
 
   override updated(changedProperties) {
-    if (changedProperties.has("xml")) {
+    if (changedProperties.has("src")) {
       this._updateDiagram();
     }
 
@@ -66,13 +66,22 @@ export class BPMNViewer extends LitElement {
 
   private async _updateDiagram() {
     try {
+      const response = await fetch(this.src);
+      if(!response.ok) {
+        const container = this.shadowRoot?.querySelector("#bpmn-container") as HTMLElement;
+        container.innerHTML = `Failed to fetch ${this.src}`;
+        throw new Error(`Failed to fetch ${this.src}, status: ${response.status}, ${response.statusText}`);
+      }
+      
+      const xml = await response.text();
+
       const { warnings } = await this._viewer.importXML(
-        this.xml.replace(/\\"/g, '"')
+        xml.replace(/\\"/g, '"')
       );
 
       if (warnings.length) {
         console.log("bpmn import with warnings", warnings);
-      } 
+      }
       else {
         console.log("bpmn import successful");
       }
@@ -88,7 +97,7 @@ export class BPMNViewer extends LitElement {
       if(this.disableInteraction) {
         this.toggleInteraction(false);
       }
-    } 
+    }
     catch (err) {
       console.log("something went wrong while importing bpmn:", err);
     }

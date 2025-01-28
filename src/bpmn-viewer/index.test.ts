@@ -1,8 +1,8 @@
 import { $, $$, expect } from "@wdio/globals";
 import { BPMNViewer } from "./index";
 import "./index";
-import customLinksProcess from "./test-data/custom-links.bpmn";
-import bpmnSubProcesses from "./test-data/test_subprocesses.bpmn";
+const customLinksProcess = "./test-data/custom-links.bpmn";
+const bpmnSubProcesses = "./test-data/test_subprocesses.bpmn";
 
 describe("BPMNViewer", () => {
   let element: HTMLElement;
@@ -22,14 +22,14 @@ describe("BPMNViewer", () => {
   });
 
   it("renders with a bpmn file", async () => {
-    element.setAttribute("data-xml", bpmnSubProcesses);
+    element.setAttribute("src", bpmnSubProcesses);
 
     container.appendChild(element);
     await expect($(">>>.bjs-container svg g g .djs-group")).not.toBeNull();
   });
 
   it("zooms in and out and resets zoom level", async () => {
-    element.setAttribute("data-xml", bpmnSubProcesses);
+    element.setAttribute("src", bpmnSubProcesses);
     container.appendChild(element);
     await expect($(">>>.bjs-container svg")).not.toBeNull();
 
@@ -48,7 +48,7 @@ describe("BPMNViewer", () => {
   });
 
   it("emits an event when an element with custom links is clicked", async () => {
-    element.setAttribute("data-xml", customLinksProcess);
+    element.setAttribute("src", customLinksProcess);
     let callbackTriggered = false;
     element.addEventListener("onelementclick", (event) => {
       // @ts-ignore
@@ -67,7 +67,7 @@ describe("BPMNViewer", () => {
   });
 
   it("simulates a process", async () => {
-    element.setAttribute("data-xml", bpmnSubProcesses);
+    element.setAttribute("src", bpmnSubProcesses);
     element.setAttribute("enable-simulator", "true");
 
     container.appendChild(element);
@@ -84,7 +84,7 @@ describe("BPMNViewer", () => {
   });
 
   it("drills down to collapsed subprocesses and navigates back via breadcrumbs", async () => {
-    element.setAttribute("data-xml", bpmnSubProcesses);
+    element.setAttribute("src", bpmnSubProcesses);
 
     container.appendChild(element);
 
@@ -98,7 +98,7 @@ describe("BPMNViewer", () => {
   });
 
   it("deeplinks to a subprocess", async () => {
-    element.setAttribute("data-xml", bpmnSubProcesses);
+    element.setAttribute("src", bpmnSubProcesses);
     element.setAttribute("show-process", "Activity_0d5g08j");
 
     container.appendChild(element);
@@ -107,7 +107,7 @@ describe("BPMNViewer", () => {
   });
 
   it("deeplinks to a subprocess of a subprocess", async () => {
-    element.setAttribute("data-xml", bpmnSubProcesses);
+    element.setAttribute("src", bpmnSubProcesses);
     element.setAttribute("show-process", "Activity_0d5g08j/Activity_0m8usba");
 
     container.appendChild(element);
@@ -116,7 +116,7 @@ describe("BPMNViewer", () => {
   });
 
   it("fails to deeplink to a non-existing subprocess", async () => {
-    element.setAttribute("data-xml", bpmnSubProcesses);
+    element.setAttribute("src", bpmnSubProcesses);
     element.setAttribute("show-process", "Activity_0d5g08j_does_not_exist");
 
     container.appendChild(element);
