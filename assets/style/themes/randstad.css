@@ -1,0 +1,23 @@
+@font-face {
+    font-family: 'Graphik';
+    src: url("./randstad/fonts/Graphik-Regular.eot");
+    src: url("./randstad/fonts/Graphik-Regular.eot?#iefix") format("embedded-opentype"), url("./randstad/fonts/Graphik-Regular.woff2") format("woff2"), url("./randstad/fonts/Graphik-Regular.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+:root {
+    /* Randstad colors */
+    --rs-rgb-color-primary: 33 117 217;
+    --rs-rgb-color-secondary: 15 25 65;
+
+    /* md-docs colors */
+    --rgb-brand: var(--rs-rgb-color-primary);
+    --rgb-text: var(--rs-rgb-color-secondary);
+    --rgb-heading: var(--rs-rgb-color-secondary);
+    --text-color-base: rgb(var(--rgb-text));
+
+    /* Typography */
+    --font-family-base: Graphik, Tahoma, "sans-serif";
+    --font-family-heading: Graphik, Tahoma, "sans-serif";
+}

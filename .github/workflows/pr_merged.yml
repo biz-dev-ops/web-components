@@ -1,0 +1,50 @@
+name: release
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [main]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    environment: production
+    if: github.event.pull_request.merged
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: get package version
+        id: package_version
+        uses: Saionaro/extract-package-version@v1.0.6
+
+      - name: add v
+        id: version
+        run: echo "::set-output name=value::${{ format('v{0}', steps.package_version.outputs.version) }}"
+
+      - name: print package version
+        run: |
+          echo "package version: ${{ steps.version.outputs.value }}"
+
+      - name: get tag version
+        id: tag_version
+        uses: WyriHaximus/github-action-get-previous-tag@v1
+
+      - name: print tag version
+        run: |
+          echo 'tag version: ${{ steps.tag_version.outputs.tag }}'
+
+      - name: Publish release
+        if: ${{ steps.version.outputs.value != steps.tag_version.outputs.tag }}
+        uses: ./.github/actions/publish_release
+        with:
+          version: ${{ steps.version.outputs.value }}
+          pr_number: ${{ github.event.pull_request.number }}
+          pr_title: ${{ github.event.pull_request.title }}
+          tag: ${{ steps.tag_version.outputs.tag }}
+          github_actor: ${{ github.actor }}
+          github_token: ${{ github.token }}
+          npm_token: ${{ secrets.NPM }}
