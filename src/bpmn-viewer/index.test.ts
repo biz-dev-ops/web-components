@@ -1,8 +1,8 @@
 import { $, $$, expect } from "@wdio/globals";
 import { BPMNViewer } from "./index";
 import "./index";
-const customLinksProcess = "./test-data/custom-links.bpmn";
-const bpmnSubProcesses = "./test-data/test_subprocesses.bpmn";
+const customLinksProcess = "src/bpmn-viewer/test-data/custom-links.bpmn";
+const bpmnSubProcesses = "src/bpmn-viewer/test-data/test_subprocesses.bpmn";
 
 describe("BPMNViewer", () => {
   let element: HTMLElement;
