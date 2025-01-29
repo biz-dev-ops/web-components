@@ -19,17 +19,48 @@
         <div class="header">
           <h1>BPMN Viewer</h1>
         </div>
-        <div class="zoom-controls">
+        <div id="buttons">
           <button id="zoom-out">➖</button>
           <button id="reset-zoom">🔍</button>
           <button id="zoom-in">➕</button>
+          <button id="toggle-simulator">Toggle simulator</button>
+          <button id="toggle-interaction">Toggle interaction</button>
         </div>
         <div class="container" id="container">
-          <bpmn-viewer src="./test-data/custom-links.bpmn"></bpmn-viewer>
+          <bpmn-viewer src="./test-data/custom-links.bpmn" enable-simulator></bpmn-viewer>
         </div>
         </div>
       </div>
   </main>
+
+  <script lang="javascript">
+    const buttons = document.getElementById('buttons');
+    const viewer = container.querySelector('bpmn-viewer');
+
+    buttons.addEventListener('click', function (event) {
+      const target = event.target;
+
+      if (target.id === 'zoom-in') {
+        viewer.zoomIn();
+      }
+
+      if (target.id === 'zoom-out') {
+        viewer.zoomOut();
+      }
+
+      if (target.id === 'reset-zoom') {
+        viewer.zoomReset();
+      }
+
+      if (target.id === 'toggle-simulator') {
+        viewer.toggleSimulator(!viewer.enableSimulator);
+      }
+
+      if (target.id === 'toggle-interaction') {
+        viewer.toggleInteraction(!viewer.disableInteraction);
+      }
+    });
+  </script>
 </body>
 
 </html>
