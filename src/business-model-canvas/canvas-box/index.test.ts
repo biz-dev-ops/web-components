@@ -5,7 +5,7 @@ describe("CanvasBox", () => {
   let element: HTMLElement;
 
   beforeEach(() => {
-    element = document.createElement("canvas-box");
+    element = document.createElement("canvase-box");
   });
 
   it("renders without data", async () => {

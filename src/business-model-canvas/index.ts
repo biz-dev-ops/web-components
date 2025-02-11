@@ -4,86 +4,112 @@ import styles from "../shared/styles/reset";
 import { Model } from "./models";
 import "./canvas-box";
 import { data } from "./data";
+import { FetchError, fetchYaml } from "../shared/fetch";
 
 @customElement("business-model-canvas")
 export class BusinessModelCanvasComponent extends LitElement {
   @property({ type: Object })
-  model!: Model;
+  model!: Model | FetchError;
 
-  @property({ attribute: "model-json" })
-  modelJson!: string;
+  @property({ attribute: "src" })
+  src!: string
+
+  @property({ attribute: "data-json" })
+  json!: string;
 
   override render() {
+    if (this.model instanceof FetchError) {
+      return html`<div class="error">${this.model.message}</div>`;
+    }
+
     return html` <div class="canvas-grid">
       <div class="canvas-grid__item">
         <canvas-box
-          .items=${this.model.keyPartnerships || data.keyPartnerships.defaultItems}
-          .icon=${data.keyPartnerships.icon}
-          .title=${data.keyPartnerships.title}
+          data-test-id="keyPartnerships"
+          .items=${this.model?.keyPartnerships?.items || data.keyPartnerships.items}
+          .icon=${this.model?.keyPartnerships?.icon || data.keyPartnerships.icon}
+          .title=${this.model?.keyPartnerships?.title || data.keyPartnerships.title}
         ></canvas-box>
       </div>
       <div class="canvas-grid__item">
         <canvas-box
-          .items=${this.model.keyActivities || data.keyActivities.defaultItems}
-          .icon=${data.keyActivities.icon}
-          .title=${data.keyActivities.title}
+          data-test-id="keyActivities"
+          .items=${this.model?.keyActivities?.items || data.keyActivities.items}
+          .icon=${this.model?.keyActivities?.icon || data.keyActivities.icon}
+          .title=${this.model?.keyActivities?.title || data.keyActivities.title}
         ></canvas-box>
       </div>
       <div class="canvas-grid__item">
         <canvas-box
-          .items=${this.model.keyResources || data.keyResources.defaultItems}
-          .icon=${data.keyResources.icon}
-          .title=${data.keyResources.title}
+          data-test-id="keyResources"
+          .items=${this.model?.keyResources?.items || data.keyResources.items}
+          .icon=${this.model?.keyResources?.icon || data.keyResources.icon}
+          .title=${this.model?.keyResources?.title || data.keyResources.title}
         ></canvas-box>
       </div>
       <div class="canvas-grid__item">
         <canvas-box
-          .items=${this.model.valuePropositions || data.valuePropositions.defaultItems}
-          .icon=${data.valuePropositions.icon}
-          .title=${data.valuePropositions.title}
+          data-test-id="valuePropositions"
+          .items=${this.model?.valuePropositions?.items || data.valuePropositions.items}
+          .icon=${this.model?.valuePropositions?.icon || data.valuePropositions.icon}
+          .title=${this.model?.valuePropositions?.title || data.valuePropositions.title}
         ></canvas-box>
       </div>
       <div class="canvas-grid__item">
         <canvas-box
-          .items=${this.model.customerRelationships || data.customerRelationships.defaultItems}
-          .icon=${data.customerRelationships.icon}
-          .title=${data.customerRelationships.title}
+          data-test-id="customerRelationships"
+          .items=${this.model?.customerRelationships?.items || data.customerRelationships.items}
+          .icon=${this.model?.customerRelationships?.icon || data.customerRelationships.icon}
+          .title=${this.model?.customerRelationships?.title || data.customerRelationships.title}
         ></canvas-box>
       </div>
       <div class="canvas-grid__item">
         <canvas-box
-          .items=${this.model.customerSegments || data.customerSegments.defaultItems}
-          .icon=${data.customerSegments.icon}
-          .title=${data.customerSegments.title}
+          data-test-id="customerSegments"
+          .items=${this.model?.customerSegments?.items || data.customerSegments.items}
+          .icon=${this.model?.customerSegments?.icon || data.customerSegments.icon}
+          .title=${this.model?.customerSegments?.title || data.customerSegments.title}
         ></canvas-box>
       </div>
       <div class="canvas-grid__item">
         <canvas-box
-          .items=${this.model.channels || data.channels.defaultItems}
-          .icon=${data.channels.icon}
-          .title=${data.channels.title}
+          data-test-id="channels"
+          .items=${this.model?.channels?.items || data.channels.items}
+          .icon=${this.model?.channels?.icon || data.channels.icon}
+          .title=${this.model?.channels?.title || data.channels.title}
         ></canvas-box>
       </div>
       <div class="canvas-grid__item">
         <canvas-box
-          .items=${this.model.costStructure || data.costStructure.defaultItems}
-          .icon=${data.costStructure.icon}
-          .title=${data.costStructure.title}
+          data-test-id="costStructure"
+          .items=${this.model?.costStructure?.items || data.costStructure.items}
+          .icon=${this.model?.costStructure?.icon || data.costStructure.icon}
+          .title=${this.model?.costStructure?.title || data.costStructure.title}
         ></canvas-box>
       </div>
       <div class="canvas-grid__item">
         <canvas-box
-          .items=${this.model.revenueStreams || data.revenueStreams.defaultItems}
-          .icon=${data.revenueStreams.icon}
-          .title=${data.revenueStreams.title}
+          data-test-id="revenueStreams"
+          .items=${this.model?.revenueStreams?.items || data.revenueStreams.items}
+          .icon=${this.model?.revenueStreams?.icon || data.revenueStreams.icon}
+          .title=${this.model?.revenueStreams?.title || data.revenueStreams.title}
         ></canvas-box>
       </div>
     </div>`;
   }
 
-  override update(changedProperties: Map<string, unknown>) {
-    if (changedProperties.has("modelJson")) {
-      this.model = JSON.parse(this.modelJson);
+  override async update(changedProperties: Map<string, unknown>) {
+    if (changedProperties.has("src")) {
+      try {
+        this.model = await fetchYaml<Model>(this.src);
+      }
+      catch (error:any) {
+        this.model = error;
+      }
+    }
+
+    if (changedProperties.has("json")) {
+      this.model = JSON.parse(this.json);
     }
 
     super.update(changedProperties);

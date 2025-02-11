@@ -1,6 +1,6 @@
 import { $, $$, expect } from "@wdio/globals";
-import { BPMNViewer } from "./index";
 import "./index";
+import { BPMNViewer } from "./index";
 const customLinksProcess = "src/bpmn-viewer/test-data/custom-links.bpmn";
 const bpmnSubProcesses = "src/bpmn-viewer/test-data/test_subprocesses.bpmn";
 
@@ -31,6 +31,7 @@ describe("BPMNViewer", () => {
   it("zooms in and out and resets zoom level", async () => {
     element.setAttribute("src", bpmnSubProcesses);
     container.appendChild(element);
+
     await expect($(">>>.bjs-container svg")).not.toBeNull();
 
     const viewer = element as BPMNViewer;
@@ -48,8 +49,9 @@ describe("BPMNViewer", () => {
   });
 
   it("emits an event when an element with custom links is clicked", async () => {
-    element.setAttribute("src", customLinksProcess);
     let callbackTriggered = false;
+
+    element.setAttribute("src", customLinksProcess);
     element.addEventListener("onelementclick", (event) => {
       // @ts-ignore
       const { element, links } = event.detail;
@@ -62,6 +64,7 @@ describe("BPMNViewer", () => {
       callbackTriggered = true;
     });
     container.appendChild(element);
+
     await $('>>>[data-element-id="Activity_0vl2m4j"]').click();
     await expect(callbackTriggered).toBeTruthy();
   });

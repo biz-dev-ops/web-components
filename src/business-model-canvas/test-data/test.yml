@@ -1,0 +1,115 @@
+---
+keyPartnerships:
+  title: Strategic Alliances
+  icon: mat-link
+  items:
+    - Identifying synergistic partners
+    - Negotiating collaboration agreements
+    - Joint marketing initiatives
+    - head: Benefits of partnerships
+    - - Expanding market reach
+      - Accessing new technologies
+      - Sharing resources and expertise
+keyActivities:
+  title: Core Operations
+  icon: mat-build
+  items:
+    - Product development and innovation
+    - Manufacturing and production
+    - Sales and marketing campaigns
+    - Customer service and support
+    - head: Operational focus
+    - - Efficiency optimization
+      - Quality control
+      - Process improvement
+valuePropositions:
+  title: Unique Selling Points
+  icon: mat-star
+  items:
+    - Addressing unmet customer needs
+    - Offering superior product quality
+    - Providing exceptional customer service
+    - Delivering innovative solutions
+    - head: Key differentiators
+    - - Competitive pricing
+      - Brand reputation
+      - Product features
+      - Customer experience
+      - Sustainability
+customerRelationships:
+  title: Customer Engagement
+  icon: mat-heart
+  items:
+    - Building long-term customer loyalty
+    - Personalized communication strategies
+    - Feedback mechanisms and surveys
+    - Community building initiatives
+    - head: Relationship models
+    - - Dedicated account management
+      - Online customer portals
+      - Social media engagement
+      - Loyalty programs
+      - Automated support systems
+customerSegments:
+  title: Target Market
+  icon: mat-account_multiple_check
+  items:
+    - Defining ideal customer profiles
+    - Market segmentation strategies
+    - head: Target audience
+    - - Demographics
+      - Psychographics
+      - Geographics
+      - Behavioral patterns
+      - Needs and preferences
+keyResources:
+  title: Essential Assets
+  icon: mat-diamond
+  items:
+    - Intellectual property and patents
+    - Skilled workforce and talent
+    - Technology infrastructure
+    - Financial capital
+    - head: Resource categories
+    - - Physical assets
+      - Intangible assets
+      - Human resources
+      - Financial resources
+costStructure:
+  title: Expense Management
+  icon: mat-money_off
+  items:
+    - Identifying key cost drivers
+    - Cost optimization strategies
+    - Budgeting and forecasting
+    - head: Cost types
+    - - Fixed costs
+      - Variable costs
+      - Operating expenses
+      - Capital expenditures
+revenueStreams:
+  title: Revenue Generation
+  icon: mat-attach_money
+  items:
+    - Pricing models and strategies
+    - Sales channels and distribution
+    - Revenue diversification
+    - head: Revenue streams
+    - - Product sales
+      - Subscription fees
+      - Licensing agreements
+      - Advertising revenue
+      - Service fees
+channels:
+  title: Distribution Network
+  icon: mat-truck
+  items:
+    - Direct sales channels
+    - Online marketplaces
+    - Retail partnerships
+    - Wholesale distribution
+    - head: Channel strategies
+    - - Multi-channel approach
+      - Omnichannel experience
+      - Channel optimization
+      - Logistics and supply chain

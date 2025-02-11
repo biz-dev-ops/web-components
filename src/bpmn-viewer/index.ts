@@ -57,21 +57,22 @@ export class BPMNViewer extends LitElement {
       },
       additionalModules: this.enableSimulator ? [TokenSimulationModule] : [],
     });
-
+    
     this._updateDiagram(this.xml);
-
   }
 
   override async updated(changedProperties) {
     if (changedProperties.has("src")) {
       const response = await fetch(this.src);
-      if(!response.ok) {
-        const container = this.shadowRoot?.querySelector("#bpmn-container") as HTMLElement;
-        container.innerHTML = `Failed to fetch ${this.src}`;
-        throw new Error(`Failed to fetch ${this.src}, status: ${response.status}, ${response.statusText}`);
+      if(response.ok) {
+        this.xml = await response.text();
+        this._updateDiagram(this.xml);
+        return;
       }
-      this.xml = await response.text();
-      this._updateDiagram(this.xml);
+
+      const container = this.shadowRoot?.querySelector("#bpmn-container") as HTMLElement;
+      container.innerHTML = `Failed to fetch ${this.src}`;
+      console.error(`Failed to fetch ${this.src}, status: ${response.status}, ${response.statusText}`, response);
     }
 
     if(changedProperties.has("data-xml")) {

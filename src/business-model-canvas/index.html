@@ -3,23 +3,38 @@
   <head>
     <meta charset="utf-8" />
     <title>Business model canvas</title>
-    <link rel="stylesheet" href="../assets/style/page/style.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
 
   <body>
-    <div class="container">
-      <div class="canvas-wrapper">
-        <div class="header-container h2">
+    <main>
+      <div class="content">
+        <div class="header-container h1">
           <div class="header">
-            <h2 id="h2" tabindex="-1">
-              Business model canvas
-              <a class="header-anchor" href="#h2">¶</a>
-            </h2>
+            <h1>Business model canvas</h1>
+          </div>
+          <div id="buttons">
+            <button id="change-src">Change src</button>
+          </div>
+          <div class="container">
+            <business-model-canvas id="viewer"></business-model-canvas>
+            <h2>Run tests</h2>
+            <code>npx wdio run ./wdio.conf.ts --spec ./src/business-model-canvas/index.test.ts</code>
           </div>
         </div>
-        <business-model-canvas id="business-model-canvas" model-json="{}" />
       </div>
-    </div>
+    </main>
+
+    <script lang="javascript">
+      const buttons = document.getElementById("buttons");
+      const viewer = document.getElementById("viewer");
+
+      buttons.addEventListener("click", function (event) {
+        const target = event.target;
+      
+        if (target.id === "change-src") {
+          viewer.setAttribute("src", "invalid-url");
+        }
+      });
+    </script>
   </body>
 </html>

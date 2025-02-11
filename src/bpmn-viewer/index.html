@@ -1,66 +1,76 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <title>BPMN viewer</title>
+    <style>
+      bpmn-viewer {
+        display: block;
+        height: 500px;
+      }
+    </style>
+  </head>
 
-<head>
-  <meta charset="utf-8" />
-  <title>BPMN viewer</title>
-  <style>
-    bpmn-viewer {
-      display: block;
-      height: 500px;
-    }
-  </style>
-</head>
-
-<body>
-  <main>
-    <div class="content">
-      <div class="header-container h1">
-        <div class="header">
-          <h1>BPMN Viewer</h1>
-        </div>
-        <div id="buttons">
-          <button id="zoom-out">➖</button>
-          <button id="reset-zoom">🔍</button>
-          <button id="zoom-in">➕</button>
-          <button id="toggle-simulator">Toggle simulator</button>
-          <button id="toggle-interaction">Toggle interaction</button>
-        </div>
-        <div class="container" id="container">
-          <bpmn-viewer src="./test-data/custom-links.bpmn" enable-simulator></bpmn-viewer>
-        </div>
+  <body>
+    <main>
+      <div class="content">
+        <div class="header-container h1">
+          <div class="header">
+            <h1>BPMN Viewer</h1>
+          </div>
+          <div id="buttons">
+            <button id="zoom-out">➖</button>
+            <button id="reset-zoom">🔍</button>
+            <button id="zoom-in">➕</button>
+            <button id="change-src">Change src</button>
+            <button id="toggle-simulator">Toggle simulator</button>
+            <button id="toggle-interaction">Toggle interaction</button>
+          </div>
+          <div class="container" id="container">
+            <bpmn-viewer src="./test-data/custom-links.bpmn"></bpmn-viewer>
+          </div>
         </div>
       </div>
-  </main>
+    </main>
 
-  <script lang="javascript">
-    const buttons = document.getElementById('buttons');
-    const viewer = container.querySelector('bpmn-viewer');
+    <script lang="javascript">
+      const buttons = document.getElementById("buttons");
+      const viewer = container.querySelector("bpmn-viewer");
 
-    buttons.addEventListener('click', function (event) {
-      const target = event.target;
+      viewer.addEventListener("onelementclick", (event) => {
+        console.dir(event);
+      });
 
-      if (target.id === 'zoom-in') {
-        viewer.zoomIn();
-      }
+      buttons.addEventListener("click", function (event) {
+        const target = event.target;
 
-      if (target.id === 'zoom-out') {
-        viewer.zoomOut();
-      }
+        if (target.id === "zoom-in") {
+          viewer.zoomIn();
+        }
 
-      if (target.id === 'reset-zoom') {
-        viewer.zoomReset();
-      }
+        if (target.id === "zoom-out") {
+          viewer.zoomOut();
+        }
 
-      if (target.id === 'toggle-simulator') {
-        viewer.toggleSimulator(!viewer.enableSimulator);
-      }
+        if (target.id === "reset-zoom") {
+          viewer.zoomReset();
+        }
 
-      if (target.id === 'toggle-interaction') {
-        viewer.toggleInteraction(!viewer.disableInteraction);
-      }
-    });
-  </script>
-</body>
+        if (target.id === "change-src") {
+          viewer.setAttribute(
+            "src",
+            "./test-data/test_subprocesses.bpmn"
+          );
+        }
 
+        if (target.id === "toggle-simulator") {
+          viewer.toggleSimulator(!viewer.enableSimulator);
+        }
+
+        if (target.id === "toggle-interaction") {
+          viewer.toggleInteraction(!viewer.disableInteraction);
+        }
+      });
+    </script>
+  </body>
 </html>
