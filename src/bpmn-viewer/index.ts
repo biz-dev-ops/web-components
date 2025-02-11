@@ -24,8 +24,11 @@ interface ModdleLinks {
 export class BPMNViewer extends LitElement {
   private _viewer!: any;
 
+  @property({ attribute: "src" })
+  src!: string
+
   @property({ attribute: "data-xml" })
-  xml!: string;
+  xml!:string;
 
   @property({ attribute: "show-process" })
   showProcess!: string;
@@ -41,6 +44,10 @@ export class BPMNViewer extends LitElement {
   }
 
   override async firstUpdated() {
+    if(this._viewer) {
+      this._viewer.destroy();
+    }
+
     this._viewer = new Viewer({
       container: this.shadowRoot?.querySelector(
         "#bpmn-container"
@@ -51,28 +58,48 @@ export class BPMNViewer extends LitElement {
       additionalModules: this.enableSimulator ? [TokenSimulationModule] : [],
     });
 
-    this._updateDiagram();
+    this._updateDiagram(this.xml);
+
   }
 
-  override updated(changedProperties) {
-    if (changedProperties.has("xml")) {
-      this._updateDiagram();
+  override async updated(changedProperties) {
+    if (changedProperties.has("src")) {
+      const response = await fetch(this.src);
+      if(!response.ok) {
+        const container = this.shadowRoot?.querySelector("#bpmn-container") as HTMLElement;
+        container.innerHTML = `Failed to fetch ${this.src}`;
+        throw new Error(`Failed to fetch ${this.src}, status: ${response.status}, ${response.statusText}`);
+      }
+      this.xml = await response.text();
+      this._updateDiagram(this.xml);
+    }
+
+    if(changedProperties.has("data-xml")) {
+      this._updateDiagram(this.xml);
     }
 
     if (changedProperties.has("enable-simulator")) {
-      this.firstUpdated();
+      this.toggleSimulator(this.enableSimulator);
+    }
+
+    if (changedProperties.has("disable-interaction")) {
+      this.toggleInteraction(this.disableInteraction);
     }
   }
 
-  private async _updateDiagram() {
+  private async _updateDiagram(xml:string) {
+    if(!xml) {
+      return;
+    }
+
     try {
       const { warnings } = await this._viewer.importXML(
-        this.xml.replace(/\\"/g, '"')
+        xml.replace(/\\"/g, '"')
       );
 
       if (warnings.length) {
         console.log("bpmn import with warnings", warnings);
-      } 
+      }
       else {
         console.log("bpmn import successful");
       }
@@ -84,11 +111,7 @@ export class BPMNViewer extends LitElement {
       }
 
       this.zoomReset();
-
-      if(this.disableInteraction) {
-        this.toggleInteraction(false);
-      }
-    } 
+    }
     catch (err) {
       console.log("something went wrong while importing bpmn:", err);
     }
@@ -207,7 +230,13 @@ export class BPMNViewer extends LitElement {
     this._viewer.get("canvas").zoom("fit-viewport", "auto");
   }
 
-  public toggleInteraction(enable) {
-    this._viewer.get('zoomScroll').toggle(enable);
+  public toggleSimulator(enable: boolean) {
+    this.enableSimulator = enable;
+    this.firstUpdated();
+  }
+
+  public toggleInteraction(enable: boolean) {
+    this.disableInteraction = enable;
+    this._viewer.get('zoomScroll').toggle(this.disableInteraction);
   }
 }
