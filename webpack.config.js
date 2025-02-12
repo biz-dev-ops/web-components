@@ -27,7 +27,7 @@ export default (env, argv) => {
   plugins.push(new CopyWebpackPlugin({
           patterns: [
             {
-              from: "**/test-data/**/*",
+              from: "**/_test-data/**/*",
               to({ context, absoluteFilename }) {
                 const relativePath = path.relative(path.resolve(__dirname, "src"), absoluteFilename);
                 return relativePath;

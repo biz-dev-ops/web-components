@@ -26,8 +26,10 @@
             <button id="toggle-simulator">Toggle simulator</button>
             <button id="toggle-interaction">Toggle interaction</button>
           </div>
-          <div class="container" id="container">
-            <bpmn-viewer src="./test-data/custom-links.bpmn"></bpmn-viewer>
+          <div class="container">
+            <bpmn-viewer src="./_test-data/custom-links.bpmn"></bpmn-viewer>
+            <h2>Run tests</h2>
+            <code>npx wdio run ./wdio.conf.ts --spec ./src/bpmn-viewer/index.test.ts</code>
           </div>
         </div>
       </div>
@@ -35,7 +37,7 @@
 
     <script lang="javascript">
       const buttons = document.getElementById("buttons");
-      const viewer = container.querySelector("bpmn-viewer");
+      const viewer = document.getElementsByTagName("bpmn-viewer")[0];
 
       viewer.addEventListener("onelementclick", (event) => {
         console.dir(event);
@@ -57,18 +59,15 @@
         }
 
         if (target.id === "change-src") {
-          viewer.setAttribute(
-            "src",
-            "./test-data/test_subprocesses.bpmn"
-          );
+          viewer.src = "./_test-data/test_subprocesses.bpmn";
         }
 
         if (target.id === "toggle-simulator") {
-          viewer.toggleSimulator(!viewer.enableSimulator);
+          viewer.enableSimulator = !viewer.enableSimulator;
         }
 
         if (target.id === "toggle-interaction") {
-          viewer.toggleInteraction(!viewer.disableInteraction);
+          viewer.disableInteraction = !viewer.disableInteraction;
         }
       });
     </script>

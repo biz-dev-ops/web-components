@@ -8,7 +8,7 @@ describe("BusinessModelCanvasComponent", () => {
     describe("BusinessModelCanvasComponent", () => { });
     let container: HTMLElement;
     let element: HTMLElement;
-    const testDataSrc = "src/business-model-canvas/test-data/test.yml";
+    const testDataSrc = "src/business-model-canvas/_test-data/test.yml";
     let testData;
 
     before("load test data", function (done) {
@@ -64,12 +64,12 @@ describe("BusinessModelCanvasComponent", () => {
         await testModelContent(testData);
     });
 
-    // it("displays error message on fetch failure", async () => {
-    //     element.setAttribute("src", "invalid-url");
-    //     container.appendChild(element);
+    it("displays error message on fetch failure", async () => {
+        element.setAttribute("src", "invalid-url");
+        container.appendChild(element);
 
-    //     await expect($(">>>.error")).toHaveText(expect.stringContaining("Failed to fetch"));
-    // });
+        await expect($(">>>.error")).toBeExisting();
+    });
 
     afterEach(() => {
         container.remove();

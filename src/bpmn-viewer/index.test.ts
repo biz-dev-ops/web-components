@@ -1,11 +1,11 @@
 import { $, $$, expect } from "@wdio/globals";
 import "./index";
 import { BPMNViewer } from "./index";
-const customLinksProcess = "src/bpmn-viewer/test-data/custom-links.bpmn";
-const bpmnSubProcesses = "src/bpmn-viewer/test-data/test_subprocesses.bpmn";
+const customLinksProcess = "src/bpmn-viewer/_test-data/custom-links.bpmn";
+const bpmnSubProcesses = "src/bpmn-viewer/_test-data/test_subprocesses.bpmn";
 
 describe("BPMNViewer", () => {
-  let element: HTMLElement;
+  let viewer: BPMNViewer;
   let container: HTMLElement;
 
   beforeEach(() => {
@@ -13,28 +13,27 @@ describe("BPMNViewer", () => {
     container.style.width = "500px";
     container.style.height = "500px";
     document.body.appendChild(container);
-    element = document.createElement("bpmn-viewer");
+    viewer = document.createElement("bpmn-viewer") as BPMNViewer;
   });
 
   it("renders without data", async () => {
-    container.appendChild(element);
+    container.appendChild(viewer);
     await expect($(">>>.bjs-container svg")).not.toBeNull();
   });
 
   it("renders with a bpmn file", async () => {
-    element.setAttribute("src", bpmnSubProcesses);
+    viewer.setAttribute("src", bpmnSubProcesses);
 
-    container.appendChild(element);
+    container.appendChild(viewer);
     await expect($(">>>.bjs-container svg g g .djs-group")).not.toBeNull();
   });
 
   it("zooms in and out and resets zoom level", async () => {
-    element.setAttribute("src", bpmnSubProcesses);
-    container.appendChild(element);
+    viewer.setAttribute("src", bpmnSubProcesses);
+    container.appendChild(viewer);
 
     await expect($(">>>.bjs-container svg")).not.toBeNull();
 
-    const viewer = element as BPMNViewer;
     expect(viewer.getZoomLevel()).toBe(1);
 
     viewer.zoomIn();
@@ -51,8 +50,8 @@ describe("BPMNViewer", () => {
   it("emits an event when an element with custom links is clicked", async () => {
     let callbackTriggered = false;
 
-    element.setAttribute("src", customLinksProcess);
-    element.addEventListener("onelementclick", (event) => {
+    viewer.src = customLinksProcess;
+    viewer.addEventListener("onelementclick", (event) => {
       // @ts-ignore
       const { element, links } = event.detail;
       expect(element).not.toBeNull();
@@ -63,17 +62,16 @@ describe("BPMNViewer", () => {
       expect(links[1].value).toBe("www.test2.com");
       callbackTriggered = true;
     });
-    container.appendChild(element);
+    container.appendChild(viewer);
 
     await $('>>>[data-element-id="Activity_0vl2m4j"]').click();
     await expect(callbackTriggered).toBeTruthy();
   });
 
   it("simulates a process", async () => {
-    element.setAttribute("src", bpmnSubProcesses);
-    element.setAttribute("enable-simulator", "true");
-
-    container.appendChild(element);
+    viewer.src = bpmnSubProcesses;
+    viewer.enableSimulator = true;
+    container.appendChild(viewer);
 
     (await $(">>>.bts-toggle-mode")).click();
     (
@@ -87,9 +85,8 @@ describe("BPMNViewer", () => {
   });
 
   it("drills down to collapsed subprocesses and navigates back via breadcrumbs", async () => {
-    element.setAttribute("src", bpmnSubProcesses);
-
-    container.appendChild(element);
+    viewer.src = bpmnSubProcesses;
+    container.appendChild(viewer);
 
     await expect($$(">>>.bjs-breadcrumbs li")).toBeElementsArrayOfSize(1);
 
@@ -101,34 +98,31 @@ describe("BPMNViewer", () => {
   });
 
   it("deeplinks to a subprocess", async () => {
-    element.setAttribute("src", bpmnSubProcesses);
-    element.setAttribute("show-process", "Activity_0d5g08j");
-
-    container.appendChild(element);
+    viewer.src = bpmnSubProcesses;
+    viewer.showProcess = "Activity_0d5g08j";
+    container.appendChild(viewer);
 
     await expect($$(">>>.bjs-breadcrumbs li")).toBeElementsArrayOfSize(2);
   });
 
   it("deeplinks to a subprocess of a subprocess", async () => {
-    element.setAttribute("src", bpmnSubProcesses);
-    element.setAttribute("show-process", "Activity_0d5g08j/Activity_0m8usba");
-
-    container.appendChild(element);
+    viewer.src = bpmnSubProcesses;
+    viewer.showProcess = "Activity_0d5g08j/Activity_0m8usba";
+    container.appendChild(viewer);
 
     await expect($$(">>>.bjs-breadcrumbs li")).toBeElementsArrayOfSize(3);
   });
 
   it("fails to deeplink to a non-existing subprocess", async () => {
-    element.setAttribute("src", bpmnSubProcesses);
-    element.setAttribute("show-process", "Activity_0d5g08j_does_not_exist");
-
-    container.appendChild(element);
+    viewer.src = bpmnSubProcesses;
+    viewer.showProcess = "Activity_0d5g08j_does_not_exist";
+    container.appendChild(viewer);
 
     await expect($$(">>>.bjs-breadcrumbs li")).toBeElementsArrayOfSize(1);
     await expect($(">>>#bpmn-container.error")).toBeExisting();
   });
 
   afterEach(() => {
-    element.remove();
+    viewer.remove();
   });
 });

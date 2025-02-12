@@ -12,10 +12,12 @@ The group title has a default value, but can be overwritten with a custom value.
 Font icon support for:
 
 - [Material icons, add mat- before the icon name.](https://fonts.google.com/icons)
-- [Font awesome icons, add fa- before the icon name.](https://fontawesome.com/)
-- [Phosphor icons, add ph- before the icon name.](https://phosphoricons.com/)
 
 ## Attributes
+
+### src
+
+The url of the business reference architecture yaml file.
 
 ### model-json
 
@@ -23,24 +25,30 @@ An HTML escaped version of the business reference architecture model.
 
 ### model
 
-The business reference architecture model, must be set via JavaScript.
+The  business reference architecture model, must be set via JavaScript.
 
 ## Examples
 
-### HTML
+### src attribute
 
 ```html
-<business-reference-architecture model-json="{ &quot;key &quot;: &quot;value &quot; }"></business-reference-architectur>
+<business-reference-architecture src="./model.yml"></business-reference-architecture>
 ```
 
-### HTML and JavaScript
+### model-json attribute
 
 ```html
-<business-reference-architecture id="business-reference-architecture"></business-reference-architectur>
+<business-reference-architecture data-json="[ ...section ]"></business-reference-architecture>
+```
+
+### Javascript
+
+```html
+<business-reference-architecture id="viewer"></business-reference-architecture>
 
 <script>
-    document.getElementById('business-reference-architecture').model = [
-        sections
+    document.getElementById("viewer").model = [
+        ...sections
     ];
 <script>
 ```

@@ -8,7 +8,7 @@ import viewerDiagramJsCss from "bpmn-js/dist/assets/diagram-js.css";
 import viewerBpmnJsCss from "bpmn-js/dist/assets/bpmn-js.css";
 import simulatorCss from "bpmn-js-token-simulation/assets/css/bpmn-js-token-simulation.css";
 
-import * as bizdevops from "./bizdevops.json";
+import * as bizdevops from "./bizdevops.moddle.json";
 import { Element, ModdleElement } from "bpmn-js/lib/model/Types";
 
 interface Link {
@@ -57,7 +57,7 @@ export class BPMNViewer extends LitElement {
       },
       additionalModules: this.enableSimulator ? [TokenSimulationModule] : [],
     });
-    
+
     this._updateDiagram(this.xml);
   }
 
@@ -75,16 +75,16 @@ export class BPMNViewer extends LitElement {
       console.error(`Failed to fetch ${this.src}, status: ${response.status}, ${response.statusText}`, response);
     }
 
-    if(changedProperties.has("data-xml")) {
+    if(changedProperties.has("xml")) {
       this._updateDiagram(this.xml);
     }
 
-    if (changedProperties.has("enable-simulator")) {
-      this.toggleSimulator(this.enableSimulator);
+    if (changedProperties.has("enableSimulator")) {
+      this.firstUpdated();
     }
 
-    if (changedProperties.has("disable-interaction")) {
-      this.toggleInteraction(this.disableInteraction);
+    if (changedProperties.has("disableInteraction")) {
+      this._viewer.get('zoomScroll').toggle(this.disableInteraction);
     }
   }
 
@@ -229,15 +229,5 @@ export class BPMNViewer extends LitElement {
 
   public zoomReset() {
     this._viewer.get("canvas").zoom("fit-viewport", "auto");
-  }
-
-  public toggleSimulator(enable: boolean) {
-    this.enableSimulator = enable;
-    this.firstUpdated();
-  }
-
-  public toggleInteraction(enable: boolean) {
-    this.disableInteraction = enable;
-    this._viewer.get('zoomScroll').toggle(this.disableInteraction);
   }
 }

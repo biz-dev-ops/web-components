@@ -1,6 +1,6 @@
 import { $, expect } from "@wdio/globals";
 import "./index";
-import testDmn from "./test-data/test.dmn";
+import testDmn from "./_test-data/test.dmn";
 
 describe("DMNViewer", () => {
   let element: HTMLElement;

@@ -9,6 +9,10 @@ HTML5 web component which renders a business model canvas.
 
 ## Attributes
 
+### src
+
+The url of the business canvas model yaml file.
+
 ### model-json
 
 An HTML escaped version of the business model canvas model.
@@ -19,28 +23,30 @@ The business model canvas model, must be set via JavaScript.
 
 ## Examples
 
-### HTML
+### src attribute
 
 ```html
-<business-model-canvas model-json="{ &quot;key &quot;: &quot;value &quot; }" />
+<business-model-canvas src="./model.yml" />
 ```
 
-### HTML and JavaScript
+### model-json attribute
 
 ```html
-<business-model-canvas id="business-model-canvas" model-json=" { ...json }"></business-model-canvas>
+<business-model-canvas id="business-model-canvas" data-json=" { ...json }"></business-model-canvas>
+```
 
-<script>
-    document.getElementById('business-model-canvas').model = {
-    	keyPartnerships: [ "..." ],
-        keyActivities: [ "..." ],
-        keyResources: [ "..." ],
-        valuePropositions: [ "..." ],
-        customerRelationships: [ "..." ],
-        channels: [ "..." ],
-        customerSegments: [ "..." ],
-        costStructure: [ "..." ],
-        revenueStreams: [ "..." ]
-    }
-<script>
+### Javascript
+
+```javascript
+  document.getElementById('business-model-canvas').model = {
+    keyPartnerships: [ "..." ],
+      keyActivities: [ "..." ],
+      keyResources: [ "..." ],
+      valuePropositions: [ "..." ],
+      customerRelationships: [ "..." ],
+      channels: [ "..." ],
+      customerSegments: [ "..." ],
+      costStructure: [ "..." ],
+      revenueStreams: [ "..." ]
+  }
 ```
