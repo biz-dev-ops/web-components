@@ -122,6 +122,15 @@ describe("BPMNViewer", () => {
     await expect($(">>>#bpmn-container.error")).toBeExisting();
   });
 
+  //It returns 200 for non existing bpmn. Check why.
+  // it("displays error message on fetch failure", async () => {
+  //     const notAValidUrl = ;
+  //     viewer.src = notAValidUrl;
+  //     container.appendChild(viewer);
+
+  //     await expect($(">>>.error")).toBeExisting();
+  // });
+
   afterEach(() => {
     viewer.remove();
   });

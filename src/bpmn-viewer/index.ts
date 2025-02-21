@@ -28,7 +28,7 @@ export class BPMNViewer extends LitElement {
   src!: string
 
   @property({ attribute: "data-xml" })
-  xml!:string;
+  xml!: string;
 
   @property({ attribute: "show-process" })
   showProcess!: string;
@@ -44,7 +44,7 @@ export class BPMNViewer extends LitElement {
   }
 
   override async firstUpdated() {
-    if(this._viewer) {
+    if (this._viewer) {
       this._viewer.destroy();
     }
 
@@ -64,18 +64,18 @@ export class BPMNViewer extends LitElement {
   override async updated(changedProperties) {
     if (changedProperties.has("src")) {
       const response = await fetch(this.src);
-      if(response.ok) {
-        this.xml = await response.text();
-        this._updateDiagram(this.xml);
+      if (!response.ok) {
+        const container = this.shadowRoot?.querySelector("#bpmn-container") as HTMLElement;
+        container.innerHTML = `<div class="errro">Failed to fetch ${this.src}</div>`;
+        console.error(`Failed to fetch ${this.src}, status: ${response.status}, ${response.statusText}`, response);
         return;
       }
 
-      const container = this.shadowRoot?.querySelector("#bpmn-container") as HTMLElement;
-      container.innerHTML = `Failed to fetch ${this.src}`;
-      console.error(`Failed to fetch ${this.src}, status: ${response.status}, ${response.statusText}`, response);
+      this.xml = await response.text();
+      this._updateDiagram(this.xml);
     }
 
-    if(changedProperties.has("xml")) {
+    if (changedProperties.has("xml")) {
       this._updateDiagram(this.xml);
     }
 
@@ -88,8 +88,8 @@ export class BPMNViewer extends LitElement {
     }
   }
 
-  private async _updateDiagram(xml:string) {
-    if(!xml) {
+  private async _updateDiagram(xml: string) {
+    if (!xml) {
       return;
     }
 

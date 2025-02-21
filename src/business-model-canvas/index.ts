@@ -103,7 +103,7 @@ export class BusinessModelCanvasComponent extends LitElement {
       try {
         this.model = await fetchYaml<Model>(this.src);
       }
-      catch (error:any) {
+      catch (error: any) {
         this.model = error;
       }
     }
