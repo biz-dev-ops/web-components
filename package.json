@@ -45,7 +45,7 @@
     "@biz-dev-ops/md-docs": "^1.1.43",
     "@testing-library/webdriverio": "^3.2.1",
     "@types/mocha": "^10.0.6",
-    "@wdio/browser-runner": "8.39.1",
+    "@wdio/browser-runner": "9.10.0",
     "@wdio/cli": "9.8.0",
     "@wdio/mocha-framework": "9.7.3",
     "@wdio/spec-reporter": "9.8.0",
