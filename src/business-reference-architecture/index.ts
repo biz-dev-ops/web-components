@@ -10,7 +10,7 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 import "./architecture-section";
-import { FetchError, fetchYaml } from "../shared/fetch";
+import { FetchError, fetchYamlAndBundleAs } from "../shared/fetch";
 
 @customElement("business-reference-architecture")
 export class BusinessReferenceArchitectureComponent extends LitElement {
@@ -49,7 +49,7 @@ export class BusinessReferenceArchitectureComponent extends LitElement {
   override async update(changedProperties: Map<string, unknown>) {
     if (changedProperties.has("src")) {
       try {
-        this.model = await fetchYaml<Section[]>(this.src);
+        this.model = await fetchYamlAndBundleAs<Section[]>(this.src);
       }
       catch (error: any) {
         this.model = error;

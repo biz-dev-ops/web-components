@@ -4,7 +4,7 @@ import styles from "../shared/styles/reset";
 import { Model } from "./models";
 import "./canvas-box";
 import { data } from "./data";
-import { FetchError, fetchYaml } from "../shared/fetch";
+import { FetchError, fetchYamlAndBundleAs } from "../shared/fetch";
 
 @customElement("business-model-canvas")
 export class BusinessModelCanvasComponent extends LitElement {
@@ -101,7 +101,7 @@ export class BusinessModelCanvasComponent extends LitElement {
   override async update(changedProperties: Map<string, unknown>) {
     if (changedProperties.has("src")) {
       try {
-        this.model = await fetchYaml<Model>(this.src);
+        this.model = await fetchYamlAndBundleAs<Model>(this.src);
       }
       catch (error: any) {
         this.model = error;

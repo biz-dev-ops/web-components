@@ -38,7 +38,7 @@ valuePropositions:
       - Sustainability
 customerRelationships:
   title: Customer Engagement
-  icon: mat-heart
+  icon: mat-favorite
   items:
     - Building long-term customer loyalty
     - Personalized communication strategies
@@ -52,7 +52,7 @@ customerRelationships:
       - Automated support systems
 customerSegments:
   title: Target Market
-  icon: mat-account_multiple_check
+  icon: mat-done_all
   items:
     - Defining ideal customer profiles
     - Market segmentation strategies
@@ -102,7 +102,7 @@ revenueStreams:
       - Service fees
 channels:
   title: Distribution Network
-  icon: mat-truck
+  icon: mat-local_shipping
   items:
     - Direct sales channels
     - Online marketplaces

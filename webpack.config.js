@@ -2,6 +2,7 @@ import TerserPlugin from "terser-webpack-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import CopyWebpackPlugin from "copy-webpack-plugin";
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
+import NodePolyfillPlugin from "node-polyfill-webpack-plugin";
 import path from "path";
 import * as url from "url";
 import { globSync } from "glob";
@@ -23,29 +24,31 @@ export default (env, argv) => {
     );
   }
 
-  plugins.push(new CleanWebpackPlugin());
-  plugins.push(new CopyWebpackPlugin({
-          patterns: [
-            {
-              from: "**/_test-data/**/*",
-              to({ context, absoluteFilename }) {
-                const relativePath = path.relative(path.resolve(__dirname, "src"), absoluteFilename);
-                return relativePath;
-              },
-              context: path.resolve(__dirname, "src"),
-              globOptions: {
-                dot: true,
-                gitignore: true,
-                ignore: ["**/ignore-this-folder/**"],
-              },
-              noErrorOnMissing: true,
-            },
-          ],
-        })
-  );
   plugins.push(
+    new CleanWebpackPlugin(),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: "**/_test-data/**/*",
+          to({ context, absoluteFilename }) {
+            const relativePath = path.relative(path.resolve(__dirname, "src"), absoluteFilename);
+            return relativePath;
+          },
+          context: path.resolve(__dirname, "src"),
+          globOptions: {
+            dot: true,
+            gitignore: true,
+            ignore: ["**/ignore-this-folder/**"],
+          },
+          noErrorOnMissing: true,
+        },
+      ],
+    }),
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify(argv.mode),
+    }),
+    new NodePolyfillPlugin({
+      additionalAliases: ["process"]
     })
   );
 
@@ -83,11 +86,17 @@ export default (env, argv) => {
             },
           ],
         },
+        {
+          test: /\.m?js$/,
+          resolve: {
+            fullySpecified: false
+          },
+        },
       ],
     },
     resolve: {
       extensions: [".tsx", ".ts", ".js"],
-      preferRelative: true,
+      preferRelative: true
     },
     output: {
       filename: "web-components.js",
