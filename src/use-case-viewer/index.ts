@@ -1,118 +1,130 @@
 import { CSSResult, CSSResultArray, LitElement, TemplateResult, html } from "lit";
+import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { property } from "lit/decorators.js";
-import useCaseVieweCss from "./use-case-viewer.css";
+import useCaseViewerCss from "./use-case-viewer.css";
 import "../shared/badge";
 import "../shared/expansion-panel";
 import "../shared/truncate";
 import "../model-viewer";
 import { Case, UseCase, UseCaseType } from "./models";
-import Util from "../shared/util";
+import {titlelize, parseMarkdown } from "../shared/util";
+import { FetchError, fetchYamlAndBundleAs } from "../shared/fetch";
 
 export abstract class UseCaseViewer<T extends UseCase> extends LitElement {
-    @property({ type: Object })
-    model!: T
+  @property({ type: Object })
+  model!: T | FetchError;
 
-    @property({ attribute: "model-json" })
-    modelJson!: string
+  @property({ attribute: "src" })
+  src!: string
 
-    abstract useCaseType: UseCaseType;
+  @property({ attribute: "data-json" })
+  json!: string
 
-    override render() {
-        return html`
-            <section>
-                <header>
-                    <bdo-badge type=${this.useCaseType?.type} icon=${this.useCaseType?.icon}>${this.useCaseType?.name}</bdo-badge>
-                    ${Util.titlelize(this.model?.name)}
-                </header>
+  abstract useCaseType: UseCaseType;
 
-                <main>
-                    ${this.descriptionTemplate(this.model?.description)}
-                    ${this.renderMain()}
-                </main>
-            </section>
-        `;
+  override render() {
+    if (this.model instanceof FetchError) {
+      return html`<div class="error">${this.model.message}</div>`;
     }
 
-    abstract renderMain() :TemplateResult;
+    return html`
+      <section>
+          <header>
+              <bdo-badge type=${this.useCaseType?.type} icon=${this.useCaseType?.icon}>${this.useCaseType?.name}</bdo-badge>
+              ${titlelize(this.model?.name)}
+          </header>
 
-    descriptionTemplate(description:string) {
-        if(!description) {
-            return html``;
-        }
+          <main>
+              ${this.descriptionTemplate(this.model?.description)}
+              ${this.renderMain(this.model)}
+          </main>
+      </section>
+    `;
+  }
 
-        //TODO: render markdown?
+  abstract renderMain(model:T): TemplateResult;
 
-        return html`
-            <bdo-truncate>
-                ${description}
-            </bdo-truncate>
-        `;
+  descriptionTemplate(description: string) {
+    if (!description) {
+      return html``;
     }
 
-    modelViewerTemplate(title: string, parameters:any) {
-        if(!parameters) {
-            return html``;
-        }
+    return html`
+      <bdo-truncate>
+          ${unsafeHTML(parseMarkdown(description.trim()))}
+      </bdo-truncate>
+    `;
+  }
 
-        return html`
-            <bdo-expansion-panel>
-                <div slot="summary">${title}</div>
-                <model-viewer .model=${parameters}></model-viewer>
-            </bdo-expansion-panel>
-        `;
+  modelViewerTemplate(title: string, parameters: any) {
+    if (!parameters) {
+      return html``;
     }
 
-    casesTemplate(title: string, cases: Map<string, Case>) {
-        if(!cases) {
-            return html``;
-        }
+    return html`
+      <bdo-expansion-panel>
+          <div slot="summary">${title}</div>
+          <model-viewer .model=${parameters}></model-viewer>
+      </bdo-expansion-panel>
+    `;
+  }
 
-        return html`
-            <bdo-expansion-panel>
-                <div slot="summary">${Util.titlelize(title)} <span class="count">(${this.countItems(cases)})</span></div>
-                
-                <div class="cases">
-                    ${Object.entries(cases).map(([key, c]) => html`
-                        <div class="case">
-                            <h2>${Util.titlelize(c?.name || key)}</h2>
-                            ${this.descriptionTemplate(c?.description)}
-                            ${this.modelViewerTemplate("Parameters", c?.parameters)}
-                        </div>
-                    `)}
-                </div>
-            </bdo-expansion-panel>
-        `;
+  casesTemplate(title: string, cases: Map<string, Case>) {
+    if (!cases) {
+      return html``;
     }
 
-    countItems(item: any) {
-        if (!item) {
-            return 0;
-        }
+    return html`
+      <bdo-expansion-panel>
+          <div slot="summary">${titlelize(title)} <span class="count">(${this.countItems(cases)})</span></div>
 
-        if(item.properties) {
-            return Object.keys(item.properties).length;
-        }
+          <div class="cases">
+              ${Object.entries(cases).map(([key, c]) => html`
+                  <div class="case">
+                      <h2>${titlelize(c?.name || key)}</h2>
+                      ${this.descriptionTemplate(c?.description)}
+                      ${this.modelViewerTemplate("Parameters", c?.parameters)}
+                  </div>
+              `)}
+          </div>
+      </bdo-expansion-panel>
+    `;
+  }
 
-        if (Array.isArray(item)) {
-            return item.length;
-        }
-
-        return Object.keys(item).length;;
+  countItems(item: any) {
+    if (!item) {
+      return 0;
     }
 
-    override update(changedProperties: Map<string, unknown>) {
-        if (changedProperties.has("modelJson")) {
-            try {
-                this.model = JSON.parse(this.modelJson);
-            } 
-            catch (e) {
-                console.error("Error parsing modelJson:", e);
-            }
-        }
-        super.update(changedProperties);
+    if (item.properties) {
+      return Object.keys(item.properties).length;
     }
 
-    static override get styles() : CSSResult | CSSResultArray {
-        return useCaseVieweCss;
+    if (Array.isArray(item)) {
+      return item.length;
     }
+
+    return Object.keys(item).length;;
+  }
+
+  override async update(changedProperties: Map<string, unknown>) {
+      if (changedProperties.has("src")) {
+        try {
+          this.model = await fetchYamlAndBundleAs<T>(this.src);
+        }
+        catch (error: any) {
+          this.model = error;
+        }
+      }
+
+      if (changedProperties.has("json")) {
+        this.model = JSON.parse(this.json);
+      }
+
+      super.update(changedProperties);
+    }
+
+  static override get styles(): CSSResult | CSSResultArray {
+    return useCaseViewerCss;
+  }
 }

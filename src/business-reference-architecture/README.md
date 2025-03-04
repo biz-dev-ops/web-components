@@ -47,8 +47,10 @@ The  business reference architecture model, must be set via JavaScript.
 <business-reference-architecture id="viewer"></business-reference-architecture>
 
 <script>
-    document.getElementById("viewer").model = [
-        ...sections
-    ];
+    const viewer = document.getElementById("viewer");
+
+    viewer.src = "./model.yml";
+
+    viewer.model = [...section];
 <script>
 ```

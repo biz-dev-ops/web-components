@@ -6,23 +6,25 @@
   </head>
 
   <body>
-      <main>
-        <div class="content">
-          <div class="header-container h1">
-            <div class="header">
-              <h1>Business model canvas</h1>
-            </div>
-            <div id="buttons">
-              <button id="change-src">Change src</button>
-            </div>
-            <div class="container">
-              <business-model-canvas></business-model-canvas>
-              <h2>Run tests</h2>
-              <code>npx wdio run ./wdio.conf.ts --spec ./src/business-model-canvas/index.test.ts</code>
-            </div>
+    <main>
+      <div class="content">
+        <div class="header-container h1">
+          <div class="header">
+            <h1>Business model canvas</h1>
+          </div>
+          <div id="buttons">
+            <button id="change-src">Change src</button>
+          </div>
+          <div class="container">
+            <business-model-canvas></business-model-canvas>
+            <h2>Run tests</h2>
+            <code>
+              npx wdio run ./wdio.conf.ts --spec ./src/business-model-canvas/index.test.ts
+            </code>
           </div>
         </div>
-      </main>
+      </div>
+    </main>
 
     <script lang="javascript">
       const buttons = document.getElementById("buttons");

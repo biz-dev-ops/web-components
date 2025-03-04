@@ -1,0 +1,159 @@
+---
+- title: Dealership Roles
+  link: null
+  arrow: down
+  buttonType: brand
+  buttons:
+    - title: Salesperson
+      link: roles/salesperson/index.html
+      icon: mat-shopping_cart
+    - title: Mechanic
+      link: roles/mechanic/index.html
+      icon: mat-build
+    - title: Customer
+      link: roles/customer/index.html
+      icon: mat-person
+    - title: Manager
+      link: roles/manager/index.html
+      icon: mat-supervisor_account
+    - title: Accountant
+      link: roles/accountant/index.html
+      icon: mat-account_balance
+- title: Access Platforms
+  link: null
+  arrow: down
+  buttons:
+    - title: Mobile App
+      link: platforms/mobile-app/index.html
+      icon: mat-smartphone
+    - title: Web Portal
+      link: platforms/web-portal/index.html
+      icon: mat-desktop_windows
+    - title: Inventory System
+      link: platforms/inventory-system/index.html
+      icon: mat-storage
+    - title: Email Notifications
+      link: platforms/email-notifications/index.html
+      icon: mat-email
+    - title: SMS Alerts
+      link: platforms/sms-alerts/index.html
+      icon: mat-sms
+    - title: Showroom Displays
+      link: platforms/showroom-displays/index.html
+      icon: mat-tv
+    - title: Printed Contracts
+      link: platforms/printed-contracts/index.html
+      icon: mat-print
+- title: Core Processes
+  link: null
+  buttonType: stream
+  sectionType: streams
+  buttons:
+    - title: Vehicle Acquisition
+      link: processes/acquisition/index.html
+    - title: Sales & Financing
+      link: processes/sales/index.html
+    - title: Maintenance & Repair
+      link: processes/maintenance/index.html
+    - title: Customer Service
+      link: processes/customer-service/index.html
+- title: Dealership Services
+  link: null
+  arrow: up
+  buttonType: default
+  groups:
+    - title: Vehicle Management
+      link: domains/vehicle-management/index.html
+      buttons:
+        - title: Inventory Service
+          link: domains/vehicle-management/inventory-service/index.html
+          icon: mat-local_shipping
+        - title: Pricing Service
+          link: domains/vehicle-management/pricing-service/index.html
+          icon: mat-attach_money
+        - title: Vehicle History Service
+          link: domains/vehicle-management/history-service/index.html
+          icon: mat-history
+    - title: Customer Relationship Management
+      link: domains/crm/index.html
+      buttons:
+        - title: Lead Management Service
+          link: domains/crm/lead-service/index.html
+          icon: mat-person_add
+        - title: Customer Profile Service
+          link: domains/crm/profile-service/index.html
+          icon: mat-account_box
+        - title: Follow-up Service
+          link: domains/crm/follow-up-service/index.html
+          icon: mat-schedule
+    - title: Finance Management
+      link: domains/finance-management/index.html
+      buttons:
+        - title: Loan Service
+          link: domains/finance-management/loan-service/index.html
+          icon: mat-credit_card
+        - title: Payment Service
+          link: domains/finance-management/payment-service/index.html
+          icon: mat-payments
+        - title: Accounting Service
+          link: domains/finance-management/accounting-service/index.html
+          icon: mat-calculate
+    - title: Service & Repair Management
+      link: domains/service-management/index.html
+      buttons:
+        - title: Appointment Service
+          link: domains/service-management/appointment-service/index.html
+          icon: mat-event
+        - title: Repair Tracking Service
+          link: domains/service-management/repair-tracking-service/index.html
+          icon: mat-track_changes
+        - title: Parts Inventory Service
+          link: domains/service-management/parts-inventory-service/index.html
+          icon: mat-build_circle
+    - title: User Management
+      link: domains/user-management/index.html
+      buttons:
+        - title: Account Service
+          link: domains/user-management/account-service/index.html
+          icon: mat-manage_accounts
+        - title: Role Service
+          link: domains/user-management/role-service/index.html
+          icon: mat-security
+        - title: Permission Service
+          link: domains/user-management/permission-service/index.html
+          icon: mat-lock_open
+    - title: Analytics & Reporting
+      link: domains/analytics-reporting/index.html
+      buttons:
+        - title: Sales Dashboard
+          link: domains/analytics-reporting/sales-dashboard/index.html
+          icon: mat-dashboard
+        - title: Inventory Reports
+          link: domains/analytics-reporting/inventory-reports/index.html
+          icon: mat-insights
+- title: Dealership Principles
+  link: null
+  sectionType: side
+  buttonType: default
+  buttons:
+    - title: Customer Satisfaction
+      link: principles/customer-satisfaction/index.html
+      icon: mat-thumb_up_alt
+    - title: Data Security
+      link: principles/data-security/index.html
+      icon: mat-security
+    - title: Streamlined Processes
+      link: principles/streamlined-processes/index.html
+      icon: mat-tune
+    - title: Continuous Improvement
+      link: principles/continuous-improvement/index.html
+      icon: mat-update
+    - title: Team Collaboration
+      link: principles/team-collaboration/index.html
+      icon: mat-groups
+    - title: Scalable Growth
+      link: principles/scalable-growth/index.html
+      icon: mat-trending_up
+    - title: Innovation
+      link: principles/innovation/index.html
+      icon: mat-lightbulb

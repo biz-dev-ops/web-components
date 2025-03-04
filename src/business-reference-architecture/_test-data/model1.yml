@@ -1,0 +1,159 @@
+---
+- title: User Roles
+  link: null
+  arrow: down
+  buttonType: brand
+  buttons:
+    - title: Student
+      link: users/student/index.html
+      icon: mat-school
+    - title: Teacher
+      link: users/teacher/index.html
+      icon: mat-person_pin
+    - title: Parent
+      link: users/parent/index.html
+      icon: mat-family_restroom
+    - title: Administrator
+      link: users/administrator/index.html
+      icon: mat-admin_panel_settings
+    - title: Guest
+      link: users/guest/index.html
+      icon: mat-account_circle
+- title: Access Platforms
+  link: null
+  arrow: down
+  buttons:
+    - title: Mobile App
+      link: platforms/mobile-app/index.html
+      icon: mat-smartphone
+    - title: Web Portal
+      link: platforms/web-portal/index.html
+      icon: mat-desktop_windows
+    - title: API Integration
+      link: platforms/api-integration/index.html
+      icon: mat-api
+    - title: Email Notifications
+      link: platforms/email-notifications/index.html
+      icon: mat-email
+    - title: SMS Alerts
+      link: platforms/sms-alerts/index.html
+      icon: mat-sms
+    - title: Classroom Displays
+      link: platforms/classroom-displays/index.html
+      icon: mat-tv
+    - title: Print Reports
+      link: platforms/print-reports/index.html
+      icon: mat-print
+- title: Core Processes
+  link: null
+  buttonType: stream
+  sectionType: streams
+  buttons:
+    - title: Enrollment
+      link: processes/enrollment/index.html
+    - title: Learning
+      link: processes/learning/index.html
+    - title: Assessment
+      link: processes/assessment/index.html
+    - title: Reporting
+      link: processes/reporting/index.html
+- title: System Services
+  link: null
+  arrow: up
+  buttonType: default
+  groups:
+    - title: Student Management
+      link: domains/student-management/index.html
+      buttons:
+        - title: Attendance Service
+          link: domains/student-management/attendance-service/index.html
+          icon: mat-event_available
+        - title: Grade Service
+          link: domains/student-management/grade-service/index.html
+          icon: mat-grade
+        - title: Profile Service
+          link: domains/student-management/profile-service/index.html
+          icon: mat-person
+    - title: Course Management
+      link: domains/course-management/index.html
+      buttons:
+        - title: Curriculum Service
+          link: domains/course-management/curriculum-service/index.html
+          icon: mat-menu_book
+        - title: Assignment Service
+          link: domains/course-management/assignment-service/index.html
+          icon: mat-assignment
+        - title: Schedule Service
+          link: domains/course-management/schedule-service/index.html
+          icon: mat-calendar_month
+    - title: Communication Management
+      link: domains/communication-management/index.html
+      buttons:
+        - title: Announcement Service
+          link: domains/communication-management/announcement-service/index.html
+          icon: mat-campaign
+        - title: Messaging Service
+          link: domains/communication-management/messaging-service/index.html
+          icon: mat-chat
+        - title: Notification Service
+          link: domains/communication-management/notification-service/index.html
+          icon: mat-notifications
+    - title: Resource Management
+      link: domains/resource-management/index.html
+      buttons:
+        - title: Library Service
+          link: domains/resource-management/library-service/index.html
+          icon: mat-local_library
+        - title: Equipment Service
+          link: domains/resource-management/equipment-service/index.html
+          icon: mat-build
+        - title: Material Service
+          link: domains/resource-management/material-service/index.html
+          icon: mat-inventory
+    - title: User Management
+      link: domains/user-management/index.html
+      buttons:
+        - title: Account Service
+          link: domains/user-management/account-service/index.html
+          icon: mat-manage_accounts
+        - title: Role Service
+          link: domains/user-management/role-service/index.html
+          icon: mat-security
+        - title: Permission Service
+          link: domains/user-management/permission-service/index.html
+          icon: mat-lock_open
+    - title: Analytics & Reporting
+      link: domains/analytics-reporting/index.html
+      buttons:
+        - title: Performance Dashboard
+          link: domains/analytics-reporting/performance-dashboard/index.html
+          icon: mat-dashboard
+        - title: Custom Reports
+          link: domains/analytics-reporting/custom-reports/index.html
+          icon: mat-insights
+- title: Guiding Principles
+  link: null
+  sectionType: side
+  buttonType: default
+  buttons:
+    - title: Accessibility for All
+      link: principles/accessibility-for-all/index.html
+      icon: mat-accessibility
+    - title: Data Privacy & Security
+      link: principles/data-privacy-security/index.html
+      icon: mat-security
+    - title: User-Centric Design
+      link: principles/user-centric-design/index.html
+      icon: mat-design_services
+    - title: Continuous Improvement
+      link: principles/continuous-improvement/index.html
+      icon: mat-update
+    - title: Collaboration & Communication
+      link: principles/collaboration-communication/index.html
+      icon: mat-groups
+    - title: Scalability & Reliability
+      link: principles/scalability-reliability/index.html
+      icon: mat-settings_system_daydream
+    - title: Innovation & Adaptability
+      link: principles/innovation-adaptability/index.html
+      icon: mat-lightbulb

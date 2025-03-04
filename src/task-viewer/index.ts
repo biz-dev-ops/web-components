@@ -13,11 +13,11 @@ export class TaskViewer extends UseCaseViewer<Task> {
     name: "Task",
   };
 
-  renderMain() {
+  renderMain(model:Task) {
     return html`
-      ${this.modelViewerTemplate(`Context`, this.model?.context)}
-      ${this.casesTemplate("Actions", this.model?.actions)}
-      ${this.casesTemplate("Exceptions", this.model?.exceptions)}
+      ${this.modelViewerTemplate(`Context`, model?.context)}
+      ${this.casesTemplate("Actions", model?.actions)}
+      ${this.casesTemplate("Exceptions", model?.exceptions)}
     `;
   }
 

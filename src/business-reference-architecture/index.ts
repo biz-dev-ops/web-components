@@ -1,14 +1,7 @@
 import { css, html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-
 import resetStyles from "../shared/styles/reset";
 import { Section } from "./models";
-
-if (process.env.NODE_ENV !== "production") {
-  require("@biz-dev-ops/md-docs/assets/style/page/style.css?dev");
-  require("../../assets/style/custom-theme.css?dev");
-}
-
 import "./architecture-section";
 import { FetchError, fetchYamlAndBundleAs } from "../shared/fetch";
 
@@ -30,14 +23,13 @@ export class BusinessReferenceArchitectureComponent extends LitElement {
 
     return html`
       <div class="architecture-section-grid" data-has-side="${this.hasSide()}">
-        ${this.model.map((section) =>
-          html`<architecture-section
-                .section=${section}
-                .arrow=${section.arrow}
-                .sectionType=${section.sectionType}
-                .buttonType=${section.buttonType}
-              ></architecture-section>`
-        )}
+        ${this.model.map((section) => html`<architecture-section
+                  .section=${section}
+                  .arrow=${section.arrow}
+                  .sectionType=${section.sectionType}
+                  .buttonType=${section.buttonType}
+                ></architecture-section>`
+      )}
       </div>
     `;
   }

@@ -32,14 +32,21 @@ The business model canvas model, must be set via JavaScript.
 ### model-json attribute
 
 ```html
-<business-model-canvas id="business-model-canvas" data-json=" { ...json }"></business-model-canvas>
+<business-model-canvas data-json=" { ...json }"></business-model-canvas>
 ```
 
 ### Javascript
 
-```javascript
-  document.getElementById('business-model-canvas').model = {
-    keyPartnerships: [ "..." ],
+```html
+  <business-model-canvas id="viewer"></business-model-canvas>
+
+  <script>
+    const viewer = document.getElementById("viewer");
+
+    viewer.src = "./model.yml";
+
+    viewer.model = {
+      keyPartnerships: [ "..." ],
       keyActivities: [ "..." ],
       keyResources: [ "..." ],
       valuePropositions: [ "..." ],
@@ -48,5 +55,6 @@ The business model canvas model, must be set via JavaScript.
       customerSegments: [ "..." ],
       costStructure: [ "..." ],
       revenueStreams: [ "..." ]
-  }
+    };
+  <script>
 ```
