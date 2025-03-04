@@ -40,8 +40,6 @@ describe("BusinessModelCanvasComponent", () => {
     it("renders without data", async () => {
         container.appendChild(element);
 
-        await expect($(">>>.canvas-grid")).toBeExisting();
-        await expect($$(">>>.canvas-grid__item")).toBeElementsArrayOfSize(Object.keys(data).length);
         await testModelContent(data);
     });
 
@@ -49,8 +47,6 @@ describe("BusinessModelCanvasComponent", () => {
         element.setAttribute("data-json", JSON.stringify(testData));
         container.appendChild(element);
 
-        await expect($(">>>.canvas-grid")).toBeExisting();
-        await expect($$(">>>.canvas-grid__item")).toBeElementsArrayOfSize(Object.keys(data).length);
         await testModelContent(testData);
     });
 
@@ -58,8 +54,6 @@ describe("BusinessModelCanvasComponent", () => {
         element.setAttribute("src", testDataSrc);
         container.appendChild(element);
 
-        await expect($(">>>.canvas-grid")).toBeExisting();
-        await expect($$(">>>.canvas-grid__item")).toBeElementsArrayOfSize(Object.keys(testData).length);
         await testModelContent(testData);
     });
 
@@ -79,6 +73,9 @@ describe("BusinessModelCanvasComponent", () => {
 });
 
 async function testModelContent(data: Model): Promise<void> {
+    await expect($(">>>.canvas-grid")).toBeExisting();
+    await expect($$(">>>.canvas-grid__item")).toBeElementsArrayOfSize(Object.keys(data).length);
+    
     for (const key in data) {
         if (data.hasOwnProperty(key)) {
             const segment = data[key];
