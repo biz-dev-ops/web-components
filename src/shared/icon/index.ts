@@ -1,6 +1,7 @@
 import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
+import resetCss from '../styles/reset.css';
 import styles from "./icon.css";
 import "material-symbols/outlined.css?dev";
 
@@ -24,6 +25,6 @@ export class Icon extends LitElement {
   }
 
   static override get styles() {
-    return styles;
+    return [resetCss, styles];
   }
 }

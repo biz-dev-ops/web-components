@@ -1,5 +1,6 @@
 import { LitElement, html } from "lit";
 import { customElement, property, queryAssignedNodes } from "lit/decorators.js";
+import resetCss from '../styles/reset.css';
 import expansionPanelCss from './expansion-panel.css';
 
 @customElement('bdo-expansion-panel')
@@ -22,6 +23,6 @@ export class BdoExpansionPanel extends LitElement {
     }
 
     static override get styles() {
-        return expansionPanelCss;
+        return [resetCss, expansionPanelCss];
     }
 }

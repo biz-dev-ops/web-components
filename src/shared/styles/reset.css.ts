@@ -1,7 +1,6 @@
 import { css } from "lit";
 
 export default css`
-    /* Reset */
     :host {
         all: unset;
         font-family: var(--font-family-base);

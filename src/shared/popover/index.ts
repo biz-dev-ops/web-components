@@ -1,5 +1,6 @@
 import { LitElement, html } from "lit";
 import { customElement, query } from "lit/decorators.js";
+import resetCss from '../styles/reset.css';
 import popoverCss from "./popover.css";
 
 @customElement("bdo-popover")
@@ -54,7 +55,7 @@ export class BdoPopover extends LitElement {
     };
 
     static override get styles() {
-        return popoverCss;
+        return [resetCss, popoverCss];
     }
 }
 

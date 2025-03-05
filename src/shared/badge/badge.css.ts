@@ -1,22 +1,6 @@
 import { css } from "lit";
 
 const buttonCss = css`
-    /* Reset */
-    :host {
-        all: unset;
-        font-family: var(--font-family-base);
-        font-size: var(--font-size-base);
-        display: inline-block;
-        line-height: var(--line-height-base);
-        box-sizing: border-box;
-        text-align: start;
-    }
-
-    :where(*, ::before, ::after) {
-        box-sizing: border-box;
-    }
-    
-    /* Component */
     :host {
         --_badge-color: var(--badge-color, var(--color-brand-a10));
         --_badge-text-color: var(--badge-text-color, var(--text-color-base));

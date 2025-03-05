@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import resetCss from '../styles/reset.css';
 import badgeCss from './badge.css';
 import "../icon";
 
@@ -10,7 +11,7 @@ export class BdoBadge extends LitElement {
 
     @property({ type: String })
     icon!: string;
-        
+
     override render() {
         return html`
             <div class="badge ${this.type ? `badge-${this.type}` : ``}">
@@ -21,6 +22,6 @@ export class BdoBadge extends LitElement {
     }
 
     static override get styles() {
-        return badgeCss;
+        return [resetCss, badgeCss];
     }
 }
