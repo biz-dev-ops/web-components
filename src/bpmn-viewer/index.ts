@@ -1,15 +1,17 @@
 import { css, html, LitElement, unsafeCSS } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import TokenSimulationModule from "bpmn-js-token-simulation/lib/viewer";
-import Viewer from "bpmn-js/lib/NavigatedViewer";
 
-import styles from "../shared/styles/reset.css";
+import resetCss from "../shared/styles/reset.css";
+import themeCss from "../shared/styles/theme.css";
 import viewerDiagramJsCss from "bpmn-js/dist/assets/diagram-js.css";
 import viewerBpmnJsCss from "bpmn-js/dist/assets/bpmn-js.css";
 import simulatorCss from "bpmn-js-token-simulation/assets/css/bpmn-js-token-simulation.css";
 
-import * as bizdevops from "./bizdevops.moddle.json";
+import TokenSimulationModule from "bpmn-js-token-simulation/lib/viewer";
+import Viewer from "bpmn-js/lib/NavigatedViewer";
 import { Element, ModdleElement } from "bpmn-js/lib/model/Types";
+
+import * as bizdevops from "./bizdevops.moddle.json";
 
 interface Link {
   name?: string;
@@ -185,7 +187,8 @@ export class BPMNViewer extends LitElement {
 
   static override get styles() {
     return [
-      styles,
+      resetCss,
+      themeCss,
       css`
         :host {
           display: block;
