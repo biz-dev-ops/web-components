@@ -2,7 +2,7 @@ import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import {ifDefined} from 'lit/directives/if-defined.js';
 
-import styles from "../../shared/styles/reset";
+import styles from "../../shared/styles/reset.css";
 import { Section, ButtonType, ArrowDirection, SectionType } from "../models";
 
 import "../architecture-group";

@@ -16,7 +16,7 @@ export default css`
     :where(*, ::before, ::after) {
         box-sizing: border-box;
     }
-    
+
     /* Component */
     :host {
         --expansion-panel-border-color: var(--use-case-color-500);

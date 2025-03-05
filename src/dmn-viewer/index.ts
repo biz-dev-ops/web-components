@@ -1,6 +1,6 @@
 import { css, LitElement, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import styles from "../shared/styles/reset";
+import styles from "../shared/styles/reset.css";
 
 import Viewer from 'dmn-js';
 import ViewerSharedCss from 'dmn-js/dist/assets/dmn-js-shared.css';

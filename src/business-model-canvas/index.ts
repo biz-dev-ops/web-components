@@ -1,6 +1,7 @@
 import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import styles from "../shared/styles/reset";
+import resetCss from "../shared/styles/reset.css";
+import themeCss from "../shared/styles/theme.css";
 import { Model } from "./models";
 import "./canvas-box";
 import { data } from "./data";
@@ -117,7 +118,8 @@ export class BusinessModelCanvasComponent extends LitElement {
 
   static override get styles() {
     return [
-      styles,
+      resetCss,
+      themeCss,
       css`
         .canvas-grid {
           width: 100%;
