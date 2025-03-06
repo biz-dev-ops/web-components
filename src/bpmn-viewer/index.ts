@@ -4,9 +4,9 @@ import TokenSimulationModule from "bpmn-js-token-simulation/lib/viewer";
 import Viewer from "bpmn-js/lib/NavigatedViewer";
 
 import styles from "../shared/styles/reset";
-import viewerDiagramJsCss from "bpmn-js/dist/assets/diagram-js.css";
-import viewerBpmnJsCss from "bpmn-js/dist/assets/bpmn-js.css";
-import simulatorCss from "bpmn-js-token-simulation/assets/css/bpmn-js-token-simulation.css";
+import viewerDiagramJsCss from "bpmn-js/dist/assets/diagram-js.css?inline";
+import viewerBpmnJsCss from "bpmn-js/dist/assets/bpmn-js.css?inline";
+import simulatorCss from "bpmn-js-token-simulation/assets/css/bpmn-js-token-simulation.css?inline";
 
 import * as bizdevops from "./bizdevops.json";
 import { Element, ModdleElement } from "bpmn-js/lib/model/Types";
@@ -72,7 +72,7 @@ export class BPMNViewer extends LitElement {
 
       if (warnings.length) {
         console.log("bpmn import with warnings", warnings);
-      } 
+      }
       else {
         console.log("bpmn import successful");
       }
@@ -88,7 +88,7 @@ export class BPMNViewer extends LitElement {
       if(this.disableInteraction) {
         this.toggleInteraction(false);
       }
-    } 
+    }
     catch (err) {
       console.log("something went wrong while importing bpmn:", err);
     }

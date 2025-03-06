@@ -11,11 +11,6 @@ import { ModelItemBuilder } from "./modules/model-item-builder";
 
 import "./components/model-viewer-path";
 
-if (process.env.NODE_ENV !== "production") {
-  require("@biz-dev-ops/md-docs/assets/style/page/style.css?dev");
-  require("../../assets/style/custom-theme.css?dev");
-}
-
 @customElement("model-viewer")
 export class ModelViewer extends LitElement {
   @property()

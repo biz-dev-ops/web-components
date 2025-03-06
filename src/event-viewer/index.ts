@@ -1,11 +1,6 @@
 import { html } from "lit";
 import { customElement } from "lit/decorators.js";
 
-if (process.env.NODE_ENV !== "production") {
-  require("@biz-dev-ops/md-docs/assets/style/page/style.css?dev");
-  require("../../assets/style/custom-theme.css?dev");
-}
-
 import { UseCaseViewer } from "../use-case-viewer";
 import { Event } from "./models";
 import eventViewerCss from "./event-viewer.css";

@@ -3,11 +3,11 @@ import { customElement, property } from 'lit/decorators.js';
 import styles from "../shared/styles/reset";
 
 import Viewer from 'dmn-js';
-import ViewerSharedCss from 'dmn-js/dist/assets/dmn-js-shared.css';
-import ViewerDrdCss from 'dmn-js/dist/assets/dmn-js-drd.css';
-import ViewerDecisionTableCss from 'dmn-js/dist/assets/dmn-js-decision-table.css';
-import ViewerLiteralExpressionCss from 'dmn-js/dist/assets/dmn-js-literal-expression.css';
-import ViewerDMNCss from 'dmn-js/dist/assets/dmn-font/css/dmn.css';
+import ViewerSharedCss from 'dmn-js/dist/assets/dmn-js-shared.css?inline';
+import ViewerDrdCss from 'dmn-js/dist/assets/dmn-js-drd.css?inline';
+import ViewerDecisionTableCss from 'dmn-js/dist/assets/dmn-js-decision-table.css?inline';
+import ViewerLiteralExpressionCss from 'dmn-js/dist/assets/dmn-js-literal-expression.css?inline';
+import ViewerDMNCss from 'dmn-js/dist/assets/dmn-font/css/dmn.css?inline';
 
 @customElement('dmn-viewer')
 export class DMNViewer extends LitElement {
@@ -30,7 +30,7 @@ export class DMNViewer extends LitElement {
       else {
         console.log('import successful');
       }
-      
+
       this.zoomReset();
     }
     catch (err) {
