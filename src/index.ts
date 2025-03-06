@@ -13,3 +13,6 @@ export * from './command-viewer'
 export * from './event-viewer'
 export * from './query-viewer'
 export * from './task-viewer'
+
+
+console.log('sup fool')

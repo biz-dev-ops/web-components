@@ -28,9 +28,9 @@
     "dist/**/*.ts.map"
   ],
   "scripts": {
-    "develop": "webpack-dev-server --mode development --config webpack.config.dev.js",
     "build": "vite build",
-    "dev": "vite serve",
+    "develop": "vite dev",
+    "dev": "npm run develop",
     "test": "wdio run ./wdio.conf.ts"
   },
   "dependencies": {
