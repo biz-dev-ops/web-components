@@ -1,4 +1,4 @@
-import { $, expect } from "@wdio/globals";
+import { $, $$, expect } from "@wdio/globals";
 import "./index";
 import { parse as yamlParse } from "yaml";
 import { Event } from "./models";
