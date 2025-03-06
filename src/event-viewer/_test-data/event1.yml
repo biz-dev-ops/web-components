@@ -1,0 +1,51 @@
+---
+name: Appointment Scheduled
+description: |
+  This event is triggered when a new appointment is successfully scheduled.
+  It provides details about the appointment, including type, date, time,
+  client, and service provider.
+
+  This event enables downstream systems to react to new appointment bookings,
+  such as sending confirmation emails, updating calendars, or triggering
+  related workflows.
+parameters:
+  title: appointment_scheduled_payload
+  type: object
+  properties:
+    appointment_id:
+      type: string
+      description: Unique identifier for the appointment.
+      example: appt_98765
+    appointment_type:
+      type: string
+      description: Type of appointment (e.g., consultation, service).
+      example: Consultation
+    appointment_date:
+      type: string
+      format: date
+      description: Date of the appointment.
+      example: 2025-03-15
+    appointment_time:
+      type: string
+      format: time
+      description: Time of the appointment.
+      example: "14:00:00"
+    client_id:
+      type: string
+      description: Unique identifier for the client.
+      example: client_101
+    service_provider_id:
+      type: string
+      description: Unique identifier for the service provider.
+      example: provider_202
+    notes:
+      type: string
+      description: Additional notes or instructions.
+      example: "Please bring relevant documents."
+  required:
+    - appointment_id
+    - appointment_type
+    - appointment_date
+    - appointment_time
+    - client_id
+    - service_provider_id

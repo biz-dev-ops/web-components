@@ -1,20 +1,126 @@
 ---
-name: Create order command
+name: Schedule Appointment
 description: |
-  The "Create Order" command is used to initiate the process of placing an order within a system.
-  It enables the user to provide essential details about the order, such as:
+  The "Schedule Appointment" use case allows users to book a new appointment.
+  It captures essential details like the appointment type, date, time,
+  client information, and service provider.
 
-  - a unique order ID
-  - customer information
-  - a list of items being purchased (with their quantities and prices)
-  - the total cost of the order
-  - the shipping address
-
-  This command ensures accurate and organized data entry,
-  which facilitates smooth order processing, tracking, and fulfillment.
-  Additionally, it validates the input parameters to meet necessary criteria,
-  such as ensuring items have valid IDs and quantities are above zero.
+  This ensures efficient appointment management,
+  reduces scheduling conflicts, and provides clear communication
+  between the client and service provider.
+  Validation ensures all required fields are provided and dates/times are valid.
 parameters:
-  $ref: "./parameters1.yml"
+  title: schedule_appointment_parameters
+  type: object
+  properties:
+    appointment_id:
+      type: string
+      description: Unique identifier for the appointment.
+      example: appt_98765
+    appointment_type:
+      type: string
+      description: Type of appointment (e.g., consultation, service).
+      example: Consultation
+    appointment_date:
+      type: string
+      format: date
+      description: Date of the appointment.
+      example: 2025-03-15
+    appointment_time:
+      type: string
+      format: time
+      description: Time of the appointment.
+      example: "14:00:00"
+    client_id:
+      type: string
+      description: Unique identifier for the client.
+      example: client_101
+    service_provider_id:
+      type: string
+      description: Unique identifier for the service provider.
+      example: provider_202
+    notes:
+      type: string
+      description: Additional notes or instructions.
+      example: "Please bring relevant documents."
+  required:
+    - appointment_id
+    - appointment_type
+    - appointment_date
+    - appointment_time
+    - client_id
+    - service_provider_id
 exceptions:
-  $ref: "./exceptions1.yml"
+  client_not_found:
+    name: Client Not Found Exception
+    description: The specified client ID does not exist.
+    parameters:
+      type: object
+      description: Details about the client not found.
+      properties:
+        client_id:
+          type: string
+          description: The provided client ID.
+          example: client_101
+        message:
+          type: string
+          description: Error message.
+          example: "Client with ID client_101 not found."
+      required:
+        - client_id
+        - message
+  provider_unavailable:
+    name: Provider Unavailable Exception
+    description: The service provider is not available at the requested time.
+    parameters:
+      type: object
+      description: Details about the provider availability.
+      properties:
+        service_provider_id:
+          type: string
+          description: The provided service provider ID.
+          example: provider_202
+        appointment_date:
+          type: string
+          format: date
+          description: The requested appointment date.
+          example: 2025-03-15
+        appointment_time:
+          type: string
+          format: time
+          description: The requested appointment time.
+          example: "14:00:00"
+        message:
+          type: string
+          description: Error message.
+          example: "Provider provider_202 is unavailable on 2025-03-15 at 14:00:00."
+      required:
+        - service_provider_id
+        - appointment_date
+        - appointment_time
+        - message
+  invalid_time_slot:
+    name: Invalid Time Slot Exception
+    description: The requested time slot is invalid or outside of working hours.
+    parameters:
+      type: object
+      description: Details about the time slot.
+      properties:
+        appointment_date:
+          type: string
+          format: date
+          description: The requested appointment date.
+          example: 2025-03-15
+        appointment_time:
+          type: string
+          format: time
+          description: The requested appointment time.
+          example: "14:00:00"
+        message:
+          type: string
+          description: Error message.
+          example: "The requested time slot is outside of working hours."
+      required:
+        - appointment_date
+        - appointment_time
+        - message

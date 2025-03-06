@@ -1,90 +1,41 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Event viewer</title>
+  </head>
 
-<head>
-  <meta charset="utf-8" />
-  <title>Event viewer</title>
-</head>
-
-<body>
-  <main>
-    <div class="content">
-      <div class="header-container h1">
-        <div class="header">
-          <h1>Event viewer</h1>
-        </div>
-        <div class="container">
-          <event-viewer model-json='
-          {
-            "name": "Test event",
-            "description": "........",
-            "parameters": {
-              "required": [
-                "depot",
-                "colleteral",
-                "production_options"
-              ],
-              "properties": {
-                "depot": {
-                  "required": [
-                    "type_of_contruction",
-                    "orginal_deposit",
-                    "remaining_deposit"
-                  ],
-                  "properties": {
-                    "type_of_contruction": {
-                      "type": "string",
-                      "enum": [
-                        "NEW_CONSTRUCTION",
-                        "RENOVATION"
-                      ]
-                    },
-                    "orginal_deposit": {
-                      "type": "integer"
-                    },
-                    "remaining_deposit": {
-                      "type": "integer"
-                    }
-                  }
-                },
-                "colleteral": {
-                  "required": [
-                    "market_value_before_rennovation",
-                    "market_value_after_rennovation"
-                  ],
-                  "properties": {
-                    "market_value_before_rennovation": {
-                      "type": "integer"
-                    },
-                    "market_value_after_rennovation": {
-                      "type": "integer"
-                    }
-                  }
-                },
-                "production_options": {
-                  "required": [
-                    "remaining_construction_deposit_amount_threshold",
-                    "remaining_construction_deposit_percentage_threshold",
-                    "remaining_construction_deposit_adjustment_percentage"
-                  ],
-                  "properties": {
-                    "remaining_construction_deposit_amount_threshold": {
-                      "type": "integer"
-                    },
-                    "remaining_construction_deposit_percentage_threshold": {
-                      "type": "number"
-                    },
-                    "remaining_construction_deposit_adjustment_percentage": {
-                      "type": "number"
-                    }
-                  }
-                }
-              }
-            }
-          }
-          '></event-viewer>
+  <body>
+    <main>
+      <div class="content">
+        <div class="header-container h1">
+          <div class="header">
+            <h1>Event viewer</h1>
+          </div>
+          <div id="buttons">
+            <button id="change-src">Change src</button>
+          </div>
+          <div class="container">
+            <event-viewer src="./_test-data/event1.yml"></event-viewer>
+            <h2>Run tests</h2>
+            <code>
+              npx wdio run ./wdio.conf.ts --spec ./src/event-viewer/index.test.ts
+            </code>
+          </div>
         </div>
       </div>
-  </main>
-</body>
+    </main>
+
+    <script lang="javascript">
+      const buttons = document.getElementById("buttons");
+      const viewer = document.getElementsByTagName("event-viewer")[0];
+
+      buttons.addEventListener("click", function (event) {
+        const target = event.target;
+        if (target.id === "change-src") {
+          viewer.setAttribute("src", viewer.src.endsWith("event1.yml") ? "./_test-data/event2.yml" : "./_test-data/event1.yml");
+        }
+      });
+    </script>
+  </body>
 </html>

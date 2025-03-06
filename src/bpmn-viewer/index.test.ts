@@ -124,7 +124,7 @@ describe("BPMNViewer", () => {
 
   //It returns 200 for non existing bpmn. Check why.
   // it("displays error message on fetch failure", async () => {
-  //     const notAValidUrl = ;
+  //     const notAValidUrl = "./not-valid.bpmn";
   //     viewer.src = notAValidUrl;
   //     container.appendChild(viewer);
 

@@ -89,6 +89,7 @@ export class ModelViewerItemOneOf extends ModelViewerItem {
 
         return html`
             <model-viewer-item-one-of
+                aria-label="model-viewer-item"
                 property=${decorated.property}
                 title=${titlelize(decorated.title)}
                 .items=${decorated.item.oneOf}

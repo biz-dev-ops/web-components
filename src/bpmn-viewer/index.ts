@@ -68,7 +68,7 @@ export class BPMNViewer extends LitElement {
       const response = await fetch(this.src);
       if (!response.ok) {
         const container = this.shadowRoot?.querySelector("#bpmn-container") as HTMLElement;
-        container.innerHTML = `<div class="errro">Failed to fetch ${this.src}</div>`;
+        container.innerHTML = `<div class="error">Failed to fetch ${this.src}</div>`;
         console.error(`Failed to fetch ${this.src}, status: ${response.status}, ${response.statusText}`, response);
         return;
       }

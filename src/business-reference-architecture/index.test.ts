@@ -9,22 +9,9 @@ describe("BusinessReferenceArchitectureComponent", () => {
     const testDataSrc = "src/business-reference-architecture/_test-data/model1.yml";
     let testData: Section[];
 
-    before("load test data", function (done) {
-        fetch(testDataSrc)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Failed to fetch ${testDataSrc}`);
-                }
-                return response.text();
-            })
-            .then(data => {
-                testData = yamlParse(data);
-                done();
-            })
-            .catch(err => {
-                console.log(err);
-                done();
-            });
+    before("load test data", async function () {
+        let response = await fetch(testDataSrc);
+        testData = yamlParse(await response.text());
     });
 
     beforeEach(() => {

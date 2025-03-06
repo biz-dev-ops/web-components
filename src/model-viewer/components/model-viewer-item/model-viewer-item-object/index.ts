@@ -28,6 +28,7 @@ export class ModelViewerItemObject extends ModelViewerItem {
 
         return html`
             <model-viewer-item-object
+                aria-label="model-viewer-item"
                 property=${decorated.property}
                 title=${titlelize(decorated.title)}
                 .item=${decorated.item}

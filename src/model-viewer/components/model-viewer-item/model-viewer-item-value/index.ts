@@ -68,7 +68,7 @@ export class ModelViewerItemValue extends ModelViewerItem {
             dd + dt {
                 margin-block-start: 1em;
             }
-            
+
             .item--value {
                 background-color: var(--color-black-a05);
                 border-radius: var(--radius-half);
@@ -97,6 +97,7 @@ export class ModelViewerItemValue extends ModelViewerItem {
 
         return html`
             <model-viewer-item-value
+              aria-label="model-viewer-item"
               property=${decorated.property}
               title=${titlelize(decorated.title)}
               .item=${decorated.item}

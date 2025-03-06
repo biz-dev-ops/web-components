@@ -5,13 +5,11 @@ export default css`
     /* Default theme values */
     --rgb-brand: 0 0 0;
     --rgb-brand-secondary: var(--rgb-brand);
-    --rgb-text: 0 0 0;
-    --rgb-heading: 0 0 0;
+    --rgb-text: var(--rgb-brand);
+    --rgb-heading: var(--rgb-brand-secondary);
 
     --color-brand-base: rgb(var(--rgb-brand));
     --color-brand-pop: rgb(var(--rgb-brand-secondary));
-    /* deprecated */
-    --color-brand-secondary: rgb(var(--rgb-brand-secondary));
 
     --text-color-base: rgba(var(--rgb-text) / 90%);
     --text-color-heading: rgb(var(--rgb-heading));
@@ -68,6 +66,9 @@ export default css`
     --status-pending: var(--color-warning-secondary);
     --status-pending-100: var(--color-warning-secondary-100);
 
+    /* Main */
+    --main-surface: var(--color-white);
+
     /* Typography */
     --font-family-base: -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Helvetica', 'Arial', sans-serif;
     --font-family-heading: -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Helvetica', 'Arial', sans-serif;
@@ -85,12 +86,6 @@ export default css`
     --font-size-sm: .875rem;
     --font-size-base: 1rem;
     --font-size-md: 1.125rem;
-
-    /* Dimensions */
-    /* --logo-height: 3rem;
-    --max-text-width: 50rem;
-    --nav-width: 20rem;
-    --header-height: 12rem; */
 
     /* Link */
     --link-text-color: var(--color-brand-base, var(--text-color-base));
@@ -116,34 +111,15 @@ export default css`
     /* Transition */
     --duration-base: 250ms;
 
-    /* z-indexes */
-    /* --z-header: 900;
-    --z-nav: 901;
-    --z-fullscreen: 902;
-    --z-fullscreen-button: 100; */
-
     /* Lines */
     --line-base: .0625rem;
     --line-thin: .125rem;
     --line-medium: .1875rem;
 
-    /* Radii */
+    /* Radius */
     --radius-half: .375rem;
     --radius-base: .75rem;
     --radius-pill: 99rem;
     --radius-circle: 50%;
-
-    /* Page */
-    /* --page-surface: var(--color-brand-base, var(--color-black-a80)); */
-
-    /* Main */
-    /* --main-surface: var(--color-white);
-    --main-margin: var(--space-sm); */
-
-    /* Content */
-    /* --content-padding-inline: var(--space-xl); */
-
-    /* Menu */
-    /* --menu-text-color: var(--color-white); */
   }
 `;

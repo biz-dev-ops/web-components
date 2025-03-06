@@ -47,7 +47,6 @@ main {
 
 @media (min-width: 1400px) {
   .canvas-wrapper {
-    padding: var(--space-lg) var(--content-padding-inline)
-      calc(var(--space-lg) * 2);
+    padding: var(--space-lg) var(--space-xl) calc(var(--space-lg) * 2);
   }
 }

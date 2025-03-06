@@ -10,22 +10,9 @@ describe("BusinessModelCanvasComponent", () => {
     const testDataSrc = "src/business-model-canvas/_test-data/test.yml";
     let testData;
 
-    before("load test data", function (done) {
-        fetch(testDataSrc)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Failed to fetch ${testDataSrc}`);
-                }
-                return response.text();
-            })
-            .then(data => {
-                testData = yamlParse(data);
-                done();
-            })
-            .catch(err => {
-                console.log(err);
-                done();
-            });
+    before("load test data", async function () {
+        let response = await fetch(testDataSrc);
+        testData = yamlParse(await response.text());
     });
 
     beforeEach(() => {
@@ -75,7 +62,7 @@ describe("BusinessModelCanvasComponent", () => {
 async function testModelContent(data: Model): Promise<void> {
     await expect($(">>>.canvas-grid")).toBeExisting();
     await expect($$(">>>.canvas-grid__item")).toBeElementsArrayOfSize(Object.keys(data).length);
-    
+
     for (const key in data) {
         if (data.hasOwnProperty(key)) {
             const segment = data[key];

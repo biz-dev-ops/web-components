@@ -1,9 +1,9 @@
 import { $, expect } from "@wdio/globals";
-import "./index";
-import testDmn from "./_test-data/test.dmn";
+import { DMNViewer } from "./index";
+const testDmn = "src/smn-viewer/_test-data/test.dmn";
 
 describe("DMNViewer", () => {
-  let element: HTMLElement;
+  let viewer: DMNViewer;
   let container: HTMLElement;
 
   beforeEach(() => {
@@ -11,25 +11,25 @@ describe("DMNViewer", () => {
     container.style.width = "500px";
     container.style.height = "500px";
     document.body.appendChild(container);
-    element = document.createElement("dmn-viewer");
-    element.setAttribute("data-xml", testDmn);
+    viewer = document.createElement("dmn-viewer") as DMNViewer;
   });
 
   it("renders without data", async () => {
-    element.removeAttribute("data-xml");
-    container.appendChild(element);
-    
+    container.appendChild(viewer);
+
     await expect($(">>>.bjs-container svg")).not.toBeNull();
   });
 
   it("renders with a dmn file", async () => {
-    container.appendChild(element);
-    
+    viewer.setAttribute("src", testDmn);
+    container.appendChild(viewer);
+
     await expect($(">>>.bjs-container svg g g .djs-group")).not.toBeNull();
   });
 
   it("decission model navigation buttons are working", async () => {
-    container.appendChild(element);
+    viewer.setAttribute("src", testDmn);
+    container.appendChild(viewer);
 
     await expect($(">>>.dmn-drd-container")).toBeExisting();
     await expect($(">>>.dmn-decision-table-container")).not.toBeExisting();
@@ -46,7 +46,8 @@ describe("DMNViewer", () => {
   });
 
   it("business knowledge model navigation buttons are working", async () => {
-    container.appendChild(element);
+    viewer.setAttribute("src", testDmn);
+    container.appendChild(viewer);
 
     await expect($(">>>.dmn-drd-container")).toBeExisting();
     await expect($(">>>.dmn-boxed-expression-container")).not.toBeExisting();
@@ -62,7 +63,16 @@ describe("DMNViewer", () => {
     await expect($(">>>.dmn-boxed-expression-container")).not.toBeExisting();
   });
 
+   //It returns 200 for non existing bpmn. Check why.
+  // it("displays error message on fetch failure", async () => {
+  //     const notAValidUrl = "./not-valid.dmn";
+  //     viewer.src = notAValidUrl;
+  //     container.appendChild(viewer);
+
+  //     await expect($(">>>.error")).toBeExisting();
+  // });
+
   afterEach(() => {
-    element.remove();
+    viewer.remove();
   });
 });

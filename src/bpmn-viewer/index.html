@@ -61,7 +61,7 @@
         }
 
         if (target.id === "change-src") {
-          viewer.src = "./_test-data/test_subprocesses.bpmn";
+          viewer.src = viewer.src.endsWith("test_subprocesses.bpmn") ? "./_test-data/custom-links.bpmn" : "./_test-data/test_subprocesses.bpmn";
         }
 
         if (target.id === "toggle-simulator") {
