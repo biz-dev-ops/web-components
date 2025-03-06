@@ -1,17 +1,17 @@
-import {defineConfig} from 'vite'
+import {defineConfig} from "vite"
 
-/** @type {import('vite').UserConfig} */
+/** @type {import("vite").UserConfig} */
 export default defineConfig({
   build: {
-    outDir: '../dist',
-	  minify: 'terser',
+    outDir: "../dist",
+	  minify: "terser",
 	  rollupOptions: {
-		  input: './src/index.ts',
+		  input: "./src/index.ts",
 		  output: {
-			  entryFileNames: 'web-components.js',
+			  entryFileNames: "web-components.js",
 		  }
 	  }
   },
-  root: 'src',
-  publicDir: '../public',
+  root: "src",
+  publicDir: "../public",
 })
