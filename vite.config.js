@@ -1,5 +1,10 @@
 import { defineConfig } from "vite"
 import { nodePolyfills } from "vite-plugin-node-polyfills";
+import { globSync } from "glob";
+
+const inputs = globSync("src/**/*.ts");
+console.log(inputs);
+
 
 /** @type {import("vite").UserConfig} */
 export default defineConfig({
@@ -10,7 +15,7 @@ export default defineConfig({
 		outDir: "../dist",
 		minify: "terser",
 		rollupOptions: {
-			input: "./src/index.ts",
+			input: inputs,
 			output: {
 				entryFileNames: "web-components.js",
 			}
