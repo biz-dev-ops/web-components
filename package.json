@@ -31,7 +31,8 @@
     "build": "vite build",
     "develop": "vite dev",
     "dev": "npm run develop",
-    "test": "wdio run ./wdio.conf.ts"
+    "test": "wdio run ./wdio.conf.ts",
+    "test-ct": "playwright test -c playwright-ct.config.ts"
   },
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^11.9.1",
@@ -47,9 +48,10 @@
     "yaml": "^2.7.0"
   },
   "devDependencies": {
-    "@biz-dev-ops/md-docs": "^1.1.43",
+    "@sand4rt/experimental-ct-web": "^1.51.0",
     "@testing-library/webdriverio": "^3.2.1",
     "@types/mocha": "^10.0.6",
+    "@types/node": "^22.13.9",
     "@wdio/browser-runner": "^9.11.0",
     "@wdio/cli": "9.8.0",
     "@wdio/mocha-framework": "9.7.3",
@@ -57,6 +59,7 @@
     "@webcomponents/webcomponentsjs": "^2.8.0",
     "autoprefixer": "^10.4.19",
     "glob": "^11.0.0",
+    "msw": "^2.7.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
     "vite": "^5.4.10",

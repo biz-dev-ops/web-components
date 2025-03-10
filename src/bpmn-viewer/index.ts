@@ -7,8 +7,8 @@ import viewerDiagramJsCss from "bpmn-js/dist/assets/diagram-js.css?inline";
 import viewerBpmnJsCss from "bpmn-js/dist/assets/bpmn-js.css?inline";
 import simulatorCss from "bpmn-js-token-simulation/assets/css/bpmn-js-token-simulation.css?inline";
 
-import TokenSimulationModule from "bpmn-js-token-simulation/lib/viewer";
-import Viewer from "bpmn-js/lib/NavigatedViewer";
+import TokenSimulationModule from "bpmn-js-token-simulation/lib/viewer.js";
+import Viewer from "bpmn-js/lib/NavigatedViewer.js";
 import { Element, ModdleElement } from "bpmn-js/lib/model/Types";
 
 import * as bizdevops from "./bizdevops.moddle.json";
