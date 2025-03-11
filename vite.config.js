@@ -16,6 +16,6 @@ export default defineConfig({
 			}
 		}
 	},
-	root: "src",
+	root: "specs",
 	publicDir: "../public",
 });
