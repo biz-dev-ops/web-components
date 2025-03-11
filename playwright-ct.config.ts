@@ -1,4 +1,5 @@
 import { defineConfig, devices } from "@sand4rt/experimental-ct-web";
+import { nodePolyfills } from "vite-plugin-node-polyfills";
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -26,6 +27,11 @@ export default defineConfig({
 
     /* Port to use for Playwright component endpoint. */
     ctPort: 3100,
+    ctViteConfig: {
+      plugins: [
+        nodePolyfills(),
+      ]
+    }
   },
 
   /* Configure projects for major browsers */

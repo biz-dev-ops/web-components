@@ -29,6 +29,6 @@
       }
     ]
   },
-  "include": ["src/**/*.ts", "globals.d.ts"],
+  "include": ["src/**/*.ts", "globals.d.ts", "tests/command-viewer/index.test.ts"],
   "exclude": []
 }
