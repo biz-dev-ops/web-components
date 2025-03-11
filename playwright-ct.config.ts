@@ -1,7 +1,7 @@
 import { defineConfig, devices } from "@sand4rt/experimental-ct-web";
-import { nodePolyfills } from "vite-plugin-node-polyfills";
 
 import viteConfig from "./vite.config";
+import {nodePolyfills} from "vite-plugin-node-polyfills";
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -20,8 +20,6 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
-  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: "html",
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
@@ -29,7 +27,9 @@ export default defineConfig({
 
     /* Port to use for Playwright component endpoint. */
     ctPort: 3100,
-    // ctViteConfig: viteConfig
+    ctViteConfig: {
+      plugins: [nodePolyfills({ globals: { Buffer: true, global: true, process: true }})]
+    }
   },
 
   /* Configure projects for major browsers */
@@ -37,14 +37,14 @@ export default defineConfig({
     {
       name: "chromium",
       use: { ...devices["Desktop Chrome"] },
-    },
-    {
-      name: "firefox",
-      use: { ...devices["Desktop Firefox"] },
-    },
-    {
-      name: "webkit",
-      use: { ...devices["Desktop Safari"] },
-    },
+    }
+    // {
+    //   name: "firefox",
+    //   use: { ...devices["Desktop Firefox"] },
+    // },
+    // {
+    //   name: "webkit",
+    //   use: { ...devices["Desktop Safari"] },
+    // },
   ]
 });

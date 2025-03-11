@@ -4,7 +4,7 @@ import { globSync } from "glob";
 
 export default defineConfig({
 	plugins: [
-		nodePolyfills(),
+		nodePolyfills({ globals: { Buffer: true } }),
 	],
 	build: {
 		outDir: "../dist",
