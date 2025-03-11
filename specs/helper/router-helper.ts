@@ -1,4 +1,4 @@
-import { RouterFixture } from "@playwright/experimental-ct-core"; 
+import { RouterFixture } from "@playwright/experimental-ct-core";
 import { http, HttpResponse } from "msw";
 import fs from "fs";
 
@@ -17,11 +17,11 @@ export interface Route {
 export class FileRoute implements Route {
     path: string;
     file: string;
-    
+
     constructor(path: string, file: string) {
         this.path = path;
         this.file = file;
-    
+
     }
     async set(router: RouterFixture): Promise<void> {
         await router.use(http.get(this.path, async () => {
