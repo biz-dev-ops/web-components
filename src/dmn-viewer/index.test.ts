@@ -1,35 +1,48 @@
-import { $, expect } from "@wdio/globals";
+// import { $, expect } from "@wdio/globals";
+
 import { DMNViewer } from "./index";
 const testDmn = "src/smn-viewer/_test-data/test.dmn";
+import {test, expect, MountResult} from '@sand4rt/experimental-ct-web';
 
-describe("DMNViewer", () => {
-  let viewer: DMNViewer;
-  let container: HTMLElement;
+test.describe("DMNViewer", () => {
+  let viewer: MountResult<DMNViewer>;
 
-  beforeEach(() => {
-    container = document.createElement("div");
-    container.style.width = "500px";
-    container.style.height = "500px";
-    document.body.appendChild(container);
-    viewer = document.createElement("dmn-viewer") as DMNViewer;
+  test.beforeEach(async ({page, mount}) => {
+
+    viewer = await mount(DMNViewer, {props: {src: testDmn}})
+
+    // page.evaluate(() => {
+    //   container = document.createElement("div");
+    //   container.style.width = "500px";
+    //   container.style.height = "500px";
+    //   document.body.appendChild(container);
+    //   viewer = document.createElement("dmn-viewer") as DMNViewer;
+    //   container.appendChild(viewer);
+    //   viewer.setAttribute("src", testDmn);
+    // })
   });
 
-  it("renders without data", async () => {
-    container.appendChild(viewer);
+  // test.afterEach(({ page }) => {
+  //   page.evaluate(() => {
+  //     viewer.remove();
+  //   })
+  // });
 
-    await expect($(">>>.bjs-container svg")).not.toBeNull();
+  test("renders without data", async () => {
+    // container.appendChild(viewer);
+
+    // await expect($(">>>.bjs-container svg")).not.toBeNull();
+    await expect(viewer.locator('.bjs-container svg')).not.toBeNull();
   });
 
-  it("renders with a dmn file", async () => {
-    viewer.setAttribute("src", testDmn);
-    container.appendChild(viewer);
+  test("renders with a dmn file", async ({ page }) => {
+    // container.appendChild(viewer);
 
     await expect($(">>>.bjs-container svg g g .djs-group")).not.toBeNull();
   });
 
-  it("decission model navigation buttons are working", async () => {
-    viewer.setAttribute("src", testDmn);
-    container.appendChild(viewer);
+  test("decission model navigation buttons are working", async () => {
+    // container.appendChild(viewer);
 
     await expect($(">>>.dmn-drd-container")).toBeExisting();
     await expect($(">>>.dmn-decision-table-container")).not.toBeExisting();
@@ -45,9 +58,8 @@ describe("DMNViewer", () => {
     await expect($(">>>.dmn-decision-table-container")).not.toBeExisting();
   });
 
-  it("business knowledge model navigation buttons are working", async () => {
-    viewer.setAttribute("src", testDmn);
-    container.appendChild(viewer);
+  test("business knowledge model navigation buttons are working", async () => {
+    // container.appendChild(viewer);
 
     await expect($(">>>.dmn-drd-container")).toBeExisting();
     await expect($(">>>.dmn-boxed-expression-container")).not.toBeExisting();
@@ -64,15 +76,11 @@ describe("DMNViewer", () => {
   });
 
    //It returns 200 for non existing bpmn. Check why.
-  // it("displays error message on fetch failure", async () => {
+  // test("displays error message on fetch failure", async () => {
   //     const notAValidUrl = "./not-valid.dmn";
   //     viewer.src = notAValidUrl;
   //     container.appendChild(viewer);
 
   //     await expect($(">>>.error")).toBeExisting();
   // });
-
-  afterEach(() => {
-    viewer.remove();
-  });
 });

@@ -2,8 +2,8 @@ import { css, LitElement, unsafeCSS } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import Viewer from "dmn-js";
 
-import resetCss from "../shared/styles/reset.css";
-import themeCss from "../shared/styles/theme.css";
+import resetCss from "../shared/styles/reset.css?inline";
+import themeCss from "../shared/styles/theme.css?inline";
 import ViewerSharedCss from "dmn-js/dist/assets/dmn-js-shared.css?inline";
 import ViewerDrdCss from "dmn-js/dist/assets/dmn-js-drd.css?inline";
 import ViewerDecisionTableCss from "dmn-js/dist/assets/dmn-js-decision-table.css?inline";

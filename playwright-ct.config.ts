@@ -1,6 +1,8 @@
 import { defineConfig, devices } from "@sand4rt/experimental-ct-web";
 import { nodePolyfills } from "vite-plugin-node-polyfills";
 
+import viteConfig from "./vite.config";
+
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
@@ -27,11 +29,7 @@ export default defineConfig({
 
     /* Port to use for Playwright component endpoint. */
     ctPort: 3100,
-    ctViteConfig: {
-      plugins: [
-        nodePolyfills(),
-      ]
-    }
+    // ctViteConfig: viteConfig
   },
 
   /* Configure projects for major browsers */
@@ -48,5 +46,5 @@ export default defineConfig({
       name: "webkit",
       use: { ...devices["Desktop Safari"] },
     },
-  ],
+  ]
 });
