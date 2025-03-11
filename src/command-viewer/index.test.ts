@@ -1,9 +1,10 @@
-import { $, $$, expect } from "@wdio/globals";
+import { $, $$ } from "@wdio/globals";
 import "./index";
 import { parse as yamlParse } from "yaml";
 import { Command } from "./models";
+import { test, expect } from "@sand4rt/experimental-ct-web";
 
-describe("CommandViewer", () => {
+test.describe("CommandViewer", async () => {
     let container: HTMLElement;
     let element: HTMLElement;
     const testDataSrc = "src/command-viewer/_test-data/command1.yml";
@@ -11,13 +12,11 @@ describe("CommandViewer", () => {
     let testData1: Command;
     let testData2: Command;
 
-    before("load test data", async function () {
-        let response = await fetch(testDataSrc);
-        testData1 = yamlParse(await response.text());
+    let response = await fetch(testDataSrc);
+    testData1 = yamlParse(await response.text());
 
-        response = await fetch(testDataSrcWithReferences);
-        testData2 = yamlParse(await response.text());
-    });
+    response = await fetch(testDataSrcWithReferences);
+    testData2 = yamlParse(await response.text());
 
     beforeEach(() => {
         container = document.createElement("div");
@@ -28,21 +27,21 @@ describe("CommandViewer", () => {
         element = document.createElement("command-viewer");
     });
 
-    it("renders with data", async () => {
+    test("renders with data", async () => {
         element.setAttribute("data-json", JSON.stringify(testData1));
         container.appendChild(element);
 
         await testModelContent(testData1);
     });
 
-    it("renders src", async () => {
+    test("renders src", async () => {
         element.setAttribute("src", testDataSrc);
         container.appendChild(element);
 
         await testModelContent(testData1);
     });
 
-    it("renders references", async () => {
+    test("renders references", async () => {
         element.setAttribute("src", testDataSrcWithReferences);
         container.appendChild(element);
 
@@ -50,7 +49,7 @@ describe("CommandViewer", () => {
     });
 
     //It returns 200 for non existing urls. Check why.
-    it("displays error message on fetch failure", async () => {
+    test("displays error message on fetch failure", async () => {
         const notAValidUrl = "https://c4dd8ecc-3063-4825-b4aa-0b969d89bb63.com";
 
         element.setAttribute("src", notAValidUrl);

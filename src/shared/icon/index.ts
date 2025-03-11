@@ -7,7 +7,7 @@ import "material-symbols/outlined.css";
 
 @customElement("bdo-icon")
 export class Icon extends LitElement {
-  @property()
+  @property({ type: String })
   icon!: string | undefined;
 
   override render() {
