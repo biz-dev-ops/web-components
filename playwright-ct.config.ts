@@ -29,7 +29,13 @@ export default defineConfig({
     ctPort: 3100,
     ctViteConfig: {
       plugins: [
-        nodePolyfills(),
+        nodePolyfills({
+          globals: {
+            Buffer: true,
+            global: true,
+            process: true
+          }
+        })
       ]
     }
   },
