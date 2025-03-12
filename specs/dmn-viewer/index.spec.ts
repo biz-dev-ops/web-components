@@ -57,7 +57,7 @@ test.describe("dmn-viewer", async () => {
         expect(component.locator(".dmn-decision-table-container")).toBeVisible();
 
 
-        await component.getByRole("button", { name: "View DRD"}).click();
+        await component.getByRole("button", { name: "View DRD" }).click();
 
         expect(component.locator(".dmn-drd-container")).toBeVisible();
         expect(component.locator(".dmn-decision-table-container")).not.toBeVisible();
@@ -79,7 +79,7 @@ test.describe("dmn-viewer", async () => {
         expect(component.locator(".dmn-boxed-expression-container")).toBeVisible();
 
 
-        await component.getByRole("button", { name: "View DRD"}).click();
+        await component.getByRole("button", { name: "View DRD" }).click();
 
         expect(component.locator(".dmn-drd-container")).toBeVisible();
         expect(component.locator(".dmn-boxed-expression-container")).not.toBeVisible();

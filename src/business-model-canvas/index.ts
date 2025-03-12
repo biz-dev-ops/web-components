@@ -103,15 +103,21 @@ export class BusinessModelCanvasComponent extends LitElement {
 
   override async update(changedProperties: Map<string, unknown>) {
     if (changedProperties.has("src")) {
-      try {
-        this.model = await fetchYamlAndBundleAs<Model>(this.src);
+      if(!this.src) {
+        this.model = data;
       }
-      catch (error: any) {
-        this.model = error;
+      else {
+        try {
+          this.model = await fetchYamlAndBundleAs<Model>(this.src);
+        }
+        catch (error: any) {
+          this.model = error;
+        }
       }
     }
 
     if (changedProperties.has("json")) {
+      console.log(this.json);
       this.model = JSON.parse(this.json);
     }
 

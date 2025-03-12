@@ -1,12 +1,21 @@
 import { test, expect, MountResult } from "@sand4rt/experimental-ct-web";
 import { QueryViewer } from "../../src/query-viewer";
 import { FileRoute, useRoutes } from "../helper/router-helper";
-import { readAsJsonString as readFileAsJsonString } from "../helper/fs-helper";
+import { readYamlAsJsonString } from "../helper/fs-helper";
 
 test.describe("query-viewer", async () => {
+    test.beforeEach(async ({ router }) => {
+        await useRoutes(router, [
+            new FileRoute("/query1.yml", new URL("query1.yml", import.meta.url)),
+            new FileRoute("/query2.yml", new URL("query2.yml", import.meta.url)),
+            new FileRoute("/parameters.yml", new URL("parameters.yml", import.meta.url)),
+            new FileRoute("/response.yml", new URL("response.yml", import.meta.url)),
+            new FileRoute("/exceptions.yml", new URL("exceptions.yml", import.meta.url))
+        ]);
+    });
 
     test("can load data", async ({ mount }) => {
-        const json = await readFileAsJsonString(new URL("query1.yml", import.meta.url));
+        const json = await readYamlAsJsonString(new URL("query1.yml", import.meta.url));
 
         const component = await mount(QueryViewer, {
             props: {
@@ -18,8 +27,6 @@ test.describe("query-viewer", async () => {
     });
 
     test("can load src", async ({ mount, router }) => {
-        await useRoutes(router, new FileRoute("/query1.yml", new URL("query1.yml", import.meta.url)));
-
         const component = await mount(QueryViewer, {
             props: {
                 src: "query1.yml"
@@ -30,13 +37,6 @@ test.describe("query-viewer", async () => {
     });
 
     test("can load references", async ({ mount, router }) => {
-        await useRoutes(router, [
-            new FileRoute("/query2.yml", new URL("query2.yml", import.meta.url)),
-            new FileRoute("/parameters.yml", new URL("parameters.yml", import.meta.url)),
-            new FileRoute("/response.yml", new URL("response.yml", import.meta.url)),
-            new FileRoute("/exceptions.yml", new URL("exceptions.yml", import.meta.url))
-        ]);
-
         const component = await mount(QueryViewer, {
             props: {
                 src: "query2.yml"
@@ -47,10 +47,6 @@ test.describe("query-viewer", async () => {
     });
 
     test("can change src", async ({ mount, router }) => {
-        await useRoutes(router, [
-            new FileRoute("/query1.yml", new URL("query1.yml", import.meta.url))
-        ]);
-
         const component = await mount(QueryViewer, {
             props: {
                 src: "query1.yml"
@@ -58,13 +54,6 @@ test.describe("query-viewer", async () => {
         });
 
         await expectComponentToContain(component, 5, 1, 3);
-
-        await useRoutes(router, [
-            new FileRoute("/query2.yml", new URL("query2.yml", import.meta.url)),
-            new FileRoute("/parameters.yml", new URL("parameters.yml", import.meta.url)),
-            new FileRoute("/response.yml", new URL("response.yml", import.meta.url)),
-            new FileRoute("/exceptions.yml", new URL("exceptions.yml", import.meta.url))
-        ]);
 
         await component.update({
             props: {
