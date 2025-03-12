@@ -1,0 +1,33 @@
+---
+type: array
+title: orders
+items:
+  type: object
+  title: order
+  description: Details of a found order.
+  properties:
+    order_id:
+      type: string
+      description: Unique identifier for the order.
+      example: order_12345
+    order_date:
+      type: string
+      format: date
+      description: Date of the order.
+      example: 2025-03-15
+    customer_id:
+      type: string
+      description: Unique identifier for the customer.
+      example: customer_101
+    product_id:
+      type: string
+      description: Unique identifier for the product.
+      example: product_202
+    quantity:
+      type: integer
+      description: The quantity of the product ordered.
+      example: 2
+    status:
+      type: string
+      description: The status of the order.
+      example: "Shipped"

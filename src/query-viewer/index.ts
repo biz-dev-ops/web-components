@@ -15,9 +15,9 @@ export class QueryViewer extends UseCaseViewer<Query> {
 
   renderMain(model: Query) {
     return html`
-      ${this.modelViewerTemplate(`Parameters`, model?.parameters)}
-      ${this.modelViewerTemplate(`Response`, model?.response)}
-      ${this.casesTemplate("Exceptions", model?.exceptions)}
+      ${this.modelViewerTemplate("query-parameters", `Parameters`, model?.parameters)}
+      ${this.modelViewerTemplate("query-response", `Response`, model?.response)}
+      ${this.casesTemplate("query-exceptions", "Exceptions", model?.exceptions)}
     `;
   }
 

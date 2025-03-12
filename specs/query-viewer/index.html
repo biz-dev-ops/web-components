@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Query viewer</title>
+  </head>
+
+  <body>
+    <main>
+      <h1>Query viewer</h1>
+      <div id="buttons">
+        <button id="change-src">Change src</button>
+      </div>
+      <query-viewer src="query1.yml"></query-viewer>
+      <h2>Run tests</h2>
+      <code>
+        npm run test-ct -- 'query-viewer'
+      </code>
+    </main>
+
+    <script type="module">
+      import "../../src/query-viewer/index.ts";
+
+      const buttons = document.getElementById("buttons");
+      const viewer = document.getElementsByTagName("query-viewer")[0];
+
+      buttons.addEventListener("click", function (event) {
+        const target = event.target;
+        if (target.id === "change-src") {
+          viewer.setAttribute("src", viewer.src.endsWith("query1.yml") ? "query2.yml" : "query1.yml");
+        }
+      });
+    </script>
+  </body>
+</html>
