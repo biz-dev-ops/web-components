@@ -31,8 +31,7 @@
     "build": "vite build",
     "develop": "vite dev",
     "dev": "npm run develop",
-    "test": "wdio run ./wdio.conf.ts",
-    "test-ct": "playwright test -c playwright-ct.config.ts"
+    "test": "playwright test -c playwright-ct.config.ts"
   },
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^11.9.1",
@@ -44,18 +43,12 @@
     "lit-html": "^3.1.4",
     "marked": "^15.0.6",
     "material-symbols": "^0.28.0",
-    "node-polyfill-webpack-plugin": "^4.1.0",
     "yaml": "^2.7.0"
   },
   "devDependencies": {
     "@sand4rt/experimental-ct-web": "^1.51.0",
-    "@testing-library/webdriverio": "^3.2.1",
     "@types/mocha": "^10.0.6",
     "@types/node": "^22.13.9",
-    "@wdio/browser-runner": "^9.11.0",
-    "@wdio/cli": "9.8.0",
-    "@wdio/mocha-framework": "9.7.3",
-    "@wdio/spec-reporter": "9.8.0",
     "@webcomponents/webcomponentsjs": "^2.8.0",
     "autoprefixer": "^10.4.19",
     "glob": "^11.0.0",
@@ -64,8 +57,5 @@
     "typescript": "^5.3.3",
     "vite": "^5.4.10",
     "vite-plugin-node-polyfills": "^0.23.0"
-  },
-  "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "^4.18.0"
   }
 }
