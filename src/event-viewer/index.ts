@@ -15,7 +15,7 @@ export class EventViewer extends UseCaseViewer<Event> {
 
   renderMain(model:Event) {
     return html`
-      ${this.modelViewerTemplate(`Parameters`, model?.parameters)}
+      ${this.modelViewerTemplate("event-parameters", `Parameters`, model?.parameters)}
     `;
   }
 

@@ -14,7 +14,7 @@ test.describe("command-viewer", async () => {
             }
         });
 
-        await expectComponentToContain(component, 16, 3);
+        await expectComponentToContain(component, 7, 3);
     });
 
     test("can load src", async ({ mount, router }) => {
@@ -26,7 +26,7 @@ test.describe("command-viewer", async () => {
             }
         });
 
-        await expectComponentToContain(component, 16, 3);
+        await expectComponentToContain(component, 7, 3);
     });
 
     test("can load references", async ({ mount, router }) => {
@@ -42,7 +42,7 @@ test.describe("command-viewer", async () => {
             }
         });
 
-        await expectComponentToContain(component, 9, 2);
+        await expectComponentToContain(component, 5, 2);
     });
 
     test("can change src", async ({ mount, router }) => {
@@ -56,7 +56,7 @@ test.describe("command-viewer", async () => {
             }
         });
 
-        await expectComponentToContain(component, 16, 3);
+        await expectComponentToContain(component, 7, 3);
 
         await useRoutes(router, [
             new FileRoute("/command2.yml", new URL("command2.yml", import.meta.url)),
@@ -70,7 +70,7 @@ test.describe("command-viewer", async () => {
             }
         });
 
-        await expectComponentToContain(component, 9, 2);
+        await expectComponentToContain(component, 5, 2);
     });
 
     test.afterEach(async ({ page }) => {
@@ -79,6 +79,6 @@ test.describe("command-viewer", async () => {
 });
 
 async function expectComponentToContain(component: MountResult<CommandViewer>, parameters: number, exceptions: number) : Promise<void> {
-    await expect(component.getByLabel("parameters-panel").getByLabel("model-viewer-item")).toHaveCount(parameters);
-    await expect(component.getByLabel("cases-panel").getByLabel("case", { exact: true })).toHaveCount(exceptions);
+    await expect(component.getByLabel("command-parameters").getByLabel("model-viewer-item")).toHaveCount(parameters);
+    await expect(component.getByLabel("command-exceptions").getByLabel("case", { exact: true })).toHaveCount(exceptions);
 };

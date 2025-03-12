@@ -14,4 +14,4 @@ description: |
   such as initiating fulfillment processes, sending confirmation emails,
   or updating inventory.
 parameters:
-  $ref: "./parameters1.yml"
+  $ref: "./parameters.yml"

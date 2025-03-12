@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Event viewer</title>
+  </head>
+
+  <body>
+    <main>
+      <h1>Event viewer</h1>
+      <div id="buttons">
+        <button id="change-src">Change src</button>
+      </div>
+      <event-viewer src="event1.yml"></event-viewer>
+      <h2>Run tests</h2>
+      <code>
+        npm run test-ct -- 'event-viewer'
+      </code>
+    </main>
+
+    <script type="module">
+      import "../../src/event-viewer/index.ts";
+
+      const buttons = document.getElementById("buttons");
+      const viewer = document.getElementsByTagName("event-viewer")[0];
+
+      buttons.addEventListener("click", function (event) {
+        const target = event.target;
+        if (target.id === "change-src") {
+          viewer.setAttribute("src", viewer.src.endsWith("event1.yml") ? "event2.yml" : "event1.yml");
+        }
+      });
+    </script>
+  </body>
+</html>

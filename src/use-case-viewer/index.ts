@@ -58,26 +58,26 @@ export abstract class UseCaseViewer<T extends UseCase> extends LitElement {
     `;
   }
 
-  modelViewerTemplate(title: string, parameters: any) {
+  modelViewerTemplate(label:string, title: string, parameters: any) {
     if (!parameters) {
       return html``;
     }
 
     return html`
-      <bdo-expansion-panel aria-label="parameters-panel">
+      <bdo-expansion-panel aria-label="${label}">
           <div slot="summary">${title}</div>
           <model-viewer .model=${parameters}></model-viewer>
       </bdo-expansion-panel>
     `;
   }
 
-  casesTemplate(title: string, cases: Map<string, Case>) {
+  casesTemplate(label: string, title: string, cases: Map<string, Case>) {
     if (!cases) {
       return html``;
     }
 
     return html`
-      <bdo-expansion-panel aria-label="cases-panel">
+      <bdo-expansion-panel aria-label="${label}">
           <div slot="summary">${titlelize(title)} <span class="count">(${this.countItems(cases)})</span></div>
 
           <div class="cases" role="list" aria-label="cases">
@@ -85,7 +85,7 @@ export abstract class UseCaseViewer<T extends UseCase> extends LitElement {
                   <div class="case" role="listitem" aria-label="case">
                       <h2>${titlelize(c?.name || key)}</h2>
                       ${this.descriptionTemplate(c?.description)}
-                      ${this.modelViewerTemplate("Parameters", c?.parameters)}
+                      ${this.modelViewerTemplate("exception-parameters", "Parameters", c?.parameters)}
                   </div>
               `)}
           </div>
