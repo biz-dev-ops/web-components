@@ -15,9 +15,9 @@ export class TaskViewer extends UseCaseViewer<Task> {
 
   renderMain(model:Task) {
     return html`
-      ${this.modelViewerTemplate(`Context`, model?.context)}
-      ${this.casesTemplate("Actions", model?.actions)}
-      ${this.casesTemplate("Exceptions", model?.exceptions)}
+      ${this.modelViewerTemplate("task-context", `Context`, model?.context)}
+      ${this.casesTemplate("task-actions", "Actions", model?.actions)}
+      ${this.casesTemplate("task-exceptions", "Exceptions", model?.exceptions)}
     `;
   }
 

@@ -1,5 +1,5 @@
 ---
-name: Find Appointment
+name: find appointment query
 description: |
   The "Find Appointment" query allows users to retrieve appointment details
   based on various search criteria, such as appointment ID, client ID,

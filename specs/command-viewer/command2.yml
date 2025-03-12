@@ -1,7 +1,8 @@
 ---
-name: Create order command
+name: create order command
 description: |
-  The "Create Order" command is used to initiate the process of placing an order within a system.
+  The "Create Order" command is used to initiate the process of placing an
+  order within a system.
   It enables the user to provide essential details about the order, such as:
 
   - a unique order ID

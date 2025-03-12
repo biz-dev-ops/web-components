@@ -1,5 +1,5 @@
 ---
-name: Find Order
+name: find order query
 description: |
   The "Find Order" query allows users to retrieve order details
   based on various search criteria, such as order ID, customer ID,

@@ -1,5 +1,5 @@
 ---
-name: Schedule Appointment
+name: schedule appointment command
 description: |
   The "Schedule Appointment" use case allows users to book a new appointment.
   It captures essential details like the appointment type, date, time,
@@ -93,7 +93,8 @@ exceptions:
         message:
           type: string
           description: Error message.
-          example: "Provider provider_202 is unavailable on 2025-03-15 at 14:00:00."
+          example: |
+            Provider provider_202 is unavailable on 2025-03-15 at 14:00:00.
       required:
         - service_provider_id
         - appointment_date
