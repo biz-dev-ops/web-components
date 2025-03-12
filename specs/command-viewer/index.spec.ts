@@ -18,7 +18,7 @@ test.describe("command-viewer", async () => {
     });
 
     test("can load src", async ({ mount, router }) => {
-        await useRoutes(router, new FileRoute("command1.yml", new URL("./command1.yml", import.meta.url)));
+        await useRoutes(router, new FileRoute("/command1.yml", new URL("command1.yml", import.meta.url)));
 
         const component = await mount(CommandViewer, {
             props: {
@@ -37,6 +37,34 @@ test.describe("command-viewer", async () => {
         ]);
 
         const component = await mount(CommandViewer, {
+            props: {
+                src: "command2.yml"
+            }
+        });
+
+        await expectComponentToContain(component, 9, 2);
+    });
+
+    test("can change src", async ({ mount, router }) => {
+        await useRoutes(router, [
+            new FileRoute("/command1.yml", new URL("command1.yml", import.meta.url))
+        ]);
+
+        const component = await mount(CommandViewer, {
+            props: {
+                src: "command1.yml"
+            }
+        });
+
+        await expectComponentToContain(component, 16, 3);
+
+        await useRoutes(router, [
+            new FileRoute("/command2.yml", new URL("command2.yml", import.meta.url)),
+            new FileRoute("/parameters.yml", new URL("parameters.yml", import.meta.url)),
+            new FileRoute("/exceptions.yml", new URL("exceptions.yml", import.meta.url))
+        ]);
+
+        await component.update({
             props: {
                 src: "command2.yml"
             }
