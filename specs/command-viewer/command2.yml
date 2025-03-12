@@ -15,6 +15,6 @@ description: |
   Additionally, it validates the input parameters to meet necessary criteria,
   such as ensuring items have valid IDs and quantities are above zero.
 parameters:
-  $ref: "./parameters1.yml"
+  $ref: "./parameters.yml"
 exceptions:
-  $ref: "./exceptions1.yml"
+  $ref: "./exceptions.yml"

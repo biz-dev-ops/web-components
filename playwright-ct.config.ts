@@ -1,11 +1,10 @@
 import { defineConfig, devices } from "@sand4rt/experimental-ct-web";
-import { nodePolyfills } from "vite-plugin-node-polyfills";
-
+import viteConfig from "./vite.config";
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: "./",
+  testDir: "./specs",
   /* The base directory, relative to the config file, for snapshot files created with toMatchSnapshot and toHaveScreenshot. */
   snapshotDir: "./__snapshots__",
   /* Maximum time one test can run for. */
@@ -28,15 +27,7 @@ export default defineConfig({
     /* Port to use for Playwright component endpoint. */
     ctPort: 3100,
     ctViteConfig: {
-      plugins: [
-        nodePolyfills({
-          globals: {
-            Buffer: true,
-            global: true,
-            process: true
-          }
-        })
-      ]
+      plugins: viteConfig.plugins
     }
   },
 

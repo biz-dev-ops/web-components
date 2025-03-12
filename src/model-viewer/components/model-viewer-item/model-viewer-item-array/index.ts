@@ -116,9 +116,20 @@ export class ModelViewerItemArray extends ModelViewerItem {
                 .item=${decorated.item}
                 .required=${decorated.required}
                 @itemSelected=${itemSelectedDelegate}
-            >
-                ${ModelItemBuilder.build(new ModelItemDecorator(decorated.item.items), itemSelectedDelegate, root)}
-            </model-viewer-item-array>
+            ></model-viewer-item-array>
         `;
+
+// return html`
+// <model-viewer-item-array
+//     aria-label="model-viewer-item"
+//     property=${decorated.property}
+//     title=${titlelize(decorated.title)}
+//     .item=${decorated.item}
+//     .required=${decorated.required}
+//     @itemSelected=${itemSelectedDelegate}
+// >
+//     ${ModelItemBuilder.build(new ModelItemDecorator(decorated.item.items), itemSelectedDelegate, root)}
+// </model-viewer-item-array>
+// `;
     }
 }

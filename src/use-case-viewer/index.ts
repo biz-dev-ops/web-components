@@ -64,7 +64,7 @@ export abstract class UseCaseViewer<T extends UseCase> extends LitElement {
     }
 
     return html`
-      <bdo-expansion-panel aria-label="parameters panel">
+      <bdo-expansion-panel aria-label="parameters-panel">
           <div slot="summary">${title}</div>
           <model-viewer .model=${parameters}></model-viewer>
       </bdo-expansion-panel>
@@ -77,7 +77,7 @@ export abstract class UseCaseViewer<T extends UseCase> extends LitElement {
     }
 
     return html`
-      <bdo-expansion-panel aria-label="cases panel">
+      <bdo-expansion-panel aria-label="cases-panel">
           <div slot="summary">${titlelize(title)} <span class="count">(${this.countItems(cases)})</span></div>
 
           <div class="cases" role="list" aria-label="cases">

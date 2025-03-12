@@ -1,6 +1,6 @@
 import { RouterFixture } from "@playwright/experimental-ct-core";
 import { http, HttpResponse } from "msw";
-import fs from "fs";
+import fs from "node:fs";
 
 export async function useRoutes(router: RouterFixture, routes: Route | Route[]) {
     if(!Array.isArray(routes)) {
@@ -16,9 +16,9 @@ export interface Route {
 
 export class FileRoute implements Route {
     path: string;
-    file: string;
+    file: URL;
 
-    constructor(path: string, file: string) {
+    constructor(path: string, file: URL) {
         this.path = path;
         this.file = file;
 

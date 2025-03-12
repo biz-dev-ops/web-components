@@ -11,10 +11,10 @@
       <div id="buttons">
         <button id="change-src">Change src</button>
       </div>
-      <command-viewer src="./command1.yml"></command-viewer>
+      <command-viewer src="command1.yml"></command-viewer>
       <h2>Run tests</h2>
       <code>
-        npm run test-ct specs/command-viewer/index.spec.ts
+        npm run test-ct -- 'command-viewer'
       </code>
     </main>
 
@@ -27,7 +27,7 @@
       buttons.addEventListener("click", function (event) {
         const target = event.target;
         if (target.id === "change-src") {
-          viewer.setAttribute("src", viewer.src.endsWith("command1.yml") ? "./command2.yml" : "./command1.yml");
+          viewer.setAttribute("src", viewer.src.endsWith("command1.yml") ? "command2.yml" : "command1.yml");
         }
       });
     </script>

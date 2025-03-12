@@ -39,11 +39,6 @@ properties:
         - item_id
         - quantity
         - unit_price
-  total_price:
-    type: number
-    minimum: 0
-    description: Total price of the order.
-    example: 39.98
   shipping_address:
     type: object
     description: The shipping address for the order.
@@ -74,5 +69,4 @@ required:
   - customer_id
   - order_date
   - items
-  - total_price
   - shipping_address
