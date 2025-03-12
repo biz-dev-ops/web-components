@@ -1,7 +1,8 @@
 import { test, expect, MountResult } from "@sand4rt/experimental-ct-web";
 import { QueryViewer } from "../../src/query-viewer";
 import { FileRoute, useRoutes } from "../helper/router-helper";
-import { readYamlAsJsonString } from "../helper/fs-helper";
+import { readYamlAndParseAs } from "../helper/fs-helper";
+import { Query } from "../../src/query-viewer/models";
 
 test.describe("query-viewer", async () => {
     test.beforeEach(async ({ router }) => {
@@ -15,11 +16,11 @@ test.describe("query-viewer", async () => {
     });
 
     test("can load data", async ({ mount }) => {
-        const json = await readYamlAsJsonString(new URL("query1.yml", import.meta.url));
+        const model = await readYamlAndParseAs<Query>(new URL("query1.yml", import.meta.url));
 
         const component = await mount(QueryViewer, {
             props: {
-                "json": json
+                "model": model
             }
         });
 

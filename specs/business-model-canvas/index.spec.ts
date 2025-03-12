@@ -21,15 +21,15 @@ test.describe("business-model-canvas", async () => {
     });
 
     test("can load data", async ({ mount }) => {
-        const json = await readYamlAndParseAs<Model>(new URL("canvas.yml", import.meta.url));
+        const model = await readYamlAndParseAs<Model>(new URL("canvas.yml", import.meta.url));
 
         const component = await mount(BusinessModelCanvasComponent, {
             props: {
-                "model": json
+                "model": model
             }
         });
 
-        await expectComponentToContainData(component, json);
+        await expectComponentToContainData(component, model);
     });
 
     test("can load src", async ({ mount }) => {

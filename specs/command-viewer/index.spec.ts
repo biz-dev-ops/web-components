@@ -1,7 +1,8 @@
 import { test, expect, MountResult } from "@sand4rt/experimental-ct-web";
 import { CommandViewer } from "../../src/command-viewer";
 import { FileRoute, useRoutes } from "../helper/router-helper";
-import { readYamlAsJsonString } from "../helper/fs-helper";
+import { readYamlAndParseAs } from "../helper/fs-helper";
+import { Command } from "../../src/command-viewer/models";
 
 test.describe("command-viewer", async () => {
 
@@ -15,11 +16,11 @@ test.describe("command-viewer", async () => {
     });
 
     test("can load data", async ({ mount }) => {
-        const json = await readYamlAsJsonString(new URL("command1.yml", import.meta.url));
+        const model = await readYamlAndParseAs<Command>(new URL("command1.yml", import.meta.url));
 
         const component = await mount(CommandViewer, {
             props: {
-                "json": json
+                "model": model
             }
         });
 

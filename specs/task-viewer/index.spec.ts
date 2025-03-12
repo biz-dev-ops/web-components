@@ -1,7 +1,8 @@
 import { test, expect, MountResult } from "@sand4rt/experimental-ct-web";
 import { TaskViewer } from "../../src/task-viewer";
 import { FileRoute, useRoutes } from "../helper/router-helper";
-import { readYamlAsJsonString } from "../helper/fs-helper";
+import { readYamlAndParseAs } from "../helper/fs-helper";
+import { Task } from "../../src/task-viewer/models";
 
 test.describe("task-viewer", async () => {
     test.beforeEach(async ({ router }) => { 
@@ -15,11 +16,11 @@ test.describe("task-viewer", async () => {
     });
 
     test("can load data", async ({ mount }) => {
-        const json = await readYamlAsJsonString(new URL("task1.yml", import.meta.url));
+        const model = await readYamlAndParseAs<Task>(new URL("task1.yml", import.meta.url));
 
         const component = await mount(TaskViewer, {
             props: {
-                "json": json
+                "model": model
             }
         });
 
