@@ -1,15 +1,9 @@
 import { html } from "lit";
 import { customElement } from "lit/decorators.js";
-
 import { UseCaseViewer } from "../use-case-viewer";
 import { Command } from "./models";
 import commandViewerCss from "./command-viewer.css";
 import "../model-viewer";
-
-if (process.env.NODE_ENV !== "production") {
-  require("@biz-dev-ops/md-docs/assets/style/page/style.css?dev");
-  require("../../assets/style/custom-theme.css?dev");
-}
 
 @customElement("command-viewer")
 export class CommandViewer extends UseCaseViewer<Command> {
@@ -19,10 +13,10 @@ export class CommandViewer extends UseCaseViewer<Command> {
     name: "Command",
   };
 
-  renderMain() {
+  renderMain(model:Command) {
     return html`
-      ${this.modelViewerTemplate(`Parameters`, this.model?.parameters)}
-      ${this.casesTemplate("Exceptions", this.model?.exceptions)}
+      ${this.modelViewerTemplate("command-parameters", `Parameters`, model?.parameters)}
+      ${this.casesTemplate("command-exceptions", "Exceptions", model?.exceptions)}
     `;
   }
 

@@ -13,7 +13,7 @@ export class DefaultArchitectureButton extends AbstractArchitectureButton {
                 :host > a, :host > span {
                     padding: var(--space-xs) var(--space-sm);
                     background-color: var(--color-brand-base);
-                    color: var(--color-white);
+                    color: var(--main-surface);
                     border-radius: var(--radius-pill);
                 }
             `

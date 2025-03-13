@@ -1,4 +1,4 @@
-import { ModelItem } from "../business-model-canvas/models";
+import { ModelItem } from "../model-viewer/models";
 import { UseCase } from "../use-case-viewer/models";
 
 export type Event = UseCase & {

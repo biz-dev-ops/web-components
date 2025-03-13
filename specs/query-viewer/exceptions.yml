@@ -1,0 +1,55 @@
+---
+order_not_found:
+  name: Order Not Found Exception
+  description: The specified order ID does not exist.
+  parameters:
+    type: object
+    description: Details about the order not found.
+    properties:
+      order_id:
+        type: string
+        description: The provided order ID.
+        example: order_99999
+      message:
+        type: string
+        description: Error message.
+        example: "Order with ID order_99999 not found."
+    required:
+      - order_id
+      - message
+customer_not_found:
+  name: Customer Not Found Exception
+  description: The specified customer ID does not exist.
+  parameters:
+    type: object
+    description: Details about the customer not found.
+    properties:
+      customer_id:
+        type: string
+        description: The provided customer ID.
+        example: customer_999
+      message:
+        type: string
+        description: Error message.
+        example: "Customer with ID customer_999 not found."
+    required:
+      - customer_id
+      - message
+product_not_found:
+  name: Product Not Found Exception
+  description: The specified product ID does not exist.
+  parameters:
+    type: object
+    description: Details about the product not found.
+    properties:
+      product_id:
+        type: string
+        description: The provided product ID.
+        example: product_999
+      message:
+        type: string
+        description: Error message.
+        example: "Product with ID product_999 not found."
+    required:
+      - product_id
+      - message

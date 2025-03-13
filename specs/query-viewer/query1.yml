@@ -1,0 +1,128 @@
+---
+name: find appointment query
+description: |
+  The "Find Appointment" query allows users to retrieve appointment details
+  based on various search criteria, such as appointment ID, client ID,
+  service provider ID, or date range.
+
+  This query helps users quickly locate specific appointments,
+  review appointment information, and manage their schedules.
+parameters:
+  title: find_appointment_parameters
+  type: object
+  properties:
+    appointment_id:
+      type: string
+      description: Unique identifier for the appointment.
+      example: appt_98765
+    client_id:
+      type: string
+      description: Unique identifier for the client.
+      example: client_101
+    service_provider_id:
+      type: string
+      description: Unique identifier for the service provider.
+      example: provider_202
+    appointment_date_start:
+      type: string
+      format: date
+      description: Start date for the appointment search range.
+      example: 2025-03-01
+    appointment_date_end:
+      type: string
+      format: date
+      description: End date for the appointment search range.
+      example: 2025-03-31
+response:
+  type: array
+  title: appointments
+  items:
+    type: object
+    title: apppointment
+    description: Details of a found appointment.
+    properties:
+      appointment_id:
+        type: string
+        description: Unique identifier for the appointment.
+        example: appt_98765
+      appointment_type:
+        type: string
+        description: Type of appointment (e.g., consultation, service).
+        example: Consultation
+      appointment_date:
+        type: string
+        format: date
+        description: Date of the appointment.
+        example: 2025-03-15
+      appointment_time:
+        type: string
+        format: time
+        description: Time of the appointment.
+        example: "14:00:00"
+      client_id:
+        type: string
+        description: Unique identifier for the client.
+        example: client_101
+      service_provider_id:
+        type: string
+        description: Unique identifier for the service provider.
+        example: provider_202
+      notes:
+        type: string
+        description: Additional notes or instructions.
+        example: "Please bring relevant documents."
+exceptions:
+  appointment_not_found:
+    name: Appointment Not Found Exception
+    description: The specified appointment ID does not exist.
+    parameters:
+      type: object
+      description: Details about the appointment not found.
+      properties:
+        appointment_id:
+          type: string
+          description: The provided appointment ID.
+          example: appt_99999
+        message:
+          type: string
+          description: Error message.
+          example: "Appointment with ID appt_99999 not found."
+      required:
+        - appointment_id
+        - message
+  client_not_found:
+    name: Client Not Found Exception
+    description: The specified client ID does not exist.
+    parameters:
+      type: object
+      description: Details about the client not found.
+      properties:
+        client_id:
+          type: string
+          description: The provided client ID.
+          example: client_999
+        message:
+          type: string
+          description: Error message.
+          example: "Client with ID client_999 not found."
+      required:
+        - client_id
+        - message
+  service_provider_not_found:
+    name: Service Provider Not Found Exception
+    description: The specified service provider ID does not exist.
+    parameters:
+      type: object
+      description: Details about the service provider not found.
+      properties:
+        service_provider_id:
+          type: string
+          description: The provided service provider ID.
+          example: provider_999
+        message:
+          type: string
+          description: Error message.
+          example: "Service provider with ID provider_999 not found."
+      required:
+        - service_provider_id
+        - message

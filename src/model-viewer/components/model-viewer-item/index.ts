@@ -13,7 +13,7 @@ export abstract class ModelViewerItem extends LitElement {
     protected _handleItemSelection() {
         this.dispatchEvent(new CustomEvent<ItemSelected>('itemSelected', { detail: { property: this.property, item: this.item } }));
     }
-    
+
     static override get styles() {
         return [ modelViewerItemCss ];
     }

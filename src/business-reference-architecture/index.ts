@@ -1,36 +1,37 @@
 import { css, html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
-import resetStyles from "../shared/styles/reset";
+import resetCss from "../shared/styles/reset.css";
+import themeCss from "../shared/styles/theme.css";
 import { Section } from "./models";
-
-if (process.env.NODE_ENV !== "production") {
-  require("@biz-dev-ops/md-docs/assets/style/page/style.css?dev");
-  require("../../assets/style/custom-theme.css?dev");
-}
-
 import "./architecture-section";
+import { FetchError, fetchYamlAndBundleAs } from "../shared/fetch";
 
 @customElement("business-reference-architecture")
 export class BusinessReferenceArchitectureComponent extends LitElement {
   @property({ type: Array })
   model!: Section[];
 
-  @property({ attribute: "model-json" })
-  modelJson!: string;
+  @property({ attribute: "src" })
+  src!: string;
+
+  @property({ attribute: "data-json" })
+  json!: string;
 
   override render() {
+    if (this.model instanceof FetchError) {
+      return html`<div class="error">${this.model.message}</div>`;
+    }
+
     return html`
       <div class="architecture-section-grid" data-has-side="${this.hasSide()}">
-        ${this.model.map(
-          (section) =>
-            html`<architecture-section
-              .section=${section}
-              .arrow=${section.arrow}
-              .sectionType=${section.sectionType}
-              .buttonType=${section.buttonType}
-            ></architecture-section>`
-        )}
+        ${this.model.map((section) => html`<architecture-section
+                  .section=${section}
+                  .arrow=${section.arrow}
+                  .sectionType=${section.sectionType}
+                  .buttonType=${section.buttonType}
+                ></architecture-section>`
+      )}
       </div>
     `;
   }
@@ -39,20 +40,27 @@ export class BusinessReferenceArchitectureComponent extends LitElement {
     return this.model.some((section) => section.sectionType === "side");
   }
 
-  override update(changedProperties: Map<string, unknown>) {
-    if (changedProperties.has("modelJson")) {
+  override async update(changedProperties: Map<string, unknown>) {
+    if (changedProperties.has("src")) {
       try {
-        this.model = JSON.parse(this.modelJson);
-      } catch (e) {
-        console.error("Error parsing modelJson:", e);
+        this.model = await fetchYamlAndBundleAs<Section[]>(this.src);
+      }
+      catch (error: any) {
+        this.model = error;
       }
     }
+
+    if (changedProperties.has("json")) {
+      this.model = JSON.parse(this.json);
+    }
+
     super.update(changedProperties);
   }
 
   static override get styles() {
     return [
-      resetStyles,
+      resetCss,
+      themeCss,
       css`
         :host {
           margin-top: var(--space-sm);

@@ -1,11 +1,5 @@
 import { html } from "lit";
 import { customElement } from "lit/decorators.js";
-
-if (process.env.NODE_ENV !== "production") {
-  require("@biz-dev-ops/md-docs/assets/style/page/style.css?dev");
-  require("../../assets/style/custom-theme.css?dev");
-}
-
 import { UseCaseViewer } from "../use-case-viewer";
 import { Query } from "./models";
 import queryViewerCss from "./query-viewer.css";
@@ -19,11 +13,11 @@ export class QueryViewer extends UseCaseViewer<Query> {
     name: "Query",
   };
 
-  renderMain() {
+  renderMain(model: Query) {
     return html`
-      ${this.modelViewerTemplate(`Parameters`, this.model?.parameters)}
-      ${this.modelViewerTemplate(`Response`, this.model?.response)}
-      ${this.casesTemplate("Exceptions", this.model?.exceptions)}
+      ${this.modelViewerTemplate("query-parameters", `Parameters`, model?.parameters)}
+      ${this.modelViewerTemplate("query-response", `Response`, model?.response)}
+      ${this.casesTemplate("query-exceptions", "Exceptions", model?.exceptions)}
     `;
   }
 

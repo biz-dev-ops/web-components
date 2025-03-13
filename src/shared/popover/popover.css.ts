@@ -1,20 +1,6 @@
 import { css } from "lit";
 
 export default css`
-    /* Reset */
-    :host {
-        font-family: var(--font-family-base);
-        font-size: var(--font-size-base);
-        line-height: var(--line-height-base);
-        box-sizing: border-box;
-        text-align: start;
-    }
-    
-    :where(*, ::before, ::after) {
-        box-sizing: border-box;
-    }
-    
-    /* Component */
     button {
         cursor: pointer;
     }
@@ -24,7 +10,7 @@ export default css`
     }
 
     .popover-control--info {
-      background-color: var(--color-white);
+      background-color: var(--main-surface);
       align-self: center;
       border: var(--line-base) solid var(--button-background-base);
       border-radius: var(--radius-circle);

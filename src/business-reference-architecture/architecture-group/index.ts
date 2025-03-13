@@ -2,7 +2,7 @@ import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import "../architecture-button";
 
-import styles from "../../shared/styles/reset";
+import styles from "../../shared/styles/reset.css";
 import { ButtonType, Group } from "../models";
 
 @customElement("architecture-group")

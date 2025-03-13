@@ -5,7 +5,7 @@ import { ItemSelected, ModelItemDecorator } from "../../../models";
 
 import "../../../../shared/popover";
 import { ModelViewerItem } from "..";
-import Util from "../../../../shared/util";
+import { titlelize, parseMarkdown } from "../../../../shared/util";
 
 @customElement('model-viewer-item-value')
 export class ModelViewerItemValue extends ModelViewerItem {
@@ -33,13 +33,13 @@ export class ModelViewerItemValue extends ModelViewerItem {
             <div class="item item--value">
                 <h3>
                     <span class="txt--property">
-                        ${Util.titlelize(this.title)}
+                        ${titlelize(this.title)}
                         ${this.required ? html`<span class="txt--required">*</span>` : ``}
                     </span>
                     ${this.item.description ?
                 html`
                             <bdo-popover>
-                                ${unsafeHTML(Util.parseMarkdown(this.item.description.trim()))}
+                                ${unsafeHTML(parseMarkdown(this.item.description.trim()))}
                             </bdo-popover>
                         ` : null
             }
@@ -68,7 +68,7 @@ export class ModelViewerItemValue extends ModelViewerItem {
             dd + dt {
                 margin-block-start: 1em;
             }
-            
+
             .item--value {
                 background-color: var(--color-black-a05);
                 border-radius: var(--radius-half);
@@ -97,8 +97,9 @@ export class ModelViewerItemValue extends ModelViewerItem {
 
         return html`
             <model-viewer-item-value
+              aria-label="model-viewer-item"
               property=${decorated.property}
-              title=${Util.titlelize(decorated.title)}
+              title=${titlelize(decorated.title)}
               .item=${decorated.item}
               .required=${decorated.required}
             ></model-viewer-item-value>

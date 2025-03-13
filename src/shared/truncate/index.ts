@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import resetCss from '../styles/reset.css';
 import truncateCss from './truncate.css';
 
 @customElement('bdo-truncate')
@@ -27,12 +28,12 @@ export class BdoTruncate extends LitElement {
         `;
     }
 
-    
+
     override firstUpdated(): void {
         const content = this.shadowRoot?.querySelector('.truncate__content');
-        
+
         if (!content) return;
-    
+
         new ResizeObserver(e => {
             if (!this.open) {
                 if (this.disabled === _isTextClamped(e[0].target)) {
@@ -41,13 +42,13 @@ export class BdoTruncate extends LitElement {
             }
         }).observe(content);
     }
-    
+
     private _onClick() {
         this.open = !this.open;
     }
 
     static override get styles() {
-        return truncateCss;
+        return [resetCss, truncateCss];
     }
 }
 

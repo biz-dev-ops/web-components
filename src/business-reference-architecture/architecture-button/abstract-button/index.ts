@@ -2,7 +2,7 @@ import { html, css, LitElement, TemplateResult, CSSResult } from "lit";
 import { property } from "lit/decorators.js";
 import { Button } from "../../models";
 
-import styles from "../../../shared/styles/reset";
+import styles from "../../../shared/styles/reset.css";
 
 import "../../../shared/icon";
 

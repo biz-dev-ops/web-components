@@ -5,43 +5,41 @@ import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ItemSelected, ModelItemDecorator } from "../../../models";
 import { ModelItemBuilder } from "../../../modules/model-item-builder";
 import { ModelViewerItem } from "..";
-import Util from "../../../../shared/util";
+import { titlelize, parseMarkdown } from "../../../../shared/util";
 
 import "../../../../shared/button";
 import "../../../../shared/popover";
 
 @customElement('model-viewer-item-array')
 export class ModelViewerItemArray extends ModelViewerItem {
-    
+
     override render() {
-        const name = Util.titlelize(this.item.items.title || "item");
+        const name = titlelize(this.item.items.title || "item");
 
         return html`
             <div class="item item--array">
                 <h3>
                     <span class="txt--property">
-                        ${Util.titlelize(this.title)} ${this.required ? html`<span class="txt--required">*</span>`: ``}
+                        ${titlelize(this.title)} ${this.required ? html`<span class="txt--required">*</span>` : ``}
                     </span>
-                    ${
-                        this.item.description ?
-                        html`
+                    ${this.item.description ?
+                html`
                             <bdo-popover>
-                                ${unsafeHTML(Util.parseMarkdown(this.item.description.trim()))}
+                                ${unsafeHTML(parseMarkdown(this.item.description.trim()))}
                             </bdo-popover>
                         ` : null
-                    }
+            }
                 </h3>
-                
+
                 <ul class="list--array">
-                    ${[...Array(2).keys()].map((_, index) => 
-                        html`
-                            <li>
-                                <bdo-button direction="right" @clicked=${this._onClicked} ?disabled="${index > 0}">
-                                    <span class="txt--property">${name}</span>
-                                </bdo-button>
-                            </li>
-                        `
-                    )}
+                    ${[...Array(2).keys()].map((_, index) => html`
+                        <li>
+                            <bdo-button direction="right" @clicked=${this._onClicked} ?disabled="${index > 0}">
+                                <span class="txt--property">${name}</span>
+                            </bdo-button>
+                        </li>
+                    `
+            )}
                 </ul>
             </div>
         `;
@@ -49,7 +47,7 @@ export class ModelViewerItemArray extends ModelViewerItem {
 
     private _onClicked() {
         this.dispatchEvent(new CustomEvent<ItemSelected>('itemSelected', { detail: { property: this.property, item: this.item } }));
-        this.dispatchEvent(new CustomEvent<ItemSelected>('itemSelected', { detail: { property: this.property, item: this.item.items } }));
+        this.dispatchEvent(new CustomEvent<ItemSelected>('itemSelected', { detail: { property: "item", item: this.item.items } }));
     }
 
     static override get styles() {
@@ -64,7 +62,7 @@ export class ModelViewerItemArray extends ModelViewerItem {
                 mask-image: linear-gradient(to top, transparent var(--space-sm), black var(--space-xl));
                 -webkit-mask-image: linear-gradient(to top, transparent var(--space-sm), black var(--space-xl));
             }
-            
+
             .list--array {
                 list-style: none;
                 padding-inline-start: 0;
@@ -76,7 +74,7 @@ export class ModelViewerItemArray extends ModelViewerItem {
             .list--array li {
                 position: relative;
             }
-            
+
             .list--array li::before,
             .list--array li::after {
             content: '';
@@ -90,7 +88,7 @@ export class ModelViewerItemArray extends ModelViewerItem {
                 block-size: var(--line-thin);
                 inline-size: var(--space-sm);
             }
-            
+
             .list--array li::after {
                 aspect-ratio: 1;
                 background-color: var(--main-surface);
@@ -107,19 +105,31 @@ export class ModelViewerItemArray extends ModelViewerItem {
     }
 
     static build(decorated: ModelItemDecorator, itemSelectedDelegate: (event: CustomEvent<ItemSelected>) => void, root: boolean): import("lit-html").TemplateResult {
-        if(decorated.item.type != "array" && !decorated.item.items)
+        if (decorated.item.type != "array" && !decorated.item.items)
             return html``;
 
         return html`
             <model-viewer-item-array
+                aria-label="model-viewer-item"
                 property=${decorated.property}
-                title=${Util.titlelize(decorated.title)}
+                title=${titlelize(decorated.title)}
                 .item=${decorated.item}
                 .required=${decorated.required}
                 @itemSelected=${itemSelectedDelegate}
-            >
-                ${ModelItemBuilder.build(new ModelItemDecorator(decorated.item.items), itemSelectedDelegate, root)}
-            </model-viewer-item-array>
+            ></model-viewer-item-array>
         `;
+
+// return html`
+// <model-viewer-item-array
+//     aria-label="model-viewer-item"
+//     property=${decorated.property}
+//     title=${titlelize(decorated.title)}
+//     .item=${decorated.item}
+//     .required=${decorated.required}
+//     @itemSelected=${itemSelectedDelegate}
+// >
+//     ${ModelItemBuilder.build(new ModelItemDecorator(decorated.item.items), itemSelectedDelegate, root)}
+// </model-viewer-item-array>
+// `;
     }
 }

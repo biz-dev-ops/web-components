@@ -6,7 +6,7 @@ import { ItemSelected, ModelItem, ModelItemDecorator } from "../../../models";
 import "../../../../shared/button";
 import "../../../../shared/popover";
 import { ModelViewerItem } from "..";
-import Util from "../../../../shared/util";
+import { titlelize, parseMarkdown } from "../../../../shared/util";
 
 @customElement('model-viewer-item-one-of')
 export class ModelViewerItemOneOf extends ModelViewerItem {
@@ -17,8 +17,8 @@ export class ModelViewerItemOneOf extends ModelViewerItem {
             <div class="item item--one-of">
                 <h2>
                     <span class="txt--property">
-                        ${Util.titlelize(this.title)}
-                        ${this.required ? html`<span class="txt--required">*</span>`: ``}
+                        ${titlelize(this.title)}
+                        ${this.required ? html`<span class="txt--required">*</span>` : ``}
                     </span>
                 </h2>
 
@@ -27,10 +27,10 @@ export class ModelViewerItemOneOf extends ModelViewerItem {
                         <li>
                             <bdo-button direction="right" @clicked="${() => { this._onClicked(item); }}">
                                 <span class="button-label">
-                                <span class="txt--property">${Util.titlelize(item.title)}</span>
+                                <span class="txt--property">${titlelize(item.title)}</span>
                                 ${item.description ? html`
                                     <bdo-popover>
-                                        ${unsafeHTML(Util.parseMarkdown(item.description.trim()))}
+                                        ${unsafeHTML(parseMarkdown(item.description.trim()))}
                                     </bdo-popover>
                                 ` : null}
                                 </span>
@@ -89,8 +89,9 @@ export class ModelViewerItemOneOf extends ModelViewerItem {
 
         return html`
             <model-viewer-item-one-of
+                aria-label="model-viewer-item"
                 property=${decorated.property}
-                title=${Util.titlelize(decorated.title)}
+                title=${titlelize(decorated.title)}
                 .items=${decorated.item.oneOf}
                 .required=${decorated.required}
                 @itemSelected=${itemSelectedDelegate}

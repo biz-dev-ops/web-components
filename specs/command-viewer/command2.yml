@@ -1,0 +1,21 @@
+---
+name: create order command
+description: |
+  The "Create Order" command is used to initiate the process of placing an
+  order within a system.
+  It enables the user to provide essential details about the order, such as:
+
+  - a unique order ID
+  - customer information
+  - a list of items being purchased (with their quantities and prices)
+  - the total cost of the order
+  - the shipping address
+
+  This command ensures accurate and organized data entry,
+  which facilitates smooth order processing, tracking, and fulfillment.
+  Additionally, it validates the input parameters to meet necessary criteria,
+  such as ensuring items have valid IDs and quantities are above zero.
+parameters:
+  $ref: "./parameters.yml"
+exceptions:
+  $ref: "./exceptions.yml"

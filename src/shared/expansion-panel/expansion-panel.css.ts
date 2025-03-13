@@ -1,39 +1,24 @@
 import { css } from "lit";
 
-const expansionPanelCss = css`
-    /* Reset */
-    :host {
-        all: unset;
-        font-family: var(--font-family-base);
-        font-size: var(--font-size-base);
-        display: inline-block;
-        line-height: var(--line-height-base);
-        box-sizing: border-box;
-        text-align: start;
-    }
-
-    :where(*, ::before, ::after) {
-        box-sizing: border-box;
-    }
-    
+export default css`
     /* Component */
     :host {
         --_expansion-panel-border-color: var(--expansion-panel-border-color, var(--color-brand-a40));
 
         display: block
     }
-    
+
     details {
         border: var(--line-base) solid var(--_expansion-panel-border-color);
         display: block;
-        border-radius: var(--radius-base);    
+        border-radius: var(--radius-base);
     }
     details summary::-webkit-details-marker {
         display:none;
     }
 
     summary {
-        border-radius: calc(var(--radius-base) - var(--space-xs));    
+        border-radius: calc(var(--radius-base) - var(--space-xs));
         cursor: pointer;
         list-style: none;
         padding-inline-end: var(--space-lg);
@@ -67,5 +52,3 @@ const expansionPanelCss = css`
         padding-block-end: var(--space-sm);
     }
 `;
-
-export default expansionPanelCss;

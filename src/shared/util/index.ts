@@ -1,16 +1,15 @@
-import { marked } from "marked";
+import MarkdownIt from "markdown-it";
+const md = MarkdownIt();
 
-export default class Util {
-    static titlelize(name: string) {
-        if(!name)
-            return name;
+export function titlelize(name: string) {
+    if (!name)
+        return name;
 
-        return (name.charAt(0).toUpperCase() + name.slice(1))
-            .replaceAll("_", " ")
-            .replaceAll("-", " ");
-    }
+    return (name.charAt(0).toUpperCase() + name.slice(1))
+        .replaceAll("_", " ")
+        .replaceAll("-", " ");
+}
 
-    static parseMarkdown(markdown: string) : string {
-        return marked.parse(markdown) as string;
-    } 
+export function parseMarkdown(markdown: string): string {
+    return md.render(markdown);
 }

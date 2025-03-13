@@ -1,0 +1,47 @@
+---
+invalid_customer_id:
+  name: Invalid Customer ID exception
+  description: The provided customer ID is invalid or does not exist in the system.
+  parameters:
+    type: object
+    description: Detailed information about the exception.
+    properties:
+      customer_id:
+        type: string
+        description: The provided customer ID, applicable for invalid_customer_id exception.
+        example: customer_789
+      message:
+        type: string
+        description: Human-readable message explaining the exception.
+        example: |
+          The provided customer ID is invalid or does not exist in the system.
+          Please ensure the customer ID is correct and try again.
+    required:
+      - customer_id
+      - message
+out_of_stock:
+  name: Out of stock exception
+  description: One or more items in the order are out of stock.
+  parameters:
+    type: object
+    description: Detailed information about the exception.
+    properties:
+      unavailable_items:
+        type: array
+        description: List of item IDs that are out of stock, applicable for out_of_stock exception.
+        items:
+          type: string
+        example:
+          - item_456
+          - item_789
+      message:
+        type: string
+        description: Human-readable message explaining the exception.
+        example: |
+          The following items are out of stock:
+          - item_456
+          - item_789
+          Please remove these items from the order and try again.
+    required:
+      - unavailable_items
+      - message

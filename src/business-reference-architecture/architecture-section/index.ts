@@ -2,7 +2,7 @@ import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import {ifDefined} from 'lit/directives/if-defined.js';
 
-import styles from "../../shared/styles/reset";
+import styles from "../../shared/styles/reset.css";
 import { Section, ButtonType, ArrowDirection, SectionType } from "../models";
 
 import "../architecture-group";
@@ -103,7 +103,7 @@ export class ArchitectureSection extends LitElement {
                     position: relative;
                     border-radius: var(--radius-base);
                 }
-                
+
                 .architecture-section:not([data-section-type]) {
                     background-color: var(--color-brand-a10);
                     color: var(--color-black);
@@ -115,11 +115,11 @@ export class ArchitectureSection extends LitElement {
 
                 .architecture-section[data-section-type="streams"] {
                     padding-top: var(--space-md);
-                    color: var(--color-white);
-                    border: 3px solid var(--color-brand-secondary);
+                    color: var(--main-surface);
+                    border: 3px solid var(--color-brand-pop);
                     gap: 0;
                 }
-                
+
                 .architecture-section[data-section-type="side"] {
                     grid-row: span 4 / span 4; /* Make dynamic */
                     grid-column-start: 2;
@@ -148,7 +148,7 @@ export class ArchitectureSection extends LitElement {
                     left: 50%;
                     transform: translate(-50%, 100%);
                 }
-                
+
                 h2, a {
                     color: var(--text-color-heading);
                     font-family: var(--font-family-heading);
@@ -161,7 +161,7 @@ export class ArchitectureSection extends LitElement {
                     left: var(--space-sm);
                     margin: 0;
                     padding: var(--space-xxs) var(--space-sm);
-                    background-color: var(--color-white);
+                    background-color: var(--main-surface);
                     border-radius: var(--radius-pill);
                     transform: translateY(-50%);
                     text-transform: lowercase;
@@ -172,7 +172,7 @@ export class ArchitectureSection extends LitElement {
                 a:hover h2 {
                     text-decoration: none;
                 }
-                
+
                 .architecture-groups {
                     display: grid;
                     grid-template-columns: repeat(3, 1fr);

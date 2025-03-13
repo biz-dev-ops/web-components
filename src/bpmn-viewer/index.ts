@@ -1,15 +1,17 @@
 import { css, html, LitElement, unsafeCSS } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import TokenSimulationModule from "bpmn-js-token-simulation/lib/viewer";
-import Viewer from "bpmn-js/lib/NavigatedViewer";
 
-import styles from "../shared/styles/reset";
-import viewerDiagramJsCss from "bpmn-js/dist/assets/diagram-js.css";
-import viewerBpmnJsCss from "bpmn-js/dist/assets/bpmn-js.css";
-import simulatorCss from "bpmn-js-token-simulation/assets/css/bpmn-js-token-simulation.css";
+import resetCss from "../shared/styles/reset.css";
+import themeCss from "../shared/styles/theme.css";
+import viewerDiagramJsCss from "bpmn-js/dist/assets/diagram-js.css?inline";
+import viewerBpmnJsCss from "bpmn-js/dist/assets/bpmn-js.css?inline";
+import simulatorCss from "bpmn-js-token-simulation/assets/css/bpmn-js-token-simulation.css?inline";
 
-import * as bizdevops from "./bizdevops.json";
+import TokenSimulationModule from "bpmn-js-token-simulation/lib/viewer.js";
+import Viewer from "bpmn-js/lib/NavigatedViewer.js";
 import { Element, ModdleElement } from "bpmn-js/lib/model/Types";
+
+import * as bizdevops from "./bizdevops.moddle.json";
 
 interface Link {
   name?: string;
@@ -20,9 +22,14 @@ interface ModdleLinks {
   links: Link[];
 }
 
-@customElement("bpmn-viewer")
+@customElement(BPMNViewer.tagName)
 export class BPMNViewer extends LitElement {
+  static tagName: string = "bpmn-viewer";
+
   private _viewer!: any;
+
+  @property({ attribute: "src" })
+  src!: string
 
   @property({ attribute: "data-xml" })
   xml!: string;
@@ -41,6 +48,10 @@ export class BPMNViewer extends LitElement {
   }
 
   override async firstUpdated() {
+    if (this._viewer) {
+      this._viewer.destroy();
+    }
+
     this._viewer = new Viewer({
       container: this.shadowRoot?.querySelector(
         "#bpmn-container"
@@ -50,29 +61,47 @@ export class BPMNViewer extends LitElement {
       },
       additionalModules: this.enableSimulator ? [TokenSimulationModule] : [],
     });
-
-    this._updateDiagram();
   }
 
-  override updated(changedProperties) {
-    if (changedProperties.has("xml")) {
-      this._updateDiagram();
+  override async updated(changedProperties) {
+    if (changedProperties.has("src")) {
+      const response = await fetch(this.src);
+      if (!response.ok) {
+        const container = this.shadowRoot?.querySelector("#bpmn-container") as HTMLElement;
+        container.innerHTML = `<div class="error">Failed to fetch ${this.src}</div>`;
+        console.error(`Failed to fetch ${this.src}, status: ${response.status}, ${response.statusText}`, response);
+        return;
+      }
+
+      this.xml = await response.text();
     }
 
-    if (changedProperties.has("enable-simulator")) {
+    if (changedProperties.has("xml")) {
+      this._updateDiagram(this.xml);
+    }
+
+    if (changedProperties.has("enableSimulator")) {
       this.firstUpdated();
     }
+
+    if (changedProperties.has("disableInteraction")) {
+      this._viewer.get("zoomScroll").toggle(this.disableInteraction);
+    }
   }
 
-  private async _updateDiagram() {
+  private async _updateDiagram(xml: string) {
+    if (!xml) {
+      return;
+    }
+
     try {
       const { warnings } = await this._viewer.importXML(
-        this.xml.replace(/\\"/g, '"')
+        xml.replace(/\\"/g, '"')
       );
 
       if (warnings.length) {
         console.log("bpmn import with warnings", warnings);
-      } 
+      }
       else {
         console.log("bpmn import successful");
       }
@@ -84,11 +113,7 @@ export class BPMNViewer extends LitElement {
       }
 
       this.zoomReset();
-
-      if(this.disableInteraction) {
-        this.toggleInteraction(false);
-      }
-    } 
+    }
     catch (err) {
       console.log("something went wrong while importing bpmn:", err);
     }
@@ -161,7 +186,8 @@ export class BPMNViewer extends LitElement {
 
   static override get styles() {
     return [
-      styles,
+      resetCss,
+      themeCss,
       css`
         :host {
           display: block;
@@ -205,9 +231,5 @@ export class BPMNViewer extends LitElement {
 
   public zoomReset() {
     this._viewer.get("canvas").zoom("fit-viewport", "auto");
-  }
-
-  public toggleInteraction(enable) {
-    this._viewer.get('zoomScroll').toggle(enable);
   }
 }

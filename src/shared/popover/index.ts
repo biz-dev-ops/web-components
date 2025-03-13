@@ -1,9 +1,10 @@
 import { LitElement, html } from "lit";
 import { customElement, query } from "lit/decorators.js";
+import resetCss from '../styles/reset.css';
 import popoverCss from "./popover.css";
 
 @customElement("bdo-popover")
-export class BdoPopover extends LitElement {    
+export class BdoPopover extends LitElement {
     @query("[popover]")
     _popoverElement!: HTMLElement;
 
@@ -13,7 +14,7 @@ export class BdoPopover extends LitElement {
     override render() {
         return html`
             <button popovertarget="popover-target" class="popover-control popover-control--info" @click=${this._onClick.bind(this)}>
-                <abbr title="info" >i</abbr>
+                <abbr title="info">i</abbr>
             </button>
             <div id="popover-target" popover>
                 <slot></slot>
@@ -31,18 +32,18 @@ export class BdoPopover extends LitElement {
         }
     }
 
-    private _onClick(event:Event): void {
+    private _onClick(event: Event): void {
         event.stopPropagation();
 
         if (this._buttonElement.getAttribute('aria-expanded') === 'true') {
             this._buttonElement.setAttribute('aria-expanded', 'false');
-            
+
             if (!_supportsPopover()) {
                 this._popoverElement.style.display = 'none';
             }
         } else {
             this._buttonElement.setAttribute('aria-expanded', 'true');
-            
+
             if (!_supportsPopover()) {
                 this._popoverElement.style.display = 'block';
                 this._popoverElement.style.position = 'fixed';
@@ -52,20 +53,20 @@ export class BdoPopover extends LitElement {
             _position(this._buttonElement, this._popoverElement, this.parentElement);
         }
     };
-    
+
     static override get styles() {
-        return popoverCss;
+        return [resetCss, popoverCss];
     }
 }
 
-const _position = (button: HTMLElement, popover:HTMLElement, context: HTMLElement | null) => {
+const _position = (button: HTMLElement, popover: HTMLElement, context: HTMLElement | null) => {
     if (!parent) {
         return;
     }
 
     const buttonPosition = button.getBoundingClientRect();
     const contextPosition = context?.getBoundingClientRect();
-    const scrollTop =  document.documentElement.scrollTop || document.body.scrollTop;
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
 
     if (contextPosition) {
         popover.style.left = `${contextPosition.left}px`;

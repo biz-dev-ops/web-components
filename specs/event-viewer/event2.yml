@@ -1,0 +1,17 @@
+---
+name: Order Created
+description: |
+  This event is triggered when a new order is successfully created.
+  It provides details about the order, including:
+
+  - a unique order ID
+  - customer information
+  - a list of items purchased (with quantities and prices)
+  - the total cost of the order
+  - the shipping address
+
+  This event enables downstream systems to react to new order placements,
+  such as initiating fulfillment processes, sending confirmation emails,
+  or updating inventory.
+parameters:
+  $ref: "./parameters.yml"

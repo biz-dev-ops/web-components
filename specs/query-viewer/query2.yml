@@ -1,0 +1,14 @@
+---
+name: find order query
+description: |
+  The "Find Order" query allows users to retrieve order details
+  based on various search criteria, such as order ID, customer ID,
+  product ID, or order date range.
+  This query helps users quickly locate specific orders,
+  review order information, and manage their order history.
+parameters:
+  $ref: "./parameters.yml"
+response:
+  $ref: "./response.yml"
+exceptions:
+  $ref: "./exceptions.yml"

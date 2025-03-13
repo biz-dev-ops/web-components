@@ -1,20 +1,8 @@
 import { css, html, LitElement } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
-
-import {
-  ItemSelected,
-  ModelItem,
-  ModelItemDecorator,
-  PathChanged,
-} from "./models";
+import { ItemSelected, ModelItem, ModelItemDecorator, PathChanged } from "./models";
 import { ModelItemBuilder } from "./modules/model-item-builder";
-
 import "./components/model-viewer-path";
-
-if (process.env.NODE_ENV !== "production") {
-  require("@biz-dev-ops/md-docs/assets/style/page/style.css?dev");
-  require("../../assets/style/custom-theme.css?dev");
-}
 
 @customElement("model-viewer")
 export class ModelViewer extends LitElement {
@@ -46,10 +34,10 @@ export class ModelViewer extends LitElement {
       ></model-viewer-path>
       <main>
         ${ModelItemBuilder.build(
-          this.path.at(-1) as ModelItemDecorator,
-          this.onItemSelected.bind(this),
-          false
-        )}
+        this.path.at(-1) as ModelItemDecorator,
+        this.onItemSelected.bind(this),
+        false
+      )}
       </main>
     `;
   }
@@ -60,7 +48,8 @@ export class ModelViewer extends LitElement {
       this.model = JSON.parse(this.modelJson);
       this.model.title = this.model.title || this.name;
       this.addPath("", this.model);
-    } else if (changedProperties.has("model")) {
+    }
+    else if (changedProperties.has("model")) {
       this.path = [];
       this.model.title = this.model.title || this.name;
       this.addPath("", this.model);
