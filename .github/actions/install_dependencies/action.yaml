@@ -9,7 +9,9 @@ runs:
         node-version: lts/*
 
     - name: Install project dependencies
+      shell: bash
       run: npm ci
 
     - name: Install Playwright Browsers
+      shell: bash
       run: npx playwright install --with-deps
