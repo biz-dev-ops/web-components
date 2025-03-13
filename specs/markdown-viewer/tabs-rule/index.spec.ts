@@ -21,18 +21,19 @@ test.describe("tabsRule", () => {
 
         render(md, page, markdown);
 
-        await expect(page.locator("tab-panel")).toHaveCount(1);
-        await expect(page.locator("tab-header")).toHaveCount(3);
-        await expect(page.locator("tab-content")).toHaveCount(3);
+        const tabs = page.getByRole("tab");
+        const panels = page.getByRole("tabpanel");
 
-        await expect(page.locator(`tab-header[data-tab="tab-content-1-1"]`)).toHaveText("Tab 1");
-        await expect(page.locator(`tab-content#tab-content-1-1`)).toContainText("Content 1");
+        await expect(page.locator("div.tabs")).toHaveCount(1);
+        await expect(page.getByRole("tablist")).toHaveCount(1);
+        await expect(tabs).toHaveCount(3);
+        await expect(panels).toHaveCount(1);
 
-        await expect(page.locator(`tab-header[data-tab="tab-content-1-2"]`)).toHaveText("Tab 2");
-        await expect(page.locator("tab-content#tab-content-1-2")).toContainText("Content 2");
+        await expect(tabs.nth(0)).toHaveText("Tab 1");
+        await expect(tabs.nth(1)).toHaveText("Tab 2");
+        await expect(tabs.nth(2)).toHaveText("Tab 3");
 
-        await expect(page.locator(`tab-header[data-tab="tab-content-1-3"]`)).toHaveText("Tab 3");
-        await expect(page.locator("tab-content#tab-content-1-3")).toContainText("Content 3");
+        await expect(panels.nth(0)).toContainText("Content 1");
     });
 
     test("should handle multiple tab panels", async ({ page }) => {
@@ -51,15 +52,21 @@ new list
 
         render(md, page, markdown);
 
-        await expect(page.locator("tab-panel")).toHaveCount(2);
-        await expect(page.locator("tab-header")).toHaveCount(4);
-        await expect(page.locator("tab-content")).toHaveCount(4);
+        const tabs = page.getByRole("tab");
+        const panels = page.getByRole("tabpanel");
 
-        await expect(page.locator(`tab-header[data-tab="tab-content-1-1"]`)).toHaveText("Tab 1");
-        await expect(page.locator("tab-content#tab-content-1-1")).toContainText("Content 1");
+        await expect(page.locator("div.tabs")).toHaveCount(2);
+        await expect(page.getByRole("tablist")).toHaveCount(2);
+        await expect(tabs).toHaveCount(4);
+        await expect(panels).toHaveCount(2);
 
-        await expect(page.locator(`tab-header[data-tab="tab-content-2-1"]`)).toHaveText("Tab A");
-        await expect(page.locator("tab-content#tab-content-2-1")).toContainText("Content A");
+        await expect(tabs.nth(0)).toHaveText("Tab 1");
+        await expect(tabs.nth(1)).toHaveText("Tab 2");
+        await expect(tabs.nth(2)).toHaveText("Tab A");
+        await expect(tabs.nth(3)).toHaveText("Tab B");
+
+        await expect(panels.nth(0)).toContainText("Content 1");
+        await expect(panels.nth(1)).toContainText("Content A");
     });
 
     test("should handle links", async ({ page }) => {
@@ -67,8 +74,17 @@ new list
 
         render(md, page, markdown);
 
-        await expect(page.locator(`tab-header[data-tab="tab-content-1-1"]`)).toHaveText("Link");
-        await expect(page.locator("tab-content#tab-content-1-1").locator("a")).toHaveAttribute("href", "#link");
+        const tabs = page.getByRole("tab");
+        const panels = page.getByRole("tabpanel");
+
+        await expect(page.locator("div.tabs")).toHaveCount(1);
+        await expect(page.getByRole("tablist")).toHaveCount(1);
+        await expect(tabs).toHaveCount(1);
+        await expect(panels).toHaveCount(1);
+
+        await expect(tabs.nth(0)).toHaveText("Link");;
+
+        await expect(panels.nth(0).locator("a")).toHaveAttribute("href", "#link");
     });
 
     test("should not interfere with regular bullet lists", async ({ page }) => {
@@ -79,6 +95,7 @@ new list
         const html = md.render(markdown);
         await page.setContent(html);
 
+        await expect(page.locator("div.tabs")).toHaveCount(0);
         await expect(page.locator("ul")).toHaveCount(1);
         await expect(page.locator("li")).toHaveCount(2);
     });

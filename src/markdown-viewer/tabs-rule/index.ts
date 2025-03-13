@@ -1,94 +1,103 @@
 import MarkdownIt, { Options, Renderer, Token } from "markdown-it";
 
 export default function tabsRule(md: MarkdownIt): void {
-    let tabPanelIndex = 0;
-    let tabContentIndex = 0;
+  let tabIndex = 0;
+  let tabPanelIndex = 0;
 
-    md.renderer.rules.bullet_list_open = function (tokens: Token[], idx: number, options: Options, _env: any, self: Renderer): string {
-        const token = tokens[idx];
+  md.renderer.rules.bullet_list_open = function (tokens: Token[], idx: number, options: Options, _env: any, self: Renderer): string {
+    const token = tokens[idx];
 
-        if (!(token as any).tabs) {
-            return self.renderToken(tokens, idx, options);
-        }
-
-        tabPanelIndex += 1;
-        tabContentIndex = 0;
-
-        const headers = getHeaders(tokens, idx);
-
-        return `
-            <tab-panel>
-                <tab-header-panel>
-                    ${headers.map((header, index) => `<tab-header data-tab="tab-content-${tabPanelIndex}-${index + 1}">${header}</tab-header>`).join("")}
-                </tab-header-panel>
-                <tab-content-panel>
-        `;
+    if (!(token as any).tabs) {
+      return self.renderToken(tokens, idx, options);
     }
 
-    md.renderer.rules.list_item_open = function (tokens: Token[], idx: number, options: Options, _env: any, self: Renderer): string {
-        const token = tokens[idx];
+    tabIndex += 1;
+    tabPanelIndex = 0;
 
-        if (!(token as any).tab) {
-            return self.renderToken(tokens, idx, options);
-        }
+    const headers = getHeaders(tokens, idx);
 
-        tabContentIndex += 1;
+    return `
+      <div class="tabs">
+        <div role="tablist">
+          ${headers.map((header, index) => `
+            <button
+              role="tab"
+              aria-selected="${index === 0 ? "true" : "false"}"
+              aria-controls="tabs-${tabIndex}-panel-${index + 1}"
+              id="tabs-${tabIndex}-tab-${index + 1}"
+              tabindex="${index === 0 ? "0" : "-1"}"
+            >${header}</button>
+          `).join("")}
+        </div>
+    `;
+  }
 
-        return `
-            <tab-content id="tab-content-${tabPanelIndex}-${tabContentIndex}">`;
+  md.renderer.rules.list_item_open = function (tokens: Token[], idx: number, options: Options, _env: any, self: Renderer): string {
+    const token = tokens[idx];
+
+    if (!(token as any).tab) {
+      return self.renderToken(tokens, idx, options);
     }
 
-    md.renderer.rules.list_item_close = function (tokens: Token[], idx: number, options: Options, _env: any, self: Renderer): string {
-        const token = tokens[idx];
+    tabPanelIndex += 1;
 
-        if (!(token as any).tab) {
-            return self.renderToken(tokens, idx, options);
-        }
+    return `
+      <div
+        id="tabs-${tabIndex}-panel-${tabPanelIndex}"
+        role="tabpanel"
+        tabindex="0"
+        aria-labelledby="tabs-${tabIndex}-tab-${tabPanelIndex}"
+        ${tabPanelIndex === 1 ? "" : "hidden"}>
+    `;
+  }
 
-        return `
-            </tab-content>`;
+  md.renderer.rules.list_item_close = function (tokens: Token[], idx: number, options: Options, _env: any, self: Renderer): string {
+    const token = tokens[idx];
+
+    if (!(token as any).tab) {
+      return self.renderToken(tokens, idx, options);
     }
 
-    md.renderer.rules.bullet_list_close = function (tokens: Token[], idx: number, options: Options, _env: any, self: Renderer): string {
-        const token = tokens[idx];
+    return `</div>`;
+  }
 
-        if (!(token as any).tabs) {
-            return self.renderToken(tokens, idx, options);
-        }
+  md.renderer.rules.bullet_list_close = function (tokens: Token[], idx: number, options: Options, _env: any, self: Renderer): string {
+    const token = tokens[idx];
 
-        return `
-                </tab-content-panel>
-            </tab-panel>
-        `;
+    if (!(token as any).tabs) {
+      return self.renderToken(tokens, idx, options);
     }
+
+    return `</div>`;
+  }
 }
 
-function getHeaders(tokens: Token[], idx: number) : string[] {
-    const headers: string[] = [];
-    for(idx; idx < tokens.length; idx++) {
-        const token = tokens[idx];
+function getHeaders(tokens: Token[], idx: number): string[] {
+  const headers: string[] = [];
+  for (idx; idx < tokens.length; idx++) {
+    const token = tokens[idx];
 
-        if(tokens[idx].type=== "bullet_list_close") {
-            break;
-        }
-
-        if(token.type != "list_item_open") {
-            continue;
-        }
-
-        const inlineToken = getNextInline(tokens, idx);
-        const textToken  = inlineToken?.children?.find(child => child.type === "text");
-        headers.push(textToken?.content || "undefined");
+    if (tokens[idx].type === "bullet_list_close") {
+      break;
     }
-    return headers;
+
+    if (token.type != "list_item_open") {
+      continue;
+    }
+
+    const inlineToken = getNextInline(tokens, idx);
+    const textToken = inlineToken?.children?.find(child => child.type === "text");
+    headers.push(textToken?.content || "undefined");
+  }
+  return headers;
 }
 
-function getNextInline(tokens: Token[], idx: number) : Token | null {
-    for(idx; idx < tokens.length; idx++) {
-        const token = tokens[idx];
-        if(token.type === "inline") {
-            return token;
-        }
+function getNextInline(tokens: Token[], idx: number): Token | null {
+  for (idx; idx < tokens.length; idx++) {
+    const token = tokens[idx];
+    if (token.type === "inline") {
+      return token;
     }
-    return null;
+  }
+  return null;
 }
