@@ -5,7 +5,8 @@ import { readYamlAndParseAs } from "../helper/fs-helper";
 import { Task } from "../../src/task-viewer/models";
 
 test.describe("task-viewer", async () => {
-    test.beforeEach(async ({ router }) => { 
+
+    test.beforeEach(async ({ router }) => {
         await useRoutes(router, [
             new FileRoute("/task1.yml", new URL("task1.yml", import.meta.url)),
             new FileRoute("/task2.yml", new URL("task2.yml", import.meta.url)),
@@ -27,7 +28,7 @@ test.describe("task-viewer", async () => {
         await expectComponentToContain(component, 3, 2, 3);
     });
 
-    test("can load src", async ({ mount, router }) => {
+    test("can load src", async ({ mount }) => {
         const component = await mount(TaskViewer, {
             props: {
                 src: "task1.yml"
@@ -37,7 +38,7 @@ test.describe("task-viewer", async () => {
         await expectComponentToContain(component, 3, 2, 3);
     });
 
-    test("can load references", async ({ mount, router }) => {
+    test("can load references", async ({ mount }) => {
         const component = await mount(TaskViewer, {
             props: {
                 src: "task2.yml"
@@ -47,7 +48,7 @@ test.describe("task-viewer", async () => {
         await expectComponentToContain(component, 3, 2, 3);
     });
 
-    test("can change src", async ({ mount, router }) => {
+    test("can change src", async ({ mount }) => {
         const component = await mount(TaskViewer, {
             props: {
                 src: "task1.yml"

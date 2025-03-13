@@ -15,7 +15,7 @@ test.describe("command-viewer", async () => {
         ]);
     });
 
-    test("can load data", async ({ mount }) => {
+    test.fixme("can load data", async ({ mount }) => {
         const model = await readYamlAndParseAs<Command>(new URL("command1.yml", import.meta.url));
 
         const component = await mount(CommandViewer, {

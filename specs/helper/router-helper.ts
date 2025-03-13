@@ -7,7 +7,9 @@ export async function useRoutes(router: RouterFixture, routes: Route | Route[]) 
         routes = [routes];
     }
 
-    routes.forEach(async route =>  await route.set(router));
+    for (const rout of routes) {
+        await rout.set(router);
+    }
 }
 
 export interface Route {

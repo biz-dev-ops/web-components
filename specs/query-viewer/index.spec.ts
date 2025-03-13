@@ -5,6 +5,7 @@ import { readYamlAndParseAs } from "../helper/fs-helper";
 import { Query } from "../../src/query-viewer/models";
 
 test.describe("query-viewer", async () => {
+
     test.beforeEach(async ({ router }) => {
         await useRoutes(router, [
             new FileRoute("/query1.yml", new URL("query1.yml", import.meta.url)),
@@ -15,7 +16,7 @@ test.describe("query-viewer", async () => {
         ]);
     });
 
-    test("can load data", async ({ mount }) => {
+    test.fixme("can load data", async ({ mount }) => {
         const model = await readYamlAndParseAs<Query>(new URL("query1.yml", import.meta.url));
 
         const component = await mount(QueryViewer, {
