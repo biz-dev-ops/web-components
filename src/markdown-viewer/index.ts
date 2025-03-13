@@ -29,8 +29,7 @@ export class MarkdownViewer extends LitElement {
         if (changedProperties.has("src")) {
             try {
                 const markdown = await fetchText(this.src);
-
-                this.state = await parseMarkdown(markdown)
+                this.state = md.render(markdown);
             }
             catch (error: any) {
                 this.state = error;
@@ -46,7 +45,3 @@ export class MarkdownViewer extends LitElement {
         ];
     }
 }
-
-async function parseMarkdown(markdown: string): Promise<string> {
-    return md.render(markdown);
-};
