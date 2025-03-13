@@ -22,18 +22,20 @@ test.describe("tabsRule", () => {
         render(md, page, markdown);
 
         const tabs = page.getByRole("tab");
-        const panels = page.getByRole("tabpanel");
+        const panels = page.getByRole("tabpanel", { includeHidden: true });
 
         await expect(page.locator("div.tabs")).toHaveCount(1);
         await expect(page.getByRole("tablist")).toHaveCount(1);
         await expect(tabs).toHaveCount(3);
-        await expect(panels).toHaveCount(1);
+        await expect(panels).toHaveCount(3);
 
         await expect(tabs.nth(0)).toHaveText("Tab 1");
         await expect(tabs.nth(1)).toHaveText("Tab 2");
         await expect(tabs.nth(2)).toHaveText("Tab 3");
 
         await expect(panels.nth(0)).toContainText("Content 1");
+        await expect(panels.nth(1)).toContainText("Content 2");
+        await expect(panels.nth(2)).toContainText("Content 3");
     });
 
     test("should handle multiple tab panels", async ({ page }) => {
@@ -53,12 +55,12 @@ new list
         render(md, page, markdown);
 
         const tabs = page.getByRole("tab");
-        const panels = page.getByRole("tabpanel");
+        const panels = page.getByRole("tabpanel", { includeHidden: true });
 
         await expect(page.locator("div.tabs")).toHaveCount(2);
         await expect(page.getByRole("tablist")).toHaveCount(2);
         await expect(tabs).toHaveCount(4);
-        await expect(panels).toHaveCount(2);
+        await expect(panels).toHaveCount(4);
 
         await expect(tabs.nth(0)).toHaveText("Tab 1");
         await expect(tabs.nth(1)).toHaveText("Tab 2");
@@ -66,7 +68,9 @@ new list
         await expect(tabs.nth(3)).toHaveText("Tab B");
 
         await expect(panels.nth(0)).toContainText("Content 1");
-        await expect(panels.nth(1)).toContainText("Content A");
+        await expect(panels.nth(1)).toContainText("Content 2");
+        await expect(panels.nth(2)).toContainText("Content A");
+        await expect(panels.nth(3)).toContainText("Content B");
     });
 
     test("should handle links", async ({ page }) => {
@@ -75,7 +79,7 @@ new list
         render(md, page, markdown);
 
         const tabs = page.getByRole("tab");
-        const panels = page.getByRole("tabpanel");
+        const panels = page.getByRole("tabpanel", { includeHidden: true });
 
         await expect(page.locator("div.tabs")).toHaveCount(1);
         await expect(page.getByRole("tablist")).toHaveCount(1);
