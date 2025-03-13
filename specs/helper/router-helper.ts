@@ -7,13 +7,13 @@ export async function useRoutes(router: RouterFixture, routes: Route | Route[]) 
         routes = [routes];
     }
 
-    for (const rout of routes) {
-        await rout.set(router);
+    for (const route of routes) {
+        await route.useOn(router);
     }
 }
 
 export interface Route {
-    set(router: RouterFixture): Promise<void>
+    useOn(router: RouterFixture): Promise<void>
 }
 
 export class FileRoute implements Route {
@@ -25,7 +25,7 @@ export class FileRoute implements Route {
         this.file = file;
 
     }
-    async set(router: RouterFixture): Promise<void> {
+    async useOn(router: RouterFixture): Promise<void> {
         await router.use(http.get(this.path, async () => {
             return HttpResponse.text(fs.readFileSync(this.file, "utf-8"));
         }));

@@ -28,8 +28,6 @@ export class DMNViewer extends LitElement {
     this._viewer = new Viewer({
       container: this.renderRoot as HTMLElement
     });
-
-    this._updateDiagram(this.xml);
   }
 
   override async updated(changedProperties) {
@@ -43,7 +41,6 @@ export class DMNViewer extends LitElement {
       }
 
       this.xml = await response.text();
-      this._updateDiagram(this.xml);
     }
 
     if (changedProperties.has("xml")) {

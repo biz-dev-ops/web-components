@@ -22,8 +22,10 @@ interface ModdleLinks {
   links: Link[];
 }
 
-@customElement("bpmn-viewer")
+@customElement(BPMNViewer.tagName)
 export class BPMNViewer extends LitElement {
+  static tagName: string = "bpmn-viewer";
+
   private _viewer!: any;
 
   @property({ attribute: "src" })
@@ -59,8 +61,6 @@ export class BPMNViewer extends LitElement {
       },
       additionalModules: this.enableSimulator ? [TokenSimulationModule] : [],
     });
-
-    this._updateDiagram(this.xml);
   }
 
   override async updated(changedProperties) {
@@ -74,7 +74,6 @@ export class BPMNViewer extends LitElement {
       }
 
       this.xml = await response.text();
-      this._updateDiagram(this.xml);
     }
 
     if (changedProperties.has("xml")) {

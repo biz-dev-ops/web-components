@@ -16,7 +16,7 @@ test.describe("query-viewer", async () => {
         ]);
     });
 
-    test.fixme("can load data", async ({ mount }) => {
+    test("can load data", async ({ mount }) => {
         const model = await readYamlAndParseAs<Query>(new URL("query1.yml", import.meta.url));
 
         const component = await mount(QueryViewer, {

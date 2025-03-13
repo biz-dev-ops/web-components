@@ -9,7 +9,7 @@
     <main>
       <h1>Markdown viewer</h1>
       <div id="buttons">
-        <button id="change-src">Change src</button>
+        <button id="bpmn">BPMN</button>
       </div>
       <markdown-viewer src="markdown.md"></markdown-viewer>
       <h2>Run tests</h2>
@@ -26,8 +26,8 @@
 
       buttons.addEventListener("click", function (event) {
         const target = event.target;
-        if (target.id === "change-src") {
-          viewer.setAttribute("src", viewer.src.endsWith("markdown.md") ? "markdown.md" : "markdown.md");
+        if (target.id === "bpmn") {
+          viewer.setAttribute("src", "markdown-bpmn.md");
         }
       });
     </script>

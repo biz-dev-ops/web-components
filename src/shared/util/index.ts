@@ -1,4 +1,5 @@
-import { marked } from "marked";
+import MarkdownIt from "markdown-it";
+const md = MarkdownIt();
 
 export function titlelize(name: string) {
     if (!name)
@@ -10,5 +11,5 @@ export function titlelize(name: string) {
 }
 
 export function parseMarkdown(markdown: string): string {
-    return marked.parse(markdown) as string;
+    return md.render(markdown);
 }
