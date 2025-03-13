@@ -1,28 +1,13 @@
 import { css, html, LitElement } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import { BPMNViewer } from "../bpmn-viewer";
 
 import resetCss from "../shared/styles/reset.css";
 import themeCss from "../shared/styles/theme.css";
 
 import { FetchError, fetchText } from "../shared/fetch";
 
-const webcomponents = [
-    { extensions: [".bpmn"], componentTag: BPMNViewer.tagName }
-]
-
-import MarkdownIt from "markdown-it";
-const md = MarkdownIt();
-
-import tabsRuler from "./tabs-ruler";
-md.use(tabsRuler, { extensions: webcomponents.flatMap(c => c.extensions) });
-
-import tabsRule from "./tabs-rule";
-md.use(tabsRule);
-
-import webComponentLinkRule from "./webcomponent-link-rule";
-md.use(webComponentLinkRule, { mappings: webcomponents });
+import md from "./markdown-it";
 
 @customElement("markdown-viewer")
 export class MarkdownViewer extends LitElement {
