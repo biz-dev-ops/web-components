@@ -12,3 +12,7 @@ runs:
     - name: Install project dependencies
       shell: bash
       run: npm ci
+
+    - name: Install playwright
+      shell: bash
+      run: npx playwright install
