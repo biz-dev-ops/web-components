@@ -31,3 +31,19 @@ export class FileRoute implements Route {
         }));
     }
 }
+
+export class StringContentRoute implements Route {
+    path: string;
+    content: string;
+
+    constructor(path: string, content: string) {
+        this.path = path;
+        this.content = content;
+
+    }
+    async useOn(router: RouterFixture): Promise<void> {
+        await router.use(http.get(this.path, async () => {
+            return HttpResponse.text(this.content);
+        }));
+    }
+}

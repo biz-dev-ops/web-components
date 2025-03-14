@@ -9,7 +9,9 @@ import "./canvas-box";
 import { data } from "./data";
 import { FetchError, fetchYamlAndBundleAs } from "../shared/fetch";
 
-@customElement("business-model-canvas")
+export const tag = "business-model-canvas";
+
+@customElement(tag)
 export class BusinessModelCanvasComponent extends LitElement {
   @property({ type: Object })
   model!: Model | FetchError;

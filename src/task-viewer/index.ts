@@ -5,7 +5,9 @@ import { Task } from "./models";
 import taskViewerCss from "./task-viewer.css";
 import "../model-viewer";
 
-@customElement("task-viewer")
+export const tag = "task-viewer";
+
+@customElement(tag)
 export class TaskViewer extends UseCaseViewer<Task> {
   useCaseType = {
     type: "task",

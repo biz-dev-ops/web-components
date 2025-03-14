@@ -7,7 +7,9 @@ import { Section } from "./models";
 import "./architecture-section";
 import { FetchError, fetchYamlAndBundleAs } from "../shared/fetch";
 
-@customElement("business-reference-architecture")
+export const tag = "business-reference-architecture";
+
+@customElement(tag)
 export class BusinessReferenceArchitectureComponent extends LitElement {
   @property({ type: Array })
   model!: Section[];

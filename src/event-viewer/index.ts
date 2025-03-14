@@ -5,7 +5,9 @@ import { Event } from "./models";
 import eventViewerCss from "./event-viewer.css";
 import "../model-viewer";
 
-@customElement("event-viewer")
+export const tag = "event-viewer";
+
+@customElement(tag)
 export class EventViewer extends UseCaseViewer<Event> {
   useCaseType = {
     type: "event",

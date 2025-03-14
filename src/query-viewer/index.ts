@@ -5,7 +5,9 @@ import { Query } from "./models";
 import queryViewerCss from "./query-viewer.css";
 import "../model-viewer";
 
-@customElement("query-viewer")
+export const tag = "query-viewer";
+
+@customElement(tag)
 export class QueryViewer extends UseCaseViewer<Query> {
   useCaseType = {
     type: "query",

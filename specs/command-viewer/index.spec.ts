@@ -8,15 +8,15 @@ test.describe("command-viewer", async () => {
 
     test.beforeEach(async ({ router }) => {
         await useRoutes(router, [
-            new FileRoute("/command1.yml", new URL("command1.yml", import.meta.url)),
-            new FileRoute("/command2.yml", new URL("command2.yml", import.meta.url)),
+            new FileRoute("/1.command.yml", new URL("1.command.yml", import.meta.url)),
+            new FileRoute("/2.command.yml", new URL("2.command.yml", import.meta.url)),
             new FileRoute("/parameters.yml", new URL("parameters.yml", import.meta.url)),
             new FileRoute("/exceptions.yml", new URL("exceptions.yml", import.meta.url))
         ]);
     });
 
     test.fixme("can load data", async ({ mount }) => {
-        const model = await readYamlAndParseAs<Command>(new URL("command1.yml", import.meta.url));
+        const model = await readYamlAndParseAs<Command>(new URL("1.command.yml", import.meta.url));
 
         const component = await mount(CommandViewer, {
             props: {
@@ -30,7 +30,7 @@ test.describe("command-viewer", async () => {
     test("can load src", async ({ mount, router }) => {
         const component = await mount(CommandViewer, {
             props: {
-                src: "command1.yml"
+                src: "1.command.yml"
             }
         });
 
@@ -40,7 +40,7 @@ test.describe("command-viewer", async () => {
     test("can load references", async ({ mount, router }) => {
         const component = await mount(CommandViewer, {
             props: {
-                src: "command2.yml"
+                src: "2.command.yml"
             }
         });
 
@@ -50,7 +50,7 @@ test.describe("command-viewer", async () => {
     test("can change src", async ({ mount, router }) => {
         const component = await mount(CommandViewer, {
             props: {
-                src: "command1.yml"
+                src: "1.command.yml"
             }
         });
 
@@ -58,7 +58,7 @@ test.describe("command-viewer", async () => {
 
         await component.update({
             props: {
-                src: "command2.yml"
+                src: "2.command.yml"
             }
         });
 

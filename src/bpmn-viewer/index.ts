@@ -22,9 +22,10 @@ interface ModdleLinks {
   links: Link[];
 }
 
-@customElement(BPMNViewer.tagName)
+export const tag: string = "bpmn-viewer";
+
+@customElement(tag)
 export class BPMNViewer extends LitElement {
-  static tagName: string = "bpmn-viewer";
 
   private _viewer!: any;
 
@@ -101,9 +102,6 @@ export class BPMNViewer extends LitElement {
 
       if (warnings.length) {
         console.log("bpmn import with warnings", warnings);
-      }
-      else {
-        console.log("bpmn import successful");
       }
 
       this._makeElementsClickable();

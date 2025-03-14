@@ -9,13 +9,13 @@ test.describe("business-reference-architecture", async () => {
 
     test.beforeEach(async ({ router }) => {
         await useRoutes(router, [
-            new FileRoute("/model1.yml", new URL("model1.yml", import.meta.url)),
-            new FileRoute("/model2.yml", new URL("model2.yml", import.meta.url))
+            new FileRoute("/1.business-reference-architecture.yml", new URL("1.business-reference-architecture.yml", import.meta.url)),
+            new FileRoute("/2.business-reference-architecture.yml", new URL("2.business-reference-architecture.yml", import.meta.url))
         ]);
     });
 
     test("can load data", async ({ mount }) => {
-        const model = await readYamlAndParseAs<Section[]>(new URL("model1.yml", import.meta.url));
+        const model = await readYamlAndParseAs<Section[]>(new URL("1.business-reference-architecture.yml", import.meta.url));
 
         const component = await mount(BusinessReferenceArchitectureComponent, {
             props: {
@@ -27,11 +27,11 @@ test.describe("business-reference-architecture", async () => {
     });
 
     test("can load src", async ({ mount, router }) => {
-        const model = await readYamlAndParseAs<Section[]>(new URL("model1.yml", import.meta.url));
+        const model = await readYamlAndParseAs<Section[]>(new URL("1.business-reference-architecture.yml", import.meta.url));
 
         const component = await mount(BusinessReferenceArchitectureComponent, {
             props: {
-                src: "model1.yml"
+                src: "1.business-reference-architecture.yml"
             }
         });
 
@@ -39,11 +39,11 @@ test.describe("business-reference-architecture", async () => {
     });
 
     test("can change src", async ({ mount, router }) => {
-        let model = await readYamlAndParseAs<Section[]>(new URL("model1.yml", import.meta.url));
+        let model = await readYamlAndParseAs<Section[]>(new URL("1.business-reference-architecture.yml", import.meta.url));
 
         const component = await mount(BusinessReferenceArchitectureComponent, {
             props: {
-                src: "model1.yml"
+                src: "1.business-reference-architecture.yml"
             }
         });
 
@@ -51,11 +51,11 @@ test.describe("business-reference-architecture", async () => {
 
         await component.update({
             props: {
-                src: "model2.yml"
+                src: "2.business-reference-architecture.yml"
             }
         });
 
-        model = await readYamlAndParseAs<Section[]>(new URL("model2.yml", import.meta.url));
+        model = await readYamlAndParseAs<Section[]>(new URL("2.business-reference-architecture.yml", import.meta.url));
 
         await expectComponentToContainData(component, model);
     });

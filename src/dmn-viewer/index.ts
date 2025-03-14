@@ -10,7 +10,9 @@ import ViewerDecisionTableCss from "dmn-js/dist/assets/dmn-js-decision-table.css
 import ViewerLiteralExpressionCss from "dmn-js/dist/assets/dmn-js-literal-expression.css?inline";
 import ViewerDMNCss from "dmn-js/dist/assets/dmn-font/css/dmn.css?inline";
 
-@customElement("dmn-viewer")
+export const tag: string = "dmn-viewer";
+
+@customElement(tag)
 export class DMNViewer extends LitElement {
   private _viewer!: any;
 
@@ -58,9 +60,6 @@ export class DMNViewer extends LitElement {
 
       if (warnings.length) {
         console.log("import with warnings", warnings);
-      }
-      else {
-        console.log("import successful");
       }
 
       this.zoomReset();
