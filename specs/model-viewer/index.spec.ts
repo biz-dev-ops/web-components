@@ -22,37 +22,45 @@ test.describe("model-viewer", async () => {
             }
         });
 
-        await expectComponentToContain(component, 5, 1, 3);
+        await expectComponentToContain(component, model);
     });
 
     test("can load src", async ({ mount }) => {
+        const model = await readYamlAndParseAs<ModelItem>(new URL("1.model.yml", import.meta.url));
+
         const component = await mount(ModelViewer, {
             props: {
                 src: "1.model.yml"
             }
         });
 
-        await expectComponentToContain(component, 5, 1, 3);
+        await expectComponentToContain(component, model);
     });
 
     test("can load references", async ({ mount }) => {
+        const model = await readYamlAndParseAs<ModelItem>(new URL("2.model.yml", import.meta.url));
+
         const component = await mount(ModelViewer, {
             props: {
                 src: "2.model.yml"
             }
         });
 
-        await expectComponentToContain(component, 5, 1, 3);
+        await expectComponentToContain(component, model);
     });
 
     test("can change src", async ({ mount }) => {
+        let model = await readYamlAndParseAs<ModelItem>(new URL("1.model.yml", import.meta.url));
+
         const component = await mount(ModelViewer, {
             props: {
                 src: "1.model.yml"
             }
         });
 
-        await expectComponentToContain(component, 5, 1, 3);
+        await expectComponentToContain(component, model);
+
+        model = await readYamlAndParseAs<ModelItem>(new URL("2.model.yml", import.meta.url));
 
         await component.update({
             props: {
@@ -60,7 +68,7 @@ test.describe("model-viewer", async () => {
             }
         });
 
-        await expectComponentToContain(component, 5, 1, 3);
+        await expectComponentToContain(component, model);
     });
 
     test.afterEach(async ({ page }) => {
@@ -68,8 +76,11 @@ test.describe("model-viewer", async () => {
     });
 });
 
-async function expectComponentToContain(component: MountResult<ModelViewer>, parameters: number, response: number, exceptions: number) : Promise<void> {
-    await expect(component.getByLabel("model-parameters").getByLabel("model-viewer-item")).toHaveCount(parameters);
-    await expect(component.getByLabel("model-response").getByLabel("model-viewer-item")).toHaveCount(response);
-    await expect(component.getByLabel("model-exceptions").getByLabel("case", { exact: true })).toHaveCount(exceptions);
+async function expectComponentToContain(component: MountResult<ModelViewer>, model: ModelItem) : Promise<void> {
+    await expect(component).toContainText(model.title);
+    await expect(component).toContainText(model.description);
+
+    for(const key of Object.keys(model.properties)) {
+        await expect(component).toContainText(key);
+    }
 };
