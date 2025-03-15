@@ -11,7 +11,7 @@
       <div id="buttons">
         <button id="change-src">Change src</button>
       </div>
-      <business-reference-architecture src="model1.yml"></business-reference-architecture>
+      <business-reference-architecture src="1.business-reference-architecture.yml"></business-reference-architecture>
       <h2>Run tests</h2>
       <code>
         npm run test -- 'business-reference-architecture'
@@ -27,7 +27,7 @@
       buttons.addEventListener("click", function (event) {
         const target = event.target;
         if (target.id === "change-src") {
-          viewer.setAttribute("src", viewer.src.endsWith("model1.yml") ? "model2.yml" : "model1.yml");
+          viewer.setAttribute("src", viewer.src.endsWith("1.business-reference-architecture.yml") ? "2.business-reference-architecture.yml" : "1.business-reference-architecture.yml");
         }
       });
     </script>

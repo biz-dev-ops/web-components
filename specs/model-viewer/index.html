@@ -2,32 +2,32 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Event viewer</title>
+    <title>Model viewer</title>
   </head>
 
   <body>
     <main>
-      <h1>Event viewer</h1>
+      <h1>Model viewer</h1>
       <div id="buttons">
         <button id="change-src">Change src</button>
       </div>
-      <event-viewer src="1.event.yml"></event-viewer>
+      <model-viewer src="1.model.yml"></model-viewer>
       <h2>Run tests</h2>
       <code>
-        npm run test -- 'event-viewer'
+        npm run test -- 'model-viewer'
       </code>
     </main>
 
     <script type="module">
-      import "../../src/event-viewer/index.ts";
+      import "../../src/model-viewer/index.ts";
 
       const buttons = document.getElementById("buttons");
-      const viewer = document.getElementsByTagName("event-viewer")[0];
+      const viewer = document.getElementsByTagName("model-viewer")[0];
 
       buttons.addEventListener("click", function (event) {
         const target = event.target;
         if (target.id === "change-src") {
-          viewer.setAttribute("src", viewer.src.endsWith("1.event.yml") ? "2.event.yml" : "1.event.yml");
+          viewer.setAttribute("src", viewer.src.endsWith("1.model.yml") ? "2.model.yml" : "1.model.yml");
         }
       });
     </script>

@@ -11,7 +11,7 @@
       <div id="buttons">
         <button id="change-src">Change src</button>
       </div>
-      <task-viewer src="task1.yml"></task-viewer>
+      <task-viewer src="1.task.yml"></task-viewer>
       <h2>Run tests</h2>
       <code>
         npm run test -- 'task-viewer'
@@ -27,7 +27,7 @@
       buttons.addEventListener("click", function (event) {
         const target = event.target;
         if (target.id === "change-src") {
-          viewer.setAttribute("src", viewer.src.endsWith("task1.yml") ? "task2.yml" : "task1.yml");
+          viewer.setAttribute("src", viewer.src.endsWith("1.task.yml") ? "2.task.yml" : "1.task.yml");
         }
       });
     </script>

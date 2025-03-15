@@ -1,14 +1,13 @@
 import { customElement } from "lit/decorators.js";
-import { css, html } from "lit";
+import { css, html, TemplateResult } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-
-import { ItemSelected, ModelItemDecorator } from "../../../models";
-import { ModelItemBuilder } from "../../../modules/model-item-builder";
+import { ItemSelected } from "../../../models";
 import { ModelViewerItem } from "..";
 import { titlelize, parseMarkdown } from "../../../../shared/util";
 
 import "../../../../shared/button";
 import "../../../../shared/popover";
+import { ModelItemDecorator, ModelItemDecoratorBuilder } from "../../../modules/model-item-decorator-builder";
 
 @customElement('model-viewer-item-array')
 export class ModelViewerItemArray extends ModelViewerItem {
@@ -23,12 +22,12 @@ export class ModelViewerItemArray extends ModelViewerItem {
                         ${titlelize(this.title)} ${this.required ? html`<span class="txt--required">*</span>` : ``}
                     </span>
                     ${this.item.description ?
-                html`
+                        html`
                             <bdo-popover>
                                 ${unsafeHTML(parseMarkdown(this.item.description.trim()))}
                             </bdo-popover>
                         ` : null
-            }
+                    }
                 </h3>
 
                 <ul class="list--array">
@@ -104,7 +103,7 @@ export class ModelViewerItemArray extends ModelViewerItem {
         `];
     }
 
-    static build(decorated: ModelItemDecorator, itemSelectedDelegate: (event: CustomEvent<ItemSelected>) => void, root: boolean): import("lit-html").TemplateResult {
+    static async build(decorated: ModelItemDecorator, _builder: ModelItemDecoratorBuilder, itemSelectedDelegate: (event: CustomEvent<ItemSelected>) => void, _root: boolean) : Promise<TemplateResult> {
         if (decorated.item.type != "array" && !decorated.item.items)
             return html``;
 
@@ -118,18 +117,5 @@ export class ModelViewerItemArray extends ModelViewerItem {
                 @itemSelected=${itemSelectedDelegate}
             ></model-viewer-item-array>
         `;
-
-// return html`
-// <model-viewer-item-array
-//     aria-label="model-viewer-item"
-//     property=${decorated.property}
-//     title=${titlelize(decorated.title)}
-//     .item=${decorated.item}
-//     .required=${decorated.required}
-//     @itemSelected=${itemSelectedDelegate}
-// >
-//     ${ModelItemBuilder.build(new ModelItemDecorator(decorated.item.items), itemSelectedDelegate, root)}
-// </model-viewer-item-array>
-// `;
     }
 }

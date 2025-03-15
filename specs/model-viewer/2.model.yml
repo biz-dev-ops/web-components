@@ -1,0 +1,216 @@
+title: Course
+description: A schema describing a course with modules and assignments.
+type: object
+properties:
+  title:
+    type: string
+    description: The title of the course.
+    example: "Introduction to Railway Engineering"
+  description:
+    type: string
+    description: A description of the course.
+    example: "Learn the fundamentals of train design and operation."
+  modules:
+    type: array
+    items:
+      title: Module
+      type: object
+      properties:
+        title:
+          type: string
+          description: The title of the module.
+          example: "Train Components"
+        lessons:
+          type: array
+          items:
+            title: Lesson
+            type: object
+            properties:
+              title:
+                type: string
+                description: The title of the lesson.
+                example: "Engines and Carriages"
+              content:
+                type: string
+                description: The content of the lesson (e.g., Markdown or HTML).
+                example: "This lesson covers the different types of engines and carriages."
+              topics:
+                type: array
+                items:
+                  oneOf:
+                    - $ref: "#/definitions/diesel_engine"
+                    - $ref: "#/definitions/electric_engine"
+                    - $ref: "#/definitions/steam_engine"
+                    - $ref: "#/definitions/passenger_carriage"
+                    - $ref: "#/definitions/freight_carriage"
+                    - $ref: "#/definitions/restaurant_carriage"
+            required:
+              - title
+              - content
+      required:
+        - title
+        - lessons
+    example:
+      - title: "Train Components"
+        lessons:
+          - title: "Engines and Carriages"
+            content: "This lesson covers the different types of engines and carriages."
+            topics:
+              - type: "diesel"
+                power: 3000
+                fuel_capacity: 5000
+              - type: "passenger"
+                seats: 80
+                class: "second"
+  assignments:
+    type: array
+    items:
+      title: Assignment
+      type: object
+      properties:
+        title:
+          type: string
+          description: The title of the assignment.
+          example: "Design a Train"
+        description:
+          type: string
+          description: The description of the assignment.
+          example: "Design a train with specific engine and carriage configurations."
+        due_date:
+          type: string
+          format: date-time
+          description: The due date of the assignment.
+          example: "2024-12-31T23:59:59Z"
+      required:
+        - title
+        - description
+        - due_date
+    example:
+      - title: "Design a Train"
+        description: "Design a train with specific engine and carriage configurations."
+        due_date: "2024-12-31T23:59:59Z"
+required:
+  - title
+  - description
+  - modules
+definitions:
+  diesel_engine:
+    title: diesel engine
+    type: object
+    properties:
+      type:
+        type: string
+        enum: ["diesel"]
+        example: "diesel"
+      power:
+        type: integer
+        description: Power in horsepower.
+        example: 3000
+      fuel_capacity:
+        type: integer
+        description: Fuel capacity in liters.
+        example: 5000
+    required:
+      - type
+      - power
+      - fuel_capacity
+  electric_engine:
+    title: electric engine
+    type: object
+    properties:
+      type:
+        type: string
+        enum: ["electric"]
+        example: "electric"
+      power:
+        type: integer
+        description: Power in kilowatts.
+        example: 4500
+      voltage:
+        type: integer
+        description: Voltage of the power supply.
+        example: 25000
+    required:
+      - type
+      - power
+      - voltage
+  steam_engine:
+    title: steam engine
+    type: object
+    properties:
+      type:
+        type: string
+        enum: ["steam"]
+        example: "steam"
+      power:
+        type: integer
+        description: Power in horsepower.
+        example: 1500
+      coal_capacity:
+        type: integer
+        description: Coal capacity in kilograms.
+        example: 2000
+    required:
+      - type
+      - power
+      - coal_capacity
+  passenger_carriage:
+    title: passenger carriage
+    type: object
+    properties:
+      type:
+        type: string
+        enum: ["passenger"]
+        example: "passenger"
+      seats:
+        type: integer
+        description: Number of seats.
+        example: 80
+      class:
+        type: string
+        enum: ["first", "second", "third"]
+        example: "second"
+    required:
+      - type
+      - seats
+      - class
+  freight_carriage:
+    title: freight carriage
+    type: object
+    properties:
+      type:
+        type: string
+        enum: ["freight"]
+        example: "freight"
+      capacity:
+        type: number
+        description: Maximum weight capacity in tons.
+        example: 50.0
+      cargo_type:
+        type: string
+        example: "containers"
+    required:
+      - type
+      - capacity
+      - cargo_type
+  restaurant_carriage:
+    title: restaurant carriage
+    type: object
+    properties:
+      type:
+        type: string
+        enum: ["restaurant"]
+        example: "restaurant"
+      tables:
+        type: integer
+        description: Number of tables.
+        example: 15
+      menu:
+        type: array
+        items:
+          type: string
+        example: ["Soup", "Steak", "Dessert"]
+    required:
+      - type
+      - tables
+      - menu

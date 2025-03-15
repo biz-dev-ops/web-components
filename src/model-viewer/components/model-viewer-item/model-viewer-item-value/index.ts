@@ -1,11 +1,12 @@
 import { css, html, TemplateResult } from "lit";
 import { customElement } from "lit/decorators.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import { ItemSelected, ModelItemDecorator } from "../../../models";
+import { ItemSelected } from "../../../models";
 
 import "../../../../shared/popover";
 import { ModelViewerItem } from "..";
 import { titlelize, parseMarkdown } from "../../../../shared/util";
+import { ModelItemDecorator, ModelItemDecoratorBuilder } from "../../../modules/model-item-decorator-builder";
 
 @customElement('model-viewer-item-value')
 export class ModelViewerItemValue extends ModelViewerItem {
@@ -37,12 +38,12 @@ export class ModelViewerItemValue extends ModelViewerItem {
                         ${this.required ? html`<span class="txt--required">*</span>` : ``}
                     </span>
                     ${this.item.description ?
-                html`
+                        html`
                             <bdo-popover>
                                 ${unsafeHTML(parseMarkdown(this.item.description.trim()))}
                             </bdo-popover>
                         ` : null
-            }
+                    }
                     <span class="icon--type">
                         ${this.item.type}${this.item.format ? html`: <em>${this.item.format}</em>` : ''}
                     </span>
@@ -91,7 +92,7 @@ export class ModelViewerItemValue extends ModelViewerItem {
         `];
     }
 
-    public static build(decorated: ModelItemDecorator, _itemSelectedDelegate: (event: CustomEvent<ItemSelected>) => void): TemplateResult {
+    static async build(decorated: ModelItemDecorator, _builder: ModelItemDecoratorBuilder, _itemSelectedDelegate: (event: CustomEvent<ItemSelected>) => void): Promise<TemplateResult> {
         if (decorated.item.type != 'string' && decorated.item.type != 'number' && decorated.item.type != 'integer' && decorated.item.type != 'boolean')
             return html``;
 

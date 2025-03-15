@@ -1,16 +1,17 @@
 import { customElement, property } from "lit/decorators.js";
 import { TemplateResult, css, html } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import { ItemSelected, ModelItem, ModelItemDecorator } from "../../../models";
+import { ItemSelected, ModelItem } from "../../../models";
 
 import "../../../../shared/button";
 import "../../../../shared/popover";
 import { ModelViewerItem } from "..";
 import { titlelize, parseMarkdown } from "../../../../shared/util";
+import { ModelItemDecorator, ModelItemDecoratorBuilder } from "../../../modules/model-item-decorator-builder";
 
 @customElement('model-viewer-item-one-of')
 export class ModelViewerItemOneOf extends ModelViewerItem {
-    @property({ type: Array }) items!: ModelItem[];
+    @property({ type: Array }) items!: ModelItemDecorator[];
 
     override render() {
         return html`
@@ -23,7 +24,9 @@ export class ModelViewerItemOneOf extends ModelViewerItem {
                 </h2>
 
                 <ul class="list--one-of">
-                    ${this.items.map(item => html`
+                    ${this.items
+                        .map(item => item.item)
+                        .map(item => html`
                         <li>
                             <bdo-button direction="right" @clicked="${() => { this._onClicked(item); }}">
                                 <span class="button-label">
@@ -55,18 +58,18 @@ export class ModelViewerItemOneOf extends ModelViewerItem {
                 flex-direction: column;
                 row-gap: var(--space-sm);
             }
-        
+
             .list--one-of {
                 row-gap: var(--space-xxs);
             }
-        
+
             .list--one-of li {
                 display: flex;
                 flex-direction: column;
                 position: relative;
                 row-gap: var(--space-xxs);
             }
-        
+
             .list--one-of li:not(:last-child)::after {
                 content: 'OR';
                 font-size: var(--font-size-xs);
@@ -83,16 +86,19 @@ export class ModelViewerItemOneOf extends ModelViewerItem {
         `];
     }
 
-    static build(decorated: ModelItemDecorator, itemSelectedDelegate: (event: CustomEvent<ItemSelected>) => void): TemplateResult {
+    static async build(decorated: ModelItemDecorator, builder: ModelItemDecoratorBuilder, itemSelectedDelegate: (event: CustomEvent<ItemSelected>) => void): Promise<TemplateResult> {
         if (!decorated.item.oneOf)
             return html``;
+
+        const result = await decorated.item.oneOf.map(async item => builder.build(item));
+        const items = await Promise.all(result);
 
         return html`
             <model-viewer-item-one-of
                 aria-label="model-viewer-item"
                 property=${decorated.property}
                 title=${titlelize(decorated.title)}
-                .items=${decorated.item.oneOf}
+                .items=${items}
                 .required=${decorated.required}
                 @itemSelected=${itemSelectedDelegate}
             ></model-viewer-item-one-of>
