@@ -1,4 +1,4 @@
 # Tabs
 
 - [BPMN](../bpmn-viewer/custom-links.bpmn)
-- [BPMN](../bpmn-viewer/subprocesses.bpmn)
+- [DMN](../dmn-viewer/dmn1.dmn)

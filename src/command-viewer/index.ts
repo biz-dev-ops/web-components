@@ -5,7 +5,9 @@ import { Command } from "./models";
 import commandViewerCss from "./command-viewer.css";
 import "../model-viewer";
 
-@customElement("command-viewer")
+export const tag = "command-viewer";
+
+@customElement(tag)
 export class CommandViewer extends UseCaseViewer<Command> {
   useCaseType = {
     type: "command",

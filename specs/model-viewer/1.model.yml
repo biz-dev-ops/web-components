@@ -1,0 +1,161 @@
+title: Train
+description: A schema describing a train with engines and carriages.
+type: object
+properties:
+  engines:
+    type: array
+    items:
+      title: engine
+      oneOf:
+        - $ref: "#/definitions/diesel_engine"
+        - $ref: "#/definitions/electric_engine"
+        - $ref: "#/definitions/steam_engine"
+    example:
+      - type: "diesel"
+        power: 3000
+        fuel_capacity: 5000
+      - type: "electric"
+        power: 4500
+        voltage: 25000
+  carriages:
+    type: array
+    items:
+      title: carriage
+      oneOf:
+        - $ref: "#/definitions/passenger_carriage"
+        - $ref: "#/definitions/freight_carriage"
+        - $ref: "#/definitions/restaurant_carriage"
+    example:
+      - type: "passenger"
+        seats: 80
+        class: "second"
+      - type: "freight"
+        capacity: 50.0
+        cargo_type: "containers"
+      - type: "restaurant"
+        tables: 15
+        menu: ["Soup", "Steak", "Dessert"]
+required:
+  - engines
+  - carriages
+definitions:
+  diesel_engine:
+    title: diesel engine
+    type: object
+    properties:
+      type:
+        type: string
+        enum: ["diesel"]
+        example: "diesel"
+      power:
+        type: integer
+        description: Power in horsepower.
+        example: 3000
+      fuel_capacity:
+        type: integer
+        description: Fuel capacity in liters.
+        example: 5000
+    required:
+      - type
+      - power
+      - fuel_capacity
+  electric_engine:
+    title: electric engine
+    type: object
+    properties:
+      type:
+        type: string
+        enum: ["electric"]
+        example: "electric"
+      power:
+        type: integer
+        description: Power in kilowatts.
+        example: 4500
+      voltage:
+        type: integer
+        description: Voltage of the power supply.
+        example: 25000
+    required:
+      - type
+      - power
+      - voltage
+  steam_engine:
+    title: steam engine
+    type: object
+    properties:
+      type:
+        type: string
+        enum: ["steam"]
+        example: "steam"
+      power:
+        type: integer
+        description: Power in horsepower.
+        example: 1500
+      coal_capacity:
+        type: integer
+        description: Coal capacity in kilograms.
+        example: 2000
+    required:
+      - type
+      - power
+      - coal_capacity
+  passenger_carriage:
+    title: passenger carriage
+    type: object
+    properties:
+      type:
+        type: string
+        enum: ["passenger"]
+        example: "passenger"
+      seats:
+        type: integer
+        description: Number of seats.
+        example: 80
+      class:
+        type: string
+        enum: ["first", "second", "third"]
+        example: "second"
+    required:
+      - type
+      - seats
+      - class
+  freight_carriage:
+    title: freight carriage
+    type: object
+    properties:
+      type:
+        type: string
+        enum: ["freight"]
+        example: "freight"
+      capacity:
+        type: number
+        description: Maximum weight capacity in tons.
+        example: 50.0
+      cargo_type:
+        type: string
+        example: "containers"
+    required:
+      - type
+      - capacity
+      - cargo_type
+  restaurant_carriage:
+    title: restaurant carriage
+    type: object
+    properties:
+      type:
+        type: string
+        enum: ["restaurant"]
+        example: "restaurant"
+      tables:
+        type: integer
+        description: Number of tables.
+        example: 15
+      menu:
+        type: array
+        items:
+          type: string
+        example: ["Soup", "Steak", "Dessert"]
+    required:
+      - type
+      - tables
+      - menu

@@ -10,7 +10,7 @@ test.describe("business-model-canvas", async () => {
 
     test.beforeEach(async ({ router }) => {
         await useRoutes(router, [
-            new FileRoute("/canvas.yml", new URL("canvas.yml", import.meta.url))
+            new FileRoute("/business-model-canvas.yml", new URL("business-model-canvas.yml", import.meta.url))
         ]);
     });
 
@@ -21,7 +21,7 @@ test.describe("business-model-canvas", async () => {
     });
 
     test("can load data", async ({ mount }) => {
-        const model = await readYamlAndParseAs<Model>(new URL("canvas.yml", import.meta.url));
+        const model = await readYamlAndParseAs<Model>(new URL("business-model-canvas.yml", import.meta.url));
 
         const component = await mount(BusinessModelCanvasComponent, {
             props: {
@@ -33,11 +33,11 @@ test.describe("business-model-canvas", async () => {
     });
 
     test("can load src", async ({ mount }) => {
-        const json = await readYamlAndParseAsObject(new URL("canvas.yml", import.meta.url));
+        const json = await readYamlAndParseAsObject(new URL("business-model-canvas.yml", import.meta.url));
 
         const component = await mount(BusinessModelCanvasComponent, {
             props: {
-                src: "canvas.yml"
+                src: "business-model-canvas.yml"
             }
         });
 
@@ -45,13 +45,13 @@ test.describe("business-model-canvas", async () => {
     });
 
     test("can change src", async ({ mount }) => {
-        const json = await readYamlAndParseAsObject(new URL("canvas.yml", import.meta.url));
+        const json = await readYamlAndParseAsObject(new URL("business-model-canvas.yml", import.meta.url));
 
         const component = await mount(BusinessModelCanvasComponent);
 
         await component.update({
             props: {
-                src: "canvas.yml"
+                src: "business-model-canvas.yml"
             }
         });
 

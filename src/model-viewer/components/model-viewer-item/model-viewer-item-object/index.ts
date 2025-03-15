@@ -1,10 +1,11 @@
 import { customElement } from "lit/decorators.js";
 import { TemplateResult, html } from "lit";
-import { ItemSelected, ModelItemDecorator } from "../../../models";
+import { ItemSelected } from "../../../models";
 
 import "../../../../shared/button";
 import { ModelViewerItem } from "..";
 import { titlelize } from "../../../../shared/util";
+import { ModelItemDecorator, ModelItemDecoratorBuilder } from "../../../modules/model-item-decorator-builder";
 
 @customElement('model-viewer-item-object')
 export class ModelViewerItemObject extends ModelViewerItem {
@@ -22,7 +23,7 @@ export class ModelViewerItemObject extends ModelViewerItem {
         `;
     }
 
-    public static build(decorated: ModelItemDecorator, itemSelectedDelegate: (event: CustomEvent<ItemSelected>) => void, root: boolean): TemplateResult {
+    public static async build(decorated: ModelItemDecorator, _builder: ModelItemDecoratorBuilder, itemSelectedDelegate: (event: CustomEvent<ItemSelected>) => void, root: boolean): Promise<TemplateResult> {
         if (!isRootObject(decorated, root))
             return html``;
 

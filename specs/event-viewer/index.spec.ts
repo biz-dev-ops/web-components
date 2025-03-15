@@ -8,15 +8,15 @@ test.describe("event-viewer", async () => {
 
     test.beforeEach(async ({ router }) => {
         await useRoutes(router, [
-            new FileRoute("/event1.yml", new URL("event1.yml", import.meta.url)),
-            new FileRoute("/event2.yml", new URL("event2.yml", import.meta.url)),
+            new FileRoute("/1.event.yml", new URL("1.event.yml", import.meta.url)),
+            new FileRoute("/2.event.yml", new URL("2.event.yml", import.meta.url)),
             new FileRoute("/parameters.yml", new URL("parameters.yml", import.meta.url)),
             new FileRoute("/exceptions.yml", new URL("exceptions.yml", import.meta.url))
         ]);
     });
 
     test("can load data", async ({ mount }) => {
-        const model = await readYamlAndParseAs<Event>(new URL("event1.yml", import.meta.url));
+        const model = await readYamlAndParseAs<Event>(new URL("1.event.yml", import.meta.url));
 
         const component = await mount(EventViewer, {
             props: {
@@ -30,7 +30,7 @@ test.describe("event-viewer", async () => {
     test("can load src", async ({ mount, router }) => {
         const component = await mount(EventViewer, {
             props: {
-                src: "event1.yml"
+                src: "1.event.yml"
             }
         });
 
@@ -40,7 +40,7 @@ test.describe("event-viewer", async () => {
     test("can load references", async ({ mount, router }) => {
         const component = await mount(EventViewer, {
             props: {
-                src: "event2.yml"
+                src: "2.event.yml"
             }
         });
 
@@ -50,7 +50,7 @@ test.describe("event-viewer", async () => {
     test("can change src", async ({ mount, router }) => {
         const component = await mount(EventViewer, {
             props: {
-                src: "event1.yml"
+                src: "1.event.yml"
             }
         });
 
@@ -58,7 +58,7 @@ test.describe("event-viewer", async () => {
 
         await component.update({
             props: {
-                src: "event2.yml"
+                src: "2.event.yml"
             }
         });
 

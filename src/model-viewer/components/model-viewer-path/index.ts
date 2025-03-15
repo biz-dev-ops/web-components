@@ -3,9 +3,10 @@ import { customElement, property } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
 import modelViewerPathCss from "./model-viewer-path.css";
-import { ModelItemDecorator, PathChanged } from "../../models";
+import { PathChanged } from "../../models";
 import { titlelize } from "../../../shared/util";
 import "../../../shared/button";
+import { ItemType, ModelItemDecorator } from "../../modules/model-item-decorator-builder";
 
 @customElement('model-viewer-path')
 export class ModelViewerPath extends LitElement {
@@ -15,12 +16,12 @@ export class ModelViewerPath extends LitElement {
 
   override render() {
     return html`
-            <nav>
-                <ol class="list--path">
-                    ${this.path.map((decorated: ModelItemDecorator, index) => this._renderPathItem(decorated, index))}
-                </ol>
-            </nav>
-        `;
+      <nav>
+        <ol class="list--path">
+          ${this.path.map((decorated: ModelItemDecorator, index) => this._renderPathItem(decorated, index))}
+        </ol>
+      </nav>
+    `;
   }
 
   private _renderPathItem(decorated: ModelItemDecorator, index: number) {
@@ -29,8 +30,8 @@ export class ModelViewerPath extends LitElement {
     const last = this._isLast(index);
 
     return html`
-          <li class="${ifDefined(decorated.type()?.toLowerCase())} ${ifDefined(decorated.title?.trim().length === 0 ? "no-title" : null)}">
-            ${decorated.type() === 'array' || last ? item : html`
+          <li class="${ifDefined(decorated.type)} ${ifDefined(decorated.title?.trim().length === 0 ? "no-title" : null)}">
+            ${decorated.type === ItemType.Array || last ? item : html`
                 <bdo-button class="button--path" .disabled="${last}" @clicked="${() => { this._onClick(index); }}">
                   ${item}
                 </bdo-button>

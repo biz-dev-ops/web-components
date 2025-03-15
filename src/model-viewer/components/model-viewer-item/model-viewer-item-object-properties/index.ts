@@ -1,12 +1,13 @@
 import { customElement } from "lit/decorators.js";
 import { TemplateResult, css, html } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import { ItemSelected, ModelItemDecorator } from "../../../models";
+import { ItemSelected } from "../../../models";
 
 import "../../../../shared/button";
 import { ModelItemBuilder } from "../../../modules/model-item-builder";
 import { ModelViewerItem } from "..";
 import { titlelize, parseMarkdown } from "../../../../shared/util";
+import { ModelItemDecorator, ModelItemDecoratorBuilder } from "../../../modules/model-item-decorator-builder";
 
 @customElement("model-viewer-item-object-properties")
 export class ModelViewerItemObjectProperties extends ModelViewerItem {
@@ -44,23 +45,17 @@ export class ModelViewerItemObjectProperties extends ModelViewerItem {
     ];
   }
 
-  public static build(
-    decorated: ModelItemDecorator,
-    itemSelectedDelegate: (event: CustomEvent<ItemSelected>) => void,
-    root: boolean
-  ): TemplateResult {
+  public static async build(decorated: ModelItemDecorator, builder: ModelItemDecoratorBuilder, itemSelectedDelegate: (event: CustomEvent<ItemSelected>) => void, root: boolean): Promise<TemplateResult> {
     if (!isObject(decorated, root)) return html``;
 
     const properties: TemplateResult<1>[] = [];
     for (const property in decorated.item.properties) {
-      const child = new ModelItemDecorator(
+      const child = await builder.build(
         decorated.item.properties[property],
         property,
         decorated.isChildRequired(property)
       );
-      properties.push(html`
-        ${ModelItemBuilder.build(child, itemSelectedDelegate, true)}
-      `);
+      properties.push(html`${await ModelItemBuilder.build(child, builder, itemSelectedDelegate, true)}`);
     }
 
     return html`

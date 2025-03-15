@@ -8,8 +8,8 @@ test.describe("task-viewer", async () => {
 
     test.beforeEach(async ({ router }) => {
         await useRoutes(router, [
-            new FileRoute("/task1.yml", new URL("task1.yml", import.meta.url)),
-            new FileRoute("/task2.yml", new URL("task2.yml", import.meta.url)),
+            new FileRoute("/1.task.yml", new URL("1.task.yml", import.meta.url)),
+            new FileRoute("/2.task.yml", new URL("2.task.yml", import.meta.url)),
             new FileRoute("/context.yml", new URL("context.yml", import.meta.url)),
             new FileRoute("/actions.yml", new URL("actions.yml", import.meta.url)),
             new FileRoute("/exceptions.yml", new URL("exceptions.yml", import.meta.url))
@@ -17,7 +17,7 @@ test.describe("task-viewer", async () => {
     });
 
     test.fixme("can load data", async ({ mount }) => {
-        const model = await readYamlAndParseAs<Task>(new URL("task1.yml", import.meta.url));
+        const model = await readYamlAndParseAs<Task>(new URL("1.task.yml", import.meta.url));
 
         const component = await mount(TaskViewer, {
             props: {
@@ -31,7 +31,7 @@ test.describe("task-viewer", async () => {
     test("can load src", async ({ mount }) => {
         const component = await mount(TaskViewer, {
             props: {
-                src: "task1.yml"
+                src: "1.task.yml"
             }
         });
 
@@ -41,7 +41,7 @@ test.describe("task-viewer", async () => {
     test("can load references", async ({ mount }) => {
         const component = await mount(TaskViewer, {
             props: {
-                src: "task2.yml"
+                src: "2.task.yml"
             }
         });
 
@@ -51,7 +51,7 @@ test.describe("task-viewer", async () => {
     test("can change src", async ({ mount }) => {
         const component = await mount(TaskViewer, {
             props: {
-                src: "task1.yml"
+                src: "1.task.yml"
             }
         });
 
@@ -59,7 +59,7 @@ test.describe("task-viewer", async () => {
 
         await component.update({
             props: {
-                src: "task2.yml"
+                src: "2.task.yml"
             }
         });
 

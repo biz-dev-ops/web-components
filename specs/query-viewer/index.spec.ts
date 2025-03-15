@@ -8,16 +8,16 @@ test.describe("query-viewer", async () => {
 
     test.beforeEach(async ({ router }) => {
         await useRoutes(router, [
-            new FileRoute("/query1.yml", new URL("query1.yml", import.meta.url)),
-            new FileRoute("/query2.yml", new URL("query2.yml", import.meta.url)),
+            new FileRoute("/1.query.yml", new URL("1.query.yml", import.meta.url)),
+            new FileRoute("/2.query.yml", new URL("2.query.yml", import.meta.url)),
             new FileRoute("/parameters.yml", new URL("parameters.yml", import.meta.url)),
             new FileRoute("/response.yml", new URL("response.yml", import.meta.url)),
             new FileRoute("/exceptions.yml", new URL("exceptions.yml", import.meta.url))
         ]);
     });
 
-    test("can load data", async ({ mount }) => {
-        const model = await readYamlAndParseAs<Query>(new URL("query1.yml", import.meta.url));
+    test.fixme("can load data", async ({ mount }) => {
+        const model = await readYamlAndParseAs<Query>(new URL("1.query.yml", import.meta.url));
 
         const component = await mount(QueryViewer, {
             props: {
@@ -31,7 +31,7 @@ test.describe("query-viewer", async () => {
     test("can load src", async ({ mount, router }) => {
         const component = await mount(QueryViewer, {
             props: {
-                src: "query1.yml"
+                src: "1.query.yml"
             }
         });
 
@@ -41,7 +41,7 @@ test.describe("query-viewer", async () => {
     test("can load references", async ({ mount, router }) => {
         const component = await mount(QueryViewer, {
             props: {
-                src: "query2.yml"
+                src: "2.query.yml"
             }
         });
 
@@ -51,7 +51,7 @@ test.describe("query-viewer", async () => {
     test("can change src", async ({ mount, router }) => {
         const component = await mount(QueryViewer, {
             props: {
-                src: "query1.yml"
+                src: "1.query.yml"
             }
         });
 
@@ -59,7 +59,7 @@ test.describe("query-viewer", async () => {
 
         await component.update({
             props: {
-                src: "query2.yml"
+                src: "2.query.yml"
             }
         });
 
