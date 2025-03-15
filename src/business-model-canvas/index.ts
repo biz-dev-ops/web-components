@@ -119,7 +119,6 @@ export class BusinessModelCanvasComponent extends LitElement {
     }
 
     if (changedProperties.has("json")) {
-      console.log(this.json);
       this.model = JSON.parse(this.json);
     }
 

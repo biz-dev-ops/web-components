@@ -85,18 +85,24 @@ function getHeaders(tokens: Token[], idx: number): string[] {
       continue;
     }
 
-    const inlineToken = getNextInline(tokens, idx);
-    const textToken = inlineToken?.children?.find(child => child.type === "text");
+    const textToken = getNextTextToken(tokens, idx);
     headers.push(textToken?.content || "undefined");
   }
   return headers;
 }
 
-function getNextInline(tokens: Token[], idx: number): Token | null {
+function getNextTextToken(tokens: Token[], idx: number): Token | null {
   for (idx; idx < tokens.length; idx++) {
     const token = tokens[idx];
-    if (token.type === "inline") {
+    if (token.type === "text") {
       return token;
+    }
+
+    if(token.children) {
+      const textToken = token.children.find(child => child.type === "text");
+      if(textToken) {
+        return textToken;
+      }
     }
   }
   return null;
