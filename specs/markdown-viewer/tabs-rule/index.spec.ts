@@ -4,7 +4,7 @@ import tabsRule from "../../../src/markdown-viewer/tabs-rule/";
 import Token from "markdown-it/lib/token.mjs";
 
 test.describe("tabsRule Plugin", () => {
-  test("should transform bullet lists with tabs attribute to my-tabs component", async () => {
+  test("should transform bullet lists with tabs attribute to bdo-tabs component", async () => {
     const md = new MarkdownIt();
     md.use(tabsRule);
 
@@ -16,12 +16,12 @@ test.describe("tabsRule Plugin", () => {
     const tokens = setTabs(md.parse(markdown, {}));
     const result = md.renderer.render(tokens, md.options, {});
 
-    expect(result).toContain(`<my-tabs selectedIndex="0">`);
-    expect(result).toContain(`<my-tab title="Tab 1">`);
+    expect(result).toContain(`<bdo-tabs selectedIndex="0">`);
+    expect(result).toContain(`<bdo-tab title="Tab 1">`);
     expect(result).toContain("Content 1");
-    expect(result).toContain(`<my-tab title="Tab 2">`);
+    expect(result).toContain(`<bdo-tab title="Tab 2">`);
     expect(result).toContain("Content 2");
-    expect(result).toContain(`</my-tabs>`);
+    expect(result).toContain(`</bdo-tabs>`);
   });
 
   test("should use link names as tab title", async () => {
@@ -35,12 +35,12 @@ test.describe("tabsRule Plugin", () => {
     const tokens = setTabs(md.parse(markdown, {}));
     const result = md.renderer.render(tokens, md.options, {});
 
-    expect(result).toContain(`<my-tabs selectedIndex="0">`);
-    expect(result).toContain(`<my-tab title="Tab 1">`);
+    expect(result).toContain(`<bdo-tabs selectedIndex="0">`);
+    expect(result).toContain(`<bdo-tab title="Tab 1">`);
     expect(result).toContain(`<a href="#test">Tab 1</a>`);
-    expect(result).toContain(`<my-tab title="Tab 2">`);
+    expect(result).toContain(`<bdo-tab title="Tab 2">`);
     expect(result).toContain("Content 2");
-    expect(result).toContain(`</my-tabs>`);
+    expect(result).toContain(`</bdo-tabs>`);
   });
 });
 

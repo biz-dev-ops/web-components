@@ -1,13 +1,13 @@
 import { LitElement, html, css, PropertyValueMap } from "lit";
 import { customElement, property, state, queryAssignedElements } from "lit/decorators.js";
 
-export const tag = "my-tabs";
+export const tag = "bdo-tabs";
 
 @customElement(tag)
 export class MyTabs extends LitElement {
   @property({ type: Number }) selectedIndex = 0;
   @state() private _tabTitles: string[] = [];
-  @queryAssignedElements({ selector: "my-tab" }) private _tabs!: HTMLElement[];
+  @queryAssignedElements({ selector: "bdo-tab" }) private _tabs!: HTMLElement[];
 
   override render() {
     return html`
@@ -93,11 +93,11 @@ export class MyTabs extends LitElement {
         padding: 15px;
         }
 
-        ::slotted(my-tab) {
+        ::slotted(bdo-tab) {
         display: none;
         }
 
-        ::slotted(my-tab.selected) {
+        ::slotted(bdo-tab.selected) {
         display: block;
         }
     `;

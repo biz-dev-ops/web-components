@@ -14,7 +14,7 @@ export default function tabsRule(md: MarkdownIt): void {
     tabIndex += 1;
     tabPanelIndex = 0;
 
-    return `<my-tabs selectedIndex="0">`;
+    return `<bdo-tabs selectedIndex="0">`;
   }
 
   md.renderer.rules.list_item_open = function (tokens: Token[], idx: number, options: Options, _env: any, self: Renderer): string {
@@ -29,7 +29,7 @@ export default function tabsRule(md: MarkdownIt): void {
     const textToken = getNextTextToken(tokens, idx);
     const title = textToken?.content || "undefined";
 
-    return `<my-tab title="${title}">`;
+    return `<bdo-tab title="${title}">`;
   }
 
   md.renderer.rules.list_item_close = function (tokens: Token[], idx: number, options: Options, _env: any, self: Renderer): string {
@@ -39,7 +39,7 @@ export default function tabsRule(md: MarkdownIt): void {
       return self.renderToken(tokens, idx, options);
     }
 
-    return `</my-tab>`;
+    return `</bdo-tab>`;
   }
 
   md.renderer.rules.bullet_list_close = function (tokens: Token[], idx: number, options: Options, _env: any, self: Renderer): string {
@@ -49,7 +49,7 @@ export default function tabsRule(md: MarkdownIt): void {
       return self.renderToken(tokens, idx, options);
     }
 
-    return `</my-tabs>`;
+    return `</bdo-tabs>`;
   }
 }
 
