@@ -1,5 +1,10 @@
 import { defineConfig, devices } from "@sand4rt/experimental-ct-web";
 import viteConfig from "./vite.config";
+import path from "path";
+
+const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+const baseURL = `http://localhost:${PORT}`;
+
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
@@ -25,7 +30,7 @@ export default defineConfig({
     trace: "on-first-retry",
 
     /* Port to use for Playwright component endpoint. */
-    ctPort: 3100,
+    ctPort: PORT,
     ctViteConfig: {
       plugins: viteConfig.plugins
     }
@@ -45,5 +50,5 @@ export default defineConfig({
     //   name: "webkit",
     //   use: { ...devices["Desktop Safari"] },
     // },
-  ],
+  ]
 });

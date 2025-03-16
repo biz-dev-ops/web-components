@@ -1,13 +1,15 @@
+import { Token } from "markdown-it";
+import { Link } from "./link-transform-ruler";
+
 import { tag as BPMNTag } from "../bpmn-viewer";
 import { tag as BusinessModelCanvasTag } from "../business-model-canvas";
 import { tag as BusinessReferenceArchitecturesTag } from "../business-reference-architecture";
 import { tag as CommandTag } from "../command-viewer";
 import { tag as DMNTag } from "../dmn-viewer";
 import { tag as EventTag } from "../event-viewer";
+import { tag as ModelTag } from "../model-viewer";
 import { tag as QueryTag } from "../query-viewer";
 import { tag as TaskTag } from "../task-viewer";
-
-import { Link, TransformResultOrNull } from "./link-transform-rule";
 
 export const components = [
     { extensions: [".bpmn"], tag: BPMNTag },
@@ -16,29 +18,33 @@ export const components = [
     { extensions: [".command.yml", ".command.yaml"], tag: CommandTag },
     { extensions: [".dmn"], tag: DMNTag },
     { extensions: [".event.yml", ".event.yaml"], tag: EventTag },
+    { extensions: [".model.yml", ".model.yaml"], tag: ModelTag },
     { extensions: [".query.yml", ".query.yaml"], tag: QueryTag },
     { extensions: [".task.yml", ".task.yaml"], tag: TaskTag }
 ];
 
-export default function (link: Link) : TransformResultOrNull {
-    const href = link.getAttribute("href");
-    if(!href) {
-        return null;
+export default function (token: Token, link: Link) : void {
+    if(!token.type.startsWith("link_")) {
+        return;
     }
 
-    const url = removeQueryStringAndAnchorsFrom(href);
-    const tag = components.find(component => component.extensions.some(extension => url.endsWith(extension)))?.tag;
-
+    const tag = getTag();
     if(!tag) {
-        return null;
+        return;
     }
 
-    return {
-        open: `<${tag} src="${href}" aria-label="${link.getText()}">`,
-        close: `</${tag}>`
-    }
-}
+    token.tag = tag;
+    token.block = true;
+    replaceHrefWithSrcAttribute();
 
-function removeQueryStringAndAnchorsFrom(href: string) {
-    return href.split('?')[0].split('#')[0];
+    function replaceHrefWithSrcAttribute() {
+        token.attrPush(["src", link.getAttribute("href") as string]);
+        const hrefIndex = token.attrIndex("href");
+        token.attrs?.splice(hrefIndex, 1);
+    }
+
+    function getTag() : string | undefined | null {
+        const path = link.getPath();
+        return path ? components.find(component => component.extensions.some(extension => path.endsWith(extension)))?.tag : null;
+    }
 }

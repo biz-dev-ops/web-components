@@ -1,95 +1,144 @@
 import { test, expect } from "@sand4rt/experimental-ct-web";
 import MarkdownIt from "markdown-it";
-import linkTransformRuler from "../../../src/markdown-viewer/link-transform-ruler"; // Adjust the import path
+import linkTransformRuler, { Link } from "../../../src/markdown-viewer/link-transform-ruler";
+import { Token } from "markdown-it/index.js";
 
-test.describe("linkTransformRuler Plugin", () => {
-  test("should move link tokens with specified extensions out of inline", async ({}) => {
+test.describe("linkTransformRuler Plugin (Token Tests)", () => {
+  test("should transform link attributes in tokens", async ({}) => {
     const md = new MarkdownIt();
-    md.use(linkTransformRuler, { extensions: [".pdf"] });
+    md.use(linkTransformRuler, {
+      transformer: (token: Token, link: Link) => {
+        if (token.type === "link_open") {
+          token.attrSet("data-test", "transformed");
+        }
+      },
+    });
 
-    const markdown = "[Link to PDF](document.pdf) Some other text.";
-    const result = md.render(markdown);
+    const markdown = "[Link](example.com)";
+    const tokens = md.parse(markdown, {});
+    expect(tokens).toHaveLength(3);
+    const linkOpenToken = tokens.find((token) => token.type === "inline")
+      ?.children?.find((token) => token.type === "link_open");
 
-    expect(result).toContain(`<a href="document.pdf">Link to PDF</a>`);
-    expect(result).not.toContain(`<p><a href="document.pdf">Link to PDF</a></p>`);
-    expect(result).toContain("Some other text.");
+    expect(linkOpenToken?.attrGet("data-test")).toBe("transformed");
   });
 
-  test("should not move link tokens with other extensions", async ({}) => {
+  test("should transform link text in tokens", async ({}) => {
     const md = new MarkdownIt();
-    md.use(linkTransformRuler, { extensions: [".pdf"] });
+    md.use(linkTransformRuler, {
+      transformer: (token: Token, link: Link) => {
+        if (token.type === "text") {
+          token.content = "Transformed Link Text";
+        }
+      },
+    });
 
-    const markdown = "[Link to image](image.jpg) Some other text.";
-    const result = md.render(markdown);
+    const markdown = "[Link](example.com)";
+    const tokens = md.parse(markdown, {});
+    expect(tokens).toHaveLength(3);
+    const textToken = tokens.find((token) => token.type === "inline")
+      ?.children?.find((token) => token.type === "text");
 
-    expect(result).toContain(`<p><a href="image.jpg">Link to image</a> Some other text.</p>`);
+    expect(textToken?.content).toBe("Transformed Link Text");
   });
 
-  test("should handle multiple links with the specified extension", async ({}) => {
+  test("should transform link path in tokens", async ({}) => {
     const md = new MarkdownIt();
-    md.use(linkTransformRuler, { extensions: [".pdf", ".doc"] });
+    md.use(linkTransformRuler, {
+      transformer: (token: Token, link: Link) => {
+        if (token.type === "link_open") {
+          token.attrSet("href", link.getPath() + "/transformed");
+        }
+      },
+    });
 
-    const markdown = "[PDF link](doc.pdf) [DOC link](report.doc) Some text. [Image link](image.jpg)";
-    const result = md.render(markdown);
+    const markdown = "[Link](example.com?query=1#hash)";
+    const tokens = md.parse(markdown, {});
+    expect(tokens).toHaveLength(3);
+    const linkOpenToken = tokens.find((token) => token.type === "inline")
+      ?.children?.find((token) => token.type === "link_open");
 
-    expect(result).toContain(`<a href="doc.pdf">PDF link</a>`);
-    expect(result).toContain(`<a href="report.doc">DOC link</a>`);
-    expect(result).toContain(`<p>  Some text. <a href="image.jpg">Image link</a></p>`);
+    expect(linkOpenToken?.attrGet("href")).toBe("example.com/transformed");
   });
 
-  test("should remove empty paragraphs when link is moved", async ({}) => {
-    const md = new MarkdownIt();
-    md.use(linkTransformRuler, { extensions: [".pdf"] });
+  test("should move block links out of inline tokens", async ({}) => {
+    const md = new MarkdownIt({ html: true });
+    md.use(linkTransformRuler, {
+      transformer: (token: Token, link: Link) => {
+        if (token.type === "link_open") {
+          token.block = true;
+        }
+      },
+    });
 
-    const markdown = "[PDF link](doc.pdf)\n\nSome text.";
-    const result = md.render(markdown);
+    const markdown = "[Link](example.com)\nSome text.";
+    const tokens = md.parse(markdown, {});
+    expect(tokens).toHaveLength(6);
+    const linkOpenToken = tokens.find((token) => token.type === "link_open");
+    const paragraphOpenToken = tokens.find(token => token.type === "paragraph_open");
 
-    expect(result).toContain(`<a href="doc.pdf">PDF link</a>`);
-    expect(result).toContain("<p>Some text.</p>");
-    expect(result).not.toContain("<p></p>");
+    expect(linkOpenToken?.level).toBe(0);
+    expect(paragraphOpenToken?.level).toBe(0);
+    expect(tokens.filter(token => token.type === "link_open").length).toBe(1);
+    expect(tokens.filter(token => token.type === "paragraph_open").length).toBe(1);
   });
 
-  test("should handle links inside of other inline elements", async ({}) => {
-    const md = new MarkdownIt();
-    md.use(linkTransformRuler, { extensions: [".pdf"] });
+  test("should remove empty paragraphs in tokens", async ({}) => {
+    const md = new MarkdownIt({ html: true });
+    md.use(linkTransformRuler, {
+      transformer: (token: Token, link: Link) => {
+        if (token.type === "link_open") {
+          token.block = true;
+        }
+      },
+    });
 
-    const markdown = "**[PDF link](doc.pdf)**\n\nSome text.";
-    const result = md.render(markdown);
+    const markdown = "[Link](example.com)\n\nSome text.";
+    const tokens = md.parse(markdown, {});
+    const paragraphOpenTokens = tokens.filter(token => token.type === "paragraph_open");
+    const paragraphCloseTokens = tokens.filter(token => token.type === "paragraph_close");
 
-    expect(result).toContain(`<a href="doc.pdf">PDF link</a>`);
-    expect(result).toContain("<p>Some text.</p>");
+    expect(paragraphOpenTokens.length).toBe(1);
+    expect(paragraphCloseTokens.length).toBe(1);
   });
 
-  test("should handle multiple links within a single paragraph", async ({}) => {
-    const md = new MarkdownIt();
-    md.use(linkTransformRuler, { extensions: [".pdf"] });
+  test("should handle multiple block links in tokens", async ({}) => {
+    const md = new MarkdownIt({ html: true });
+    md.use(linkTransformRuler, {
+      transformer: (token: Token, link: Link) => {
+        if (token.type === "link_open") {
+          token.block = true;
+        }
+      },
+    });
 
-    const markdown = "[PDF link](doc.pdf) and [another PDF link](report.pdf) and some text";
-    const result = md.render(markdown);
+    const markdown = "[Link1](example1.com)\n[Link2](example2.com)\nSome text.";
+    const tokens = md.parse(markdown, {});
+    const linkOpenTokens = tokens.filter(token => token.type === "link_open");
+    const paragraphOpenTokens = tokens.filter(token => token.type === "paragraph_open");
 
-    expect(result).toContain(`<a href="doc.pdf">PDF link</a>`);
-    expect(result).toContain(`<a href="report.pdf">another PDF link</a>`);
-    expect(result).toContain("and some text");
-
+    expect(linkOpenTokens.length).toBe(2);
+    expect(paragraphOpenTokens.length).toBe(1);
   });
 
-  test("should handle links with query parameters", async ({}) => {
-    const md = new MarkdownIt();
-    md.use(linkTransformRuler, { extensions: [".pdf"] });
+  test("should change tag names", async ({}) => {
+    const md = new MarkdownIt({ html: true });
+    md.use(linkTransformRuler, {
+      transformer: (token: Token, link: Link) => {
+        if(token.type.startsWith("link_")) {
+          token.tag = "div";
+          token.block = true;
+        }
+      },
+    });
 
-    const markdown = "[PDF link](doc.pdf?param=value)";
-    const result = md.render(markdown);
+    const markdown = "[Link1](example1.com)\n[Link2](example2.com)\nSome text.";
+    const tokens = md.parse(markdown, {});
+    const linkTokens = tokens.filter(token => token.type.startsWith("link_"));
+    const paragraphOpenTokens = tokens.filter(token => token.type === "paragraph_open");
 
-    expect(result).not.toContain(`<p>`);
-  });
-
-  test("should handle links with hashes", async ({}) => {
-    const md = new MarkdownIt();
-    md.use(linkTransformRuler, { extensions: [".pdf"] });
-
-    const markdown = "[PDF link](doc.pdf#section)";
-    const result = md.render(markdown);
-
-    expect(result).not.toContain(`<p>`);
+    expect(linkTokens.length).toBe(4);
+    linkTokens.forEach(t => expect(t.tag).toBe("div"));
+    expect(paragraphOpenTokens.length).toBe(1);
   });
 });

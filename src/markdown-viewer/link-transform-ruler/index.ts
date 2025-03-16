@@ -1,69 +1,163 @@
 import MarkdownIt, { StateCore, Token } from "markdown-it";
 
-interface LinkTransFormRulerOptions {
-    extensions?: string[];
+export type Link = {
+  getAttribute(name: string): string | null | undefined;
+  getPath(): string | null | undefined;
+  getText(): string | null | undefined;
 }
 
-export default function linkTransformRuler(md: MarkdownIt, options?: LinkTransFormRulerOptions): void {
-    const extensions: string[] = options?.extensions || [];
+class LinkImpl implements Link {
+  tokens: Token[];
 
-    md.core.ruler.push("links_transform_ruler", (state: StateCore): void => {
-        const newTokens: Token[] = [];
-        const tokens = state.tokens;
-        let removeEmptyParagraph = false;
+  constructor(tokens: Token[]) {
+    this.tokens = tokens;
+  }
 
-        for (let tokenIdx = 0; tokenIdx < tokens.length; tokenIdx++) {
-            const token = tokens[tokenIdx];
+  getAttribute(name: string): string | null | undefined {
+    return this.tokens.find(token => token.type === "link_open")?.attrGet(name);
+  }
 
-            if (token.type === "inline" && token.children) {
-                let inline = true;
-                const newChildren: Token[] = [];
+  getPath(): string | null | undefined {
+    return this.getAttribute("href")?.split("?")[0]?.split("#")[0];
+  }
 
-                for (let childIdx = 0; childIdx < token.children.length; childIdx++) {
-                    const child = token.children[childIdx];
+  getText(): string | null | undefined {
+    return this.tokens.find(token => token.type === "text")?.content;
+  }
+}
 
-                    if (child.type === "link_open") {
-                        const href = child.attrGet("href")?.split("?")[0].split("#")[0];
+export type LinkTransFormRulerOptions = {
+  transformer: (token: Token, link: Link) => void
+}
 
-                        if (extensions.some((ext) => href?.endsWith(ext))) {
-                            inline = false;
-                            removeEmptyParagraph = true;
-                        }
-                    }
+export default function linkTransformRuler(md: MarkdownIt, options: LinkTransFormRulerOptions): void {
+  const transformer = options.transformer;
 
-                    if (inline) {
-                        newChildren.push(child);
-                    }
-                    else {
-                        child.level = token.level;
-                        newTokens.splice(newTokens.length - 1, 0, child)
-                    }
+  md.core.ruler.push("links_transform_ruler", (state: StateCore): void => {
+    for (const token of state.tokens) {
+      if (token.type === "inline" && token.children) {
+        let activeLink: LinkImpl | null = null;
 
-                    if (child.type === "link_close") {
-                        inline = true;
-                    }
-                }
+        for (let childIdx = 0; childIdx < token.children.length; childIdx++) {
+          const child = token.children[childIdx];
 
-                token.children = newChildren;
+          if (child.type === "link_open") {
+            activeLink = new LinkImpl(getLinkTokens(token.children, childIdx));
+          }
 
-                if (token.children.length > 0) {
-                    newTokens.push(token);
-                }
-            }
-            else if (token.type === "paragraph_close") {
-                if(removeEmptyParagraph && newTokens[newTokens.length - 1].type === "paragraph_open") {
-                    newTokens.splice(newTokens.length - 1);
-                }
-                else {
-                    newTokens.push(token);
-                }
-                removeEmptyParagraph = false;
-            }
-            else {
-                newTokens.push(token);
-            }
+          if(activeLink) {
+            transformer(child, activeLink);
+          }
+
+          if (child.type === "link_close" && activeLink) {
+            activeLink = null;
+          }
+        }
+      }
+    }
+  });
+
+  md.core.ruler.push("move_block_items_out_of_inline_children_ruler", (state: StateCore): void => {
+    const tokens: Token[] = [];
+
+    for (const token of state.tokens) {
+      if (token.type === "inline" && token.children) {
+        let displayBlock = false;
+        const children: Token[] = [];
+
+        for (const child of token.children) {
+          if (child.type === "link_open" && child.block) {
+            displayBlock = true;
+          }
+
+          if (displayBlock) {
+            moveTokenOneLevelUp(child, token.level);
+          }
+          else {
+            children.push(child);
+          }
+
+          if (child.type === "link_close") {
+            displayBlock = false;
+          }
         }
 
-        state.tokens = newTokens;
-    });
+        token.children = children;
+
+
+        if (token.children.length > 0) {
+          tokens.push(token);
+        }
+      }
+      else {
+        tokens.push(token);
+      }
+    }
+
+    state.tokens = tokens;
+
+    function moveTokenOneLevelUp(token: Token, level: number) {
+      token.level = level + token.level;
+      token["moved"] = true;
+      tokens.push(token);
+    }
+  });
+
+  md.core.ruler.push("move_block_items_out_of_paragraph_rule", (state: StateCore): void => {
+    const tokens: Token[] = [];
+    let paragraphOpenIdx = -1;
+
+    for (const token of state.tokens) {
+      if (token.type === "paragraph_open") {
+        paragraphOpenIdx = tokens.length;
+      }
+      else if (token.type === "paragraph_close") {
+        paragraphOpenIdx = -1;
+      }
+
+      if ((token as any).moved) {
+        moveOutOfParagraph(token);
+      }
+      else {
+        tokens.push(token);
+      }
+
+      if (token.type === "paragraph_close") {
+        removeEmptyParagraph();
+      }
+    }
+
+    state.tokens = tokens;
+
+    function moveOutOfParagraph(token: Token) {
+      delete token["moved"];
+      if (paragraphOpenIdx >= 0) {
+        token.level -= 1;
+        tokens.splice(paragraphOpenIdx++, 0, token);
+      }
+      else {
+        tokens.push(token);
+      }
+    }
+    
+    function removeEmptyParagraph() {
+      const index = tokens.length - 2;
+      if (tokens[index].type === "paragraph_open") {
+        tokens.splice(index, 2);
+      }
+    }
+  });
+}
+
+function getLinkTokens(tokens: Token[], idx: number): Token[] {
+  const _tokens: Token[] = [];
+
+  for (idx; idx < tokens.length; idx++) {
+    const token = tokens[idx];
+    _tokens.push(token);
+    if (token.type === "link_close") {
+      break;
+    }
+  }
+  return _tokens;
 }

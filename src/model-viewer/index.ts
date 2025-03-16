@@ -1,4 +1,4 @@
-import { css, html, LitElement, PropertyValueMap, TemplateResult } from "lit";
+import { css, html, LitElement, TemplateResult } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import resetCss from "../shared/styles/reset.css";
 import themeCss from "../shared/styles/theme.css";
@@ -8,7 +8,9 @@ import "./components/model-viewer-path";
 import { FetchError, fetchYamlAndBundleAs } from "../shared/fetch";
 import { ModelItemDecorator, ModelItemDecoratorBuilder } from "./modules/model-item-decorator-builder";
 
-@customElement("model-viewer")
+export const tag = "model-viewer";
+
+@customElement(tag)
 export class ModelViewer extends LitElement {
   builder!: ModelItemDecoratorBuilder;
 

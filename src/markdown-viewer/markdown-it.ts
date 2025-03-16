@@ -6,10 +6,7 @@ const extensions = components.flatMap(c => c.extensions);
 const md = MarkdownIt();
 
 import linkTransformRuler from "./link-transform-ruler";
-md.use(linkTransformRuler, { extensions: extensions });
-
-import linkTransformRule from "./link-transform-rule";
-md.use(linkTransformRule, { transformer: transformer });
+md.use(linkTransformRuler, { transformer: transformer });
 
 import tabsRuler from "./tabs-ruler";
 md.use(tabsRuler, { extensions: extensions });
