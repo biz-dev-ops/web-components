@@ -14,22 +14,7 @@ export default function tabsRule(md: MarkdownIt): void {
     tabIndex += 1;
     tabPanelIndex = 0;
 
-    const headers = getHeaders(tokens, idx);
-
-    return `
-      <div class="tabs">
-        <div role="tablist">
-          ${headers.map((header, index) => `
-            <button
-              role="tab"
-              aria-selected="${index === 0 ? "true" : "false"}"
-              aria-controls="tabs-${tabIndex}-panel-${index + 1}"
-              id="tabs-${tabIndex}-tab-${index + 1}"
-              tabindex="${index === 0 ? "0" : "-1"}"
-            >${header}</button>
-          `).join("")}
-        </div>
-    `;
+    return `<my-tabs selectedIndex="0">`;
   }
 
   md.renderer.rules.list_item_open = function (tokens: Token[], idx: number, options: Options, _env: any, self: Renderer): string {
@@ -41,14 +26,10 @@ export default function tabsRule(md: MarkdownIt): void {
 
     tabPanelIndex += 1;
 
-    return `
-      <div
-        id="tabs-${tabIndex}-panel-${tabPanelIndex}"
-        role="tabpanel"
-        tabindex="0"
-        aria-labelledby="tabs-${tabIndex}-tab-${tabPanelIndex}"
-        ${tabPanelIndex === 1 ? "" : "hidden"}>
-    `;
+    const textToken = getNextTextToken(tokens, idx);
+    const title = textToken?.content || "undefined";
+
+    return `<my-tab title="${title}">`;
   }
 
   md.renderer.rules.list_item_close = function (tokens: Token[], idx: number, options: Options, _env: any, self: Renderer): string {
@@ -58,7 +39,7 @@ export default function tabsRule(md: MarkdownIt): void {
       return self.renderToken(tokens, idx, options);
     }
 
-    return `</div>`;
+    return `</my-tab>`;
   }
 
   md.renderer.rules.bullet_list_close = function (tokens: Token[], idx: number, options: Options, _env: any, self: Renderer): string {
@@ -68,27 +49,8 @@ export default function tabsRule(md: MarkdownIt): void {
       return self.renderToken(tokens, idx, options);
     }
 
-    return `</div>`;
+    return `</my-tabs>`;
   }
-}
-
-function getHeaders(tokens: Token[], idx: number): string[] {
-  const headers: string[] = [];
-  for (idx; idx < tokens.length; idx++) {
-    const token = tokens[idx];
-
-    if (tokens[idx].type === "bullet_list_close") {
-      break;
-    }
-
-    if (token.type != "list_item_open") {
-      continue;
-    }
-
-    const textToken = getNextTextToken(tokens, idx);
-    headers.push(textToken?.content || "undefined");
-  }
-  return headers;
 }
 
 function getNextTextToken(tokens: Token[], idx: number): Token | null {

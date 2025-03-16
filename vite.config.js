@@ -10,7 +10,7 @@ export default defineConfig({
 		outDir: "../dist",
 		minify: "terser",
 		rollupOptions: {
-			input: globSync("src/*/index.ts"),
+			input: globSync("src/**/index.ts"),
 			output: {
 				entryFileNames: "web-components.js",
 			}

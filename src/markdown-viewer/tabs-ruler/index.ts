@@ -38,6 +38,7 @@ export default function tabsRuler(md: MarkdownIt, options?: TabsRulerOptions): v
 function findLinkWithExtension(i: number, tokens: Token[], extensions: string[]) : boolean {
   for (let j = i + 1; tokens[j] && tokens[j].type !== "list_item_close"; j++) {
     const token = tokens[j];
+
     const href = removeParametersFrom(getHrefFrom(token));
     if (extensions.some((ext) => href?.endsWith(ext))) {
       return true;

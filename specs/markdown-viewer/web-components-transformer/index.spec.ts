@@ -16,6 +16,9 @@ import { tag as TaskTag } from "../../../src/task-viewer";
 test.describe("webComponentsTransformer", () => {
 
   test("expect components to contain exactly tags", async () => {
+    // @Tristan, wanneer ik de regel hieronder aanzet dan krijg ik de foutmelding dat de inline css bestanden niet geladen kunnen worden.
+    // Graag advies hoe dit te voorkomen.
+
     // const expected = [BPMNTag, BusinessModelCanvasTag, BusinessReferenceArchitecturesTag, CommandTag, DMNTag, EventTag, ModelTag, QueryTag, TaskTag].sort();
     // const actual = [...new Set(components.map(c => c.tag))].sort();
 

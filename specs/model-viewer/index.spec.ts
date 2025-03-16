@@ -13,7 +13,7 @@ test.describe("model-viewer", async () => {
         ]);
     });
 
-    test.fixme("can load data", async ({ mount }) => {
+    test("can load data", async ({ mount }) => {
         const model = await readYamlAndParseAs<ModelItem>(new URL("1.model.yml", import.meta.url));
 
         const component = await mount(ModelViewer, {

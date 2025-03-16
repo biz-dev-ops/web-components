@@ -16,7 +16,7 @@ test.describe("task-viewer", async () => {
         ]);
     });
 
-    test.fixme("can load data", async ({ mount }) => {
+    test("can load data", async ({ mount }) => {
         const model = await readYamlAndParseAs<Task>(new URL("1.task.yml", import.meta.url));
 
         const component = await mount(TaskViewer, {

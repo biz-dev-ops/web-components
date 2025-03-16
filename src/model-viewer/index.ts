@@ -59,7 +59,7 @@ export class ModelViewer extends LitElement {
   }
 
   override async update(changedProperties: Map<string, unknown>) {
-    if (changedProperties.has("src") ) {
+    if (changedProperties.has("src")) {
       try {
         this.model = await fetchYamlAndBundleAs<ModelItem>(this.src);
       }
@@ -74,7 +74,7 @@ export class ModelViewer extends LitElement {
 
     if (changedProperties.has("model")) {
       this.error = null;
-      this.builder =  new ModelItemDecoratorBuilder(this.model);
+      this.builder = new ModelItemDecoratorBuilder(this.model);
       this.path = [];
       this.model.title = this.model.title || this.name;
       await this.addPath("", this.model);
@@ -90,7 +90,7 @@ export class ModelViewer extends LitElement {
   async setPath(path: ModelItemDecorator[]) {
     this.path = path;
     history.pushState(this.path.length, "");
-    this.item  = await ModelItemBuilder.build(
+    this.item = await ModelItemBuilder.build(
       this.path.at(-1) as ModelItemDecorator,
       this.builder,
       this.onItemSelected.bind(this),
