@@ -26,7 +26,7 @@ export default defineConfig({
     trace: "on-first-retry",
 
     /* Port to use for Playwright component endpoint. */
-    ctPort: 3000,
+    ctPort: 3100,
     ctViteConfig: {
       plugins: viteConfig.plugins
     }
