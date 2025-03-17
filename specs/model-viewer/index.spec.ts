@@ -15,7 +15,6 @@ test.describe("model-viewer", async () => {
 
     test("can load data", async ({ mount, page }) => {
         const model = await readYamlAndParseAs<ModelItem>(new URL("1.model.yml", import.meta.url));
-        await page.waitForLoadState("networkidle");
 
         const component = await mount(ModelViewer, {
             props: {
@@ -28,7 +27,6 @@ test.describe("model-viewer", async () => {
 
     test("can load src", async ({ mount, page }) => {
         const model = await readYamlAndParseAs<ModelItem>(new URL("1.model.yml", import.meta.url));
-        await page.waitForLoadState("networkidle");
 
         const component = await mount(ModelViewer, {
             props: {
@@ -41,7 +39,6 @@ test.describe("model-viewer", async () => {
 
     test("can load references", async ({ mount, page }) => {
         const model = await readYamlAndParseAs<ModelItem>(new URL("2.model.yml", import.meta.url));
-        await page.waitForLoadState("networkidle");
 
         const component = await mount(ModelViewer, {
             props: {

@@ -22,7 +22,6 @@ test.describe("business-model-canvas", async () => {
 
     test("can load data", async ({ mount, page }) => {
         const model = await readYamlAndParseAs<Model>(new URL("business-model-canvas.yml", import.meta.url));
-        await page.waitForLoadState("networkidle");
 
         const component = await mount(BusinessModelCanvasComponent, {
             props: {

@@ -17,7 +17,6 @@ test.describe("event-viewer", async () => {
 
     test("can load data", async ({ mount, page }) => {
         const model = await readYamlAndParseAs<Event>(new URL("1.event.yml", import.meta.url));
-        await page.waitForLoadState("networkidle");
 
         const component = await mount(EventViewer, {
             props: {

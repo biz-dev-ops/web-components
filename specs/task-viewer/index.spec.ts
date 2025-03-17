@@ -18,7 +18,6 @@ test.describe("task-viewer", async () => {
 
     test("can load data", async ({ mount, page }) => {
         const model = await readYamlAndParseAs<Task>(new URL("1.task.yml", import.meta.url));
-        await page.waitForLoadState("networkidle");
 
         const component = await mount(TaskViewer, {
             props: {
