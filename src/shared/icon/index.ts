@@ -1,4 +1,4 @@
-import { html, LitElement } from "lit";
+import { html, LitElement, unsafeCSS } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
 import styles from "./icon.css";
@@ -25,6 +25,6 @@ export class Icon extends LitElement {
   }
 
   static override get styles() {
-    return [styles, materialCss];
+    return [styles, unsafeCSS(materialCss)];
   }
 }
