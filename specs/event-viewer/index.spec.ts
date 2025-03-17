@@ -15,7 +15,7 @@ test.describe("event-viewer", async () => {
         ]);
     });
 
-    test("can load data", async ({ mount }) => {
+    test("can load data", async ({ mount, page }) => {
         const model = await readYamlAndParseAs<Event>(new URL("1.event.yml", import.meta.url));
 
         const component = await mount(EventViewer, {

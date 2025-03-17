@@ -26,7 +26,7 @@ test.describe("business-reference-architecture", async () => {
         await expectComponentToContainData(component, model);
     });
 
-    test("can load src", async ({ mount, router }) => {
+    test("can load src", async ({ mount }) => {
         const model = await readYamlAndParseAs<Section[]>(new URL("1.business-reference-architecture.yml", import.meta.url));
 
         const component = await mount(BusinessReferenceArchitectureComponent, {

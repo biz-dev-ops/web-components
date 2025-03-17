@@ -11,37 +11,41 @@ import md from "./markdown-it";
 
 @customElement("markdown-viewer")
 export class MarkdownViewer extends LitElement {
-    @property({ attribute: "src" })
-    src!: string
+  @property({ attribute: "src" })
+  src!: string
 
-    @state()
-    state!: string | FetchError;
+  @state()
+  state!: string | FetchError;
 
-    override render() {
-        if (this.state instanceof FetchError) {
-            return html`<div class="error">${this.state.message}</div>`;
+  override render() {
+    if (this.state instanceof FetchError) {
+      return html`<div class="error">${this.state.message}</div>`;
+    }
+
+    return this.state ? html`${unsafeHTML(this.state)}` : html``;
+  }
+
+  override async updated(changedProperties) {
+    if (changedProperties.has("src")) {
+      try {
+        const markdown = await fetchText(this.src);
+        this.state = md.render(markdown);
+      }
+      catch (error: any) {
+        this.state = error;
+      }
+    }
+  }
+
+  static override get styles() {
+    return [
+      resetCss,
+      themeCss,
+      css`
+        :host {
+          display: block;
         }
-
-        return this.state ? html`${unsafeHTML(this.state)}` : html``;
-    }
-
-    override async updated(changedProperties) {
-        if (changedProperties.has("src")) {
-            try {
-                const markdown = await fetchText(this.src);
-                this.state = md.render(markdown);
-            }
-            catch (error: any) {
-                this.state = error;
-            }
-        }
-    }
-
-    static override get styles() {
-        return [
-            resetCss,
-            themeCss,
-            css``,
-        ];
-    }
+      `,
+    ];
+  }
 }

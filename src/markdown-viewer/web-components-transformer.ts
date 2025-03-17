@@ -1,44 +1,40 @@
-import { tag as BPMNTag } from "../bpmn-viewer";
-import { tag as BusinessModelCanvasTag } from "../business-model-canvas";
-import { tag as BusinessReferenceArchitecturesTag } from "../business-reference-architecture";
-import { tag as CommandTag } from "../command-viewer";
-import { tag as DMNTag } from "../dmn-viewer";
-import { tag as EventTag } from "../event-viewer";
-import { tag as QueryTag } from "../query-viewer";
-import { tag as TaskTag } from "../task-viewer";
-
-import { Link, TransformResultOrNull } from "./link-transform-rule";
+import { Token } from "markdown-it";
+import { Link } from "./link-transform-ruler";
 
 export const components = [
-    { extensions: [".bpmn"], tag: BPMNTag },
-    { extensions: ["business-model-canvas.yml", "business-model-canvas.yaml"], tag: BusinessModelCanvasTag },
-    { extensions: ["business-reference-architecture.yml", "business-reference-architecture.yaml"], tag: BusinessReferenceArchitecturesTag },
-    { extensions: [".command.yml", ".command.yaml"], tag: CommandTag },
-    { extensions: [".dmn"], tag: DMNTag },
-    { extensions: [".event.yml", ".event.yaml"], tag: EventTag },
-    { extensions: [".query.yml", ".query.yaml"], tag: QueryTag },
-    { extensions: [".task.yml", ".task.yaml"], tag: TaskTag }
+    { extensions: [".bpmn"], tag: "bpmn-viewer" },
+    { extensions: ["business-model-canvas.yml", "business-model-canvas.yaml"], tag: "business-model-canvas" },
+    { extensions: ["business-reference-architecture.yml", "business-reference-architecture.yaml"], tag: "business-reference-architecture" },
+    { extensions: [".command.yml", ".command.yaml"], tag: "command-viewer" },
+    { extensions: [".dmn"], tag: "dmn-viewer" },
+    { extensions: [".event.yml", ".event.yaml"], tag: "event-viewer" },
+    { extensions: [".model.yml", ".model.yaml"], tag: "model-viewer" },
+    { extensions: [".query.yml", ".query.yaml"], tag: "query-viewer" },
+    { extensions: [".task.yml", ".task.yaml"], tag: "task-viewer" }
 ];
 
-export default function (link: Link) : TransformResultOrNull {
-    const href = link.getAttribute("href");
-    if(!href) {
-        return null;
+export default function (token: Token, link: Link) : void {
+    if(!token.type.startsWith("link_")) {
+        return;
     }
 
-    const url = removeQueryStringAndAnchorsFrom(href);
-    const tag = components.find(component => component.extensions.some(extension => url.endsWith(extension)))?.tag;
-
+    const tag = getTag();
     if(!tag) {
-        return null;
+        return;
     }
 
-    return {
-        open: `<${tag} src="${href}" aria-label="${link.getText()}">`,
-        close: `</${tag}>`
-    }
-}
+    token.tag = tag;
+    token.block = true;
+    replaceHrefWithSrcAttribute();
 
-function removeQueryStringAndAnchorsFrom(href: string) {
-    return href.split('?')[0].split('#')[0];
+    function replaceHrefWithSrcAttribute() {
+        token.attrPush(["src", link.getAttribute("href") as string]);
+        const hrefIndex = token.attrIndex("href");
+        token.attrs?.splice(hrefIndex, 1);
+    }
+
+    function getTag() : string | undefined | null {
+        const path = link.getPath();
+        return path ? components.find(component => component.extensions.some(extension => path.endsWith(extension)))?.tag : null;
+    }
 }

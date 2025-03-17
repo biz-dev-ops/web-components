@@ -1,4 +1,4 @@
-import { css, html, LitElement, PropertyValueMap, TemplateResult } from "lit";
+import { css, html, LitElement, TemplateResult } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import resetCss from "../shared/styles/reset.css";
 import themeCss from "../shared/styles/theme.css";
@@ -8,7 +8,9 @@ import "./components/model-viewer-path";
 import { FetchError, fetchYamlAndBundleAs } from "../shared/fetch";
 import { ModelItemDecorator, ModelItemDecoratorBuilder } from "./modules/model-item-decorator-builder";
 
-@customElement("model-viewer")
+export const tag = "model-viewer";
+
+@customElement(tag)
 export class ModelViewer extends LitElement {
   builder!: ModelItemDecoratorBuilder;
 
@@ -57,7 +59,7 @@ export class ModelViewer extends LitElement {
   }
 
   override async update(changedProperties: Map<string, unknown>) {
-    if (changedProperties.has("src") ) {
+    if (changedProperties.has("src")) {
       try {
         this.model = await fetchYamlAndBundleAs<ModelItem>(this.src);
       }
@@ -72,7 +74,7 @@ export class ModelViewer extends LitElement {
 
     if (changedProperties.has("model")) {
       this.error = null;
-      this.builder =  new ModelItemDecoratorBuilder(this.model);
+      this.builder = new ModelItemDecoratorBuilder(this.model);
       this.path = [];
       this.model.title = this.model.title || this.name;
       await this.addPath("", this.model);
@@ -88,7 +90,7 @@ export class ModelViewer extends LitElement {
   async setPath(path: ModelItemDecorator[]) {
     this.path = path;
     history.pushState(this.path.length, "");
-    this.item  = await ModelItemBuilder.build(
+    this.item = await ModelItemBuilder.build(
       this.path.at(-1) as ModelItemDecorator,
       this.builder,
       this.onItemSelected.bind(this),

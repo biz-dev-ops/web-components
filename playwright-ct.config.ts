@@ -1,5 +1,6 @@
 import { defineConfig, devices } from "@sand4rt/experimental-ct-web";
 import viteConfig from "./vite.config";
+
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
@@ -8,7 +9,7 @@ export default defineConfig({
   /* The base directory, relative to the config file, for snapshot files created with toMatchSnapshot and toHaveScreenshot. */
   snapshotDir: "./__snapshots__",
   /* Maximum time one test can run for. */
-  timeout: 10 * 100,
+  timeout: 10 * 1000,
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -45,5 +46,5 @@ export default defineConfig({
     //   name: "webkit",
     //   use: { ...devices["Desktop Safari"] },
     // },
-  ],
+  ]
 });

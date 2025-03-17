@@ -38,15 +38,30 @@ export default function tabsRuler(md: MarkdownIt, options?: TabsRulerOptions): v
 function findLinkWithExtension(i: number, tokens: Token[], extensions: string[]) : boolean {
   for (let j = i + 1; tokens[j] && tokens[j].type !== "list_item_close"; j++) {
     const token = tokens[j];
-    if (token.type === "inline") {
-      const href = token.children?.find((child) => child.type === "link_open")?.attrGet("href");
-      if (href && extensions.some((ext) => href.endsWith(ext))) {
-        return true;
-      }
+
+    const href = removeParametersFrom(getHrefFrom(token));
+    if (extensions.some((ext) => href?.endsWith(ext))) {
+      return true;
     }
   }
 
   return false;
+}
+
+function getHrefFrom(token: Token) {
+  if(token.type === "link_open") {
+    return token.attrGet("href");
+  }
+
+  if(token.children) {
+    return token.children.find((child) => child.type === "link_open")?.attrGet("href");
+  }
+
+  return null;
+}
+
+function removeParametersFrom(href: string | null | undefined) {
+  return href?.split("?")[0].split("#")[0];
 }
 
 function setTabsTokenProperty(i: number, tokens: Token[]) {
@@ -66,3 +81,4 @@ function setTabsTokenProperty(i: number, tokens: Token[]) {
     }
   }
 }
+

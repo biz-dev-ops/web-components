@@ -28,7 +28,17 @@
     </main>
 
     <script type="module">
-      import "../../src/markdown-viewer/index.ts";
+      import "../../src/markdown-viewer";
+      import "../../src/shared//tabs";
+      import "../../src/bpmn-viewer";
+      import "../../src/business-model-canvas";
+      import "../../src/business-reference-architecture";
+      import "../../src/command-viewer";
+      import "../../src/dmn-viewer";
+      import "../../src/event-viewer";
+      import "../../src/model-viewer";
+      import "../../src/query-viewer";
+      import "../../src/task-viewer";
 
       const buttons = document.getElementById("buttons");
       const viewer = document.getElementsByTagName("markdown-viewer")[0];

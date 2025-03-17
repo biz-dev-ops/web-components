@@ -10,7 +10,7 @@ export class BdoButton extends LitElement {
 
     @property({ type: String })
     direction!: 'up' | 'right' | 'down' | 'left';
-        
+
     @property({ type: Boolean })
     disabled = false;
 

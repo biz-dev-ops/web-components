@@ -8,7 +8,8 @@ import ViewerSharedCss from "dmn-js/dist/assets/dmn-js-shared.css?inline";
 import ViewerDrdCss from "dmn-js/dist/assets/dmn-js-drd.css?inline";
 import ViewerDecisionTableCss from "dmn-js/dist/assets/dmn-js-decision-table.css?inline";
 import ViewerLiteralExpressionCss from "dmn-js/dist/assets/dmn-js-literal-expression.css?inline";
-import ViewerDMNCss from "dmn-js/dist/assets/dmn-font/css/dmn.css?inline";
+import ViewerDMNCss from "dmn-js/dist/assets/dmn-font/css/dmn-embedded.css?inline";
+import { appendFontFaceDefinitionToDom } from "../shared/util";
 
 export const tag: string = "dmn-viewer";
 
@@ -23,13 +24,10 @@ export class DMNViewer extends LitElement {
   xml!: string
 
   override async firstUpdated() {
-    if (this._viewer) {
-      this._viewer.destroy();
-    }
-
     this._viewer = new Viewer({
       container: this.renderRoot as HTMLElement
     });
+    appendFontFaceDefinitionToDom(this);
   }
 
   override async updated(changedProperties) {
