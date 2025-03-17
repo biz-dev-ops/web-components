@@ -2,7 +2,6 @@ import { html, LitElement, unsafeCSS } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
 import styles from "./icon.css";
-//@Tristan, wanneer ik ?dev verander in ?inline dan verdwijnen de iconen. Graag advies
 import materialCss from "material-symbols/outlined.css?inline";
 import { appendFontFaceDefinitionToDom } from "../util";
 
