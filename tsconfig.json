@@ -29,6 +29,6 @@
       }
     ]
   },
-  "include": ["src/**/*.ts", "globals.d.ts"],
+  "include": ["src/**/*.ts", "globals.d.ts", "specs/shared/util/index.spec.ts"],
   "exclude": []
 }
