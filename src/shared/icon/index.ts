@@ -3,7 +3,7 @@ import { customElement, property } from "lit/decorators.js";
 
 import styles from "./icon.css";
 //@Tristan, wanneer ik ?dev verander in ?inline dan verdwijnen de iconen. Graag advies
-import "material-symbols/outlined.css?dev";
+import materialCss from "material-symbols/outlined.css?inline";
 
 @customElement("bdo-icon")
 export class Icon extends LitElement {
@@ -25,6 +25,6 @@ export class Icon extends LitElement {
   }
 
   static override get styles() {
-    return styles;
+    return [styles, materialCss];
   }
 }
