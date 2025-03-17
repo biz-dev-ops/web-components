@@ -14,8 +14,9 @@ test.describe("business-reference-architecture", async () => {
         ]);
     });
 
-    test("can load data", async ({ mount }) => {
+    test("can load data", async ({ mount, page }) => {
         const model = await readYamlAndParseAs<Section[]>(new URL("1.business-reference-architecture.yml", import.meta.url));
+        await page.waitForLoadState("networkidle");
 
         const component = await mount(BusinessReferenceArchitectureComponent, {
             props: {
@@ -26,8 +27,9 @@ test.describe("business-reference-architecture", async () => {
         await expectComponentToContainData(component, model);
     });
 
-    test("can load src", async ({ mount, router }) => {
+    test("can load src", async ({ mount, page }) => {
         const model = await readYamlAndParseAs<Section[]>(new URL("1.business-reference-architecture.yml", import.meta.url));
+        await page.waitForLoadState("networkidle");
 
         const component = await mount(BusinessReferenceArchitectureComponent, {
             props: {
