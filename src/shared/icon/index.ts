@@ -4,6 +4,7 @@ import { customElement, property } from "lit/decorators.js";
 import styles from "./icon.css";
 //@Tristan, wanneer ik ?dev verander in ?inline dan verdwijnen de iconen. Graag advies
 import materialCss from "material-symbols/outlined.css?inline";
+import { appendFontFaceDefinitionToDom } from "../util";
 
 @customElement("bdo-icon")
 export class Icon extends LitElement {
@@ -22,6 +23,10 @@ export class Icon extends LitElement {
     }
 
     return html`<img .src=${this.icon} />`; // This will always have the SVG color
+  }
+
+  override async firstUpdated() {
+    appendFontFaceDefinitionToDom(this);
   }
 
   static override get styles() {
