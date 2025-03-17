@@ -15,13 +15,13 @@ export function parseMarkdown(markdown: string): string {
     return md.render(markdown);
 }
 
+// Because of a chrom bug, font-face definitions must be added to document.
+// See for more info: https://issues.chromium.org/issues/41085401
 const appendedFontToDomFaceForElements: string[] = [];
-
 export function appendFontFaceDefinitionToDom(element: LitElement) {
     if(appendedFontToDomFaceForElements.some(tag => tag == element.tagName)) {
         return;
     }
-
     appendedFontToDomFaceForElements.push(element.tagName);
 
     [...element.shadowRoot?.adoptedStyleSheets as any, ...element.shadowRoot?.styleSheets as any]
