@@ -1,5 +1,4 @@
 import MarkdownIt from "markdown-it";
-import "../shared/tabs/";
 import transformer, { components } from "./web-components-transformer";
 const extensions = components.flatMap(c => c.extensions);
 
