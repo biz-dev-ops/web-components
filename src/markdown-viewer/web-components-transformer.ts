@@ -8,6 +8,7 @@ export const components = [
     { extensions: [".command.yml", ".command.yaml"], tag: "command-viewer" },
     { extensions: [".dmn"], tag: "dmn-viewer" },
     { extensions: [".event.yml", ".event.yaml"], tag: "event-viewer" },
+    { extensions: [".mmd"], tag: "mermaid-viewer" },
     { extensions: [".model.yml", ".model.yaml"], tag: "model-viewer" },
     { extensions: [".query.yml", ".query.yaml"], tag: "query-viewer" },
     { extensions: [".task.yml", ".task.yaml"], tag: "task-viewer" }

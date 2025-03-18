@@ -13,6 +13,7 @@ const components = [
   { extension: "dmn", tag: "dmn-viewer" },
   { extension: "event.yml", tag: "event-viewer" },
   { extension: "event.yaml", tag: "event-viewer" },
+  { extension: "mmd", tag: "mermaid-viewer" },
   { extension: "model.yml", tag: "model-viewer" },
   { extension: "model.yaml", tag: "model-viewer" },
   { extension: "query.yml", tag: "query-viewer" },
