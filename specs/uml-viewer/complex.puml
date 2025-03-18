@@ -1,0 +1,23 @@
+@startuml
+skinparam actorStyle awesome
+
+actor User
+participant "Web App" as WA
+database "Database" as DB
+
+User -> WA: Login Request
+activate WA
+
+WA -> DB: Query User
+activate DB
+DB --> WA: Return User Data
+deactivate DB
+
+alt Valid Credentials
+    WA --> User: Login Success
+else Invalid Credentials
+    WA --> User: Login Failed
+end
+
+deactivate WA
+@enduml 

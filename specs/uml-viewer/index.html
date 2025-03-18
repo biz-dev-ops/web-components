@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>UML viewer</title>
+    <style>
+      uml-viewer {
+        display: block;
+        height: 500px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      <h1>UML viewer</h1>
+      <div id="buttons">
+        <button id="change-src">Change src</button>
+        <button id="direct-input">Use Direct Input</button>
+      </div>
+      <uml-viewer src="simple.puml"></uml-viewer>
+      <h2>Run tests</h2>
+      <code>
+        npm run test -- 'uml-viewer'
+      </code>
+    </main>
+
+    <script type="module">
+      import "../../src/uml-viewer/index.ts";
+
+      const buttons = document.getElementById("buttons");
+      const viewer = document.getElementsByTagName("uml-viewer")[0];
+
+      const directPuml = `@startuml
+      participant User
+      participant System
+      
+      User -> System: Action
+      System --> User: Response
+      @enduml`;
+
+      buttons.addEventListener("click", function (event) {
+        const target = event.target;
+        if (target.id === "change-src") {
+          viewer.setAttribute("src", viewer.src.endsWith("simple.puml") ? "complex.puml" : "simple.puml");
+        } else if (target.id === "direct-input") {
+          viewer.removeAttribute("src");
+          viewer.setAttribute("data-puml", directPuml);
+        }
+      });
+    </script>
+  </body>
+</html> 
