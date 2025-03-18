@@ -2,7 +2,6 @@ import { css, html, LitElement } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import plantumlEncoder from "plantuml-encoder";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-
 import resetCss from "../shared/styles/reset.css";
 import themeCss from "../shared/styles/theme.css";
 import { fetchText } from "../shared/fetch";

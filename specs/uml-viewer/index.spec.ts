@@ -56,7 +56,7 @@ test.describe("uml-viewer", async () => {
 
         const component = await mount(UMLViewer, {
             props: {
-                "data-puml": puml
+                "puml": puml
             }
         });
 
@@ -66,4 +66,4 @@ test.describe("uml-viewer", async () => {
     test.afterEach(async ({ page }) => {
         await page.close();
     });
-}); 
+});
