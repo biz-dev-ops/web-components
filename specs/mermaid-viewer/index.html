@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Mermaid viewer</title>
+    <style>
+      mermaid-viewer {
+        display: block;
+        height: 500px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      <h1>Mermaid viewer</h1>
+      <div id="buttons">
+        <button id="change-src">Change src</button>
+      </div>
+      <mermaid-viewer src="diagram1.mmd"></mermaid-viewer>
+      <h2>Run tests</h2>
+      <code>
+        npm run test -- "mermaid-viewer"
+      </code>
+    </main>
+
+    <script type="module">
+      import "../../src/mermaid-viewer/index.ts";
+
+      const buttons = document.getElementById("buttons");
+      const viewer = document.getElementsByTagName("mermaid-viewer")[0];
+
+      buttons.addEventListener("click", function (event) {
+        const target = event.target;
+        if (target.id === "change-src") {
+          viewer.setAttribute("src", viewer.src.endsWith("diagram1.mmd") ? "diagram2.mmd" : "diagram1.mmd");
+        }
+      });
+    </script>
+  </body>
+</html>
