@@ -81,9 +81,6 @@ export class DMNViewer extends LitElement {
           width: 100%;
           height: 100%;
         }
-        .error {
-          border: 3px solid red;
-        }
         .bjs-powered-by {
             display: none;
         }

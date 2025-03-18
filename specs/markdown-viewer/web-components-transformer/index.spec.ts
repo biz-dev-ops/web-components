@@ -2,7 +2,6 @@ import { test, expect } from "@sand4rt/experimental-ct-web";
 import MarkdownIt from "markdown-it";
 import transformer, { components } from "../../../src/markdown-viewer/web-components-transformer";
 import { Link } from "../../../src/markdown-viewer/link-transform-ruler";
-import { Token } from "markdown-it/index.js";
 
 test.describe("webComponentsTransformer", () => {
 
@@ -14,6 +13,7 @@ test.describe("webComponentsTransformer", () => {
       "command-viewer",
       "dmn-viewer",
       "event-viewer",
+      "mermaid-viewer",
       "model-viewer",
       "query-viewer",
       "task-viewer"
