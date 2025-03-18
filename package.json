@@ -45,8 +45,8 @@
     "yaml": "^2.7.0"
   },
   "devDependencies": {
-    "@playwright/experimental-ct-core": "^1.51.0",
     "@sand4rt/experimental-ct-web": "^1.51.0",
+    "@playwright/experimental-ct-core": "^1.51.0",
     "@types/markdown-it": "^14.1.2",
     "@types/node": "^22.13.10",
     "autoprefixer": "^10.4.21",
