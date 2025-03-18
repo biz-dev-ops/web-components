@@ -1,4 +1,4 @@
-import { customElement, property } from "lit/decorators.js";
+import { customElement, eventOptions, property } from "lit/decorators.js";
 import { TemplateResult, css, html } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ItemSelected, ModelItem } from "../../../models";
@@ -28,7 +28,7 @@ export class ModelViewerItemOneOf extends ModelViewerItem {
                         .map(item => item.item)
                         .map(item => html`
                         <li>
-                            <bdo-button direction="right" @clicked="${() => { this._onClicked(item); }}">
+                            <bdo-button direction="right" @clicked="${() => { this._onClick(item); }}">
                                 <span class="button-label">
                                 <span class="txt--property">${titlelize(item.title)}</span>
                                 ${item.description ? html`
@@ -45,7 +45,8 @@ export class ModelViewerItemOneOf extends ModelViewerItem {
         `;
     }
 
-    private _onClicked(item: ModelItem) {
+    @eventOptions({ passive: true })
+    private _onClick(item: ModelItem) {
         this.dispatchEvent(new CustomEvent<ItemSelected>('itemSelected', { detail: { property: this.property, item } }));
     }
 

@@ -1,5 +1,5 @@
 import { LitElement, html } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { customElement, eventOptions, property } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
 import modelViewerPathCss from "./model-viewer-path.css";
@@ -44,6 +44,7 @@ export class ModelViewerPath extends LitElement {
     return index === (this.path.length - 1);
   }
 
+  @eventOptions({ passive: true })
   private _onClick(index: number) {
     this.dispatchEvent(new CustomEvent<PathChanged>('pathChanged', { detail: { index } }));
   }

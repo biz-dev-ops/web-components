@@ -1,5 +1,5 @@
 import { LitElement, html } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, eventOptions, property } from 'lit/decorators.js';
 import resetCss from '../styles/reset.css';
 import buttonCss from './button.css';
 
@@ -24,6 +24,7 @@ export class BdoButton extends LitElement {
         `;
     }
 
+    @eventOptions({ passive: true })
     private _onClick() {
         this.dispatchEvent(new CustomEvent('clicked'));
     }

@@ -1,5 +1,5 @@
 import { LitElement, html } from "lit";
-import { customElement, query } from "lit/decorators.js";
+import { customElement, eventOptions, query } from "lit/decorators.js";
 import resetCss from '../styles/reset.css';
 import popoverCss from "./popover.css";
 
@@ -32,6 +32,7 @@ export class BdoPopover extends LitElement {
         }
     }
 
+    @eventOptions({ passive: true })
     private _onClick(event: Event): void {
         event.stopPropagation();
 

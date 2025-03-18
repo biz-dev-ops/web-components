@@ -69,13 +69,13 @@ export class MermaidViewer extends LitElement {
             themeCss,
             css`
                 :host {
-                display: block;
-                width: 100%;
-                height: 100%;
+                    display: block;
+                    width: 100%;
+                    height: 100%;
                 }
                 svg {
-                width: 100%;
-                height: 100%;
+                    width: 100%;
+                    height: 100%;
                 }
             `
         ];
