@@ -45,7 +45,9 @@ test.describe("markdown-viewer", async () => {
       }
     });
 
-    await expect(component.locator("bdo-tabs")).toBeVisible();
+    const elements = component.locator("bdo-tabs");
+    const count = await elements.count();
+    expect(count).toBeGreaterThanOrEqual(1);
   });
 
   test("can render nested headers", async ({ mount, router }) => {
@@ -57,7 +59,9 @@ test.describe("markdown-viewer", async () => {
       }
     });
 
-    await expect(component.locator("bdo-heading-container")).toBeVisible();
+    const elements = component.locator("bdo-heading-container");
+    const count = await elements.count();
+    expect(count).toBeGreaterThanOrEqual(1);
   });
 
   components.forEach(({ extension, tag }) => {

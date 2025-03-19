@@ -81,7 +81,8 @@ test.describe("webComponentsTransformer", () => {
             expect(linkOpenToken.block).toBe(true);
             expect(linkOpenToken.attrGet("src")).toBe("example.bpmn?query=1#hash");
             expect(linkOpenToken.attrGet("href")).toBeNull();
-          } else {
+          }
+          else {
             expect(false).toBe(true);
           }
         });

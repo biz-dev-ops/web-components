@@ -1,9 +1,9 @@
 import { test, expect } from "@sand4rt/experimental-ct-web";
 import MarkdownIt from "markdown-it";
-import nestedHeadersRule from "../../../src/markdown-viewer/nested-headers-rule"
-import { expectMarkdownToRenderAsHtml } from "../markdown-test-util";
+import nestedHeadersRulePlugin from "../../../src/markdown-viewer/nested-headers-rule"
+import { expectMarkdownToMatchHtml } from "../markdown-test-util";
 
-test.describe("nestedHeadersRule", () => {
+test.describe("nestedHeadersRulePlugin", () => {
 
     test("should handle single header", () => {
         const markdown = "# Single Header";
@@ -66,7 +66,7 @@ Level 3 content
 
 function expectHtml(markdown: string, expectedHtml: string) {
     const md = new MarkdownIt();
-    md.use(nestedHeadersRule);
-    expectMarkdownToRenderAsHtml(md, markdown, expectedHtml);
+    md.use(nestedHeadersRulePlugin);
+    expectMarkdownToMatchHtml(md, markdown, expectedHtml);
 }
 

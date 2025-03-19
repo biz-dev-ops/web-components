@@ -6,7 +6,7 @@ export type Link = {
   getText(): string | null | undefined;
 }
 
-class LinkImpl implements Link {
+export class LinkImpl implements Link {
   tokens: Token[];
 
   constructor(tokens: Token[]) {

@@ -2,7 +2,7 @@ import { test, expect } from "@sand4rt/experimental-ct-web";
 import MarkdownIt from "markdown-it";
 import linkTransformRulerPlugin, { Link } from "../../../src/markdown-viewer/link-transform-ruler";
 import { Token } from "markdown-it/index.js";
-import { expectMarkdownToMatch } from "../markdown-test-util";
+import { expectMarkdownToMatchTokens } from "../markdown-test-util";
 
 test.describe("linkTransformRulerPlugin", () => {
 
@@ -180,5 +180,5 @@ function expectTokens(markdown: string, expectedTokens: Token[], transformer: (t
   md.use(linkTransformRulerPlugin, {
     transformer
   });
-  expectMarkdownToMatch(md, markdown, expectedTokens);
+  expectMarkdownToMatchTokens(md, markdown, expectedTokens);
 }

@@ -1,7 +1,7 @@
 import { test, expect } from "@sand4rt/experimental-ct-web";
 import MarkdownIt from "markdown-it";
 import tabsRulePlugin from "../../../src/markdown-viewer/tabs-rule/";
-import { expectMarkdownToRenderAsHtml } from "../markdown-test-util";
+import { expectMarkdownToMatchHtml } from "../markdown-test-util";
 
 test.describe("tabsRule Plugin", () => {
   test("should transform bullet lists with tabs attribute to bdo-tabs component", async () => {
@@ -45,5 +45,5 @@ function expectHtml(markdown: string, expectedHtml: string) {
   md.use(tabsRulePlugin, {
     extensions: [".bpmn", ".custom"]
   });
-  expectMarkdownToRenderAsHtml(md, markdown, expectedHtml);
+  expectMarkdownToMatchHtml(md, markdown, expectedHtml);
 }

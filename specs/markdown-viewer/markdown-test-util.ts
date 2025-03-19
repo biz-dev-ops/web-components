@@ -2,7 +2,7 @@ import { expect } from "@sand4rt/experimental-ct-web";
 import MarkdownIt from "markdown-it";
 import { Token } from "markdown-it/index.js";
 
-export function expectMarkdownToRenderAsHtml(md: MarkdownIt, markdown: string, expectedHtml: string) {
+export function expectMarkdownToMatchHtml(md: MarkdownIt, markdown: string, expectedHtml: string) {
   const html = md.render(markdown);
   expect(trimHtml(html)).toBe(trimHtml(expectedHtml));
 }
@@ -11,8 +11,9 @@ export function trimHtml(html: string): string {
   return html.split("\n").map(l => l.trim()).join("");
 }
 
-export function expectMarkdownToMatch(md: MarkdownIt, markdown: string, expectedTokens: Token[]) {
+export function expectMarkdownToMatchTokens(md: MarkdownIt, markdown: string, expectedTokens: Token[]) {
   const tokens = md.parse(markdown, {});
+  console.log(tokens);
 
   expect(tokens.length).toBe(expectedTokens.length);
 

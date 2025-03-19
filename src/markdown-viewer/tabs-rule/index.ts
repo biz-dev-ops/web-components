@@ -1,7 +1,7 @@
 import MarkdownIt, { Options, Renderer, Token } from "markdown-it";
-import tabsRulerPlugin, { TabsRulerOptions } from "../tabs-ruler";
+import tabsRulerPlugin, { tabsRulePluginOptions } from "../tabs-ruler";
 
-export default function tabsRulePlugin(md: MarkdownIt, options?: TabsRulerOptions): void {
+export default function tabsRulePlugin(md: MarkdownIt, options?: tabsRulePluginOptions): void {
   md.use(tabsRulerPlugin, options);
 
   let tabIndex = 0;
