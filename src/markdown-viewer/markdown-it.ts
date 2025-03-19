@@ -2,15 +2,23 @@ import MarkdownIt from "markdown-it";
 import transformer, { components } from "./web-components-transformer";
 const extensions = components.flatMap(c => c.extensions);
 
+const listItemIsTabPanel = (listItem: ListItem) : boolean => {
+    return extensions.some(extension => listItem.getLink()?.getPath()?.endsWith(extension));
+};
+
 const md = MarkdownIt();
 
-import tabsRuler from "./tabs-ruler";
-md.use(tabsRuler, { extensions: extensions });
+import nestedHeadersRulePlugin from "./nested-headers-rule";
+md.use(nestedHeadersRulePlugin);
 
-import linkTransformRuler from "./link-transform-ruler";
-md.use(linkTransformRuler, { transformer: transformer });
+import tabsRulePlugin from "./tabs-rule";
+md.use(tabsRulePlugin, {
+    listItemIsTabPanel
+});
 
-import tabsRule from "./tabs-rule";
-md.use(tabsRule);
+import linkTransformRulerPlugin from "./link-transform-ruler";
+import { ListItem } from "./tabs-ruler";
+
+md.use(linkTransformRulerPlugin, { transformer: transformer });
 
 export default md;

@@ -1,78 +1,66 @@
-import MarkdownIt, { Token } from "markdown-it";
+import MarkdownIt, { StateCore, Token } from "markdown-it";
+import { Link, LinkImpl } from "../link-transform-ruler";
 
-interface TabsRulerOptions {
-  extensions?: string[];
+export interface tabsRulePluginOptions {
+  listItemIsTabPanel?: (listItem: ListItem) => boolean;
 }
 
-export default function tabsRuler(md: MarkdownIt, options?: TabsRulerOptions): void {
-  const extensions: string[] = options?.extensions || [];
+export default function tabsRulePlugin(md: MarkdownIt, options?: tabsRulePluginOptions): void {
+  const listItemIsTabPanelDelegate = options?.listItemIsTabPanel || ((_listItem: ListItem) => false);
 
-  md.core.ruler.push("tabs_ruler", (state) => {
+  md.core.ruler.push("tabs_ruler", (state: StateCore): void => {
     const tokens = state.tokens;
     let inList = false;
-    let listContainsMatchingLink = false;
+    let listItemIsTabPanel = false;
 
     for (let i = 0; i < tokens.length; i++) {
       const token = tokens[i];
 
       if (token.type === "bullet_list_open") {
         inList = true;
-        listContainsMatchingLink = false;
+        listItemIsTabPanel = false;
       }
       else if (token.type === "bullet_list_close") {
         inList = false;
-        if (listContainsMatchingLink) {
+        if (listItemIsTabPanel) {
           (token as any).tabs = true;
           setTabsTokenProperty(i, tokens);
         }
       }
       else if (inList && token.type === "list_item_open") {
-        if(!listContainsMatchingLink) {
-          listContainsMatchingLink = findLinkWithExtension(i, tokens, extensions);
+        if (!listItemIsTabPanel) {
+          const listItemTokens = getListItemTokens(i, tokens);
+          const listItem = new ListItemImpl(listItemTokens);
+          listItemIsTabPanel = listItemIsTabPanelDelegate(listItem);
         }
       }
     }
   });
 }
 
-function findLinkWithExtension(i: number, tokens: Token[], extensions: string[]) : boolean {
-  for (let j = i + 1; tokens[j] && tokens[j].type !== "list_item_close"; j++) {
-    const token = tokens[j];
+function getListItemTokens(idx: number, tokens: Token[]): Token[] {
+  const listItemTokens: Token[] = [];
 
-    const href = removeParametersFrom(getHrefFrom(token));
-    if (extensions.some((ext) => href?.endsWith(ext))) {
-      return true;
+  for (let i = idx; i < tokens.length; i++) {
+    listItemTokens.push(tokens[i]);
+
+    if (tokens[i].type === "list_item_close") {
+      break
     }
   }
 
-  return false;
-}
-
-function getHrefFrom(token: Token) {
-  if(token.type === "link_open") {
-    return token.attrGet("href");
-  }
-
-  if(token.children) {
-    return token.children.find((child) => child.type === "link_open")?.attrGet("href");
-  }
-
-  return null;
-}
-
-function removeParametersFrom(href: string | null | undefined) {
-  return href?.split("?")[0].split("#")[0];
+  return listItemTokens;
 }
 
 function setTabsTokenProperty(i: number, tokens: Token[]) {
   for (let j = i - 1; j >= 0; j--) {
     const token = tokens[j];
 
-    if(token.type === "list_item_open" || token.type === "list_item_close") {
+    if (token.type === "list_item_open" || token.type === "list_item_close") {
       (token as any).tab = true;
     }
 
-    if(token.type === "bullet_list_open" || token.type === "bullet_list_close") {
+    if (token.type === "bullet_list_open" || token.type === "bullet_list_close") {
       (token as any).tabs = true;
     }
 
@@ -82,3 +70,54 @@ function setTabsTokenProperty(i: number, tokens: Token[]) {
   }
 }
 
+
+export type ListItem = {
+  tokens: Token[];
+  getLink(): Link | null;
+}
+
+class ListItemImpl implements ListItem {
+  tokens: Token[];
+
+  constructor(tokens: Token[]) {
+    this.tokens = tokens;
+  }
+
+  getLink(): Link | null {
+    const tokens = getTokenWithLink(this.tokens);
+    let inLink = false;
+    const linkTokens: Token[] = [];
+
+    for (const token of tokens) {
+      if (token.type === "link_open") {
+        inLink = true;
+      }
+
+      if (inLink) {
+        linkTokens.push(token);
+      }
+
+      if (token.type === "link_close") {
+        inLink = false;
+      }
+    }
+
+    if (linkTokens.length === 0) {
+      return null;
+    }
+
+    return new LinkImpl(linkTokens);
+
+    function getTokenWithLink(tokens: Token[]): Token[] {
+      if (tokens.some(token => token.type === "link_open")) {
+        return tokens;
+      }
+
+      if (tokens.some(token => token.type === "inline" && token.children?.some(t => t.type === "link_open"))) {
+        return tokens.find(token => token.type === "inline")?.children!;
+      }
+
+      return [];
+    }
+  }
+}

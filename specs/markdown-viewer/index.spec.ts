@@ -36,6 +36,34 @@ test.describe("markdown-viewer", async () => {
     await expect(component).toContainText("Hello World");
   });
 
+  test("can render tabs", async ({ mount, router }) => {
+    await useRoutes(router, new FileRoute("/markdown-tabs.md", new URL("markdown-tabs.md", import.meta.url)));
+
+    const component = await mount(MarkdownViewer, {
+      props: {
+        "src": "markdown-tabs.md"
+      }
+    });
+
+    const elements = component.locator("bdo-tabs");
+    const count = await elements.count();
+    expect(count).toBeGreaterThanOrEqual(1);
+  });
+
+  test("can render nested headers", async ({ mount, router }) => {
+    await useRoutes(router, new FileRoute("/markdown.md", new URL("markdown.md", import.meta.url)));
+
+    const component = await mount(MarkdownViewer, {
+      props: {
+        "src": "markdown.md"
+      }
+    });
+
+    const elements = component.locator("bdo-heading-container");
+    const count = await elements.count();
+    expect(count).toBeGreaterThanOrEqual(1);
+  });
+
   components.forEach(({ extension, tag }) => {
     ["?", "#"].forEach(p => {
       test(`can render ${extension} and parameter seperator ${p}`, async ({ mount, router }) => {

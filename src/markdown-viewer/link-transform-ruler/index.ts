@@ -1,12 +1,13 @@
 import MarkdownIt, { StateCore, Token } from "markdown-it";
 
 export type Link = {
+  tokens: Token[];
   getAttribute(name: string): string | null | undefined;
   getPath(): string | null | undefined;
   getText(): string | null | undefined;
 }
 
-class LinkImpl implements Link {
+export class LinkImpl implements Link {
   tokens: Token[];
 
   constructor(tokens: Token[]) {
@@ -26,11 +27,11 @@ class LinkImpl implements Link {
   }
 }
 
-export type LinkTransFormRulerOptions = {
-  transformer: (token: Token, link: Link) => void
+export type LinkTransFormRulerPluginOptions = {
+  transformer: (link: Link) => void
 }
 
-export default function linkTransformRuler(md: MarkdownIt, options: LinkTransFormRulerOptions): void {
+export default function linkTransformRulerPlugin(md: MarkdownIt, options: LinkTransFormRulerPluginOptions): void {
   const transformer = options.transformer;
 
   md.core.ruler.push("links_transform_ruler", (state: StateCore): void => {
@@ -43,10 +44,7 @@ export default function linkTransformRuler(md: MarkdownIt, options: LinkTransFor
 
           if (child.type === "link_open") {
             activeLink = new LinkImpl(getLinkTokens(token.children, childIdx));
-          }
-
-          if(activeLink) {
-            transformer(child, activeLink);
+            transformer(activeLink);
           }
 
           if (child.type === "link_close" && activeLink) {
@@ -78,6 +76,9 @@ export default function linkTransformRuler(md: MarkdownIt, options: LinkTransFor
           }
 
           if (child.type === "link_close") {
+            if (displayBlock) {
+              child.block = true;
+            }
             displayBlock = false;
           }
         }
@@ -139,7 +140,7 @@ export default function linkTransformRuler(md: MarkdownIt, options: LinkTransFor
         tokens.push(token);
       }
     }
-    
+
     function removeEmptyParagraph() {
       const index = tokens.length - 2;
       if (tokens[index].type === "paragraph_open") {
