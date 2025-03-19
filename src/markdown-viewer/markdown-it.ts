@@ -4,6 +4,9 @@ const extensions = components.flatMap(c => c.extensions);
 
 const md = MarkdownIt();
 
+import nestedHeadersRule from "./nested-headers-rule";
+md.use(nestedHeadersRule);
+
 import tabsRuler from "./tabs-ruler";
 md.use(tabsRuler, { extensions: extensions });
 
