@@ -1,7 +1,7 @@
 import MarkdownIt, { Options, Renderer, Token } from "markdown-it";
 import { nestedHeadersRuler } from "../nested-headers-ruler";
 
-export default function nestedHeadersRule(md: MarkdownIt): void {
+export default function nestedHeadersRulePlugin(md: MarkdownIt): void {
     md.core.ruler.push("nested_headers", nestedHeadersRuler);
 
     md.renderer.rules.heading_container_open = function (tokens: Token[], idx: number): string {

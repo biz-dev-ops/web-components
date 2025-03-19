@@ -1,6 +1,7 @@
 import { test, expect } from "@sand4rt/experimental-ct-web";
 import MarkdownIt from "markdown-it";
 import nestedHeadersRule from "../../../src/markdown-viewer/nested-headers-rule"
+import { expectMarkdownToRenderAsHtml } from "../markdown-test-util";
 
 test.describe("nestedHeadersRule", () => {
 
@@ -12,7 +13,7 @@ test.describe("nestedHeadersRule", () => {
     <h1 slot="header">Single Header</h1>
 </bdo-heading-container>`
 
-        expectMarkdownToRenderAs(markdown, expectedHtml);
+        expectHtml(markdown, expectedHtml);
     });
 
     test("should render heading containers and adjust heading tokens", () => {
@@ -50,7 +51,7 @@ Level 3 content
     </bdo-heading-container>
 </bdo-heading-container>`
 
-        expectMarkdownToRenderAs(markdown, expectedHtml);
+        expectHtml(markdown, expectedHtml);
     });
 
     test("should handle no headers", () => {
@@ -59,24 +60,13 @@ Level 3 content
         const expectedHtml = `
 <p>Some plain text.</p>
 `;
-
-        expectMarkdownToRenderAs(markdown, expectedHtml);
+        expectHtml(markdown, expectedHtml);
     });
 });
 
-function renderMarkdown(markdown: string) {
+function expectHtml(markdown: string, expectedHtml: string) {
     const md = new MarkdownIt();
     md.use(nestedHeadersRule);
-    return md.render(markdown).trim();
-}
-function expectMarkdownToRenderAs(markdown: string, expectedHtml: string) {
-    const md = new MarkdownIt();
-    md.use(nestedHeadersRule);
-    const html = md.render(markdown);
-    expect(trimHtml(html)).toBe(trimHtml(expectedHtml));
-}
-
-function trimHtml(html: string) : string {
-    return html.split("\n").map(l => l.trim()).join("");
+    expectMarkdownToRenderAsHtml(md, markdown, expectedHtml);
 }
 

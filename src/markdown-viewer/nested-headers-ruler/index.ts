@@ -1,7 +1,7 @@
 import MarkdownIt, { StateCore } from "markdown-it";
 import Token from "markdown-it/lib/token.mjs";
 
-export default function nestedHeaders(md: MarkdownIt): void {
+export default function nestedHeadersRulerPlugin(md: MarkdownIt): void {
     md.core.ruler.push("nested_headers", nestedHeadersRuler);
 }
 

@@ -2,6 +2,7 @@ import { test } from "@sand4rt/experimental-ct-web";
 import MarkdownIt from "markdown-it";
 import nestedHeaders from "../../../src/markdown-viewer/nested-headers-ruler";
 import { Token } from "markdown-it/index.js";
+import { expectTokensToMatchParsedTokens } from "../markdown-test-util";
 
 test.describe("nestedHeadersRuler", () => {
 
@@ -40,11 +41,9 @@ test.describe("nestedHeadersRuler", () => {
       { type: "inline", level: 2, nesting: 0 },
       { type: "heading_close", level: 1, nesting: -1 },
       { type: "heading_container_close", level: 0, nesting: -1, attrs: [["data-heading-level", "1"]] },
-    ];
+    ] as Token[];
 
-    const tokens = parseMarkdown(markdown);
-
-    expectTokensToMatchParsedTokens(tokens, expectedTokens);
+    expectTokens(markdown, expectedTokens);
   });
 
   test("should handle single header and adjust levels", () => {
@@ -56,11 +55,9 @@ test.describe("nestedHeadersRuler", () => {
       { type: "inline", level: 2, nesting: 0 },
       { type: "heading_close", level: 1, nesting: -1 },
       { type: "heading_container_close", level: 0, nesting: -1, attrs: [["data-heading-level", "1"]] },
-    ];
+    ] as Token[];
 
-    const tokens = parseMarkdown(markdown);
-
-    expectTokensToMatchParsedTokens(tokens, expectedTokens);
+    expectTokens(markdown, expectedTokens);
   });
 
   test("should handle no headers and not adjust levels", () => {
@@ -70,30 +67,15 @@ test.describe("nestedHeadersRuler", () => {
       { type: "paragraph_open", level: 0, nesting: 1 },
       { type: "inline", level: 1, nesting: 0 },
       { type: "paragraph_close", level: 0, nesting: -1 },
-    ];
+    ] as Token[];
 
-    const tokens = parseMarkdown(markdown);
-
-    expectTokensToMatchParsedTokens(tokens, expectedTokens);
+    expectTokens(markdown, expectedTokens);
   });
 });
 
-function parseMarkdown(markdown: string): Token[] {
+function expectTokens(markdown: string, expectedTokens: Token[]) {
   const md = new MarkdownIt();
   md.use(nestedHeaders);
-  return md.parse(markdown, {});
+  expectTokensToMatchParsedTokens(md, markdown, expectedTokens);
 }
 
-function expectTokensToMatchParsedTokens(tokens, expectedTokens: { type: string; level: number; nesting: number; }[]) {
-  test.expect(tokens.length).toBe(expectedTokens.length);
-
-  for (let i = 0; i < tokens.length; i++) {
-    const token = tokens[i];
-    const expectedToken = expectedTokens[i];
-
-    for (const property of Object.keys(expectedToken)) {
-      const message = `${expectedToken.type} (${i}) property: ${property} should match`;
-      test.expect(token[property], message).toEqual(expectedToken[property]);
-    }
-  }
-}
