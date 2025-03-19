@@ -26,11 +26,11 @@ class LinkImpl implements Link {
   }
 }
 
-export type LinkTransFormRulerOptions = {
+export type LinkTransFormRulerPluginOptions = {
   transformer: (token: Token, link: Link) => void
 }
 
-export default function linkTransformRuler(md: MarkdownIt, options: LinkTransFormRulerOptions): void {
+export default function linkTransformRulerPlugin(md: MarkdownIt, options: LinkTransFormRulerPluginOptions): void {
   const transformer = options.transformer;
 
   md.core.ruler.push("links_transform_ruler", (state: StateCore): void => {
@@ -45,7 +45,7 @@ export default function linkTransformRuler(md: MarkdownIt, options: LinkTransFor
             activeLink = new LinkImpl(getLinkTokens(token.children, childIdx));
           }
 
-          if(activeLink) {
+          if (activeLink) {
             transformer(child, activeLink);
           }
 
@@ -78,6 +78,9 @@ export default function linkTransformRuler(md: MarkdownIt, options: LinkTransFor
           }
 
           if (child.type === "link_close") {
+            if (displayBlock) {
+              child.block = true;
+            }
             displayBlock = false;
           }
         }
@@ -139,7 +142,7 @@ export default function linkTransformRuler(md: MarkdownIt, options: LinkTransFor
         tokens.push(token);
       }
     }
-    
+
     function removeEmptyParagraph() {
       const index = tokens.length - 2;
       if (tokens[index].type === "paragraph_open") {

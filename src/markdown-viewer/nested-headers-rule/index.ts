@@ -1,8 +1,8 @@
 import MarkdownIt, { Options, Renderer, Token } from "markdown-it";
-import { nestedHeadersRuler } from "../nested-headers-ruler";
+import nestedHeadersRulerPlugin from "../nested-headers-ruler";
 
 export default function nestedHeadersRulePlugin(md: MarkdownIt): void {
-    md.core.ruler.push("nested_headers", nestedHeadersRuler);
+    md.use(nestedHeadersRulerPlugin);
 
     md.renderer.rules.heading_container_open = function (tokens: Token[], idx: number): string {
         return `<bdo-heading-container heading-level="${tokens[idx].attrGet("data-heading-level")!}">`;

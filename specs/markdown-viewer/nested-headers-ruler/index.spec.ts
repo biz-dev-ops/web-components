@@ -1,8 +1,8 @@
 import { test } from "@sand4rt/experimental-ct-web";
 import MarkdownIt from "markdown-it";
-import nestedHeaders from "../../../src/markdown-viewer/nested-headers-ruler";
 import { Token } from "markdown-it/index.js";
-import { expectTokensToMatchParsedTokens } from "../markdown-test-util";
+import { expectMarkdownToMatch } from "../markdown-test-util";
+import nestedHeadersRulerPlugin from "../../../src/markdown-viewer/nested-headers-ruler";
 
 test.describe("nestedHeadersRuler", () => {
 
@@ -75,7 +75,7 @@ test.describe("nestedHeadersRuler", () => {
 
 function expectTokens(markdown: string, expectedTokens: Token[]) {
   const md = new MarkdownIt();
-  md.use(nestedHeaders);
-  expectTokensToMatchParsedTokens(md, markdown, expectedTokens);
+  md.use(nestedHeadersRulerPlugin);
+  expectMarkdownToMatch(md, markdown, expectedTokens);
 }
 

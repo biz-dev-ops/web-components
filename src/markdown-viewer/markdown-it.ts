@@ -4,16 +4,13 @@ const extensions = components.flatMap(c => c.extensions);
 
 const md = MarkdownIt();
 
-import nestedHeadersRule from "./nested-headers-rule";
-md.use(nestedHeadersRule);
+import nestedHeadersRulePlugin from "./nested-headers-rule";
+md.use(nestedHeadersRulePlugin);
 
-import tabsRuler from "./tabs-ruler";
-md.use(tabsRuler, { extensions: extensions });
+import tabsRulePlugin from "./tabs-rule";
+md.use(tabsRulePlugin, { extensions: extensions });
 
-import linkTransformRuler from "./link-transform-ruler";
-md.use(linkTransformRuler, { transformer: transformer });
-
-import tabsRule from "./tabs-rule";
-md.use(tabsRule);
+import linkTransformRulerPlugin from "./link-transform-ruler";
+md.use(linkTransformRulerPlugin, { transformer: transformer });
 
 export default md;

@@ -1,12 +1,12 @@
 import { test, expect } from "@sand4rt/experimental-ct-web";
 import MarkdownIt from "markdown-it";
-import tabsRuler from "../../../src/markdown-viewer/tabs-ruler/";
+import tabsRulerPlugin from "../../../src/markdown-viewer/tabs-ruler/";
 
 test.describe("tabsRuler", () => {
 
   test("should add tabs properties to lists and list items with matching extensions", async ({ }) => {
     const md = new MarkdownIt();
-    md.use(tabsRuler, { extensions: [".bpmn"] });
+    md.use(tabsRulerPlugin, { extensions: [".bpmn"] });
 
     const markdown = "- [Process 1](process1.bpmn)\n- [Process 2](process2.bpmn)\n- Normal item\n";
 
@@ -21,7 +21,7 @@ test.describe("tabsRuler", () => {
 
   test("should not add tabs properties when no matching extensions are found", async ({ }) => {
     const md = new MarkdownIt();
-    md.use(tabsRuler, { extensions: [".bpmn"] });
+    md.use(tabsRulerPlugin, { extensions: [".bpmn"] });
 
     const markdown = "- [Normal Link](https://example.com)\n- Another normal item\n";
 
@@ -36,7 +36,7 @@ test.describe("tabsRuler", () => {
 
   test("should handle multiple extensions", async ({ }) => {
     const md = new MarkdownIt();
-    md.use(tabsRuler, { extensions: [".bpmn", ".custom"] });
+    md.use(tabsRulerPlugin, { extensions: [".bpmn", ".custom"] });
 
     const markdown = "- [Process 1](process1.bpmn)\n- [Custom File](custom.custom)\n- Normal item\n";
 
@@ -51,7 +51,7 @@ test.describe("tabsRuler", () => {
 
   test("should handle multiple lists", async ({ }) => {
     const md = new MarkdownIt();
-    md.use(tabsRuler, { extensions: [".bpmn", ".custom"] });
+    md.use(tabsRulerPlugin, { extensions: [".bpmn", ".custom"] });
 
     const markdown = "- [Process 1](process1.bpmn)\n- [Custom File](custom.custom)\n- Normal item\n\n" +
       "new line\n\n" +

@@ -5,36 +5,35 @@ export interface TabsRulerOptions {
 }
 
 export default function tabsRulePlugin(md: MarkdownIt, options?: TabsRulerOptions): void {
-  md.core.ruler.push("tabs_ruler", (state: StateCore) => tabsRuler(state, options));
-}
-
-export function tabsRuler(state: StateCore, options?: TabsRulerOptions): void {
-  const tokens = state.tokens;
   const extensions: string[] = options?.extensions || [];
-  let inList = false;
-  let listContainsMatchingLink = false;
 
-  for (let i = 0; i < tokens.length; i++) {
-    const token = tokens[i];
+  md.core.ruler.push("tabs_ruler", (state: StateCore): void => {
+    const tokens = state.tokens;
+    let inList = false;
+    let listContainsMatchingLink = false;
 
-    if (token.type === "bullet_list_open") {
-      inList = true;
-      listContainsMatchingLink = false;
-    }
-    else if (token.type === "bullet_list_close") {
-      inList = false;
-      if (listContainsMatchingLink) {
-        (token as any).tabs = true;
-        setTabsTokenProperty(i, tokens);
+    for (let i = 0; i < tokens.length; i++) {
+      const token = tokens[i];
+
+      if (token.type === "bullet_list_open") {
+        inList = true;
+        listContainsMatchingLink = false;
+      }
+      else if (token.type === "bullet_list_close") {
+        inList = false;
+        if (listContainsMatchingLink) {
+          (token as any).tabs = true;
+          setTabsTokenProperty(i, tokens);
+        }
+      }
+      else if (inList && token.type === "list_item_open") {
+        if (!listContainsMatchingLink) {
+          listContainsMatchingLink = findLinkWithExtension(i, tokens, extensions);
+        }
       }
     }
-    else if (inList && token.type === "list_item_open") {
-      if (!listContainsMatchingLink) {
-        listContainsMatchingLink = findLinkWithExtension(i, tokens, extensions);
-      }
-    }
-  }
-};
+  });
+}
 
 function findLinkWithExtension(i: number, tokens: Token[], extensions: string[]): boolean {
   for (let j = i + 1; tokens[j] && tokens[j].type !== "list_item_close"; j++) {

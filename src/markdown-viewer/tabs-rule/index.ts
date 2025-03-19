@@ -1,8 +1,8 @@
-import MarkdownIt, { Options, Renderer, StateCore, Token } from "markdown-it";
-import { tabsRuler, TabsRulerOptions } from "../tabs-ruler";
+import MarkdownIt, { Options, Renderer, Token } from "markdown-it";
+import tabsRulerPlugin, { TabsRulerOptions } from "../tabs-ruler";
 
 export default function tabsRulePlugin(md: MarkdownIt, options?: TabsRulerOptions): void {
-  md.core.ruler.push("tabs_ruler", (state: StateCore) => tabsRuler(state, options));
+  md.use(tabsRulerPlugin, options);
 
   let tabIndex = 0;
   let tabPanelIndex = 0;

@@ -1,6 +1,6 @@
 import { test, expect } from "@sand4rt/experimental-ct-web";
 import MarkdownIt from "markdown-it";
-import tabsRule from "../../../src/markdown-viewer/tabs-rule/";
+import tabsRulePlugin from "../../../src/markdown-viewer/tabs-rule/";
 import { expectMarkdownToRenderAsHtml } from "../markdown-test-util";
 
 test.describe("tabsRule Plugin", () => {
@@ -42,7 +42,7 @@ test.describe("tabsRule Plugin", () => {
 
 function expectHtml(markdown: string, expectedHtml: string) {
   const md = new MarkdownIt();
-  md.use(tabsRule, {
+  md.use(tabsRulePlugin, {
     extensions: [".bpmn", ".custom"]
   });
   expectMarkdownToRenderAsHtml(md, markdown, expectedHtml);
