@@ -13,7 +13,6 @@ export function trimHtml(html: string): string {
 
 export function expectMarkdownToMatchTokens(md: MarkdownIt, markdown: string, expectedTokens: Token[]) {
   const tokens = md.parse(markdown, {});
-  console.log(tokens);
 
   expect(tokens.length).toBe(expectedTokens.length);
 

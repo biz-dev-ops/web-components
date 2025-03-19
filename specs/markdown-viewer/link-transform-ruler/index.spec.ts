@@ -26,10 +26,12 @@ test.describe("linkTransformRulerPlugin", () => {
       { type: "paragraph_close" }
     ] as Token[];
 
-    expectTokens(markdown, expectedTokens, (token: Token, link: Link) => {
-      if (token.type === "link_open") {
-        token.attrSet("data-test", "transformed");
-      }
+    expectTokens(markdown, expectedTokens, (link: Link) => {
+      link.tokens.forEach(token => {
+        if (token.type === "link_open") {
+          token.attrSet("data-test", "transformed");
+        }
+      });
     });
   });
 
@@ -47,10 +49,12 @@ test.describe("linkTransformRulerPlugin", () => {
       { type: "paragraph_close" }
     ] as Token[];
 
-    expectTokens(markdown, expectedTokens, (token: Token, link: Link) => {
-      if (token.type === "text") {
-        token.content = "Transformed Link Text";
-      }
+    expectTokens(markdown, expectedTokens, (link: Link) => {
+      link.tokens.forEach(token => {
+        if (token.type === "text") {
+          token.content = "Transformed Link Text";
+        }
+      });
     });
   });
 
@@ -73,10 +77,12 @@ test.describe("linkTransformRulerPlugin", () => {
       { type: "paragraph_close" }
     ] as Token[];
 
-    expectTokens(markdown, expectedTokens, (token: Token, link: Link) => {
-      if (token.type === "link_open") {
-        token.attrSet("href", link.getPath() + "/transformed");
-      }
+    expectTokens(markdown, expectedTokens, (link: Link) => {
+      link.tokens.forEach(token => {
+        if (token.type === "link_open") {
+          token.attrSet("href", link.getPath() + "/transformed");
+        }
+      });
     });
   });
 
@@ -86,16 +92,18 @@ test.describe("linkTransformRulerPlugin", () => {
     const expectedTokens = [
       { type: "link_open", level: 0, block: true },
       { type: "text", level: 1 },
-      { type: "link_close", level: 0, block: true  },
+      { type: "link_close", level: 0, block: true },
       { type: "paragraph_open", level: 0 },
       { type: "inline", level: 1 },
       { type: "paragraph_close", level: 0 }
     ] as Token[];
 
-    expectTokens(markdown, expectedTokens, (token: Token, link: Link) => {
-      if (token.type === "link_open") {
-        token.block = true;
-      }
+    expectTokens(markdown, expectedTokens, (link: Link) => {
+      link.tokens.forEach(token => {
+        if (token.type === "link_open") {
+          token.block = true;
+        }
+      });
     });
   });
 
@@ -108,10 +116,12 @@ test.describe("linkTransformRulerPlugin", () => {
       { type: "link_close" }
     ] as Token[];
 
-    expectTokens(markdown, expectedTokens, (token: Token, link: Link) => {
-      if (token.type === "link_open") {
-        token.block = true;
-      }
+    expectTokens(markdown, expectedTokens, (link: Link) => {
+      link.tokens.forEach(token => {
+        if (token.type === "link_open") {
+          token.block = true;
+        }
+      });
     });
   });
 
@@ -137,10 +147,12 @@ test.describe("linkTransformRulerPlugin", () => {
       { type: "paragraph_close" }
     ] as unknown as Token[];
 
-    expectTokens(markdown, expectedTokens, (token: Token, link: Link) => {
-      if (token.type === "link_open") {
-        token.block = true;
-      }
+    expectTokens(markdown, expectedTokens, (link: Link) => {
+      link.tokens.forEach(token => {
+        if (token.type === "link_open") {
+          token.block = true;
+        }
+      });
     });
   });
 
@@ -166,16 +178,18 @@ test.describe("linkTransformRulerPlugin", () => {
       { type: "paragraph_close" }
     ] as unknown as Token[];
 
-    expectTokens(markdown, expectedTokens, (token: Token, link: Link) => {
-      if (token.type.startsWith("link_")) {
-        token.tag = "div";
-        token.block = true;
-      }
+    expectTokens(markdown, expectedTokens, (link: Link) => {
+      link.tokens.forEach(token => {
+        if (token.type.startsWith("link_")) {
+          token.tag = "div";
+          token.block = true;
+        }
+      });
     });
   });
 });
 
-function expectTokens(markdown: string, expectedTokens: Token[], transformer: (token: Token, link: Link) => void) {
+function expectTokens(markdown: string, expectedTokens: Token[], transformer: (link: Link) => void) {
   const md = new MarkdownIt();
   md.use(linkTransformRulerPlugin, {
     transformer

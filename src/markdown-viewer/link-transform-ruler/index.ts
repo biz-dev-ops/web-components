@@ -1,6 +1,7 @@
 import MarkdownIt, { StateCore, Token } from "markdown-it";
 
 export type Link = {
+  tokens: Token[];
   getAttribute(name: string): string | null | undefined;
   getPath(): string | null | undefined;
   getText(): string | null | undefined;
@@ -27,7 +28,7 @@ export class LinkImpl implements Link {
 }
 
 export type LinkTransFormRulerPluginOptions = {
-  transformer: (token: Token, link: Link) => void
+  transformer: (link: Link) => void
 }
 
 export default function linkTransformRulerPlugin(md: MarkdownIt, options: LinkTransFormRulerPluginOptions): void {
@@ -43,10 +44,7 @@ export default function linkTransformRulerPlugin(md: MarkdownIt, options: LinkTr
 
           if (child.type === "link_open") {
             activeLink = new LinkImpl(getLinkTokens(token.children, childIdx));
-          }
-
-          if (activeLink) {
-            transformer(child, activeLink);
+            transformer(activeLink);
           }
 
           if (child.type === "link_close" && activeLink) {
