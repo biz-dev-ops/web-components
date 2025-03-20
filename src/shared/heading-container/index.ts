@@ -3,6 +3,7 @@ import { customElement, property } from "lit/decorators.js";
 
 @customElement("bdo-heading-container")
 export class BdoHeadingContainer extends LitElement {
+
   @property({ type: Number, attribute: "heading-level" })
   headingLevel = 1;
 

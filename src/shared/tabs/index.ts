@@ -4,7 +4,7 @@ import { customElement, property, state, queryAssignedElements } from "lit/decor
 export const tag = "bdo-tabs";
 
 @customElement(tag)
-export class MyTabs extends LitElement {
+export class BdoTabs extends LitElement {
   @property({ type: Number }) selectedIndex = 0;
   @state() private _tabTitles: string[] = [];
   @queryAssignedElements({ selector: "bdo-tab" }) private _tabs!: HTMLElement[];
