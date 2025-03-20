@@ -14,28 +14,33 @@ export const components = [
     { extensions: [".task.yml", ".task.yaml"], tag: "task-viewer" }
 ];
 
-export default function (token: Token, link: Link) : void {
-    if(!token.type.startsWith("link_")) {
-        return;
-    }
-
+export default function (link: Link) : void {
     const tag = getTag();
+
     if(!tag) {
         return;
     }
 
-    token.tag = tag;
-    token.block = true;
-    replaceHrefWithSrcAttribute();
+    const href = link.getAttribute("href")!;
 
-    function replaceHrefWithSrcAttribute() {
-        token.attrPush(["src", link.getAttribute("href") as string]);
-        const hrefIndex = token.attrIndex("href");
-        token.attrs?.splice(hrefIndex, 1);
-    }
+    link.tokens
+        .filter(token => token.type.startsWith("link_"))
+        .forEach(token => {
+            token.tag = tag;
+            token.block = true;
+            token.attrPush(["src", href]);
+            const hrefIndex = token.attrIndex("href");
+            if(hrefIndex > -1) {
+                token.attrs?.splice(hrefIndex, 1);
+            }
+        });
 
     function getTag() : string | undefined | null {
         const path = link.getPath();
-        return path ? components.find(component => component.extensions.some(extension => path.endsWith(extension)))?.tag : null;
+        if(!path) {
+            return null;
+        }
+
+        return components.find(component => component.extensions.some(extension => path.endsWith(extension)))?.tag;
     }
 }

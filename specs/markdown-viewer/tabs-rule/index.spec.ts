@@ -1,58 +1,51 @@
 import { test, expect } from "@sand4rt/experimental-ct-web";
 import MarkdownIt from "markdown-it";
-import tabsRule from "../../../src/markdown-viewer/tabs-rule/";
-import Token from "markdown-it/lib/token.mjs";
+import tabsRulePlugin from "../../../src/markdown-viewer/tabs-rule/";
+import { expectMarkdownToMatchHtml } from "../markdown-test-util";
+import { ListItem } from "../../../src/markdown-viewer/tabs-ruler";
 
 test.describe("tabsRule Plugin", () => {
-  test("should transform bullet lists with tabs attribute to bdo-tabs component", async () => {
-    const md = new MarkdownIt();
-    md.use(tabsRule);
 
+  test("should transform bullet lists with tabs attribute to bdo-tabs component", async () => {
     const markdown = `- Tab 1
   Content 1
 - Tab 2
   Content 2
 `;
-    const tokens = setTabs(md.parse(markdown, {}));
-    const result = md.renderer.render(tokens, md.options, {});
+    const expectedHtml = `<bdo-tabs selectedIndex="0">
+    <bdo-tab title="Tab 1">
+        Tab 1Content 1
+    </bdo-tab>
+    <bdo-tab title="Tab 2">
+        Tab 2Content 2
+    </bdo-tab>
+</bdo-tabs>`;
 
-    expect(result).toContain(`<bdo-tabs selectedIndex="0">`);
-    expect(result).toContain(`<bdo-tab title="Tab 1">`);
-    expect(result).toContain("Content 1");
-    expect(result).toContain(`<bdo-tab title="Tab 2">`);
-    expect(result).toContain("Content 2");
-    expect(result).toContain(`</bdo-tabs>`);
+    expectHtml(markdown, expectedHtml);
   });
 
   test("should use link names as tab title", async () => {
-    const md = new MarkdownIt();
-    md.use(tabsRule);
-
     const markdown = `- [Tab 1](#test)
 - Tab 2
   Content 2
 `;
-    const tokens = setTabs(md.parse(markdown, {}));
-    const result = md.renderer.render(tokens, md.options, {});
+    const expectedHtml = `<bdo-tabs selectedIndex="0">
+    <bdo-tab title="Tab 1">
+        <a href="#test">Tab 1</a>
+    </bdo-tab>
+    <bdo-tab title="Tab 2">
+        Tab 2Content 2
+    </bdo-tab>
+</bdo-tabs>`;
 
-    expect(result).toContain(`<bdo-tabs selectedIndex="0">`);
-    expect(result).toContain(`<bdo-tab title="Tab 1">`);
-    expect(result).toContain(`<a href="#test">Tab 1</a>`);
-    expect(result).toContain(`<bdo-tab title="Tab 2">`);
-    expect(result).toContain("Content 2");
-    expect(result).toContain(`</bdo-tabs>`);
+    expectHtml(markdown, expectedHtml);
   });
 });
 
-function setTabs(tokens: Token[]): Token[] {
-  for(const token of tokens) {
-    if(token.type.startsWith("bullet_list")) {
-      token["tabs"] = true;
-    }
-
-    if(token.type.startsWith("list_item")) {
-      token["tab"] = true;
-    }
-  }
-  return tokens;
+function expectHtml(markdown: string, expectedHtml: string, listItemIsTabPanel?: (listItem: ListItem) => boolean) {
+  const md = new MarkdownIt();
+  md.use(tabsRulePlugin, {
+    listItemIsTabPanel: listItemIsTabPanel || (() => true)
+  });
+  expectMarkdownToMatchHtml(md, markdown, expectedHtml);
 }
