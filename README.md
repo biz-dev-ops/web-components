@@ -16,6 +16,7 @@ npm install @biz-dev-ops/web-components
 ## Components
 
 ### BPMN Viewer
+
 A component for viewing and interacting with BPMN diagrams.
 
 ```html
@@ -23,47 +24,54 @@ A component for viewing and interacting with BPMN diagrams.
 ```
 
 Features:
+
 - Zoom in/out controls
 - Simulator mode
 - Interactive elements
 - Custom event handling
 
 ### Business Model Canvas
+
 A component for displaying and editing business model canvases.
 
 ```html
-<business-model-canvas></business-model-canvas>
+<business-model-canvas src="path/to/busines-model-canvas.yml"></business-model-canvas>
 ```
 
 ### Business Reference Architecture
+
 A component for visualizing business reference architectures.
 
 ```html
-<business-reference-architecture></business-reference-architecture>
+<business-reference-architecture src="path/to/business-reference-architecture.yml"></business-reference-architecture>
 ```
 
 ### Command Viewer
+
 A component for displaying command structures.
 
 ```html
-<command-viewer></command-viewer>
+<command-viewer src="path/to/command.yml"></command-viewer>
 ```
 
 ### DMN Viewer
+
 A component for viewing Decision Model and Notation (DMN) diagrams.
 
 ```html
-<dmn-viewer></dmn-viewer>
+<dmn-viewer src="path/to/decission-model.dmn"></dmn-viewer>
 ```
 
 ### Event Viewer
+
 A component for visualizing event structures and flows.
 
 ```html
-<event-viewer></event-viewer>
+<event-viewer src="path/to/event.yml"></event-viewer>
 ```
 
 ### Markdown Viewer
+
 A component for rendering markdown content.
 
 ```html
@@ -71,6 +79,7 @@ A component for rendering markdown content.
 ```
 
 ### Mermaid Viewer
+
 A component for rendering Mermaid diagrams.
 
 ```html
@@ -78,33 +87,38 @@ A component for rendering Mermaid diagrams.
 ```
 
 ### Model Viewer
-A component for displaying various business models.
+
+A component for displaying json schema bjects.
 
 ```html
-<model-viewer></model-viewer>
+<model-viewer src="path/to/model.yml"></model-viewer>
 ```
 
 ### Query Viewer
+
 A component for visualizing query structures.
 
 ```html
-<query-viewer></query-viewer>
+<query-viewe src="path/to/query.yml"r></query-viewer>
 ```
 
 ### Task Viewer
+
 A component for displaying and managing tasks.
 
 ```html
-<task-viewer></task-viewer>
+<task-viewer src="path/to/task.yml"></task-viewer>
 ```
 
 ## Development
 
 ### Requirements
+
 - git
 - npm
 
 ### Local Development
+
 ```bash
 git clone git@github.com:biz-dev-ops/web-components.git
 cd web-components
@@ -113,6 +127,7 @@ npm run develop
 ```
 
 ### Testing
+
 ```bash
 npm run test
 ```
