@@ -7,15 +7,15 @@ test.describe("feature-viewer", async () => {
 
   test.beforeEach(async ({ router }) => {
     await useRoutes(router, [
-      new FileRoute("/feature.feature", new URL("feature.feature", import.meta.url)),
-      new FileRoute("/sample.feature", new URL("sample.feature", import.meta.url))
+      new FileRoute("/1.feature", new URL("1.feature", import.meta.url)),
+      new FileRoute("/2.feature", new URL("2.feature", import.meta.url))
     ]);
   });
 
   test("can load feature file", async ({ mount }) => {
     const component = await mount(FeatureViewerComponent, {
       props: {
-        src: "feature.feature"
+        src: "1.feature"
       }
     });
 
@@ -38,12 +38,12 @@ test.describe("feature-viewer", async () => {
   test("can load sample feature file", async ({ mount }) => {
     const component = await mount(FeatureViewerComponent, {
       props: {
-        src: "sample.feature"
+        src: "2.feature"
       }
     });
 
     // Check feature title and description
-    await expect(component).toContainText("Feature: User Profile Management");
+    await expect(component).toContainText("Feature: Manage User Profile");
     await expect(component).toContainText("As a user");
     await expect(component).toContainText("I want to manage my profile information");
     await expect(component).toContainText("So that I can keep my account up to date");
@@ -65,7 +65,7 @@ test.describe("feature-viewer", async () => {
   test("can change src between feature files", async ({ mount }) => {
     const component = await mount(FeatureViewerComponent, {
       props: {
-        src: "feature.feature"
+        src: "1.feature"
       }
     });
 
@@ -79,7 +79,7 @@ test.describe("feature-viewer", async () => {
     // Change to sample feature
     await component.update({
       props: {
-        src: "sample.feature"
+        src: "2.feature"
       }
     });
 

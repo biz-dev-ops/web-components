@@ -1,4 +1,4 @@
-Feature: User Profile Management
+Feature: Manage User Profile
   As a user
   I want to manage my profile information
   So that I can keep my account up to date
