@@ -13,41 +13,23 @@ export const tag = "feature-scenario-outline";
 export class ScenarioOutlineComponent extends LitElement {
   @property({ type: Object })
   outline!: ScenarioOutline;
+  override render() {
+    const expandedScenarios = this.expandScenarioOutline();
 
-  static override styles = [
-    resetCss,
-    themeCss,
-    css`
-      .scenario-outline {
-        display: grid;
-        gap: 16px;
-      }
-
-      .scenario-outline--passed {
-        border-left: 4px solid var(--color-green-500);
-      }
-
-      .scenario-outline--failed {
-        border-left: 4px solid var(--color-red-500);
-      }
-
-      .scenario-outline--not_implemented {
-        border-left: 4px solid var(--color-yellow-500);
-      }
-    `
-  ];
-
-  private getOutlineClass(): string {
-    const baseClass = "scenario-outline";
-    if (!this.outline.result) return baseClass;
-    return `${baseClass} scenario-outline--${this.outline.result}`;
+    return html`
+      <div class="${this.getOutlineClass()}">
+        ${expandedScenarios.map(
+          (scenario) => html`<feature-scenario .scenario=${scenario}></feature-scenario>`
+        )}
+      </div>
+    `;
   }
 
   private expandScenarioOutline(): Scenario[] {
-    return this.outline.examples.tableBody.map((row) => {
+    return this.outline.examples.tableBody.map((row, index) => {
       const scenario: Scenario = {
         keyword: "Scenario",
-        name: `${this.outline.name} - ${row.join(", ")}`,
+        name: `${this.outline.name} (${index + 1})`,
         description: this.outline.description,
         tags: this.outline.tags,
         steps: this.outline.steps.map((step) => ({
@@ -73,6 +55,12 @@ export class ScenarioOutlineComponent extends LitElement {
     });
   }
 
+  private getOutlineClass(): string {
+    const baseClass = "scenario-outline";
+    if (!this.outline.result) return baseClass;
+    return `${baseClass} scenario-outline--${this.outline.result}`;
+  }
+
   private replacePlaceholders(text: string, values: string[]): string {
     return text.replace(/<(\w+)>/g, (match, key) => {
       const index = this.outline.examples.tableHeader.indexOf(key);
@@ -80,15 +68,26 @@ export class ScenarioOutlineComponent extends LitElement {
     });
   }
 
-  override render() {
-    const expandedScenarios = this.expandScenarioOutline();
+  static override styles = [
+    resetCss,
+    themeCss,
+    css`
+      .scenario-outline {
+        display: grid;
+        gap: 16px;
+      }
 
-    return html`
-      <div class="${this.getOutlineClass()}">
-        ${expandedScenarios.map(
-          (scenario) => html`<feature-scenario .scenario=${scenario}></feature-scenario>`
-        )}
-      </div>
-    `;
-  }
-} 
+      .scenario-outline--passed {
+        border-left: 4px solid var(--color-green-500);
+      }
+
+      .scenario-outline--failed {
+        border-left: 4px solid var(--color-red-500);
+      }
+
+      .scenario-outline--not_implemented {
+        border-left: 4px solid var(--color-yellow-500);
+      }
+    `
+  ];
+}

@@ -6,6 +6,7 @@ import themeCss from "../../shared/styles/theme.css";
 
 import { Scenario } from "../models";
 import "../step";
+import "../../shared/badge";
 
 export const tag = "feature-scenario";
 
@@ -13,6 +14,39 @@ export const tag = "feature-scenario";
 export class ScenarioComponent extends LitElement {
   @property({ type: Object })
   scenario!: Scenario;
+
+  override render() {
+    return html`
+      <div class="${this.getScenarioClass()}">
+        <div class="scenario__header">
+          <h3 class="scenario__title">Scenario: ${this.scenario.name}</h3>
+          ${this.scenario.tags ? html`
+              <div class="scenario__tags">
+                  ${this.scenario.tags.map(
+                    (tag) => html`<bdo-badge type="tag">${tag}</bdo-badge>`
+                    )}
+              </div>
+            ` : null}
+          ${this.scenario.description ? html`
+              <p class="scenario__description">
+                ${this.scenario.description}
+              </p>
+            ` : null}
+        </div>
+        <div class="scenario__steps">
+          ${this.scenario.steps.map(
+            (step) => html`<feature-step .step=${step}></feature-step>`
+          )}
+        </div>
+      </div>
+    `;
+  }
+
+  private getScenarioClass(): string {
+    const baseClass = "scenario";
+    if (!this.scenario.result) return baseClass;
+    return `${baseClass} scenario--${this.scenario.result}`;
+  }
 
   static override styles = [
     resetCss,
@@ -54,14 +88,6 @@ export class ScenarioComponent extends LitElement {
         margin-bottom: 8px;
       }
 
-      .tag {
-        background-color: rgba(59, 130, 246, 0.2);
-        color: var(--color-blue-500);
-        padding: 4px 8px;
-        border-radius: 4px;
-        font-size: 12px;
-      }
-
       .scenario__description {
         color: var(--color-gray-600);
         margin: 0;
@@ -75,41 +101,4 @@ export class ScenarioComponent extends LitElement {
       }
     `
   ];
-
-  private getScenarioClass(): string {
-    const baseClass = "scenario";
-    if (!this.scenario.result) return baseClass;
-    return `${baseClass} scenario--${this.scenario.result}`;
-  }
-
-  override render() {
-    return html`
-      <div class="${this.getScenarioClass()}">
-        <div class="scenario__header">
-          <h3 class="scenario__title">Scenario: ${this.scenario.name}</h3>
-          ${this.scenario.tags
-            ? html`
-                <div class="scenario__tags">
-                  ${this.scenario.tags.map(
-                    (tag) => html`<span class="tag">${tag}</span>`
-                  )}
-                </div>
-              `
-            : null}
-          ${this.scenario.description
-            ? html`
-                <p class="scenario__description">
-                  ${this.scenario.description}
-                </p>
-              `
-            : null}
-        </div>
-        <div class="scenario__steps">
-          ${this.scenario.steps.map(
-            (step) => html`<feature-step .step=${step}></feature-step>`
-          )}
-        </div>
-      </div>
-    `;
-  }
-} 
+}

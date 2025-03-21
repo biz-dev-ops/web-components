@@ -7,8 +7,45 @@ import themeCss from "../../shared/styles/theme.css";
 
 @customElement("feature-step")
 export class StepComponent extends LitElement {
+
   @property({ type: Object })
   step!: Step;
+
+  override render() {
+    return html`
+      <div class="${this.getStepClass()}">
+        <div class="step__content">
+          <span class="step__keyword">${this.step.keyword}</span>
+          <span class="step__text">${this.step.text}</span>
+        </div>
+        ${this.step.table ? html`
+          <table>
+            <thead>
+              <tr>
+                ${this.step.table.header.map(
+                  (header) => html`<th>${header}</th>`
+                  )}
+              </tr>
+            </thead>
+            <tbody>
+              ${this.step.table.rows.map(
+                (row) => html`
+                  <tr>
+                    ${row.map((cell) => html`<td>${cell}</td>`)}
+                  </tr>
+                `
+              )}
+            </tbody>
+          </table>`: null}
+      </div>
+    `;
+  }
+
+  private getStepClass(): string {
+    const baseClass = "step";
+    if (!this.step.result) return baseClass;
+    return `${baseClass} step--${this.step.result}`;
+  }
 
   static override styles = [
     resetCss,
@@ -71,43 +108,4 @@ export class StepComponent extends LitElement {
       }
     `
   ];
-
-  private getStepClass(): string {
-    const baseClass = "step";
-    if (!this.step.result) return baseClass;
-    return `${baseClass} step--${this.step.result}`;
-  }
-
-  override render() {
-    return html`
-      <div class="${this.getStepClass()}">
-        <div class="step__content">
-          <span class="step__keyword">${this.step.keyword}</span>
-          <span class="step__text">${this.step.text}</span>
-        </div>
-        ${this.step.table
-          ? html`
-              <table>
-                <thead>
-                  <tr>
-                    ${this.step.table.header.map(
-                      (header) => html`<th>${header}</th>`
-                    )}
-                  </tr>
-                </thead>
-                <tbody>
-                  ${this.step.table.rows.map(
-                    (row) => html`
-                      <tr>
-                        ${row.map((cell) => html`<td>${cell}</td>`)}
-                      </tr>
-                    `
-                  )}
-                </tbody>
-              </table>
-            `
-          : null}
-      </div>
-    `;
-  }
-} 
+}

@@ -46,7 +46,7 @@ test.describe("feature-scenario-outline", async () => {
 
     // Check first scenario
     const firstScenario = scenarios.first();
-    await expect(firstScenario).toContainText("Scenario: Login with different credentials - john_doe, secure123");
+    await expect(firstScenario).toContainText("Scenario: Login with different credentials (1)");
     await expect(firstScenario).toContainText("Given");
     await expect(firstScenario).toContainText("the user is on the login page");
     await expect(firstScenario).toContainText("When");
@@ -56,7 +56,7 @@ test.describe("feature-scenario-outline", async () => {
 
     // Check second scenario
     const secondScenario = scenarios.nth(1);
-    await expect(secondScenario).toContainText("Scenario: Login with different credentials - jane_smith, pass456");
+    await expect(secondScenario).toContainText("Scenario: Login with different credentials (2)");
     await expect(secondScenario).toContainText("When");
     await expect(secondScenario).toContainText("the user enters username 'jane_smith' and password 'pass456'");
     await expect(secondScenario).toContainText("Then");
@@ -64,7 +64,7 @@ test.describe("feature-scenario-outline", async () => {
 
     // Check third scenario
     const thirdScenario = scenarios.last();
-    await expect(thirdScenario).toContainText("Scenario: Login with different credentials - admin, admin123");
+    await expect(thirdScenario).toContainText("Scenario: Login with different credentials (3)");
     await expect(thirdScenario).toContainText("When");
     await expect(thirdScenario).toContainText("the user enters username 'admin' and password 'admin123'");
     await expect(thirdScenario).toContainText("Then");
@@ -117,14 +117,14 @@ test.describe("feature-scenario-outline", async () => {
 
     // Check first scenario
     const firstScenario = scenarios.first();
-    await expect(firstScenario).toContainText("Scenario: Simple Outline - test1");
+    await expect(firstScenario).toContainText("Scenario: Simple Outline (1)");
     await expect(firstScenario).toContainText("Given");
     await expect(firstScenario).toContainText("a simple step with 'test1'");
 
     // Check second scenario
     const secondScenario = scenarios.last();
-    await expect(secondScenario).toContainText("Scenario: Simple Outline - test2");
+    await expect(secondScenario).toContainText("Scenario: Simple Outline (2)");
     await expect(secondScenario).toContainText("Given");
     await expect(secondScenario).toContainText("a simple step with 'test2'");
   });
-}); 
+});

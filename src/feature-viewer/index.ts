@@ -40,44 +40,31 @@ export class FeatureViewerComponent extends LitElement {
       <div class="${this.getFeatureClass()}">
         <div class="feature__header">
           <h2 class="feature__title">Feature: ${this.feature.name}</h2>
-          ${this.feature.tags
-        ? html`
-                <div class="feature__tags">
-                  ${this.feature.tags.map(
-          (tag) => html`<span class="tag">${tag}</span>`
-        )}
-                </div>
-              `
-        : null}
-          ${this.feature.description
-        ? html`
-                <p class="feature__description">
-                  ${this.feature.description}
-                </p>
-              `
-        : null}
-          ${this.feature.resultFile
-        ? html`
-                <a
-                  href="${this.feature.resultFile}"
-                  class="feature__result-link"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  View Test Results
-                </a>
-              `
-        : null}
+          ${this.feature.tags ? html`
+            <div class="feature__tags">
+              ${this.feature.tags.map((tag) => html`<bdo-badge type="tag">${tag}</bdo-badge>`)}
+            </div>`: null}
+          ${this.feature.description ? html`
+            <p class="feature__description">
+              ${this.feature.description}
+            </p>`: null}
+          ${this.feature.resultFile ? html`
+            <a
+              href="${this.feature.resultFile}"
+              class="feature__result-link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View Test Results
+            </a>`: null}
         </div>
         <div class="feature__content">
-          ${this.feature.background
-        ? html`<feature-background .background=${this.feature.background}></feature-background>`
-        : null}
+          ${this.feature.background ? html`<feature-background .background=${this.feature.background}></feature-background>`: null}
           ${this.feature.scenarios.map((scenario) =>
           "examples" in scenario
             ? html`<feature-scenario-outline .outline=${scenario}></feature-scenario-outline>`
             : html`<feature-scenario .scenario=${scenario}></feature-scenario>`
-        )}
+          )}
         </div>
       </div>
     `;
@@ -144,16 +131,6 @@ export class FeatureViewerComponent extends LitElement {
         .scenarios-container {
           display: grid;
           gap: var(--space-md);
-        }
-
-        .tag {
-          display: inline-block;
-          padding: var(--space-xs) var(--space-sm);
-          background-color: var(--color-brand-a20);
-          color: var(--color-brand);
-          border-radius: var(--radius-sm);
-          font-size: 0.875rem;
-          margin-right: var(--space-xs);
         }
 
         .feature__tags {
