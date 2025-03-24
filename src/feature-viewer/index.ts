@@ -94,9 +94,7 @@ export class FeatureViewerComponent extends LitElement {
     }
 
     if (changedProperties.has("feature")) {
-      if (this.feature) {
-        this.feature.result = this.determineFeatureResult();
-      }
+      this.setNotImplementedResult();
     }
 
     super.update(changedProperties);
@@ -183,26 +181,25 @@ export class FeatureViewerComponent extends LitElement {
     return `${baseClass} feature--${this.feature.result}`;
   }
 
-  private determineFeatureResult(): TestResult | undefined {
+  private setNotImplementedResult(): void {
     if (!this.feature) return undefined;
 
-    // Check if any step has failed
-    const hasFailedStep = this.feature.scenarios.some((scenario) =>
-      scenario.steps.some((step) => step.result === TestResult.FAILED)
-    );
-    if (hasFailedStep) return TestResult.FAILED;
+    //Set the results to not implemented, and TODO add test results object later.
+    this.feature.result = TestResult.NOT_IMPLEMENTED;
 
-    // Check if any step is not implemented
-    const hasNotImplementedStep = this.feature.scenarios.some((scenario) =>
-      scenario.steps.some((step) => step.result === TestResult.NOT_IMPLEMENTED)
-    );
-    if (hasNotImplementedStep) return TestResult.NOT_IMPLEMENTED;
+    this.feature.scenarios.forEach((scenario) => {
+      scenario.result = TestResult.NOT_IMPLEMENTED;
+      scenario.steps.forEach((step) => {
+        step.result = TestResult.NOT_IMPLEMENTED;
+      });
+    });
 
-    // Check if all steps have passed
-    const allStepsPassed = this.feature.scenarios.every((scenario) =>
-      scenario.steps.every((step) => step.result === TestResult.PASSED)
-    );
-    if (allStepsPassed) return TestResult.PASSED;
+    if (this.feature.background) {
+      this.feature.background.result = TestResult.NOT_IMPLEMENTED;
+      this.feature.background.steps.forEach((step) => {
+        step.result = TestResult.NOT_IMPLEMENTED;
+      });
+    }
 
     return undefined;
   }

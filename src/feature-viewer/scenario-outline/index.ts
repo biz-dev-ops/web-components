@@ -18,16 +18,19 @@ export class ScenarioOutlineComponent extends LitElement {
 
     return html`
       <div class="${this.getOutlineClass()}">
-        ${expandedScenarios.map(
-          (scenario) => html`<feature-scenario .scenario=${scenario}></feature-scenario>`
-        )}
+        <h3 class="scenario-outline_title">Scenario Outline: ${this.outline.name || ""}</h3>
+        <div class="scenario-outline_scenarios">
+          ${expandedScenarios.map(
+            (scenario) => html`<feature-scenario .scenario=${scenario}></feature-scenario>`
+          )}
+        </div>
       </div>
     `;
   }
 
   private expandScenarioOutline(): Scenario[] {
     return this.outline.examples.tableBody.map((row, index) => {
-      const scenario: Scenario = {
+      return {
         keyword: "Scenario",
         name: `${this.outline.name} (${index + 1})`,
         description: this.outline.description,
@@ -35,23 +38,9 @@ export class ScenarioOutlineComponent extends LitElement {
         steps: this.outline.steps.map((step) => ({
           ...step,
           text: this.replacePlaceholders(step.text, row)
-        }))
-      };
-
-      // Determine scenario result based on step results
-      if (scenario.steps.some((step) => step.result === TestResult.FAILED)) {
-        scenario.result = TestResult.FAILED;
-      } else if (
-        scenario.steps.some((step) => step.result === TestResult.NOT_IMPLEMENTED)
-      ) {
-        scenario.result = TestResult.NOT_IMPLEMENTED;
-      } else if (
-        scenario.steps.every((step) => step.result === TestResult.PASSED)
-      ) {
-        scenario.result = TestResult.PASSED;
+        })),
+        result: TestResult.NOT_IMPLEMENTED
       }
-
-      return scenario;
     });
   }
 
