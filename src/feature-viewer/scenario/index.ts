@@ -3,6 +3,7 @@ import { customElement, property } from "lit/decorators.js";
 
 import resetCss from "../../shared/styles/reset.css";
 import themeCss from "../../shared/styles/theme.css";
+import typographyCss from "../../shared/styles/typography.css";
 
 import { Scenario } from "../models";
 import "../step";
@@ -51,53 +52,51 @@ export class ScenarioComponent extends LitElement {
   static override styles = [
     resetCss,
     themeCss,
+    typographyCss,
     css`
       .scenario {
-        background-color: var(--color-gray-100);
-        padding: 16px;
-        border-radius: 4px;
-        border: 1px solid var(--color-gray-200);
-        margin-bottom: 16px;
+        background-color: var(--color-black-a05);
+        padding: calc(var(--space-md) - var(--line-base));
+        border-radius: var(--radius-base);
+        border: var(--line-base) solid var(--color-black-a10);
+      }
+
+      .scenario--passed,
+      .scenario--failed,
+      .scenario--not_implemented {
+        padding-inline-start: calc(var(--space-md) - var(--line-medium));
+        border-inline-start: var(--line-medium) solid var(--_scenario-status-color, var(--color-black-a10));
       }
 
       .scenario--passed {
-        border-left: 4px solid var(--color-green-500);
+        --_scenario-status-color: var(--status-passed);
       }
 
       .scenario--failed {
-        border-left: 4px solid var(--color-red-500);
+        --_scenario-status-color: var(--status-failed);
       }
 
       .scenario--not_implemented {
-        border-left: 4px solid var(--color-yellow-500);
+        --_scenario-status-color: var(--status-undefined);
       }
 
       .scenario__header {
         margin-bottom: 12px;
       }
 
-      .scenario__title {
-        color: var(--color-blue-500);
-        font-weight: 700;
-        margin: 0 0 8px 0;
-      }
-
       .scenario__tags {
         display: flex;
-        gap: 8px;
-        margin-bottom: 8px;
+        gap: var(--space-xs);
       }
 
       .scenario__description {
-        color: var(--color-gray-600);
-        margin: 0;
-        font-size: 14px;
+        color: var(--color-black-a80);
       }
 
       .scenario__steps {
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: var(--space-xs);
       }
     `
   ];

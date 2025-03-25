@@ -4,6 +4,7 @@ import { Step } from "../models";
 
 import resetCss from "../../shared/styles/reset.css";
 import themeCss from "../../shared/styles/theme.css";
+import typographyCss from "../../shared/styles/typography.css";
 
 @customElement("feature-step")
 export class StepComponent extends LitElement {
@@ -14,10 +15,10 @@ export class StepComponent extends LitElement {
   override render() {
     return html`
       <div class="${this.getStepClass()}">
-        <div class="step__content">
+        <p class="step__content">
           <span class="step__keyword">${this.step.keyword}</span>
           <span class="step__text">${this.step.text}</span>
-        </div>
+        </p>
         ${this.step.table ? html`
           <table>
             <thead>
@@ -50,27 +51,34 @@ export class StepComponent extends LitElement {
   static override styles = [
     resetCss,
     themeCss,
+    typographyCss,
     css`
       .step {
         display: flex;
         flex-direction: column;
         background-color: var(--color-white);
-        padding: 12px;
-        border-radius: 4px;
-        border: 1px solid var(--color-gray-200);
-        margin-bottom: 8px;
+        padding: var(--space-xs) var(--space-sm);
+        border-radius: var(--radius-half);
+        border: var(--line-base) solid var(--color-black-a10);
+      }
+
+      .step--passed,
+      .step--failed,
+      .step--not_implemented {
+        padding-inline-start: calc(var(--space-md) - var(--line-medium));
+        border-inline-start: var(--line-medium) solid var(--_step-status-color, var(--color-black-a10));
       }
 
       .step--passed {
-        border-left: 4px solid var(--color-green-500);
+        --_step-status-color: var(--status-passed);
       }
 
       .step--failed {
-        border-left: 4px solid var(--color-red-500);
+        --_step-status-color: var(--status-failed);
       }
 
       .step--not_implemented {
-        border-left: 4px solid var(--color-yellow-500);
+        --_step-status-color: var(--status-undefined);
       }
 
       .step__content {

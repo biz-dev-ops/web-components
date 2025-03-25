@@ -3,6 +3,7 @@ import { customElement, property } from "lit/decorators.js";
 
 import resetCss from "../../shared/styles/reset.css";
 import themeCss from "../../shared/styles/theme.css";
+import typographyCss from "../../shared/styles/typography.css";
 
 import { ScenarioOutline, Scenario, TestResult } from "../models";
 import "../scenario";
@@ -18,7 +19,9 @@ export class ScenarioOutlineComponent extends LitElement {
 
     return html`
       <div class="${this.getOutlineClass()}">
-        <h3 class="scenario-outline_title">Scenario Outline: ${this.outline.name || ""}</h3>
+        <div class="scenario-outline__header">
+          <h3 class="scenario-outline_title">Scenario Outline: ${this.outline.name || ""}</h3>
+        </div>
         <div class="scenario-outline_scenarios">
           ${expandedScenarios.map(
             (scenario) => html`<feature-scenario .scenario=${scenario}></feature-scenario>`
@@ -60,22 +63,36 @@ export class ScenarioOutlineComponent extends LitElement {
   static override styles = [
     resetCss,
     themeCss,
+    typographyCss,
     css`
       .scenario-outline {
-        display: grid;
-        gap: 16px;
+        background-color: var(--main-surface);
+        border-radius: var(--radius-base);
+        border-left: var(--line-medium) solid var(--_scenario-outline-status-color, transparent);
+        box-shadow: var(--drop-shadow-base);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-md);
+        padding: var(--space-md);
+        padding-inline-start: calc(var(--space-md) - var(--line-medium));
       }
 
       .scenario-outline--passed {
-        border-left: 4px solid var(--color-green-500);
+        --_scenario-outline-status-color: var(--status-passed);
       }
 
       .scenario-outline--failed {
-        border-left: 4px solid var(--color-red-500);
+        --_scenario-outline-status-color: var(--status-failed);
       }
 
       .scenario-outline--not_implemented {
-        border-left: 4px solid var(--color-yellow-500);
+        --_scenario-outline-status-color: var(--status-undefined);
+      }
+
+      .scenario-outline_scenarios {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-md);
       }
     `
   ];

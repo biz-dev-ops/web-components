@@ -3,6 +3,7 @@ import { customElement, property, state } from "lit/decorators.js";
 
 import resetCss from "../shared/styles/reset.css";
 import themeCss from "../shared/styles/theme.css";
+import typographyCss from "../shared/styles/typography.css";
 
 import { Feature, TestResult } from "./models";
 import { FeatureParser } from "./parser";
@@ -25,6 +26,7 @@ export class FeatureViewerComponent extends LitElement {
 
   override render() {
     if (this.error) {
+      // TODO: Is this not a feature with a error modifier? With a classname `feature feature--error`?
       return html`
         <div class="feature__error">
           ${this.error.message}
@@ -40,10 +42,10 @@ export class FeatureViewerComponent extends LitElement {
       <div class="${this.getFeatureClass()}">
         <div class="feature__header">
           <h2 class="feature__title">Feature: ${this.feature.name}</h2>
-          ${this.feature.tags ? html`
-            <div class="feature__tags">
+          ${this.feature.tags?.length ? html`
+            <p class="feature__tags">
               ${this.feature.tags.map((tag) => html`<bdo-badge type="tag">${tag}</bdo-badge>`)}
-            </div>`: null}
+            </p>`: null}
           ${this.feature.description ? html`
             <p class="feature__description">
               ${this.feature.description}
@@ -104,72 +106,44 @@ export class FeatureViewerComponent extends LitElement {
     return [
       resetCss,
       themeCss,
+      typographyCss,
       css`
         .feature {
-          padding: var(--space-md);
-          background-color: #ffffff;
-          border-radius: var(--radius-md);
-          box-shadow: var(--shadow-sm);
-        }
-
-        .feature__header {
-          margin-bottom: var(--space-md);
-        }
-
-        .feature__title {
-          margin: 0;
-          color: var(--color-brand);
-        }
-
-        .feature__description {
-          margin: var(--space-sm) 0;
-          color: var(--color-text);
-        }
-
-        .scenarios-container {
-          display: grid;
+          background-color: var(--main-surface);
+          border-radius: var(--radius-base);
+          border-left: var(--line-medium) solid var(--_feature-status-color, transparent);
+          box-shadow: var(--drop-shadow-base);
+          display: flex;
+          flex-direction: column;
           gap: var(--space-md);
-        }
-
-        .feature__tags {
-          margin-top: var(--space-xs);
+          padding: var(--space-md);
+          padding-inline-start: calc(var(--space-md) - var(--line-medium));
         }
 
         .feature--passed {
-          border-left: 4px solid var(--color-green-500);
+          --_feature-status-color: var(--status-passed);
         }
 
         .feature--failed {
-          border-left: 4px solid var(--color-red-500);
+          --_feature-status-color: var(--status-failed);
         }
 
         .feature--not_implemented {
-          border-left: 4px solid var(--color-yellow-500);
+          --_feature-status-color: var(--status-undefined);
         }
 
         .feature__content {
           display: flex;
           flex-direction: column;
-          gap: 24px;
+          gap: var(--space-md);
         }
 
         .feature__error {
-          color: var(--color-red-500);
-          padding: 16px;
-          background-color: var(--color-red-50);
-          border-radius: 4px;
-          border: 1px solid var(--color-red-200);
-        }
-
-        .feature__result-link {
-          display: inline-block;
-          margin-top: 16px;
-          color: var(--color-blue-500);
-          text-decoration: none;
-        }
-
-        .feature__result-link:hover {
-          text-decoration: underline;
+          color: var(--color-error);
+          padding: var(--space-sm);
+          background-color: var(--color-error-100);
+          border-radius: var(--radius-half);
+          border: var(--line-base) solid var(--color-error);
         }
       `,
     ];

@@ -5,7 +5,7 @@ export default css`
     /* Default theme values */
     --rgb-brand: 0 0 0;
     --rgb-brand-secondary: var(--rgb-brand);
-    --rgb-text: var(--rgb-brand);
+    --rgb-text: 51 51 51;
     --rgb-heading: var(--rgb-brand-secondary);
 
     --color-brand-base: rgb(var(--rgb-brand));
@@ -97,8 +97,8 @@ export default css`
     --button-background-active: var(--color-brand-a40);
 
     /* Shadow */
-    --drop-shadow-base: 0 .125rem 1.25rem rgba(0 0 0 5%);
-    --drop-shadow-level2: 0 .25rem 1rem rgba(0 0 0 10%);
+    --drop-shadow-base: 0 .125rem 1.25rem rgba(0 0 0 / 5%);
+    --drop-shadow-level2: 0 .25rem 1rem rgba(0 0 0 / 10%);
 
     /* Sizing */
     --space-xl: 4.5rem;

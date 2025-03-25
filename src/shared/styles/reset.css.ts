@@ -3,6 +3,7 @@ import { css } from "lit";
 export default css`
     :host {
         all: unset;
+        color: var(--text-color-base);
         font-family: var(--font-family-base);
         font-size: var(--font-size-base);
         display: inline-block;

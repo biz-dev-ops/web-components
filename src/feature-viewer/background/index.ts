@@ -3,6 +3,7 @@ import { customElement, property } from "lit/decorators.js";
 
 import resetCss from "../../shared/styles/reset.css";
 import themeCss from "../../shared/styles/theme.css";
+import typographyCss from "../../shared/styles/typography.css";
 
 import { Background, TestResult } from "../models";
 import "../step";
@@ -17,37 +18,38 @@ export class BackgroundComponent extends LitElement {
   static override styles = [
     resetCss,
     themeCss,
+    typographyCss,
     css`
       .background {
-        background-color: var(--color-gray-100);
-        padding: 16px;
-        border-radius: 4px;
-        border: 1px solid var(--color-gray-200);
-        margin-bottom: 16px;
+        background-color: var(--color-black-a05);
+        padding: calc(var(--space-md) - var(--line-base));
+        border-radius: var(--radius-base);
+        border: var(--line-base) solid var(--color-black-a10);
+      }
+
+      .background--passed,
+      .background--failed,
+      .background--not_implemented {
+        padding-inline-start: calc(var(--space-md) - var(--line-medium));
+        border-inline-start: var(--line-medium) solid var(--_background-status-color, var(--color-black-a10));
       }
 
       .background--passed {
-        border-left: 4px solid var(--color-green-500);
+        --_background-status-color: var(--status-passed);
       }
 
       .background--failed {
-        border-left: 4px solid var(--color-red-500);
+        --_background-status-color: var(--status-failed);
       }
 
       .background--not_implemented {
-        border-left: 4px solid var(--color-yellow-500);
-      }
-
-      .background__title {
-        color: var(--color-blue-500);
-        font-weight: 700;
-        margin: 0 0 12px 0;
+        --_background-status-color: var(--status-undefined);
       }
 
       .background__steps {
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: var(--space-xs);
       }
     `
   ];
