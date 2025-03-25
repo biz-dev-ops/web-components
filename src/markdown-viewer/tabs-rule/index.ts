@@ -17,7 +17,7 @@ export default function tabsRulePlugin(md: MarkdownIt, options?: tabsRulePluginO
     tabIndex += 1;
     tabPanelIndex = 0;
 
-    return `<bdo-tabs label="Example Tabs">`;
+    return `<bdo-tabs selectedIndex="0">`;
   }
 
   md.renderer.rules.list_item_open = function (tokens: Token[], idx: number, options: Options, _env: any, self: Renderer): string {
