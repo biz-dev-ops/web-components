@@ -6,16 +6,18 @@ export const tag = "bdo-tabs";
 @customElement(tag)
 export class BdoTabs extends LitElement {
   @property({ type: Number }) selectedIndex = 0;
+  @property({ type: String }) label!: string;
   @state() private _tabTitles: string[] = [];
   @queryAssignedElements({ selector: "bdo-tab" }) private _tabs!: HTMLElement[];
 
   override render() {
     return html`
-      <div class="tabs-header" role="tablist" aria-label="Tab Panel">
+      <div class="tabs--list" role="tablist" .ariaLabel="${this.label}">
         ${this._tabTitles.map(
           (title, index) => html`
-            <button
-              class="tab-title ${index === this.selectedIndex ? "selected" : ""}"
+            <a
+              href="#tabpanel-${index}"
+              class="tab ${index === this.selectedIndex ? "selected" : ""}"
               @click=${() => this._handleTabClick(index)}
               role="tab"
               aria-selected="${index === this.selectedIndex ? "true" : "false"}"
@@ -23,11 +25,11 @@ export class BdoTabs extends LitElement {
               id="tab-${index}"
             >
               ${title}
-            </button>
+            </a>
           `
         )}
       </div>
-      <div class="tabs-content">
+      <div class="tabs--panels">
         <slot @slotchange=${this._updateTabTitles} role="presentation"></slot>
       </div>
     `;
@@ -68,38 +70,47 @@ export class BdoTabs extends LitElement {
 
   static override get styles() {
     return css`
-        :host {
+      :host {
         display: block;
-        }
-
-        .tabs-header {
+      }
+      
+      .tabs--list {
+        background-color: var(--color-white);
         display: flex;
-        border-bottom: 1px solid #ccc;
-        }
+        flex-wrap: wrap;
+        gap: var(--space-xs) var(--space-sm);
+        justify-content: flex-start;
+        list-style: none;
+        padding-left: 0;
+        max-width: none;
+      }
 
-        .tab-title {
-        padding: 10px 15px;
-        cursor: pointer;
-        border: none;
-        background: none;
-        border-bottom: 2px solid transparent;
-        }
-
-        .tab-title.selected {
-        border-bottom: 2px solid blue;
-        }
-
-        .tabs-content {
-        padding: 15px;
-        }
-
-        ::slotted(bdo-tab) {
-        display: none;
-        }
-
-        ::slotted(bdo-tab.selected) {
+      .tab {
+        border-bottom: var(--line-thin) solid var(--color-black-a10);
+        color: currentcolor;
         display: block;
-        }
+        padding: var(--space-xs) var(--space-sm);
+        text-decoration: none;
+      }
+
+      .tab:hover,
+      .tab:focus {
+        border-bottom-color: var(--link-text-color);
+      }
+
+      .tab[aria-selected="true"] {
+        border-bottom-color: currentcolor;
+        color: var(--link-text-color);
+        font-weight: 600;
+      }
+      
+      ::slotted(bdo-tab) {
+        display: none;
+      }
+
+      ::slotted(bdo-tab[aria-hidden="false"]) {
+        display: block;
+      }
     `;
   };
 }

@@ -12,7 +12,8 @@ export class BdoTab extends LitElement {
   static override get styles() {
     return css`
       :host {
-          display: block;
+        display: block;
+        padding-block: var(--space-md);
       }
     `;
   };
