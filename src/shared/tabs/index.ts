@@ -1,5 +1,6 @@
 import { LitElement, html, css, PropertyValueMap } from "lit";
 import { customElement, property, state, queryAssignedElements } from "lit/decorators.js";
+import "./tab";
 
 export const tag = "bdo-tabs";
 
