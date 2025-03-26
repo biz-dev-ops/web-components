@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Tabs component</title>
+  </head>
+
+  <body>
+    <main>
+      <h1>Tabs component</h1>
+
+      <bdo-tabs label="Example tabs">
+        <bdo-tab title="Tab 1">
+            <p>Tab 1 content</p>
+        </bdo-tab>
+        <bdo-tab title="Tab 2">
+            <p>Tab 2 content</p>
+        </bdo-tab>
+        <bdo-tab title="Tab 3">
+            <p>Tab 3 content</p>
+        </bdo-tab>
+      </bdo-tabs>
+
+      <h2>Run tests</h2>
+      <code>
+        npm run test -- 'bdo-tabs'
+      </code>
+    </main>
+
+    <script type="module">
+      import "../../../src/shared/tabs/index.ts";
+    </script>
+  </body>
+</html>
