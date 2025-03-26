@@ -3,7 +3,6 @@ import { customElement, property } from "lit/decorators.js";
 import Viewer from "dmn-js";
 
 import resetCss from "../shared/styles/reset.css";
-import themeCss from "../shared/styles/theme.css";
 import ViewerSharedCss from "dmn-js/dist/assets/dmn-js-shared.css?inline";
 import ViewerDrdCss from "dmn-js/dist/assets/dmn-js-drd.css?inline";
 import ViewerDecisionTableCss from "dmn-js/dist/assets/dmn-js-decision-table.css?inline";
@@ -70,7 +69,6 @@ export class DMNViewer extends LitElement {
   static override get styles() {
     return [
       resetCss,
-      themeCss,
       css`
         :host {
           display: block;

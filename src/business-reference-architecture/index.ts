@@ -2,7 +2,6 @@ import { css, html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
 import resetCss from "../shared/styles/reset.css";
-import themeCss from "../shared/styles/theme.css";
 import { Section } from "./models";
 import "./architecture-section";
 import { FetchError, fetchYamlAndBundleAs } from "../shared/fetch";
@@ -62,7 +61,6 @@ export class BusinessReferenceArchitectureComponent extends LitElement {
   static override get styles() {
     return [
       resetCss,
-      themeCss,
       css`
         :host {
           margin-top: var(--space-sm);
