@@ -139,7 +139,9 @@ export class BPMNViewer extends LitElement {
   private _setHeight() {
     const dimensions = this._viewer.get("canvas").viewbox().inner;
     const container = this.shadowRoot?.querySelector("#bpmn-container") as HTMLElement;
-    container.style.height = `${container.offsetWidth * (dimensions.height / dimensions.width)}px`
+    container.style.aspectRatio = `${dimensions.width} / ${dimensions.height}`;
+    const maxHeightPadding = 10;
+    container.style.maxHeight = `${dimensions.height + maxHeightPadding}px`;
     this.zoomReset();
   }
 
