@@ -140,8 +140,8 @@ export class BPMNViewer extends LitElement {
     const dimensions = this._viewer.get("canvas").viewbox().inner;
     const container = this.shadowRoot?.querySelector("#bpmn-container") as HTMLElement;
     container.style.aspectRatio = `${dimensions.width} / ${dimensions.height}`;
-    const maxHeightPadding = 10;
-    container.style.maxHeight = `${dimensions.height + maxHeightPadding}px`;
+    const lineTweak = 2; // fix for line thickness
+    container.style.maxHeight = `${dimensions.height + lineTweak}px`;
     this.zoomReset();
   }
 
