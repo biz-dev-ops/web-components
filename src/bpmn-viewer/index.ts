@@ -25,7 +25,7 @@ export const tag: string = "bpmn-viewer";
 
 @customElement(tag)
 export class BPMNViewer extends LitElement {
-
+  private _initialized = false;
   private _viewer!: any;
 
   @property({ attribute: "src" })
@@ -48,22 +48,19 @@ export class BPMNViewer extends LitElement {
   }
 
   override async firstUpdated() {
-    if (this._viewer) {
-      this._viewer.destroy();
-    }
-
-    this._viewer = new Viewer({
-      container: this.shadowRoot?.querySelector(
-        "#bpmn-container"
-      ) as HTMLElement,
-      moddleExtensions: {
-        bizdevops,
-      },
-      additionalModules: this.enableSimulator ? [TokenSimulationModule] : [],
-    });
+    this._initViewer();
   }
 
   override async updated(changedProperties) {
+    if(!this._initialized) {
+      this._initialized = false;
+      return;
+    }
+
+    if (changedProperties.has("enableSimulator")) {
+      this._initViewer();
+    }
+
     if (changedProperties.has("src")) {
       const response = await fetch(this.src);
       if (!response.ok) {
@@ -80,13 +77,38 @@ export class BPMNViewer extends LitElement {
       this._updateDiagram(this.xml);
     }
 
-    if (changedProperties.has("enableSimulator")) {
-      this.firstUpdated();
-    }
-
     if (changedProperties.has("disableInteraction")) {
       this._viewer.get("zoomScroll").toggle(this.disableInteraction);
     }
+  }
+
+  private _initViewer() {
+    if (this._viewer) {
+      this._viewer.get("eventBus").off("root.set");
+      this._viewer.destroy();
+    }
+
+    this._viewer = new Viewer({
+      container: this.shadowRoot?.querySelector("#bpmn-container") as HTMLElement,
+      moddleExtensions: {
+        bizdevops,
+      },
+      additionalModules: this.enableSimulator ? [TokenSimulationModule] : [],
+    });
+
+    this._viewer.get("eventBus").on("root.set", () => {
+      this._setHeight();
+    });
+
+    if(this.xml) {
+      this._updateDiagram(this.xml);
+    }
+
+    if(this.disableInteraction) {
+      this._viewer.get("zoomScroll").toggle(this.disableInteraction);
+    }
+
+    this._initialized = true;
   }
 
   private async _updateDiagram(xml: string) {
@@ -108,12 +130,17 @@ export class BPMNViewer extends LitElement {
       if (this.showProcess) {
         this._expandSubProcess();
       }
-
-      this.zoomReset();
     }
     catch (err) {
       console.log("something went wrong while importing bpmn:", err);
     }
+  }
+
+  private _setHeight() {
+    const dimensions = this._viewer.get("canvas").viewbox().inner;
+    const container = this.shadowRoot?.querySelector("#bpmn-container") as HTMLElement;
+    container.style.height = `${container.offsetWidth * (dimensions.height / dimensions.width)}px`
+    this.zoomReset();
   }
 
   private _expandSubProcess() {
@@ -226,6 +253,15 @@ export class BPMNViewer extends LitElement {
   }
 
   public zoomReset() {
+    const currentViewbox = this._viewer.get("canvas").viewbox()
+
+    this._viewer.get("canvas").viewbox({
+      x: 0,
+      y: 0,
+      width: currentViewbox.width,
+      height: currentViewbox.height
+    })
+
     this._viewer.get("canvas").zoom("fit-viewport", "auto");
   }
 }
