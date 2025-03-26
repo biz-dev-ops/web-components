@@ -4,7 +4,7 @@ const alertCss = css`
     :host {
         --_alert-color: var(--alert-color, var(--color-info));
         --_alert-backgound-color: var(--alert-backgound-color, var(--color-info-100));
-        
+
         display: block;
     }
 

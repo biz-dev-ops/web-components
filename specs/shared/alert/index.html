@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Alert component</title>
+  </head>
+
+  <body>
+    <main>
+      <h1>Alert component</h1>
+
+      <bdo-alert type="info">
+        <h3>Just a heads-up!</h3>
+        <p>New content has landed.</p>
+        <p>Check it out when you get a chance.</p>
+      </bdo-alert>
+
+      <bdo-alert type="warning">
+        <h3>Heads-up!</h3>
+        <p>Proceed with caution; potential issues ahead.</p>
+        <p>Double-check before continuing.</p>
+      </bdo-alert>
+
+      <bdo-alert type="error">
+        <h3>Oops! Something went wrong.</h3>
+        <p>Please try again later.</p>
+        <p>If the issue persists, contact support.</p>
+      </bdo-alert>
+
+      <h2>Run tests</h2>
+      <code>
+        npm run test -- 'bdo-alert'
+      </code>
+    </main>
+
+    <script type="module">
+      import "../../../src/shared/alert/index.ts";
+    </script>
+  </body>
+</html>
