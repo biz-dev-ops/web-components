@@ -15,20 +15,27 @@ export default css`
         margin-inline: 0;
         padding-block-end: var(--space-md);
     }
+
     :host(:where([heading-level="3"], [heading-level="4"])) {
         border-inline: var(--line-base) solid var(--color-brand-a20);
+        border-block: none;
         gap: var(--space-sm);
-        padding: var(--space-sm);
+        padding-inline: var(--space-sm);
+        padding-block-start: var(--space-xs);
+        padding-block-end: 0;
     }
 
     :host(:where([heading-level="3"], [heading-level="4"]):first-of-type) {
         border-block-start: var(--line-base) solid var(--color-brand-a20);
         border-radius: var(--radius-base) var(--radius-base) 0 0;
+        padding-block-start: var(--space-sm);
     }
 
     :host(:where([heading-level="3"], [heading-level="4"]):last-of-type) {
         border-block-end: var(--line-base) solid var(--color-brand-a20);
         border-radius: 0 0 var(--radius-base) var(--radius-base);
+        padding-block-end: var(--space-sm);
+
     }
     :host(:where([heading-level="3"], [heading-level="4"]):first-of-type:last-of-type) {
         border-radius: var(--radius-base);
@@ -38,10 +45,31 @@ export default css`
         background-color: var(--color-brand-a10);
         border-radius: var(--radius-half);
         color: var(--link-text-color);
+        cursor: pointer;
         max-width: none;
         padding: var(--space-sm);
         padding-inline-end: var(--space-lg);
         position: relative;
+    }
+
+    ::slotted(:where(h3, h4))::after {
+        border-color: var(--text-color-base);
+        border-style: solid;
+        border-width: var(--line-base) var(--line-base) 0 0;
+        content: "";
+        display: block;
+        height: var(--space-xs);
+        inset-block-start: var(--space-md);
+        inset-inline-end: calc(.25rem + var(--space-md));
+        position: absolute;
+        transform: rotate(135deg);
+        transform-origin: 60% 40%;
+        transition: transform var(--duration-base);
+        width: var(--space-xs);
+    }
+
+    ::slotted(:where(h3, h4):where([aria-expanded="false"]))::after {
+        transform: rotate(-45deg);
     }
 
     :host(:where([heading-level="4"])) {
