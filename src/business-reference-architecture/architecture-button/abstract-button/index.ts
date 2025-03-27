@@ -2,8 +2,7 @@ import { html, css, LitElement, TemplateResult, CSSResult } from "lit";
 import { property } from "lit/decorators.js";
 import { Button } from "../../models";
 
-import styles from "../../../shared/styles/reset.css";
-
+import resetCss from "../../../shared/styles/reset.css";
 import "../../../shared/icon";
 
 export abstract class AbstractArchitectureButton extends LitElement {
@@ -67,7 +66,7 @@ export abstract class AbstractArchitectureButton extends LitElement {
 
     static override get styles() : CSSResult[] {
         return [
-            styles,
+            resetCss,
             css`
                 :host > a, :host > span {
                     display: flex;
