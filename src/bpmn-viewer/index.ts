@@ -2,7 +2,6 @@ import { css, html, LitElement, unsafeCSS } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
 import resetCss from "../shared/styles/reset.css";
-import themeCss from "../shared/styles/theme.css";
 import viewerDiagramJsCss from "bpmn-js/dist/assets/diagram-js.css?inline";
 import viewerBpmnJsCss from "bpmn-js/dist/assets/bpmn-js.css?inline";
 import simulatorCss from "bpmn-js-token-simulation/assets/css/bpmn-js-token-simulation.css?inline";
@@ -185,7 +184,6 @@ export class BPMNViewer extends LitElement {
   static override get styles() {
     return [
       resetCss,
-      themeCss,
       css`
         :host {
           display: block;

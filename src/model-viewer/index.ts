@@ -1,7 +1,6 @@
 import { css, html, LitElement, TemplateResult } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import resetCss from "../shared/styles/reset.css";
-import themeCss from "../shared/styles/theme.css";
 import { ItemSelected, ModelItem, PathChanged } from "./models";
 import { ModelItemBuilder } from "./modules/model-item-builder";
 import "./components/model-viewer-path";
@@ -129,7 +128,6 @@ export class ModelViewer extends LitElement {
   static override get styles() {
     return [
       resetCss,
-      themeCss,
       css`
         :host {
           border: var(--line-base) solid var(--color-brand-a40);
