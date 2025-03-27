@@ -5,7 +5,7 @@ import { AbstractArchitectureButton } from "../abstract-button";
 
 @customElement("inverted-architecture-button")
 export class InvertedArchitectureButton extends AbstractArchitectureButton {
-    
+
     override iconTemplate() : TemplateResult {
         return html`<bdo-icon .icon="${this.button.icon}" inverted></bdo-icon>`;
     }
