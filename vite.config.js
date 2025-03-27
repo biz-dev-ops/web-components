@@ -8,10 +8,10 @@ export default defineConfig({
 	plugins: [
 		nodePolyfills({ globals: { Buffer: true } }),
 		{
-			name: 'inline-fonts',
-			enforce: 'pre',
+			name: "inline-fonts",
+			enforce: "pre",
 			transform: async (code, id) => {
-				if (id.endsWith('.css?inline')) {
+				if (id.endsWith(".css?inline")) {
 					const basePath = path.dirname(id);
 					const css = inlineFontUrls(code, basePath);
 
@@ -21,6 +21,27 @@ export default defineConfig({
 					};
 				}
 			},
+		}, {
+			name: "serve-theme-css",
+			configureServer(server) {
+				server.middlewares.use((req, res, next) => {
+					if (req.url === "/theme.css") {
+						const themePath = path.resolve(__dirname, "src/theme.css");
+						try {
+							const content = fs.readFileSync(themePath, "utf-8");
+							res.setHeader("Content-Type", "text/css");
+							res.end(content);
+						}
+						catch (error) {
+							console.error("Error serving theme.css:", error);
+							next(error);
+						}
+					}
+					else {
+						next();
+					}
+				});
+			}
 		}
 	],
 	build: {
