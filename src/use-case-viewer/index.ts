@@ -2,7 +2,6 @@ import { CSSResult, CSSResultArray, LitElement, TemplateResult, html } from "lit
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { property } from "lit/decorators.js";
 import resetCss from "../shared/styles/reset.css";
-import themeCss from "../shared/styles/theme.css";
 import useCaseViewerCss from "./use-case-viewer.css";
 import "../shared/badge";
 import "../shared/expansion-panel";
@@ -127,6 +126,9 @@ export abstract class UseCaseViewer<T extends UseCase> extends LitElement {
     }
 
   static override get styles(): CSSResult | CSSResultArray {
-    return [resetCss, themeCss, useCaseViewerCss];
+    return [
+      resetCss, 
+      useCaseViewerCss
+    ];
   }
 }
