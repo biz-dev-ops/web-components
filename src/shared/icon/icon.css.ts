@@ -2,9 +2,8 @@ import { css } from "lit";
 
 const styles = css`
   :host {
-    display: grid;
-    place-content: center;
-    overflow: hidden;
+    display: flex;
+    line-height: 1;
   }
 
   .material-symbols {

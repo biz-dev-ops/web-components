@@ -2,7 +2,6 @@ import { html, css, LitElement } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 
 import resetCss from "../shared/styles/reset.css";
-import themeCss from "../shared/styles/theme.css";
 import typographyCss from "../shared/styles/typography.css";
 
 import { Feature, TestResult } from "./models";
@@ -105,7 +104,6 @@ export class FeatureViewerComponent extends LitElement {
   static override get styles() {
     return [
       resetCss,
-      themeCss,
       typographyCss,
       css`
         .feature {

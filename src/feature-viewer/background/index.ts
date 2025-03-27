@@ -2,10 +2,9 @@ import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
 import resetCss from "../../shared/styles/reset.css";
-import themeCss from "../../shared/styles/theme.css";
 import typographyCss from "../../shared/styles/typography.css";
 
-import { Background, TestResult } from "../models";
+import { Background } from "../models";
 import "../step";
 
 export const tag = "feature-background";
@@ -17,7 +16,6 @@ export class BackgroundComponent extends LitElement {
 
   static override styles = [
     resetCss,
-    themeCss,
     typographyCss,
     css`
       .background {

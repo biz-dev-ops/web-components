@@ -3,7 +3,6 @@ import { customElement, property } from "lit/decorators.js";
 import { Step } from "../models";
 
 import resetCss from "../../shared/styles/reset.css";
-import themeCss from "../../shared/styles/theme.css";
 import typographyCss from "../../shared/styles/typography.css";
 
 @customElement("feature-step")
@@ -50,7 +49,6 @@ export class StepComponent extends LitElement {
 
   static override styles = [
     resetCss,
-    themeCss,
     typographyCss,
     css`
       .step {

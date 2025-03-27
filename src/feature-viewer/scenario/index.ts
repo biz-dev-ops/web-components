@@ -2,7 +2,6 @@ import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
 import resetCss from "../../shared/styles/reset.css";
-import themeCss from "../../shared/styles/theme.css";
 import typographyCss from "../../shared/styles/typography.css";
 
 import { Scenario } from "../models";
@@ -51,7 +50,6 @@ export class ScenarioComponent extends LitElement {
 
   static override styles = [
     resetCss,
-    themeCss,
     typographyCss,
     css`
       .scenario {
