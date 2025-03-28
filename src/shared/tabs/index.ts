@@ -8,22 +8,22 @@ export const tag = "bdo-tabs";
 export class BdoTabs extends LitElement {
   @property({ type: Number }) selectedIndex = 0;
   @property({ type: String }) label!: string;
-  @state() private _tabTitles: string[] = [];
+  @state() private _tabsData: {title, id}[] = [];
   @queryAssignedElements({ selector: "bdo-tab" }) private _tabs!: HTMLElement[];
 
   override render() {
     return html`
       <div class="tabs--list" role="tablist" .ariaLabel="${this.label}">
-        ${this._tabTitles.map(
-          (title, index) => html`
+        ${this._tabsData.map(
+          ({title, id}, index) => html`
             <a
-              href="#tabpanel-${index}"
+              href="#tabpanel-${id}"
               class="tab ${index === this.selectedIndex ? "selected" : ""}"
-              @click=${() => this._handleTabClick(index)}
+              @click=${(event) => this._handleTabClick(event, index)}
               role="tab"
               aria-selected="${index === this.selectedIndex ? "true" : "false"}"
-              aria-controls="tabpanel-${index}"
-              id="tab-${index}"
+              aria-controls="tabpanel-${id}"
+              id="tab-${id}"
             >
               ${title}
             </a>
@@ -31,13 +31,13 @@ export class BdoTabs extends LitElement {
         )}
       </div>
       <div class="tabs--panels">
-        <slot @slotchange=${this._updateTabTitles} role="presentation"></slot>
+        <slot @slotchange=${this._updateTabData} role="presentation"></slot>
       </div>
     `;
   }
 
   override firstUpdated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
-    this._updateTabTitles();
+    this._updateTabData();
     this._updateSelectedTab();
   }
 
@@ -47,8 +47,10 @@ export class BdoTabs extends LitElement {
     }
   }
 
-  private _updateTabTitles() {
-    this._tabTitles = this._tabs.map((tab) => tab.getAttribute("title") || "Tab");
+  private _updateTabData() {
+    this._tabsData = this._tabs.map((tab) => {
+      return { title: tab.getAttribute("title"), id: tab.id }
+    });
   }
 
   private _updateSelectedTab() {
@@ -64,7 +66,8 @@ export class BdoTabs extends LitElement {
     });
   }
 
-  private _handleTabClick(index: number) {
+  private _handleTabClick(event: Event, index: number) {
+    event.preventDefault();
     this.selectedIndex = index;
     this.dispatchEvent(new CustomEvent("tab-selected", { detail: { index } }));
   }

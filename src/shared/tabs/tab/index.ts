@@ -1,12 +1,23 @@
 import { LitElement, html, css } from "lit";
-import { customElement } from "lit/decorators.js";
+import { customElement, property } from "lit/decorators.js";
 
 @customElement("bdo-tab")
 export class BdoTab extends LitElement {
+  @property({ type: String }) override title!: string;
+  @property() override id: string = "";
+  
+  override updated() {
+    if (!this.title) {
+      throw new Error('Title is required but was not provided.');
+    }
+    
+    if (!this.id) {
+      this.id = this.title.toLowerCase().replace(/\s/g, "-");
+    }
+  }
 
   override render() {
-    const tabIndex = Array.from(this.parentElement?.querySelectorAll("bdo-tab") || []).indexOf(this);
-    return html`<div role="tabpanel" aria-labelledby="tab-${tabIndex}" id="tabpanel-${tabIndex}"><slot></slot></div>`;
+    return html`<div role="tabpanel" aria-labelledby="tab-${this.id}" id="tabpanel-${this.id}"><slot></slot></div>`;
   }
 
   static override get styles() {
