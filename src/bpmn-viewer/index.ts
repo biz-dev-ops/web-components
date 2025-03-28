@@ -137,12 +137,42 @@ export class BPMNViewer extends LitElement {
   }
 
   private _setHeight() {
-    const dimensions = this._viewer.get("canvas").viewbox().inner;
+    const minMax = _getMinMaxHeight(this);
+    const extraHeight = _calculateExtraHeigt(this);
+    const viewbox = this._viewer.get("canvas").viewbox();
     const container = this.shadowRoot?.querySelector("#bpmn-container") as HTMLElement;
-    container.style.aspectRatio = `${dimensions.width} / ${dimensions.height}`;
-    const lineTweak = 2; // fix for line thickness
-    container.style.maxHeight = `${dimensions.height + lineTweak}px`;
+
+    container.style.aspectRatio = `${viewbox.inner.width} / ${viewbox.inner.height}`;
+    container.style.minHeight = `${minMax.minHeight}px`;
+    container.style.maxHeight = `${Math.min(viewbox.inner.height + extraHeight, minMax.maxHeight)}px`;
+
     this.zoomReset();
+
+    function _calculateExtraHeigt(el) {
+      const breadcrumbs = el.shadowRoot?.querySelector(".bjs-breadcrumbs") as HTMLElement;
+      const { x, height } = breadcrumbs.getBoundingClientRect();
+      const lineTweak = Math.max(10, x + height) * 2;
+      return lineTweak;
+    }
+
+    function _getMinMaxHeight(element) {
+      const style = window.getComputedStyle(element);
+      const minHeightRaw = style.minHeight;
+      const maxHeightRaw = style.maxHeight;
+
+      const parseValue = (value) => {
+        if (value === 'none' || value === 'auto') {
+          return null;
+        }
+        const parsed = parseFloat(value);
+        return isNaN(parsed) ? null : parsed;
+      };
+
+      return {
+        minHeight: parseValue(minHeightRaw) ?? 0,
+        maxHeight: parseValue(maxHeightRaw) ?? Number.MAX_SAFE_INTEGER,
+      };
+    }
   }
 
   private _expandSubProcess() {
@@ -222,6 +252,10 @@ export class BPMNViewer extends LitElement {
         #bpmn-container {
           width: 100%;
           height: 100%;
+        }
+        .bjs-breadcrumbs {
+          top: 0px!important;
+          left:0px!important;
         }
         .error {
           border: 3px solid red;
