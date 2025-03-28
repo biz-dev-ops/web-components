@@ -77,7 +77,7 @@ export class BdoTabs extends LitElement {
       :host {
         display: block;
       }
-      
+
       .tabs--list {
         background-color: var(--color-white);
         display: flex;
@@ -107,7 +107,7 @@ export class BdoTabs extends LitElement {
         color: var(--link-text-color);
         font-weight: 600;
       }
-      
+
       ::slotted(bdo-tab) {
         display: none;
       }
