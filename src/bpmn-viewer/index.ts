@@ -264,15 +264,9 @@ export class BPMNViewer extends LitElement {
             display: none;
         }
       `,
-      css`
-        ${unsafeCSS(viewerDiagramJsCss)}
-      `,
-      css`
-        ${unsafeCSS(viewerBpmnJsCss)}
-      `,
-      css`
-        ${unsafeCSS(simulatorCss)}
-      `,
+      css`${unsafeCSS(viewerDiagramJsCss)}`,
+      css`${unsafeCSS(viewerBpmnJsCss)}`,
+      css`${unsafeCSS(simulatorCss)}`,
     ];
   }
 
