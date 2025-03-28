@@ -9,7 +9,7 @@ import { appendFontFaceDefinitionToDom } from "../util";
 export class Icon extends LitElement {
   @property()
   icon!: string | undefined;
-  
+
   @property({ type: String, attribute: "icon-align" })
   align: "start" | "center" | "end" = "end";
   @property({ type: String, attribute: "icon-justify" })
