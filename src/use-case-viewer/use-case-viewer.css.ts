@@ -12,9 +12,9 @@ export default css`
     }
 
     model-viewer {
-        --color-brand-a10: var(--use-case-color-200);
-        --color-brand-a40: var(--use-case-color-500);
-        --color-brand-base: var(--use-case-color-800);
+        --model-viewer-color-a10: var(--use-case-color-200);
+        --model-viewer-color-a40: var(--use-case-color-500);
+        --model-viewer-color-base: var(--use-case-color-800);
     }
 
     header {

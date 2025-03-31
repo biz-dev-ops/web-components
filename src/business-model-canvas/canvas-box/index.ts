@@ -1,7 +1,8 @@
 import { css, html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
-import styles from "../../shared/styles/reset.css";
+import resetCss from "../../shared/styles/reset.css";
+import typographyCss from "../../shared/styles/typography.css";
 import { ModelItem } from "../models";
 
 import "../canvas-box-collection";
@@ -30,25 +31,17 @@ export class CanvasBox extends LitElement {
 
   static override get styles() {
     return [
-      styles,
+      resetCss,
+      typographyCss,
       css`
-        h3,
-        bdo-icon {
-          color: var(--text-color-heading);
-        }
-
         h3 {
           display: flex;
           justify-content: space-between;
-          font-weight: 700;
-          font-size: 1em;
-          margin: 0;
-          font-family: var(--font-family-heading);
-          line-height: var(--line-height-heading);
+          font-size: var(--font-size-base);
         }
 
         bdo-icon {
-          font-size: 1.4rem;
+          font-size: var(--space-md);
           font-weight: 400;
         }
       `,
