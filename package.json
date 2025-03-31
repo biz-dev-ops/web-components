@@ -31,7 +31,9 @@
     "build": "vite build --emptyOutDir",
     "develop": "vite dev",
     "dev": "npm run develop",
-    "test": "npx playwright test -c playwright-ct.config.ts"
+    "test": "npx playwright test -c playwright-ct.config.ts",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^11.9.3",
@@ -45,13 +47,21 @@
     "yaml": "^2.7.0"
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "^3.2.6",
     "@sand4rt/experimental-ct-web": "^1.51.0",
+    "@storybook/addon-essentials": "^8.6.11",
+    "@storybook/blocks": "^8.6.11",
+    "@storybook/experimental-addon-test": "^8.6.11",
+    "@storybook/test": "^8.6.11",
+    "@storybook/web-components": "^8.6.11",
+    "@storybook/web-components-vite": "^8.6.11",
     "@types/markdown-it": "^14.1.2",
     "@types/mermaid": "^9.1.0",
     "@types/node": "^22.13.10",
     "autoprefixer": "^10.4.21",
     "glob": "^11.0.1",
     "msw": "^2.7.3",
+    "storybook": "^8.6.11",
     "terser": "^5.39.0",
     "typescript": "^5.8.2",
     "vite": "^6.2.1",
