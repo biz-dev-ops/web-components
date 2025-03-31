@@ -32,7 +32,19 @@ export class BdoHeadingContainer extends LitElement {
         const headerNodes = headerSlot.assignedNodes({ flatten: true });
         this.heading = headerNodes.find(node => node.nodeType === Node.ELEMENT_NODE && ((node as HTMLElement).tagName === "H3" || (node as HTMLElement).tagName === "H4")) as HTMLElement | undefined;
         this.content = this.shadowRoot?.querySelector('.content') as HTMLSlotElement;
+        
+        // Add interaction handling to heading
+        if (this.headingLevel > 2 && this.heading) {
+            this.heading.tabIndex = 0;
+            this.heading.addEventListener('click', (event) => this.handleHeaderClick());
+            this.heading.addEventListener('keydown', (event: KeyboardEvent) => {
+                if (event.key === 'Enter') {
+                    this.handleHeaderClick();
+                }
+            });
+        }
 
+        // Set initial aria-expanded state
         if (this.headingLevel >= 3) {
             this.toggleExpanded(false);
         }
@@ -41,7 +53,7 @@ export class BdoHeadingContainer extends LitElement {
     override render() {
         return html`
             <div class="header">
-                <slot name="header" @click="${this.headingLevel >= 3 ? this.handleHeaderClick : null}"></slot>
+                <slot name="header"></slot>
             </div>
             <div class="content">
                 <slot></slot>
