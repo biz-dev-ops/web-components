@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <title>Heading container component</title>
-    <link rel="stylesheet" href="../theme.css" />
+    <link rel="stylesheet" href="../../theme.css" />
   </head>
 
   <body>
@@ -12,47 +12,47 @@
     </header>
 
     <main>
-      <bdo-heading-container heading-level="1">
+      <bdo-heading-container>
         <h1 slot="header">Heading level 1</h1>
 
         <p>Content heading level 1</p>
 
-        <bdo-heading-container heading-level="2">
+        <bdo-heading-container>
           <h2 slot="header">Heading level 2</h2>
 
           <p>Content heading level 2</p>
 
-          <bdo-heading-container heading-level="3">
+          <bdo-heading-container>
             <h3 slot="header">Heading level <mark>3 A</mark></h3>
 
             <p>Content heading level 3 A</p>
 
-            <bdo-heading-container heading-level="4">
+            <bdo-heading-container>
               <h4 slot="header">Heading level 4 A</h4>
 
               <p>Content heading level 4 A</p>
             </bdo-heading-container>
 
-            <bdo-heading-container heading-level="4">
+            <bdo-heading-container>
               <h4 slot="header">Heading level 4 B</h4>
 
               <p>Content heading level 4 B</p>
             </bdo-heading-container>
 
-            <bdo-heading-container heading-level="4">
+            <bdo-heading-container>
               <h4 slot="header">Heading level 4 C</h4>
 
               <p>Content heading level 4 C</p>
             </bdo-heading-container>
           </bdo-heading-container>
 
-          <bdo-heading-container heading-level="3">
+          <bdo-heading-container>
             <h3 slot="header">Heading level 3 B</h3>
 
             <p>Content heading level 3 B</p>
           </bdo-heading-container>
 
-          <bdo-heading-container heading-level="3">
+          <bdo-heading-container>
             <h3 slot="header">Heading level 3 C</h3>
 
             <p>Content heading level 3 C</p>
@@ -60,12 +60,10 @@
         </bdo-heading-container>
       </bdo-heading-container>
     </main>
-    
+
     <footer>
       <h2>Run tests</h2>
-      <code>
-        npm run test -- 'heading-container'
-      </code>
+      <code> npm run test -- 'heading-container' </code>
     </footer>
 
     <script type="module">

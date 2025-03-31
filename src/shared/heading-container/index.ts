@@ -1,64 +1,96 @@
-import { html, LitElement } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { html, LitElement,  } from "lit";
+import { customElement, state } from "lit/decorators.js";
 
 import resetCss from "../styles/reset.css";
 import headingContainerCss from "./heading-container.css";
+import { ifDefined } from "lit/directives/if-defined.js";
+
 @customElement("bdo-heading-container")
 export class BdoHeadingContainer extends LitElement {
-    @property({ type: Number, attribute: "heading-level" })
-    headingLevel = 1;
+    @state()
+    headingLevel?: number;
 
-    heading!: HTMLElement | undefined;
+    @state()
+    headingExpanded?: boolean;
+
+    header!: HTMLElement;
     content!: HTMLElement;
-
-    private handleHeaderClick() {
-        this.toggleExpanded();
-    }
-
-    private toggleExpanded(open?: boolean) {
-        let isExpanded = this.heading?.getAttribute('aria-expanded') === 'true';
-
-        if (open !== undefined) {
-             isExpanded = !open;
-        }
-
-        this.heading?.setAttribute('aria-expanded', open ? String(open) : String(!isExpanded));
-        this.content.style.display = isExpanded ? 'none' : 'block';
-    }
-
-    // trigger toggle expanded act on first render
-    protected override firstUpdated() {
-        const headerSlot = this.shadowRoot?.querySelector('slot[name="header"]') as HTMLSlotElement;
-        const headerNodes = headerSlot.assignedNodes({ flatten: true });
-        this.heading = headerNodes.find(node => node.nodeType === Node.ELEMENT_NODE && ((node as HTMLElement).tagName === "H3" || (node as HTMLElement).tagName === "H4")) as HTMLElement | undefined;
-        this.content = this.shadowRoot?.querySelector('.content') as HTMLSlotElement;
-        
-        // Add interaction handling to heading
-        if (this.headingLevel > 2 && this.heading) {
-            this.heading.tabIndex = 0;
-            this.heading.addEventListener('click', (event) => this.handleHeaderClick());
-            this.heading.addEventListener('keydown', (event: KeyboardEvent) => {
-                if (event.key === 'Enter') {
-                    this.handleHeaderClick();
-                }
-            });
-        }
-
-        // Set initial aria-expanded state
-        if (this.headingLevel >= 3) {
-            this.toggleExpanded(false);
-        }
-    }
 
     override render() {
         return html`
             <div class="header">
                 <slot name="header"></slot>
             </div>
-            <div class="content">
+            <div class="content" aria-expanded=${ifDefined(this.headingExpanded)}>
                 <slot></slot>
             </div>
         `;
+    }
+
+    // trigger toggle expanded act on first render
+    protected override firstUpdated() {
+        this.headingLevel = this.getHeadingLevel();
+        this.header =  this.shadowRoot?.querySelector('.header') as HTMLElement;
+        this.content = this.shadowRoot?.querySelector('.content') as HTMLElement;
+
+        if (!this.headingLevel || this.headingLevel < 3) {
+            return;
+        }
+
+        this.header.tabIndex = 0;
+        this.header.addEventListener('click', () => this.handleHeaderClick());
+        this.header.addEventListener('keydown', (event: KeyboardEvent) => {
+            if (event.key === 'Enter') {
+                this.handleHeaderClick();
+            }
+        });
+
+        this.toggleExpanded(false);
+    }
+
+    private handleHeaderClick() {
+        this.toggleExpanded();
+    }
+
+    private toggleExpanded(open?: boolean) {
+        if (!this.headingLevel || this.headingLevel < 3) {
+            return;
+        }
+
+        if (open !== undefined) {
+            this.headingExpanded = !open;
+        }
+        else {
+            this.headingExpanded = !this.headingExpanded
+        }
+
+        console.log(this.headingExpanded);
+    }
+
+    private getHeadingLevel(): number | undefined {
+        const headerSlot = this.shadowRoot?.querySelector('slot[name="header"]') as HTMLSlotElement;
+        for (const node of headerSlot.assignedNodes({ flatten: true })) {
+            const level = this.extractHeadingLevelFromTagName(node.nodeName);
+            if (level === undefined) {
+                continue;
+            }
+
+            return level;
+        }
+
+        return undefined;
+    }
+
+    private extractHeadingLevelFromTagName(tagName: string): number | undefined {
+        const regex = /^[hH]([1-6])$/;
+        const match = tagName.match(regex);
+
+        if (match) {
+            return parseInt(match[1], 10);
+        }
+        else {
+            return undefined;
+        }
     }
 
     static override get styles() {
