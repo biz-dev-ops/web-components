@@ -10,12 +10,12 @@ export default css`
         margin-inline: calc(var(--space-md) * -1);
     }
 
-    :host([heading-level="1"]) {
+    :host([level="1"]) {
         margin-inline: 0;
         padding-block-end: var(--space-md);
     }
 
-    :host(:where([heading-level="3"], [heading-level="4"])) {
+    :host(:where([level="3"], [level="4"])) {
         border-inline: var(--line-base) solid var(--color-brand-a20);
         border-block: none;
         gap: var(--space-sm);
@@ -24,20 +24,24 @@ export default css`
         padding-block-end: 0;
     }
 
-    :host(:where([heading-level="3"], [heading-level="4"]):first-of-type) {
+    :host(:where([level="3"], [level="4"]):first-of-type) {
         border-block-start: var(--line-base) solid var(--color-brand-a20);
         border-radius: var(--radius-base) var(--radius-base) 0 0;
         padding-block-start: var(--space-sm);
     }
 
-    :host(:where([heading-level="3"], [heading-level="4"]):last-of-type) {
+    :host(:where([level="3"], [level="4"]):last-of-type) {
         border-block-end: var(--line-base) solid var(--color-brand-a20);
         border-radius: 0 0 var(--radius-base) var(--radius-base);
         padding-block-end: var(--space-sm);
 
     }
-    :host(:where([heading-level="3"], [heading-level="4"]):first-of-type:last-of-type) {
+    :host(:where([level="3"], [level="4"]):first-of-type:last-of-type) {
         border-radius: var(--radius-base);
+    }
+
+    :host(:where([level="3"], [level="4"])) .content[aria-hidden="true"] {
+        display: none;
     }
 
     ::slotted(:where(h3, h4)) {
@@ -58,8 +62,9 @@ export default css`
         content: "";
         display: block;
         height: var(--space-xs);
-        inset-block-start: var(--space-md);
+        inset-block-start: 50%;
         inset-inline-end: calc(.25rem + var(--space-md));
+        margin-block-start: calc(var(--space-xs) / -4);
         position: absolute;
         transform: rotate(135deg);
         transform-origin: 60% 40%;
@@ -67,11 +72,11 @@ export default css`
         width: var(--space-xs);
     }
 
-    ::slotted(:where(h3, h4):where([aria-expanded="false"]))::after {
+    :where([aria-expanded="false"]) ::slotted(:where(h3, h4))::after {
         transform: rotate(-45deg);
     }
 
-    :host(:where([heading-level="4"])) {
+    :host(:where([level="4"])) {
         padding-inline: var(--space-xs) !important;
         margin-inline: 0 !important;   
     }
@@ -82,10 +87,6 @@ export default css`
         line-height: var(--line-height-heading);
         margin: 0;
     }
-
-    /* ::slotted(:where(h1, h2, h3, h4):not(:last-child)) {
-        margin-block-end: calc(var(--line-height-base) * .5em);
-    } */
 
     ::slotted(:where(h1, .heading-size-1)) {
         font-size: var(--heading-1-size);

@@ -21,7 +21,7 @@ export class BdoHeadingContainer extends LitElement {
             <div class="header">
                 <slot name="header"></slot>
             </div>
-            <div class="content" aria-expanded=${ifDefined(this.headingExpanded)}>
+            <div class="content" aria-hidden=${ifDefined(!this.headingExpanded)}>
                 <slot></slot>
             </div>
         `;
@@ -32,6 +32,8 @@ export class BdoHeadingContainer extends LitElement {
         this.headingLevel = this.getHeadingLevel();
         this.header =  this.shadowRoot?.querySelector('.header') as HTMLElement;
         this.content = this.shadowRoot?.querySelector('.content') as HTMLElement;
+        
+        this.setAttribute('level', `${this.headingLevel}`);
 
         if (!this.headingLevel || this.headingLevel < 3) {
             return;
@@ -59,6 +61,8 @@ export class BdoHeadingContainer extends LitElement {
         else {
             this.headingExpanded = !this.headingExpanded
         }
+
+        this.header.setAttribute('aria-expanded', `${this.headingExpanded}`);
     }
 
     private getHeadingLevel(): number | undefined {
