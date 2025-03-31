@@ -38,18 +38,14 @@ export class BdoHeadingContainer extends LitElement {
         }
 
         this.header.tabIndex = 0;
-        this.header.addEventListener('click', () => this.handleHeaderClick());
+        this.header.addEventListener('click', () => this.toggleExpanded());
         this.header.addEventListener('keydown', (event: KeyboardEvent) => {
             if (event.key === 'Enter') {
-                this.handleHeaderClick();
+                this.toggleExpanded();
             }
         });
 
         this.toggleExpanded(false);
-    }
-
-    private handleHeaderClick() {
-        this.toggleExpanded();
     }
 
     private toggleExpanded(open?: boolean) {
@@ -58,13 +54,11 @@ export class BdoHeadingContainer extends LitElement {
         }
 
         if (open !== undefined) {
-            this.headingExpanded = !open;
+            this.headingExpanded = open;
         }
         else {
             this.headingExpanded = !this.headingExpanded
         }
-
-        console.log(this.headingExpanded);
     }
 
     private getHeadingLevel(): number | undefined {
