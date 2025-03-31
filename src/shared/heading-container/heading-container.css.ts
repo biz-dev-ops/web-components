@@ -7,7 +7,6 @@ export default css`
         gap: var(--space-md);
         border-block-start: var(--line-base) solid var(--color-brand-a20);
         padding: var(--space-lg) var(--space-md);
-        padding-block-end: 0;
         margin-inline: calc(var(--space-md) * -1);
     }
 
