@@ -29,10 +29,10 @@ const styles = css`
   
   .icon:nth-child(2) .symbol {
     text-shadow:
-      -.0625em -.0625em 0 var(--icon-background, white), .0625em -.0625em 0 var(--icon-background, white),
-      -.0625em  .0625em 0 var(--icon-background, white), .0625em  .0625em 0 var(--icon-background, white),
-      0  -.0625em 0 var(--icon-background, white), 0  .0625em 0 var(--icon-background, white),
-      -.0625em  0 0 var(--icon-background, white), .0625em  0 0 var(--icon-background, white);
+      -.0625em -.0625em 0 var(--surface-current), .0625em -.0625em 0 var(--surface-current),
+      -.0625em  .0625em 0 var(--surface-current), .0625em  .0625em 0 var(--surface-current),
+      0  -.0625em 0 var(--surface-current), 0  .0625em 0 var(--surface-current),
+      -.0625em  0 0 var(--surface-current), .0625em  0 0 var(--surface-current);
   
     font-size: .7em;
   }

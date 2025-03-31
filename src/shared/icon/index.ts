@@ -1,8 +1,10 @@
 import { html, LitElement, PropertyValues, unsafeCSS } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
-import styles from "./icon.css";
+import resetCss from "../styles/reset.css";
+import iconCss from "./icon.css";
 import materialCss from "material-symbols/outlined.css?inline";
+
 import { appendFontFaceDefinitionToDom } from "../util";
 
 @customElement("bdo-icon")
@@ -55,6 +57,6 @@ export class Icon extends LitElement {
   }
 
   static override get styles() {
-    return [styles, unsafeCSS(materialCss)];
+    return [resetCss, iconCss, unsafeCSS(materialCss)];
   }
 }
