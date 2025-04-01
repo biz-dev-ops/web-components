@@ -1,7 +1,8 @@
 import { css, html, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 
-import styles from "../../shared/styles/reset.css";
+import resetCss from "../../shared/styles/reset.css";
+import typographyCss from "../../shared/styles/typography.css";
 import { Collection, Text, Head, ModelItem } from "../models";
 
 export class CanvasBoxCollection extends LitElement {
@@ -37,24 +38,15 @@ export class CanvasBoxCollection extends LitElement {
 
   static override get styles() {
     return [
-      styles,
+      resetCss,
+      typographyCss,
       css`
-        p,
-        li,
-        h4 {
-          font-weight: 300;
-          font-size: 0.8em;
+        :host {
+          --font-size-base: var(--font-size-sm);
         }
 
-        p,
-        h4,
-        ul {
-          margin-block-start: 0.5rem;
-          margin-block-end: 0.5rem;
-        }
-
-        h4 {
-          font-weight: 600;
+        :where(p, ul, h4):not(:last-child) {
+            margin-block-end: calc(var(--line-height-base) * .5rem);
         }
       `,
     ];

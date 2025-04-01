@@ -3,6 +3,7 @@ import { customElement, property, state } from "lit/decorators.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 
 import resetCss from "../shared/styles/reset.css";
+import typographyCss from "../shared/styles/typography.css";
 
 import { FetchError, fetchText } from "../shared/fetch";
 
@@ -39,6 +40,7 @@ export class MarkdownViewer extends LitElement {
   static override get styles() {
     return [
       resetCss,
+      typographyCss,
       css`
         :host {
           display: block;

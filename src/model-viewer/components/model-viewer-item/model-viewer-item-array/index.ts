@@ -55,7 +55,7 @@ export class ModelViewerItemArray extends ModelViewerItem {
 
             .item--array {
                 border-radius: var(--radius-half);
-                border: var(--line-thin) solid var(--item-line-color);
+                border: var(--line-thin) solid var(--_item-line-color);
                 padding: var(--space-sm);
                 padding-block-end: 0;
                 margin-block-end: calc(var(--space-xs) * -1);
@@ -84,7 +84,7 @@ export class ModelViewerItemArray extends ModelViewerItem {
             }
 
             .list--array li::before {
-                background-color: var(--item-line-color);
+                background-color: var(--_item-line-color);
                 block-size: var(--line-thin);
                 inline-size: var(--space-sm);
             }
@@ -94,7 +94,7 @@ export class ModelViewerItemArray extends ModelViewerItem {
                 background-color: var(--surface-main);
                 block-size: .625rem;
                 border-radius: var(--radius-circle);
-                border: var(--line-thin) solid var(--item-line-color);
+                border: var(--line-thin) solid var(--_item-line-color);
                 transform: translateX(-.4375rem) translateY(-.25rem);
             }
 
