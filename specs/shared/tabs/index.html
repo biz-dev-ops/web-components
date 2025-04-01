@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Tabs component</title>
+    <link rel="stylesheet" href="../../theme.css" />
+  </head>
+
+  <body>
+    <main>
+      <h1>Tabs component</h1>
+
+      <bdo-tabs label="My Awesome Tabs">
+        <bdo-tab title="First Section">
+          <p>This is the content for the first tab.</p>
+          <ul>
+            <li>Item A</li>
+            <li>Item B</li>
+          </ul>
+        </bdo-tab>
+        <bdo-tab title="Second Area">
+          <h2>Welcome to Area Two!</h2>
+          <img src="./example.jpg" alt="Placeholder Image">
+          <p>More detailed information can be found here.</p>
+        </bdo-tab>
+        <bdo-tab title="Third Option">
+          <div>
+            <strong>Important Note:</strong> This is the third tab's content.
+            <button>Click Me</button>
+          </div>
+        </bdo-tab>
+        <bdo-tab title="A Longer Title for Tab Four">
+          <p>Sometimes tab titles need to be a bit more descriptive, and that's perfectly okay!</p>
+        </bdo-tab>
+      </bdo-tabs>
+
+      <h2>Run tests</h2>
+      <code>
+        npm run test -- 'bdo-tabs'
+      </code>
+    </main>
+
+    <script type="module">
+      import "../../../src/shared/tabs/index.ts";
+    </script>
+  </body>
+</html>

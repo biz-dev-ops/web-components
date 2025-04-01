@@ -25,7 +25,7 @@ export const tag: string = "bpmn-viewer";
 
 @customElement(tag)
 export class BPMNViewer extends LitElement {
-
+  private _initialized = false;
   private _viewer!: any;
 
   @property({ attribute: "src" })
@@ -48,22 +48,19 @@ export class BPMNViewer extends LitElement {
   }
 
   override async firstUpdated() {
-    if (this._viewer) {
-      this._viewer.destroy();
-    }
-
-    this._viewer = new Viewer({
-      container: this.shadowRoot?.querySelector(
-        "#bpmn-container"
-      ) as HTMLElement,
-      moddleExtensions: {
-        bizdevops,
-      },
-      additionalModules: this.enableSimulator ? [TokenSimulationModule] : [],
-    });
+    this._initViewer();
   }
 
   override async updated(changedProperties) {
+    if(!this._initialized) {
+      this._initialized = false;
+      return;
+    }
+
+    if (changedProperties.has("enableSimulator")) {
+      this._initViewer();
+    }
+
     if (changedProperties.has("src")) {
       const response = await fetch(this.src);
       if (!response.ok) {
@@ -80,13 +77,38 @@ export class BPMNViewer extends LitElement {
       this._updateDiagram(this.xml);
     }
 
-    if (changedProperties.has("enableSimulator")) {
-      this.firstUpdated();
-    }
-
     if (changedProperties.has("disableInteraction")) {
       this._viewer.get("zoomScroll").toggle(this.disableInteraction);
     }
+  }
+
+  private _initViewer() {
+    if (this._viewer) {
+      this._viewer.get("eventBus").off("root.set");
+      this._viewer.destroy();
+    }
+
+    this._viewer = new Viewer({
+      container: this.shadowRoot?.querySelector("#bpmn-container") as HTMLElement,
+      moddleExtensions: {
+        bizdevops,
+      },
+      additionalModules: this.enableSimulator ? [TokenSimulationModule] : [],
+    });
+
+    this._viewer.get("eventBus").on("root.set", () => {
+      this._setHeight();
+    });
+
+    if(this.xml) {
+      this._updateDiagram(this.xml);
+    }
+
+    if(this.disableInteraction) {
+      this._viewer.get("zoomScroll").toggle(this.disableInteraction);
+    }
+
+    this._initialized = true;
   }
 
   private async _updateDiagram(xml: string) {
@@ -108,11 +130,48 @@ export class BPMNViewer extends LitElement {
       if (this.showProcess) {
         this._expandSubProcess();
       }
-
-      this.zoomReset();
     }
     catch (err) {
       console.log("something went wrong while importing bpmn:", err);
+    }
+  }
+
+  private _setHeight() {
+    const minMax = _getMinMaxHeight(this);
+    const extraHeight = _calculateExtraHeigt(this);
+    const viewbox = this._viewer.get("canvas").viewbox();
+    const container = this.shadowRoot?.querySelector("#bpmn-container") as HTMLElement;
+
+    container.style.aspectRatio = `${viewbox.inner.width} / ${viewbox.inner.height}`;
+    container.style.minHeight = `${minMax.minHeight}px`;
+    container.style.maxHeight = `${Math.min(viewbox.inner.height + extraHeight, minMax.maxHeight)}px`;
+
+    this.zoomReset();
+
+    function _calculateExtraHeigt(el) {
+      const breadcrumbs = el.shadowRoot?.querySelector(".bjs-breadcrumbs") as HTMLElement;
+      const { x, height } = breadcrumbs.getBoundingClientRect();
+      const lineTweak = Math.max(10, x + height) * 2;
+      return lineTweak;
+    }
+
+    function _getMinMaxHeight(element) {
+      const style = window.getComputedStyle(element);
+      const minHeightRaw = style.minHeight;
+      const maxHeightRaw = style.maxHeight;
+
+      const parseValue = (value) => {
+        if (value === 'none' || value === 'auto') {
+          return null;
+        }
+        const parsed = parseFloat(value);
+        return isNaN(parsed) ? null : parsed;
+      };
+
+      return {
+        minHeight: parseValue(minHeightRaw) ?? 0,
+        maxHeight: parseValue(maxHeightRaw) ?? Number.MAX_SAFE_INTEGER,
+      };
     }
   }
 
@@ -194,6 +253,10 @@ export class BPMNViewer extends LitElement {
           width: 100%;
           height: 100%;
         }
+        .bjs-breadcrumbs {
+          top: 0px!important;
+          left:0px!important;
+        }
         .error {
           border: 3px solid red;
         }
@@ -201,15 +264,9 @@ export class BPMNViewer extends LitElement {
             display: none;
         }
       `,
-      css`
-        ${unsafeCSS(viewerDiagramJsCss)}
-      `,
-      css`
-        ${unsafeCSS(viewerBpmnJsCss)}
-      `,
-      css`
-        ${unsafeCSS(simulatorCss)}
-      `,
+      css`${unsafeCSS(viewerDiagramJsCss)}`,
+      css`${unsafeCSS(viewerBpmnJsCss)}`,
+      css`${unsafeCSS(simulatorCss)}`,
     ];
   }
 
@@ -226,6 +283,15 @@ export class BPMNViewer extends LitElement {
   }
 
   public zoomReset() {
+    const currentViewbox = this._viewer.get("canvas").viewbox()
+
+    this._viewer.get("canvas").viewbox({
+      x: 0,
+      y: 0,
+      width: currentViewbox.width,
+      height: currentViewbox.height
+    })
+
     this._viewer.get("canvas").zoom("fit-viewport", "auto");
   }
 }

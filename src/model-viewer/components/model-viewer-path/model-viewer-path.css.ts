@@ -2,10 +2,10 @@ import { css } from "lit";
 
 const modelViewerPathCss = css`
   :host {
-    --item-line-color: var(--color-brand-base);
+    --_item-line-color: var(--_model-viewer-color-base);
 
-    --button-border-color: var(--item-line-color);
-    --button-hover-color: var(--color-brand-a10);
+    --button-border-color: var(--_item-line-color);
+    --button-hover-color: var(--_model-viewer-color-a10);
     --button-font-size: var(--font-size-sm);
     --button-inline-size: 100%;
   }

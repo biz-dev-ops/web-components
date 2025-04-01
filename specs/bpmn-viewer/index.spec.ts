@@ -28,8 +28,8 @@ test.describe("bpmn-viewer", async () => {
             }
         });
 
-        await expect(component).toContainText("Process_CustomLinks");
-        await expect(component).not.toContainText("Process_Subprocesses");
+        await expect(component.locator("svg[data-element-id='Process_CustomLinks']")).toBeVisible();
+        await expect(component.locator("svg[data-element-id='Process_Subprocesses_Collaboration']")).not.toBeVisible();
 
         await component.update({
             props: {
@@ -37,8 +37,9 @@ test.describe("bpmn-viewer", async () => {
             }
         });
 
-        await expect(component).toContainText("Process_Subprocesses");
-        await expect(component).not.toContainText("Process_CustomLinks");
+
+        await expect(component.locator("svg[data-element-id='Process_CustomLinks']")).not.toBeVisible();
+        await expect(component.locator("svg[data-element-id='Process_Subprocesses_Collaboration']")).toBeVisible();
     });
 
     test.afterEach(async ({ page }) => {
