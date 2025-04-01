@@ -6,6 +6,7 @@ import { ModelItemBuilder } from "./modules/model-item-builder";
 import "./components/model-viewer-path";
 import { FetchError, fetchYamlAndBundleAs } from "../shared/fetch";
 import { ModelItemDecorator, ModelItemDecoratorBuilder } from "./modules/model-item-decorator-builder";
+import "../shared/alert";
 
 export const tag = "model-viewer";
 
@@ -41,7 +42,7 @@ export class ModelViewer extends LitElement {
 
   override render() {
     if (this.error) {
-      return html`<div class="error">${this.error.message}</div>`;
+      return html`<bdo-alert type="error">${this.error.message}</bdo-alert>`;
     }
 
     if (this.path.length === 0) return html``;

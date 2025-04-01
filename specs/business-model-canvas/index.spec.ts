@@ -58,6 +58,16 @@ test.describe("business-model-canvas", async () => {
         await expectComponentToContainData(component, json);
     });
 
+    test("shows error for invalid src", async ({ mount }) => {
+        const component = await mount(BusinessModelCanvasComponent, {
+            props: {
+                src: "invalid file"
+            }
+        });
+
+        await expect(component.locator("[type='error']")).toBeVisible();
+    });
+
     test.afterEach(async ({ page }) => {
         await page.close();
     });

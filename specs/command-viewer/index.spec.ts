@@ -65,6 +65,16 @@ test.describe("command-viewer", async () => {
         await expectComponentToContain(component, 5, 2);
     });
 
+    test("shows error for invalid src", async ({ mount }) => {
+        const component = await mount(CommandViewer, {
+            props: {
+                src: "invalid file"
+            }
+        });
+
+        await expect(component.locator("[type='error']")).toBeVisible();
+    });
+
     test.afterEach(async ({ page }) => {
         await page.close();
     });

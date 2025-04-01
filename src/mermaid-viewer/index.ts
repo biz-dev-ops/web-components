@@ -6,6 +6,7 @@ import resetCss from "../shared/styles/reset.css";
 import { fetchText } from "../shared/fetch";
 
 import mermaid from "mermaid";
+import "../shared/alert";
 
 export const tag: string = "mermaid-viewer";
 
@@ -23,7 +24,7 @@ export class MermaidViewer extends LitElement {
 
     override render() {
         if (this.state instanceof Error) {
-            return html`<div class="error">${this.state.message}</div>`;
+            return html`<bdo-alert type="error">${this.state.message}</bdo-alert>`;
         }
 
         return this.state ? html`${unsafeHTML(this.state)}` : html``;
