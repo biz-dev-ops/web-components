@@ -40,6 +40,10 @@ export default css`
         border-radius: var(--radius-base);
     }
 
+    :host(:where([level="3"], [level="4"])) .content {
+        padding-inline: var(--space-xs)
+    }
+
     :host(:where([level="3"], [level="4"])) .content[aria-hidden="true"] {
         display: none;
     }
@@ -78,7 +82,7 @@ export default css`
 
     :host(:where([level="4"])) {
         padding-inline: var(--space-xs) !important;
-        margin-inline: 0 !important;   
+        margin-inline: 0 !important;
     }
 
     .header ::slotted(:where(h1, h2, h3, h4)) {
