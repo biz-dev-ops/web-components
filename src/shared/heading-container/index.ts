@@ -32,7 +32,7 @@ export class BdoHeadingContainer extends LitElement {
         this.headingLevel = this.getHeadingLevel();
         this.header =  this.shadowRoot?.querySelector('.header') as HTMLElement;
         this.content = this.shadowRoot?.querySelector('.content') as HTMLElement;
-        
+
         this.setAttribute('level', `${this.headingLevel}`);
 
         if (!this.headingLevel || this.headingLevel < 3) {
