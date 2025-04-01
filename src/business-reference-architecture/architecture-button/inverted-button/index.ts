@@ -16,7 +16,7 @@ export class InvertedArchitectureButton extends AbstractArchitectureButton {
             css`
                 :host > a, :host > span {
                     padding: var(--space-xs);
-                    background-color: var(--main-surface);
+                    background-color: var(--surface-current);
                     color: var(--text-color-base);
                     border-radius: var(--radius-base);
                 }

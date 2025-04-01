@@ -79,7 +79,7 @@ export class ModelViewerItemValue extends ModelViewerItem {
             .icon--type {
                 margin-inline-start: auto;
                 font-size: var(--font-size-xs);
-                background-color: var(--main-surface);
+                background-color: var(--surface-main);
                 border-radius: var(--radius-pill);
                 align-self: center;
                 padding: var(--space-xxs) var(--space-xs);
