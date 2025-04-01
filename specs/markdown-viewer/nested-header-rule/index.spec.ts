@@ -9,7 +9,7 @@ test.describe("nestedHeadersRulePlugin", () => {
         const markdown = "# Single Header";
 
         const expectedHtml = `
-<bdo-heading-container heading-level="1">
+<bdo-heading-container>
     <h1 slot="header">Single Header</h1>
 </bdo-heading-container>`
 
@@ -32,17 +32,17 @@ Level 3 content
 `;
 
         const expectedHtml = `
-<bdo-heading-container heading-level="1">
+<bdo-heading-container>
     <h1 slot="header">Level 1</h1>
     <p>
         Level 1 content
     </p>
-    <bdo-heading-container heading-level="2">
+    <bdo-heading-container>
         <h2 slot="header">Level 2</h2>
         <p>
             Level 2 content
         </p>
-        <bdo-heading-container heading-level="3">
+        <bdo-heading-container>
             <h3 slot="header">Level 3</h3>
             <p>
                 Level 3 content
