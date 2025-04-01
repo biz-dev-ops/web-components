@@ -1,27 +1,18 @@
-import { html, LitElement,  } from "lit";
-import { customElement, state } from "lit/decorators.js";
+import { html, LitElement, } from "lit";
+import { customElement } from "lit/decorators.js";
 
 import resetCss from "../styles/reset.css";
 import headingContainerCss from "./heading-container.css";
-import { ifDefined } from "lit/directives/if-defined.js";
 
 @customElement("bdo-heading-container")
 export class BdoHeadingContainer extends LitElement {
-    @state()
-    headingLevel?: number;
-
-    @state()
-    headingExpanded?: boolean;
-
-    header!: HTMLElement;
-    content!: HTMLElement;
 
     override render() {
         return html`
             <div class="header">
                 <slot name="header"></slot>
             </div>
-            <div class="content" aria-hidden=${ifDefined(!this.headingExpanded)}>
+            <div class="content">
                 <slot></slot>
             </div>
         `;
@@ -29,40 +20,43 @@ export class BdoHeadingContainer extends LitElement {
 
     // trigger toggle expanded act on first render
     protected override firstUpdated() {
-        this.headingLevel = this.getHeadingLevel();
-        this.header =  this.shadowRoot?.querySelector('.header') as HTMLElement;
-        this.content = this.shadowRoot?.querySelector('.content') as HTMLElement;
+        const headingLevel = this.getHeadingLevel();
+        this.setAttribute('level', `${headingLevel}`);
+        const header = this.shadowRoot?.querySelector('.header') as HTMLElement;
 
-        this.setAttribute('level', `${this.headingLevel}`);
-
-        if (!this.headingLevel || this.headingLevel < 3) {
+        if (!this.ariaIsExpanded() === undefined) {
             return;
         }
 
-        this.header.tabIndex = 0;
-        this.header.addEventListener('click', () => this.toggleExpanded());
-        this.header.addEventListener('keydown', (event: KeyboardEvent) => {
+        header.tabIndex = 0;
+        header.addEventListener('click', () => this.toggleExpanded());
+        header.addEventListener('keydown', (event: KeyboardEvent) => {
             if (event.key === 'Enter') {
                 this.toggleExpanded();
             }
         });
-
-        this.toggleExpanded(false);
     }
 
-    private toggleExpanded(open?: boolean) {
-        if (!this.headingLevel || this.headingLevel < 3) {
+    private toggleExpanded() {
+        const ariaExpanded = this.ariaIsExpanded();
+        if (ariaExpanded === undefined) {
             return;
         }
 
-        if (open !== undefined) {
-            this.headingExpanded = open;
-        }
-        else {
-            this.headingExpanded = !this.headingExpanded
+        this.setAttribute('aria-expanded', `${!ariaExpanded}`);
+    }
+
+    private ariaIsExpanded(): boolean | undefined {
+        const ariaExpanded = this.getAttribute('aria-expanded')?.trim().toLowerCase();
+        if (ariaExpanded === "true") {
+            return true;
         }
 
-        this.header.setAttribute('aria-expanded', `${this.headingExpanded}`);
+        if (ariaExpanded === "false") {
+            return false
+        }
+
+        return undefined;
     }
 
     private getHeadingLevel(): number | undefined {
