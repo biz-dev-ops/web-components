@@ -64,9 +64,9 @@ Level 3 content
     });
 });
 
-function expectHtml(markdown: string, expectedHtml: string) {
+function expectHtml(markdown: string, expectedHtml: string, isAriaExpanded?: (level: number) => boolean | undefined) {
     const md = new MarkdownIt();
-    md.use(nestedHeadersRulePlugin);
+    md.use(nestedHeadersRulePlugin, { isAriaExpanded });
     expectMarkdownToMatchHtml(md, markdown, expectedHtml);
 }
 
