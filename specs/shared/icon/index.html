@@ -4,25 +4,39 @@
     <meta charset="utf-8" />
     <title>Icon component</title>
     <link rel="stylesheet" href="../../theme.css" />
+    <style>
+      .icons {
+        display: flex;
+        padding: 1rem;
+        gap: 1rem;
+        --font-size-base: 4rem;
+      }
+
+      .inversed {
+        background: var(--color-brand-base);
+        --text-color-base: white;
+        --surface-current: var(--color-brand-base);
+      }
+    </style>
   </head>
 
   <body>
     <main>
       <h1>Icon component</h1>
 
-      <div style="display: flex; padding: 1rem; gap: 1rem; --font-size-base: 4rem;">
+      <div class="icons" style="">
         <bdo-icon icon="mat-close"></bdo-icon>
-        <bdo-icon icon="mat-shield mat-add" background="white"></bdo-icon>
-        <bdo-icon icon="mat-shield mat-add" icon-align="center" icon-justify="center" background="white"></bdo-icon>
+        <bdo-icon icon="mat-shield mat-add"></bdo-icon>
+        <bdo-icon icon="mat-shield mat-add" icon-align="center" icon-justify="center"></bdo-icon>
       </div>
 
-      <div style="display: flex; padding: 1rem; gap: 1rem; --font-size-base: 4rem; background: var(--color-brand-base); --text-color-base: white; --surface-current: var(--color-brand-base);">
+      <div class="icons inversed">
         <bdo-icon icon="mat-close"></bdo-icon>
-        <bdo-icon icon="mat-shield mat-add" background="white"></bdo-icon>
-        <bdo-icon icon="mat-shield mat-add" icon-align="center" icon-justify="center" background="white"></bdo-icon>
+        <bdo-icon icon="mat-shield mat-add"></bdo-icon>
+        <bdo-icon icon="mat-shield mat-add" icon-align="center" icon-justify="center"></bdo-icon>
       </div>
 
-      <!-- 
+      <!--
         <h2>Run tests</h2>
         <code>
           npm run test -- 'bdo-icon'

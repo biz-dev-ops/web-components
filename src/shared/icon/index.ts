@@ -14,10 +14,9 @@ export class Icon extends LitElement {
 
   @property({ type: String, attribute: "icon-align" })
   align: "start" | "center" | "end" = "end";
+
   @property({ type: String, attribute: "icon-justify" })
   justify: "start" | "center" | "end" = "end";
-  @property({ type: String, attribute: "background" })
-  background?: string;
 
   override updated(changedProperties: PropertyValues) {
     if (changedProperties.has("justify")) {
@@ -25,9 +24,6 @@ export class Icon extends LitElement {
     }
     if (changedProperties.has("align")) {
       this.style.setProperty("--icon-align", this.align);
-    }
-    if (changedProperties.has("background") && this.background) {
-      this.style.setProperty("--icon-background", this.background);
     }
   }
 
@@ -53,7 +49,8 @@ export class Icon extends LitElement {
         </span>`;
     }
 
-    return html`<img .src=${icon} />`; // This will always have the SVG color
+    // This will always have the SVG color
+    return html`<img .src=${icon} />`;
   }
 
   static override get styles() {
