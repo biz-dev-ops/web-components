@@ -18,7 +18,6 @@ export class BdoHeadingContainer extends LitElement {
         `;
     }
 
-    // trigger toggle expanded act on first render
     protected override firstUpdated() {
         const headingLevel = this.getHeadingLevel();
         this.setAttribute('level', `${headingLevel}`);
