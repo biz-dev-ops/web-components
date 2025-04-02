@@ -23,17 +23,15 @@ export class BdoHeadingContainer extends LitElement {
         this.setAttribute("level", `${headingLevel}`);
         const headerContainer = this.shadowRoot?.querySelector("[data-testid='header-container']") as HTMLElement;
 
-        if (!this.ariaIsExpanded() === undefined) {
-            return;
+        if (headingLevel === 3 || headingLevel === 4) {
+            headerContainer.tabIndex = 0;
+            headerContainer.addEventListener("click", () => this.toggleExpanded());
+            headerContainer.addEventListener("keydown", (event: KeyboardEvent) => {
+                if (event.key === "Enter") {
+                    this.toggleExpanded();
+                }
+            });
         }
-
-        headerContainer.tabIndex = 0;
-        headerContainer.addEventListener("click", () => this.toggleExpanded());
-        headerContainer.addEventListener("keydown", (event: KeyboardEvent) => {
-            if (event.key === "Enter") {
-                this.toggleExpanded();
-            }
-        });
     }
 
     private toggleExpanded() {
@@ -47,15 +45,12 @@ export class BdoHeadingContainer extends LitElement {
 
     private ariaIsExpanded(): boolean | undefined {
         const ariaExpanded = this.getAttribute("aria-expanded")?.trim().toLowerCase();
-        if (ariaExpanded === "true") {
-            return true;
-        }
 
         if (ariaExpanded === "false") {
             return false
         }
 
-        return undefined;
+        return true;
     }
 
     private getHeadingLevel(): number | undefined {
