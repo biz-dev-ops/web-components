@@ -22,7 +22,6 @@ const styles = css`
   }
 
   .icon:nth-child(2) {
-    inset: var(--second-icon-top, 0%) var(--second-icon-right, 0%) var(--second-icon-bottom, 0%) var(--second-icon-left, 0%);
     inset: 0;
     position: absolute;
   }
