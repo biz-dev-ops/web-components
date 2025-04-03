@@ -9,7 +9,7 @@ export class BdoHeadingContainer extends LitElement {
 
     override render() {
         return html`
-            <div class="header" data-testid="header-container">
+            <div class="header" data-testid="header-container" @click=${this.toggleExpanded} @keydown=${this.handleKeydown}>
                 <slot name="header"></slot>
             </div>
             <div class="content" data-testid="content-container">
@@ -23,14 +23,16 @@ export class BdoHeadingContainer extends LitElement {
         this.setAttribute("level", `${headingLevel}`);
         const headerContainer = this.shadowRoot?.querySelector("[data-testid='header-container']") as HTMLElement;
 
-        if (headingLevel === 3 || headingLevel === 4) {
-            headerContainer.tabIndex = 0;
-            headerContainer.addEventListener("click", () => this.toggleExpanded());
-            headerContainer.addEventListener("keydown", (event: KeyboardEvent) => {
-                if (event.key === "Enter") {
-                    this.toggleExpanded();
-                }
-            });
+        if(this.getAttribute("aria-expanded") === undefined) {
+            return;
+        }
+
+        headerContainer.tabIndex = 0;
+    }
+
+    private handleKeydown(event: KeyboardEvent) {
+        if (event.key === "Enter") {
+            this.toggleExpanded();
         }
     }
 

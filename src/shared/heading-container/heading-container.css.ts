@@ -19,7 +19,7 @@ export default css`
         padding-block-end: var(--space-md);
     }
 
-    :host(:where([level="3"], [level="4"]):where([aria-expanded])) {
+    :host(:where([aria-expanded])) {
         border-inline: var(--line-base) solid var(--color-brand-a20);
         border-block: none;
         gap: var(--space-sm);
@@ -28,23 +28,23 @@ export default css`
         padding-block-end: 0;
     }
 
-    :host(:where([level="3"], [level="4"]):where([aria-expanded]):first-of-type) {
+    :host(:where([aria-expanded]):first-of-type) {
         border-block-start: var(--line-base) solid var(--color-brand-a20);
         border-radius: var(--radius-base) var(--radius-base) 0 0;
         padding-block-start: var(--space-sm);
     }
 
-    :host(:where([level="3"], [level="4"]):where([aria-expanded]):last-of-type) {
+    :host(:where([aria-expanded]):last-of-type) {
         border-block-end: var(--line-base) solid var(--color-brand-a20);
         border-radius: 0 0 var(--radius-base) var(--radius-base);
         padding-block-end: var(--space-sm);
 
     }
-    :host(:where([level="3"], [level="4"]):where([aria-expanded]):first-of-type:last-of-type) {
+    :host(:where([aria-expanded]):first-of-type:last-of-type) {
         border-radius: var(--radius-base);
     }
 
-    :host(:where([level="3"], [level="4"]):where([aria-expanded])) .content {
+    :host(:where([aria-expanded])) .content {
         padding-inline: var(--space-xs)
     }
 
@@ -52,7 +52,7 @@ export default css`
         display: none;
     }
 
-    :host(:where([level="3"], [level="4"]):where([aria-expanded])) ::slotted(:where(h1, h2, h3, h4, h5, h6)) {
+    :host(:where([aria-expanded])) ::slotted(:where(h1, h2, h3, h4, h5, h6)) {
         background-color: var(--color-brand-a10);
         border-radius: var(--radius-half);
         color: var(--link-text-color);
@@ -63,7 +63,7 @@ export default css`
         position: relative;
     }
 
-    :host(:where([level="3"], [level="4"]):where([aria-expanded])) ::slotted(:where(h1, h2, h3, h4, h5, h6))::after {
+    :host(:where([aria-expanded])) ::slotted(:where(h1, h2, h3, h4, h5, h6))::after {
         border-color: var(--text-color-base);
         border-style: solid;
         border-width: var(--line-base) var(--line-base) 0 0;
@@ -80,7 +80,7 @@ export default css`
         width: var(--space-xs);
     }
 
-    :host(:where(:where([level="3"], [level="4"]),[aria-expanded="false"])) ::slotted(:where(h1, h2, h3, h4, h5, h6))::after {
+    :host(:where([aria-expanded="false"])) ::slotted(:where(h1, h2, h3, h4, h5, h6))::after {
         transform: rotate(-45deg);
     }
 
