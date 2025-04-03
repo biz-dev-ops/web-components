@@ -1,6 +1,7 @@
 import { expect, test } from "@sand4rt/experimental-ct-web";
 import { FileRoute, StringContentRoute, useRoutes } from "../helper/router-helper";
 import { MarkdownViewer } from "../../src/markdown-viewer";
+import { BPMNViewer } from "../../src/bpmn-viewer";
 
 const components = [
   { extension: "bpmn", tag: "bpmn-viewer" },
@@ -78,5 +79,15 @@ test.describe("markdown-viewer", async () => {
         await expect(component.locator(tag)).toBeVisible();
       });
     });
+  });
+
+  test("shows error for invalid src", async ({ mount }) => {
+    const component = await mount(MarkdownViewer, {
+      props: {
+        src: "invalid file"
+      }
+    });
+
+    await expect(component.locator("[type='error']")).toBeVisible();
   });
 });

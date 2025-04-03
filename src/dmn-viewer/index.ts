@@ -1,5 +1,5 @@
-import { css, LitElement, unsafeCSS } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { css, html, LitElement, unsafeCSS } from "lit";
+import { customElement, property, state } from "lit/decorators.js";
 import Viewer from "dmn-js";
 
 import resetCss from "../shared/styles/reset.css";
@@ -9,6 +9,8 @@ import ViewerDecisionTableCss from "dmn-js/dist/assets/dmn-js-decision-table.css
 import ViewerLiteralExpressionCss from "dmn-js/dist/assets/dmn-js-literal-expression.css?inline";
 import ViewerDMNCss from "dmn-js/dist/assets/dmn-font/css/dmn-embedded.css?inline";
 import { appendFontFaceDefinitionToDom } from "../shared/util";
+import { FetchError, fetchText } from "../shared/fetch";
+import "../shared/alert";
 
 export const tag: string = "dmn-viewer";
 
@@ -22,6 +24,16 @@ export class DMNViewer extends LitElement {
   @property({ attribute: "data-xml" })
   xml!: string
 
+  @state()
+  error!: FetchError | null;
+
+  override render() {
+    if (this.error) {
+      return html`<bdo-alert type="error">${this.error.message}</bdo-alert>`;
+    }
+    return html``;
+  }
+
   override async firstUpdated() {
     this._viewer = new Viewer({
       container: this.renderRoot as HTMLElement
@@ -31,15 +43,13 @@ export class DMNViewer extends LitElement {
 
   override async updated(changedProperties) {
     if (changedProperties.has("src")) {
-      const response = await fetch(this.src);
-      if (!response.ok) {
-        const container = this.renderRoot as HTMLElement;
-        container.innerHTML = `<div class="error">Failed to fetch ${this.src}</div>`;
-        console.error(`Failed to fetch ${this.src}, status: ${response.status}, ${response.statusText}`, response);
-        return;
+      try {
+        this.xml = await fetchText(this.src);
+        this.error = null;
       }
-
-      this.xml = await response.text();
+      catch (error: any) {
+        this.error = error;
+      }
     }
 
     if (changedProperties.has("xml")) {

@@ -60,6 +60,16 @@ test.describe("business-reference-architecture", async () => {
         await expectComponentToContainData(component, model);
     });
 
+    test("shows error for invalid src", async ({ mount }) => {
+        const component = await mount(BusinessReferenceArchitectureComponent, {
+            props: {
+                src: "invalid file"
+            }
+        });
+
+        await expect(component.locator("[type='error']")).toBeVisible();
+    });
+
     test.afterEach(async ({ page }) => {
         await page.close();
     });

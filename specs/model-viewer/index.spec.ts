@@ -71,6 +71,16 @@ test.describe("model-viewer", async () => {
         await expectComponentToContain(component, model);
     });
 
+    test("shows error for invalid src", async ({ mount }) => {
+        const component = await mount(ModelViewer, {
+            props: {
+                src: "invalid file"
+            }
+        });
+
+        await expect(component.locator("[type='error']")).toBeVisible();
+    });
+
     test.afterEach(async ({ page }) => {
         await page.close();
     });

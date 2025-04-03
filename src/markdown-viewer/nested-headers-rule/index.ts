@@ -1,11 +1,20 @@
 import MarkdownIt, { Options, Renderer, Token } from "markdown-it";
 import nestedHeadersRulerPlugin from "../nested-headers-ruler";
 
-export default function nestedHeadersRulePlugin(md: MarkdownIt): void {
+export interface nestedHeadersRulePluginOptions {
+    isAriaExpanded?: (level: number) => boolean | undefined;
+}
+
+export default function nestedHeadersRulePlugin(md: MarkdownIt, options?: nestedHeadersRulePluginOptions): void {
+    const isAriaExpanded = options?.isAriaExpanded || ((_level: number) => undefined);
+
     md.use(nestedHeadersRulerPlugin);
 
     md.renderer.rules.heading_container_open = function (tokens: Token[], idx: number): string {
-        return `<bdo-heading-container heading-level="${tokens[idx].attrGet("data-heading-level")!}">`;
+        const level = Number.parseInt(tokens[idx].attrGet("data-heading-level")!);
+        const ariaExpanded = isAriaExpanded(level);
+
+        return `<bdo-heading-container${ariaExpanded === undefined ? "" : ` aria-expanded="${ariaExpanded}"`}>`;
     }
 
     md.renderer.rules.heading_open = function (tokens: Token[], idx: number, options: Options, _env: any, self: Renderer): string {

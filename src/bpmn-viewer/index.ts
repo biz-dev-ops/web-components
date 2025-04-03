@@ -1,5 +1,5 @@
 import { css, html, LitElement, unsafeCSS } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { customElement, property, state } from "lit/decorators.js";
 
 import resetCss from "../shared/styles/reset.css";
 import viewerDiagramJsCss from "bpmn-js/dist/assets/diagram-js.css?inline";
@@ -11,6 +11,8 @@ import Viewer from "bpmn-js/lib/NavigatedViewer.js";
 import { Element, ModdleElement } from "bpmn-js/lib/model/Types";
 
 import * as bizdevops from "./bizdevops.moddle.json";
+import { FetchError, fetchText } from "../shared/fetch";
+import "../shared/alert";
 
 interface Link {
   name?: string;
@@ -43,8 +45,16 @@ export class BPMNViewer extends LitElement {
   @property({ attribute: "disable-interaction", reflect: true, type: Boolean })
   disableInteraction: boolean = false;
 
+  @state()
+  error!: FetchError | null;
+
   override render() {
-    return html`<div id="bpmn-container"></div>`;
+    if (this.error) {
+      return html`<bdo-alert type="error">${this.error.message}</bdo-alert>`;
+    }
+    else {
+      return html`<div id="bpmn-container"></div>`;
+    };
   }
 
   override async firstUpdated() {
@@ -52,7 +62,7 @@ export class BPMNViewer extends LitElement {
   }
 
   override async updated(changedProperties) {
-    if(!this._initialized) {
+    if (!this._initialized) {
       this._initialized = false;
       return;
     }
@@ -62,15 +72,13 @@ export class BPMNViewer extends LitElement {
     }
 
     if (changedProperties.has("src")) {
-      const response = await fetch(this.src);
-      if (!response.ok) {
-        const container = this.shadowRoot?.querySelector("#bpmn-container") as HTMLElement;
-        container.innerHTML = `<div class="error">Failed to fetch ${this.src}</div>`;
-        console.error(`Failed to fetch ${this.src}, status: ${response.status}, ${response.statusText}`, response);
-        return;
+      try {
+        this.xml = await fetchText(this.src);
+        this.error = null;
       }
-
-      this.xml = await response.text();
+      catch (error: any) {
+        this.error = error;
+      }
     }
 
     if (changedProperties.has("xml")) {
@@ -100,11 +108,11 @@ export class BPMNViewer extends LitElement {
       this._setHeight();
     });
 
-    if(this.xml) {
+    if (this.xml) {
       this._updateDiagram(this.xml);
     }
 
-    if(this.disableInteraction) {
+    if (this.disableInteraction) {
       this._viewer.get("zoomScroll").toggle(this.disableInteraction);
     }
 
@@ -183,10 +191,7 @@ export class BPMNViewer extends LitElement {
       this._viewer.get("canvas").setRootElement(element);
     }
     catch (error: unknown) {
-      console.log(error instanceof Error ? error.message : "Unknown error");
-      (
-        this.shadowRoot?.querySelector("#bpmn-container") as HTMLElement
-      ).classList.add("error");
+      console.error(error);
     }
   }
 
@@ -256,9 +261,6 @@ export class BPMNViewer extends LitElement {
         .bjs-breadcrumbs {
           top: 0px!important;
           left:0px!important;
-        }
-        .error {
-          border: 3px solid red;
         }
         .bjs-powered-by {
             display: none;

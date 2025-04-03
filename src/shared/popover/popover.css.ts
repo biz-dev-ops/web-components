@@ -10,7 +10,7 @@ export default css`
     }
 
     .popover-control--info {
-      background-color: var(--main-surface);
+      background-color: var(--surface-main);
       align-self: center;
       border: var(--line-base) solid var(--button-background-base);
       border-radius: var(--radius-circle);

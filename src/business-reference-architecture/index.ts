@@ -5,6 +5,7 @@ import resetCss from "../shared/styles/reset.css";
 import { Section } from "./models";
 import "./architecture-section";
 import { FetchError, fetchYamlAndBundleAs } from "../shared/fetch";
+import "../shared/alert";
 
 export const tag = "business-reference-architecture";
 
@@ -21,7 +22,7 @@ export class BusinessReferenceArchitectureComponent extends LitElement {
 
   override render() {
     if (this.model instanceof FetchError) {
-      return html`<div class="error">${this.model.message}</div>`;
+      return html`<bdo-alert type="error">${this.model.message}</bdo-alert>`;
     }
 
     return html`

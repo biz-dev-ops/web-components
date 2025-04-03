@@ -8,6 +8,7 @@ import typographyCss from "../shared/styles/typography.css";
 import { FetchError, fetchText } from "../shared/fetch";
 
 import md from "./markdown-it";
+import "../shared/alert";
 
 @customElement("markdown-viewer")
 export class MarkdownViewer extends LitElement {
@@ -19,7 +20,7 @@ export class MarkdownViewer extends LitElement {
 
   override render() {
     if (this.state instanceof FetchError) {
-      return html`<div class="error">${this.state.message}</div>`;
+      return html`<bdo-alert type="error">${this.state.message}</bdo-alert>`;
     }
 
     return this.state ? html`${unsafeHTML(this.state)}` : html``;

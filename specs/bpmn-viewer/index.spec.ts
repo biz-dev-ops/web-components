@@ -42,6 +42,16 @@ test.describe("bpmn-viewer", async () => {
         await expect(component.locator("svg[data-element-id='Process_Subprocesses_Collaboration']")).toBeVisible();
     });
 
+    test("shows error for invalid src", async ({ mount }) => {
+        const component = await mount(BPMNViewer, {
+            props: {
+                src: "invalid file"
+            }
+        });
+
+        await expect(component.locator("[type='error']")).toBeVisible();
+    });
+
     test.afterEach(async ({ page }) => {
         await page.close();
     });

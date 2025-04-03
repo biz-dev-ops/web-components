@@ -91,7 +91,7 @@ export class ModelViewerItemArray extends ModelViewerItem {
 
             .list--array li::after {
                 aspect-ratio: 1;
-                background-color: var(--main-surface);
+                background-color: var(--surface-main);
                 block-size: .625rem;
                 border-radius: var(--radius-circle);
                 border: var(--line-thin) solid var(--_item-line-color);

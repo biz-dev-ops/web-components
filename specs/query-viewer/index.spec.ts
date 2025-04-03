@@ -66,6 +66,16 @@ test.describe("query-viewer", async () => {
         await expectComponentToContain(component, 5, 1, 3);
     });
 
+    test("shows error for invalid src", async ({ mount }) => {
+        const component = await mount(QueryViewer, {
+            props: {
+                src: "invalid file"
+            }
+        });
+
+        await expect(component.locator("[type='error']")).toBeVisible();
+    });
+
     test.afterEach(async ({ page }) => {
         await page.close();
     });
