@@ -2,6 +2,9 @@ import { css } from "lit";
 
 const styles = css`
   :host {
+    --_icon-color: var(--icon-color, var(--text-color-base));
+
+    color: var(--_icon-color);
     display: flex;
     line-height: 1;
     position: relative;
