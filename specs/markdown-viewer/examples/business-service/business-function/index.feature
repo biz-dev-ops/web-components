@@ -1,4 +1,4 @@
-Feature: {{folder.name}}
+Feature: Calculate Payroll
 
   As a payroll administrator,
   I want the system to correctly calculate employee payroll,

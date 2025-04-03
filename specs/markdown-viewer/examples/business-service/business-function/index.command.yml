@@ -1,7 +1,10 @@
 ---
-title: {{folder.name}}
+title: calculate payroll
 description: |
-  {{folder.description}}
+  Determines how much each employee earns during a specific pay period.
+  It involves factoring in their wages or salary, hours worked (including overtime),
+  and then subtracting applicable deductions (like taxes and benefits) to arrive at their net pay.
+  This function ensures employees are compensated accurately and in compliance with legal requirements.
 type: object
 properties:
   parameters:
