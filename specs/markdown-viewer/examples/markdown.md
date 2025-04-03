@@ -1,8 +1,8 @@
 # Hello World
 
-- [BPMN](../bpmn-viewer/custom-links.bpmn)
-- [DMN](../dmn-viewer/dmn1.dmn)
-- [Mermaid](../mermaid-viewer/diagram1.mmd)
+- [BPMN](../../bpmn-viewer/custom-links.bpmn)
+- [DMN](../../dmn-viewer/dmn1.dmn)
+- [Mermaid](../../mermaid-viewer/diagram1.mmd)
 
 ## Level 2-1
 

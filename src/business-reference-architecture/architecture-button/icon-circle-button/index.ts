@@ -25,6 +25,7 @@ export class IconCircleArchitectureButton extends AbstractArchitectureButton {
                     color: var(--surface-current);
                     border-radius: var(--radius-pill);
                     aspect-ratio: 1;
+                    --icon-color: var(--surface-current);
                 }
             `
         )
