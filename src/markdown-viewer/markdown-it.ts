@@ -1,30 +1,33 @@
 import MarkdownIt from "markdown-it";
-import transformer, { components } from "./web-components-transformer";
-const extensions = components.flatMap(c => c.extensions);
-
-const listItemIsTabPanel = (listItem: ListItem) : boolean => {
-    return extensions.some(extension => listItem.getLink()?.getPath()?.endsWith(extension));
-};
-
-const md = MarkdownIt();
-
+import { urlRewriterFactory, transformComponentLink, components } from "./web-components-transformer";
 import nestedHeadersRulePlugin from "./nested-headers-rule";
-md.use(nestedHeadersRulePlugin, { isAriaExpanded: (level: number) => { 
-    if(level > 2) {
-        return false;
-    }
-
-    return undefined;
-} });
-
 import tabsRulePlugin from "./tabs-rule";
-md.use(tabsRulePlugin, {
-    listItemIsTabPanel
-});
-
 import linkTransformRulerPlugin from "./link-transform-ruler";
 import { ListItem } from "./tabs-ruler";
 
-md.use(linkTransformRulerPlugin, { transformer: transformer });
+const extensions = components.flatMap(c => c.extensions);
 
-export default md;
+const listItemIsTabPanel = (listItem: ListItem): boolean => {
+    return extensions.some(extension => listItem.getLink()?.getPath()?.endsWith(extension));
+};
+
+export default function mdFactory(src: string) {
+    const md = MarkdownIt();
+    md.use(nestedHeadersRulePlugin, {
+        isAriaExpanded: (level: number) => {
+            if (level > 2) {
+                return false;
+            }
+
+            return undefined;
+        }
+    });
+
+    md.use(tabsRulePlugin, {
+        listItemIsTabPanel
+    });
+
+    md.use(linkTransformRulerPlugin, { transformer: [ urlRewriterFactory(src), transformComponentLink ] });
+
+    return md;
+}

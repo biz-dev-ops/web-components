@@ -12,21 +12,6 @@ export class Icon extends LitElement {
   @property()
   icon!: string | undefined;
 
-  @property({ type: String, attribute: "icon-align" })
-  align: "start" | "center" | "end" = "end";
-
-  @property({ type: String, attribute: "icon-justify" })
-  justify: "start" | "center" | "end" = "end";
-
-  override updated(changedProperties: PropertyValues) {
-    if (changedProperties.has("justify")) {
-      this.style.setProperty("--icon-justify", this.justify);
-    }
-    if (changedProperties.has("align")) {
-      this.style.setProperty("--icon-align", this.align);
-    }
-  }
-
   override render() {
     if (!this.icon) {
       return html``;

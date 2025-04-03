@@ -116,4 +116,8 @@ export default css`
     dd + dt {
         margin-block-start: var(--space-sm);
     }
+
+    blockquote {
+        background-color: red;
+    }
 `;

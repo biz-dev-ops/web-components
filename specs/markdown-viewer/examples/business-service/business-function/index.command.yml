@@ -1,0 +1,32 @@
+---
+title: {{folder.name}}
+description: |
+  {{folder.description}}
+type: object
+properties:
+  parameters:
+    type: object
+    required:
+      - employee_id
+      - start_date
+      - end_date
+    properties:
+      employee_id:
+        type: string
+        description: The ID of the employee to calculate the payroll for.
+        pattern: ^\d{10}$
+        example: "1234567890"
+      start_date:
+        type: string
+        format: date
+        description: The start date of the payroll period.
+        example: "2024-01-01"
+      end_date:
+        type: string
+        format: date
+        description: The end date of the payroll period.
+        example: "2024-01-31"
+  exceptions:
+    oneOf:
+      - type: object
+        title: employee not found

@@ -28,11 +28,11 @@ export class LinkImpl implements Link {
 }
 
 export type LinkTransFormRulerPluginOptions = {
-  transformer: (link: Link) => void
+  transformer: [(link: Link) => void]
 }
 
 export default function linkTransformRulerPlugin(md: MarkdownIt, options: LinkTransFormRulerPluginOptions): void {
-  const transformer = options.transformer;
+  const transformer = options.transformer || [];
 
   md.core.ruler.push("links_transform_ruler", (state: StateCore): void => {
     for (const token of state.tokens) {
@@ -44,7 +44,7 @@ export default function linkTransformRulerPlugin(md: MarkdownIt, options: LinkTr
 
           if (child.type === "link_open") {
             activeLink = new LinkImpl(getLinkTokens(token.children, childIdx));
-            transformer(activeLink);
+            transformer.forEach(t => t(activeLink!));
           }
 
           if (child.type === "link_close" && activeLink) {

@@ -3,6 +3,8 @@ import { css } from "lit";
 const styles = css`
   :host {
     --_icon-color: var(--icon-color, var(--text-color-base));
+    --icon-justify: center;
+    --icon-align: center;
 
     color: var(--_icon-color);
     display: flex;
@@ -20,8 +22,8 @@ const styles = css`
 
   .icon {
     display: flex;
-    justify-content: var(--icon-justify, end);
-    align-items: var(--icon-align, end);
+    justify-content: var(--icon-justify, center);
+    align-items: var(--icon-align, center);
   }
 
   .icon:nth-child(2) {

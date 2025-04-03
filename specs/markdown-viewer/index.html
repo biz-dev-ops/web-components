@@ -10,13 +10,15 @@
     <main>
       <h1>Markdown viewer</h1>
       <div id="buttons">
-        <button id="bpmn">BPMN</button>
-        <button id="business-model-canvas">Business model canvas</button>
-        <button id="business-reference-architecture">Business reference architecture</button>
-        <button id="command">Command</button>
-        <button id="dmn">DMN</button>
-        <button id="event">Event</button>
-        <button id="mermaid">Mermaid</button>
+        <button id="business service" data-file="./examples/business-service/business-service/index.md">Service</button>
+        <button id="business service" data-file="./examples/business-service/business-function/index.md">Function</button>
+        <button id="bpmn" data-file="./examples/bpmn/index.md">BPMN</button>
+        <button id="business-model-canvas" data-file="./examples/business-model-canvas/index.md">Business model canvas</button>
+        <button id="business-reference-architecture" data-file="./examples/business-reference-architecture/index.md">Business reference architecture</button>
+        <button id="command" data-file="./examples/command/index.md">Command</button>
+        <button id="dmn" data-file="./examples/dmn/index.md">DMN</button>
+        <button id="event" data-file="./examples/event/index.md">Event</button>
+        <button id="mermaid" data-file="./examples/mermaid/index.md">Mermaid</button>
         <button id="model">Model</button>
         <button id="query">Query</button>
         <button id="tabs">Tabs</button>
@@ -51,7 +53,8 @@
 
       buttons.addEventListener("click", function (event) {
         const target = event.target;
-        viewer.setAttribute("src", `markdown-${target.id}.md`);
+        const file = target.getAttribute("data-file");
+        viewer.setAttribute("src", file);
       });
     </script>
   </body>

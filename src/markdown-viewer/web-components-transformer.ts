@@ -1,4 +1,4 @@
-import { Token } from "markdown-it";
+import path from "node:path";
 import { Link } from "./link-transform-ruler";
 
 export const components = [
@@ -14,7 +14,15 @@ export const components = [
     { extensions: [".task.yml", ".task.yaml"], tag: "task-viewer" }
 ];
 
-export default function (link: Link) : void {
+export function urlRewriterFactory(src: string) : (link: Link) => void {
+    return (link: Link) => {
+        const href = link.getAttribute("href")!;
+        const newHref = path.join(path.dirname(src), href);
+        link.tokens.find(token => token.type === "link_open")?.attrSet("href", newHref);
+    }
+}
+
+export function transformComponentLink(link: Link) : void {
     const tag = getTag();
 
     if(!tag) {
