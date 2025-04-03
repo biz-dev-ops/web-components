@@ -1,4 +1,3 @@
-import { Token } from "markdown-it";
 import { Link } from "./link-transform-ruler";
 
 export const components = [
@@ -8,6 +7,7 @@ export const components = [
     { extensions: [".command.yml", ".command.yaml"], tag: "command-viewer" },
     { extensions: [".dmn"], tag: "dmn-viewer" },
     { extensions: [".event.yml", ".event.yaml"], tag: "event-viewer" },
+    { extensions: [".feature"], tag: "feature-viewer" },
     { extensions: [".mmd"], tag: "mermaid-viewer" },
     { extensions: [".model.yml", ".model.yaml"], tag: "model-viewer" },
     { extensions: [".query.yml", ".query.yaml"], tag: "query-viewer" },
