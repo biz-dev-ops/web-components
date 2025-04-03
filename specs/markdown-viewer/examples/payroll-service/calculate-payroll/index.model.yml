@@ -3,6 +3,8 @@ title: calculate payroll
 description: |
   Ensures employees are compensated accurately and in compliance with legal requirements.
 type: object
+required:
+  - properties
 properties:
   parameters:
     type: object
@@ -26,7 +28,3 @@ properties:
         format: date
         description: The end date of the payroll period.
         example: "2024-01-31"
-  exceptions:
-    oneOf:
-      - type: object
-        title: employee not found

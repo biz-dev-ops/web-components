@@ -4,9 +4,8 @@ description: |
   Ensures that all relevant work and absence information for the pay period is gathered, verified, and prepared for the subsequent steps in the payroll calculation.
 type: object
 required:
-  - properties
+  - parameters
   - response
-  - exceptions
 properties:
   parameters:
     type: object
@@ -32,11 +31,8 @@ properties:
         example: "2024-01-31"
   response:
     type: array
-    title: time and attendance records
     description: Array of time and attendance records
     items:
-      title: time and attendance record
-      description: A record of time and attendance for an employee
       type: object
       required:
         - date
@@ -72,5 +68,4 @@ properties:
           example: "This is a note"
   exceptions:
     oneOf:
-      - type: object
-        title: employee not found
+      - $ref: "../_data-dictionary/exceptions/employee-not-found.yml"
