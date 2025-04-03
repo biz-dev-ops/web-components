@@ -118,6 +118,7 @@ export default css`
     }
 
     blockquote {
-        background-color: red;
+        padding: 0 var(--space-sm);
+        border-left: var(--space-xxs) solid var( --color-brand-pop);
     }
 `;

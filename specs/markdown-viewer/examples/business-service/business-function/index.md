@@ -13,7 +13,7 @@ Ensures employees are compensated accurately and in compliance with legal requir
 
 [Process](./index.bpmn)
 
-## Tasks
+## Steps
 
 ### Get time and attendance data
 
@@ -29,7 +29,7 @@ Collects and consolidates information about employee work hours and absences. Th
 Ensures that all relevant work and absence information for the pay period is gathered, verified, and prepared for the subsequent steps in the payroll calculation.
 
 * [Query](./get-time-and-attendance.model.yml)
-* [Requirements](./get-time-and-attendance.feature))
+* [Requirements](./get-time-and-attendance.feature)
 
 ### Determine gross pay
 
@@ -102,6 +102,12 @@ Securely stores all the calculated payroll information in a designated system or
 * **Audit trails**: Logs of when the payroll was processed, by whom, and any changes made.
 
 Automatically committs the data to its permanent storage. It's crucial that this data is stored securely, with appropriate access controls, and is readily retrievable for reporting, compliance audits, and addressing any payroll-related issues that may arise in the future. This saved data forms the foundation for subsequent processes like disbursing payments and generating payroll reports.
+
+### Solve problem
+
+>  Provides a human intervention point to diagnose, resolve, and mitigate these exceptions, aiming to either resume the payroll process successfully or, when resolution is impossible, to gracefully conclude it while signaling a critical failure.
+
+Acts as a crucial safety net and a point of human oversight in the automated payroll process. It acknowledges that unforeseen issues can arise and provides a structured way to address them, minimizing disruptions and ensuring appropriate handling of payroll exceptions. The clear outcomes of this task dictate the subsequent flow of the payroll process, ensuring either a successful completion or a formal recognition of failure.
 
 ## Events
 
