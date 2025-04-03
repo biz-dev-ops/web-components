@@ -16,7 +16,7 @@ const buttonCss = css`
         color: var(--_badge-text-color);
         display: flex;
         flex-direction: row;
-        font-size: var(--font-size-xs);
+        font-size: var(--font-size-sm);
         gap: var(--space-xxs);
         padding-block: calc(var(--space-xxs) / 2);
         padding-inline: var(--space-xs);
