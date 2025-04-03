@@ -9,7 +9,13 @@ const listItemIsTabPanel = (listItem: ListItem) : boolean => {
 const md = MarkdownIt();
 
 import nestedHeadersRulePlugin from "./nested-headers-rule";
-md.use(nestedHeadersRulePlugin);
+md.use(nestedHeadersRulePlugin, { isAriaExpanded: (level: number) => { 
+    if(level > 2) {
+        return false;
+    }
+
+    return undefined;
+} });
 
 import tabsRulePlugin from "./tabs-rule";
 md.use(tabsRulePlugin, {
