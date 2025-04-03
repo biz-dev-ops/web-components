@@ -41,6 +41,16 @@ test.describe("dmn-viewer", async () => {
         await expect(component).not.toContainText("DRD_1");
     });
 
+    test("shows error for invalid src", async ({ mount }) => {
+        const component = await mount(DMNViewer, {
+            props: {
+                src: "invalid file"
+            }
+        });
+
+        await expect(component.locator("[type='error']")).toBeVisible();
+    });
+
     test("decission model navigation buttons are working", async ({ mount }) => {
         const component = await mount(DMNViewer, {
             props: {

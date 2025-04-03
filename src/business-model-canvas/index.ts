@@ -7,6 +7,7 @@ import { Model } from "./models";
 import "./canvas-box";
 import { data } from "./data";
 import { FetchError, fetchYamlAndBundleAs } from "../shared/fetch";
+import "../shared/alert";
 
 export const tag = "business-model-canvas";
 
@@ -23,7 +24,7 @@ export class BusinessModelCanvasComponent extends LitElement {
 
   override render() {
     if (this.model instanceof FetchError) {
-      return html`<div class="error">${this.model.message}</div>`;
+      return html`<bdo-alert type="error">${this.model.message}</bdo-alert>`;
     }
 
     return html` <div class="canvas-grid">

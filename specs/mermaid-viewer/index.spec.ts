@@ -46,10 +46,10 @@ test.describe("mermaid-viewer", async () => {
             }
         });
 
-        await expect(component.locator(".error")).toBeVisible();
+        await expect(component.locator("[type='error']")).toBeVisible();
     });
 
     test.afterEach(async ({ page }) => {
         await page.close();
     });
-}); 
+});

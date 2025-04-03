@@ -2,7 +2,7 @@
   /* Default theme values */
   --rgb-brand: 0 0 0;
   --rgb-brand-secondary: var(--rgb-brand);
-  --rgb-text: var(--rgb-brand);
+  --rgb-text: 0 0 0;
   --rgb-heading: var(--rgb-brand-secondary);
 
   --color-brand-base: rgb(var(--rgb-brand));

@@ -7,6 +7,7 @@ import "../shared/badge";
 import "../shared/expansion-panel";
 import "../shared/truncate";
 import "../model-viewer";
+import "../shared/alert";
 import { Case, UseCase, UseCaseType } from "./models";
 import {titlelize, parseMarkdown } from "../shared/util";
 import { FetchError, fetchYamlAndBundleAs } from "../shared/fetch";
@@ -25,7 +26,7 @@ export abstract class UseCaseViewer<T extends UseCase> extends LitElement {
 
   override render() {
     if (this.model instanceof FetchError) {
-      return html`<div class="error">${this.model.message}</div>`;
+      return html`<bdo-alert type="error">${this.model.message}</bdo-alert>`;
     }
 
     return html`
@@ -127,7 +128,7 @@ export abstract class UseCaseViewer<T extends UseCase> extends LitElement {
 
   static override get styles(): CSSResult | CSSResultArray {
     return [
-      resetCss, 
+      resetCss,
       useCaseViewerCss
     ];
   }

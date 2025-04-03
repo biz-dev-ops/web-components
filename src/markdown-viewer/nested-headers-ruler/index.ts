@@ -10,9 +10,7 @@ export default function nestedHeadersRulerPlugin(md: MarkdownIt): void {
         for (const token of state.tokens) {
             if (token.type === "heading_open") {
                 const headerLevel = parseInt(token.tag.slice(1));
-
                 addCloseContainerTokenWhenOpenContainerTokensHeaderLevelIsGreaterOrEqual(headerLevel);
-
                 addOpenContainerToken(token);
             }
 
@@ -48,7 +46,7 @@ export default function nestedHeadersRulerPlugin(md: MarkdownIt): void {
         }
 
         function getContainerLevel(): number {
-            if(openContainerTokenStack.length == 0) {
+            if (openContainerTokenStack.length == 0) {
                 return -1;
             }
 
@@ -69,7 +67,7 @@ export default function nestedHeadersRulerPlugin(md: MarkdownIt): void {
             closeContainerToken.level = openContainerToken.level;
             closeContainerToken.map = openContainerToken.map;
             const headingLevel = openContainerToken.attrGet("data-heading-level");
-            if(headingLevel) {
+            if (headingLevel) {
                 closeContainerToken.attrPush(["data-heading-level", headingLevel]);
             }
             tokens.push(closeContainerToken);
