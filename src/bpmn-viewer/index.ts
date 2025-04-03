@@ -97,7 +97,7 @@ export class BPMNViewer extends LitElement {
     }
 
     this._viewer = new Viewer({
-      container: this.shadowRoot?.querySelector("#bpmn-container") as HTMLElement,
+      container: this.renderRoot.querySelector("#bpmn-container") as HTMLElement,
       moddleExtensions: {
         bizdevops,
       },
@@ -148,7 +148,7 @@ export class BPMNViewer extends LitElement {
     const minMax = _getMinMaxHeight(this);
     const extraHeight = _calculateExtraHeigt(this);
     const viewbox = this._viewer.get("canvas").viewbox();
-    const container = this.shadowRoot?.querySelector("#bpmn-container") as HTMLElement;
+    const container = this.renderRoot.querySelector("#bpmn-container") as HTMLElement;
 
     container.style.aspectRatio = `${viewbox.inner.width} / ${viewbox.inner.height}`;
     container.style.minHeight = `${minMax.minHeight}px`;
@@ -157,7 +157,7 @@ export class BPMNViewer extends LitElement {
     this.zoomReset();
 
     function _calculateExtraHeigt(el) {
-      const breadcrumbs = el.shadowRoot?.querySelector(".bjs-breadcrumbs") as HTMLElement;
+      const breadcrumbs = el.renderRoot.querySelector(".bjs-breadcrumbs") as HTMLElement;
       const { x, height } = breadcrumbs.getBoundingClientRect();
       const lineTweak = Math.max(10, x + height) * 2;
       return lineTweak;

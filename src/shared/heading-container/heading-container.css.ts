@@ -4,7 +4,7 @@ export default css`
     :host {
         display: block;
     }
-    
+
     :host(:where([level="1"], [level="2"], [level="3"], [level="4"])) {
         display: flex;
         flex-direction: column;

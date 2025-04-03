@@ -10,41 +10,44 @@
     <main>
       <h1>Driver component</h1>
 
-      <!-- <h2>Basic Example</h2>
-      <p>
-        The driver component allows you to control a "driven" component with
-        action buttons.
-      </p>
-
-      <bdo-driver>
-        <button slot="drivers" data-action="zoom-in">Zoom In</button>
-        <button slot="drivers" data-action="zoom-out">Zoom Out</button>
-        <div class="driven-content">
-          <h3>Driven Content</h3>
-          <p>This content can be controlled by the driver buttons above.</p>
-        </div>
-      </bdo-driver>
-
-      <h2>With Default Drivers</h2>
-      <p>
-        You can use the built-in default drivers by setting the
-        use-default-drivers attribute.
-      </p>
-
-      <bdo-driver use-default-drivers>
-        <div class="driven-content">
-          <h3>Content with Default Drivers</h3>
-          <p>This content can be controlled by the default driver buttons.</p>
-          <img src="https://via.placeholder.com/400x300" alt="Placeholder image"
-          />
-        </div>
-      </bdo-driver> -->
-
       <h2>Custom Driven Component</h2>
       <p>
-        You can create custom driven components that implement the required
-        interface.
+        You can create custom driven components which implement the required
+        <code>DrivenByAction</code> interface.
       </p>
+
+      <pre>
+        <code>
+class CustomDrivenComponent extends HTMLElement implements DrivenByAction {
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+    this.shadowRoot.innerHTML = `
+      &lt;div&gt;
+        &lt;h3&gt;Driven Component&lt;/h3&gt;
+        &lt;p&gt;Current state: &lt;span id=&quot;state&quot;&gt;normal&lt;/span&gt;&lt;/p&gt;
+      &lt;/div&gt;
+    `;
+  }
+
+  handleDriverAction(action) {
+    const stateElement = this.shadowRoot.getElementById("state");
+    stateElement.textContent = action;
+  }
+
+  canHandleDriverAction(action) {
+    return [
+      "toggle-fullscreen",
+      "zoom-in",
+      "zoom-out",
+      "zoom-reset",
+    ].includes(action);
+  }
+}
+
+customElements.define("custom-driven", CustomDrivenComponent);
+        </code>
+      </pre>
 
       <script>
         // Define a custom driven component
@@ -54,7 +57,7 @@
             this.attachShadow({ mode: "open" });
             this.shadowRoot.innerHTML = `
               <div>
-                <h3>Custom Driven Component</h3>
+                <h3>Driven Component</h3>
                 <p>Current state: <span id="state">normal</span></p>
               </div>
             `;
@@ -62,18 +65,7 @@
 
           handleDriverAction(action) {
             const stateElement = this.shadowRoot.getElementById("state");
-            if (action === "toggle-fullscreen") {
-              stateElement.textContent =
-                stateElement.textContent === "fullscreen"
-                  ? "normal"
-                  : "fullscreen";
-            } else if (action === "zoom-in") {
-              stateElement.textContent = "zoomed in";
-            } else if (action === "zoom-out") {
-              stateElement.textContent = "zoomed out";
-            } else if (action === "zoom-reset") {
-              stateElement.textContent = "normal";
-            }
+            stateElement.textContent = action;
           }
 
           canHandleDriverAction(action) {
@@ -89,7 +81,19 @@
         customElements.define("custom-driven", CustomDrivenComponent);
       </script>
 
-      <bdo-driver use-default-drivers>
+      <bdo-driver>
+        <button slot="driver" data-action="toggle-fullscreen">
+          <bdo-icon icon="mat-fullscreen"></bdo-icon>Toggle Fullscreen
+        </button>
+        <button slot="driver" data-action="zoom-in">
+          <bdo-icon icon="mat-zoom_in"></bdo-icon>Zoom In
+        </button>
+        <button slot="driver" data-action="zoom-out">
+          <bdo-icon icon="mat-zoom_out"></bdo-icon>Zoom Out
+        </button>
+        <button slot="driver" data-action="zoom-reset">
+          <bdo-icon icon="mat-reset_focus"></bdo-icon>Zoom Reset
+        </button>
         <custom-driven></custom-driven>
       </bdo-driver>
 
@@ -99,6 +103,7 @@
 
     <script type="module">
       import "../../../src/shared/driver/index.ts";
+      import "../../../src/shared/icon/index.ts";
     </script>
   </body>
 </html>
