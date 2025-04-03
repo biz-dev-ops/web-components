@@ -192,7 +192,7 @@ test.describe("linkTransformRulerPlugin", () => {
 function expectTokens(markdown: string, expectedTokens: Token[], transformer: (link: Link) => void) {
   const md = new MarkdownIt();
   md.use(linkTransformRulerPlugin, {
-    transformer
+    transformers: [ transformer ]
   });
   expectMarkdownToMatchTokens(md, markdown, expectedTokens);
 }

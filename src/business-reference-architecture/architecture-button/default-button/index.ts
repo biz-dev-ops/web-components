@@ -17,7 +17,7 @@ export class DefaultArchitectureButton extends AbstractArchitectureButton {
                     border-radius: var(--radius-pill);
                 }
 
-                .icon {
+                bdo-icon {
                     --icon-color: var(--surface-current);
                 }
             `

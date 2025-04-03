@@ -2,7 +2,9 @@
 
 > Ensures fairness, legal obligation, financial accuracy, and the overall well-being and smooth operation of the business and its workforce. It's a foundational process that underpins the employment relationship and contributes significantly to the success and sustainability of an organization.
 
-Determines how much each employee earns during a specific pay period. It involves factoring in their wages or salary, hours worked (including overtime), and then subtracting applicable deductions (like taxes and benefits) to arrive at their net pay. This function ensures employees are compensated accurately and in compliance with legal requirements.
+Determines how much each employee earns during a specific pay period. It involves factoring in their wages or salary, hours worked (including overtime), and then subtracting applicable deductions (like taxes and benefits) to arrive at their net pay.
+
+Ensures employees are compensated accurately and in compliance with legal requirements.
 
 * [Command](./index.model.yml)
 * [Requirements](./index.feature)
@@ -26,7 +28,7 @@ Collects and consolidates information about employee work hours and absences. Th
 
 Ensures that all relevant work and absence information for the pay period is gathered, verified, and prepared for the subsequent steps in the payroll calculation.
 
-* [Query](./get-time-and-attendance.query.yml)
+* [Query](./get-time-and-attendance.model.yml)
 * [Requirements](./get-time-and-attendance.feature))
 
 ### Determine gross pay

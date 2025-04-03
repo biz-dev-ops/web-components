@@ -18,6 +18,9 @@ export const components = [
 export function urlRewriterFactory(src: string) : (link: Link) => void {
     return (link: Link) => {
         const href = link.getAttribute("href")!;
+        if(!href) {
+            return;
+        }
         const newHref = path.join(path.dirname(src), href);
         link.tokens.find(token => token.type === "link_open")?.attrSet("href", newHref);
     }

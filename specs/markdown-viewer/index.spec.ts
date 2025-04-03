@@ -1,7 +1,6 @@
 import { expect, test } from "@sand4rt/experimental-ct-web";
 import { FileRoute, StringContentRoute, useRoutes } from "../helper/router-helper";
 import { MarkdownViewer } from "../../src/markdown-viewer";
-import { BPMNViewer } from "../../src/bpmn-viewer";
 
 const components = [
   { extension: "bpmn", tag: "bpmn-viewer" },
@@ -26,7 +25,7 @@ const components = [
 test.describe("markdown-viewer", async () => {
 
   test("can render markdown", async ({ mount, router }) => {
-    await useRoutes(router, new FileRoute("/markdown.md", new URL("markdown.md", import.meta.url)));
+    await useRoutes(router, new FileRoute("/markdown.md", new URL("examples/markdown.md", import.meta.url)));
 
     const component = await mount(MarkdownViewer, {
       props: {
@@ -38,7 +37,7 @@ test.describe("markdown-viewer", async () => {
   });
 
   test("can render tabs", async ({ mount, router }) => {
-    await useRoutes(router, new FileRoute("/markdown-tabs.md", new URL("markdown-tabs.md", import.meta.url)));
+    await useRoutes(router, new FileRoute("/markdown-tabs.md", new URL("examples/tabs.md", import.meta.url)));
 
     const component = await mount(MarkdownViewer, {
       props: {
@@ -52,7 +51,7 @@ test.describe("markdown-viewer", async () => {
   });
 
   test("can render nested headers", async ({ mount, router }) => {
-    await useRoutes(router, new FileRoute("/markdown.md", new URL("markdown.md", import.meta.url)));
+    await useRoutes(router, new FileRoute("/markdown.md", new URL("examples/markdown.md", import.meta.url)));
 
     const component = await mount(MarkdownViewer, {
       props: {

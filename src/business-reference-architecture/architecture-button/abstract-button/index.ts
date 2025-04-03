@@ -93,7 +93,7 @@ export abstract class AbstractArchitectureButton extends LitElement {
                     line-height: 140%;
                 }
 
-                a bdo-icon, span bdo-icon {
+                bdo-icon {
                     flex: none;
                     width: 1.5rem;
                     height: 1.5rem;

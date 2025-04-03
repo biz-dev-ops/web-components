@@ -27,7 +27,7 @@ export default function mdFactory(src: string) {
         listItemIsTabPanel
     });
 
-    md.use(linkTransformRulerPlugin, { transformer: [ urlRewriterFactory(src), transformComponentLink ] });
+    md.use(linkTransformRulerPlugin, { transformers: [ urlRewriterFactory(src), transformComponentLink ] });
 
     return md;
 }
