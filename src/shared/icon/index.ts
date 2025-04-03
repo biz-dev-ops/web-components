@@ -1,8 +1,10 @@
-import { html, LitElement, unsafeCSS } from "lit";
+import { html, LitElement, PropertyValues, unsafeCSS } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
-import styles from "./icon.css";
+import resetCss from "../styles/reset.css";
+import iconCss from "./icon.css";
 import materialCss from "material-symbols/outlined.css?inline";
+
 import { appendFontFaceDefinitionToDom } from "../util";
 
 @customElement("bdo-icon")
@@ -10,25 +12,48 @@ export class Icon extends LitElement {
   @property()
   icon!: string | undefined;
 
+  @property({ type: String, attribute: "icon-align" })
+  align: "start" | "center" | "end" = "end";
+
+  @property({ type: String, attribute: "icon-justify" })
+  justify: "start" | "center" | "end" = "end";
+
+  override updated(changedProperties: PropertyValues) {
+    if (changedProperties.has("justify")) {
+      this.style.setProperty("--icon-justify", this.justify);
+    }
+    if (changedProperties.has("align")) {
+      this.style.setProperty("--icon-align", this.align);
+    }
+  }
+
   override render() {
     if (!this.icon) {
       return html``;
     }
 
-    if (this.icon.startsWith("mat-")) {
-      return html`<span class="material-symbols"
-        >${this.icon.substring(4)}</span
-      >`;
-    }
-
-    return html`<img .src=${this.icon} />`; // This will always have the SVG color
+    // Render a single or a joined icons
+    const icons = this.icon.split(" ").slice(0, 2);
+    return html`${icons.map((icon) => this.renderIcon(icon))}`;
   }
 
   override async firstUpdated() {
     appendFontFaceDefinitionToDom(this);
   }
 
+  renderIcon(icon: string) {
+    if (icon.startsWith("mat-")) {
+      return html`
+        <span class="icon">
+          <span class="symbol material-symbols">${icon.substring(4)}</span>
+        </span>`;
+    }
+
+    // This will always have the SVG color
+    return html`<img .src=${icon} />`;
+  }
+
   static override get styles() {
-    return [styles, unsafeCSS(materialCss)];
+    return [resetCss, iconCss, unsafeCSS(materialCss)];
   }
 }

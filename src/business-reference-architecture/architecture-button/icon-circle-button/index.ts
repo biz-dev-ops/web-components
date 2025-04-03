@@ -22,7 +22,7 @@ export class IconCircleArchitectureButton extends AbstractArchitectureButton {
                     align-items: center;
                     justify-content: center;
                     background-color: var(--color-brand-base);
-                    color: var(--main-surface);
+                    color: var(--surface-current);
                     border-radius: var(--radius-pill);
                     aspect-ratio: 1;
                 }

@@ -19,7 +19,7 @@ export class ArrowArchitectureButton extends AbstractArchitectureButton {
         styles.push(
             css`
                 :host > a, :host > span {
-                    color: var(--main-surface);
+                    color: var(--surface-current);
                 }
 
                 .inner {

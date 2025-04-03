@@ -115,7 +115,7 @@ export class ArchitectureSection extends LitElement {
 
                 .architecture-section[data-section-type="streams"] {
                     padding-top: var(--space-md);
-                    color: var(--main-surface);
+                    color: var(--surface-main);
                     border: 3px solid var(--color-brand-pop);
                     gap: 0;
                 }
@@ -161,7 +161,7 @@ export class ArchitectureSection extends LitElement {
                     left: var(--space-sm);
                     margin: 0;
                     padding: var(--space-xxs) var(--space-sm);
-                    background-color: var(--main-surface);
+                    background-color: var(--surface-main);
                     border-radius: var(--radius-pill);
                     transform: translateY(-50%);
                     text-transform: lowercase;
