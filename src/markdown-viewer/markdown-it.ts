@@ -11,7 +11,7 @@ const listItemIsTabPanel = (listItem: ListItem): boolean => {
     return extensions.some(extension => listItem.getLink()?.getPath()?.endsWith(extension));
 };
 
-export default function mdFactory(src: string) {
+export default function mdFactory(src: string = ".") {
     const md = MarkdownIt();
     md.use(nestedHeadersRulePlugin, {
         isAriaExpanded: (level: number) => {
