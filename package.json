@@ -43,7 +43,7 @@
     "js-yaml": "^4.1.0",
     "lit": "^3.2.1",
     "markdown-it": "^14.1.0",
-    "material-symbols": "^0.29.1",
+    "material-symbols": "^0.30.0",
     "mermaid": "^11.5.0",
     "yaml": "^2.7.0",
     "zod": "^3.24.2"

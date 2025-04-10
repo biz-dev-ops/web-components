@@ -4,7 +4,7 @@ export default css`
     :host {
         display: block;
     }
-    
+
     :host(:where([level="1"], [level="2"], [level="3"], [level="4"])) {
         display: flex;
         flex-direction: column;
@@ -89,7 +89,7 @@ export default css`
         margin-inline: 0 !important;
     }
 
-    .header ::slotted(:where(h1, h2, h3, h4)) {
+    :host(:not([aria-expanded])) .header ::slotted(:where(h1, h2, h3, h4)) {
         color: var(--text-color-heading);
         font-family: var(--font-family-heading);
         line-height: var(--line-height-heading);
