@@ -4,7 +4,7 @@ description: |
   Ensures employees are compensated accurately and in compliance with legal requirements.
 type: object
 required:
-  - properties
+  - parameters
 properties:
   parameters:
     type: object

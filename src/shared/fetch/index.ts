@@ -1,6 +1,7 @@
 import { bundle } from "@apidevtools/json-schema-ref-parser";
 import YAML from "yaml";
-import Ajv from "ajv/dist/2020";
+import Ajv from "ajv";
+// import openApi from "ajv-openapi";
 const ajv = new Ajv({ strict: true });
 
 export async function fetchText(src: string): Promise<string> {
@@ -35,6 +36,7 @@ export async function fetchYamlAs<T>(src: string): Promise<T> {
     const response = await fetch(src);
     if (response.ok) {
         const yaml = await response.text();
+        console.log("yaml", yaml);
         return YAML.parse(yaml) as T;
     }
     else {
@@ -53,19 +55,18 @@ export async function fetchYamlAndBundleAs<T>(src: string): Promise<T> {
 
 export async function fetchAndValidateSchema(src: string): Promise<any> {
     const schema = await fetchSchema(src);
+    console.log("schema", schema);
     if (!schema) {
         return undefined;
     }
 
-    const validate = ajv.compile(schema);
-    const valid = validate(schema);
-    if (!valid) {
-        throw new FetchError(src!, `
-Invalid schema:
-
-${validate.errors?.map(e => `* ${e.message}`).join("\n")}
-
-`, validate.errors);
+    try {
+        ajv.compile(schema);
+    }
+    catch (error: any) {
+        console.log("error", error);
+        console.dir(error);
+        throw new FetchError(src,  `Invalid schema:\n${error?.errors?.map(e => `* ${e?.message}`).join("\n")}`, error.errors);
     }
 
     return schema;
@@ -81,8 +82,6 @@ export async function fetchSchema(src: string): Promise<any> {
     }
 
     throw new FetchError(src, "Unsupported file type", undefined);
-
-
 }
 
 export class FetchError extends Error {

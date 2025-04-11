@@ -1,28 +1,28 @@
-import { CSSResult, CSSResultArray, html, LitElement } from "lit";
+import { CSSResult, CSSResultArray, html, LitElement, TemplateResult } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import markdownFactory from "../markdown-viewer/markdown-it";
 const md = markdownFactory();
 import resetCss from "../shared/styles/reset.css";
-import jsonSchemaViewerCss from "./json-schema-viewer.css";
+import schemaViewerCss from "./schema-viewer.css";
 
 import "../shared/alert";
 import { fetchAndValidateSchema } from "../shared/fetch";
 import path from "path";
-
-export const tag = "json-schema-viewer";
+import SchemaFactory from "./schema-factory";
+export const tag = "schema-viewer";
 
 @customElement(tag)
-export class JsonSchemaViewerComponent extends LitElement {
+export class SchemaViewerComponent extends LitElement {
+    private schemaFactory = new SchemaFactory();
 
     @property({ type: String })
     src?: string;
 
-    @state()
-    private schema?: Record<string, unknown>;
+    private schema?: any;
 
     @state()
-    private path?: string;
+    private template?: TemplateResult[];
 
     @state()
     private error?: Error;
@@ -32,18 +32,22 @@ export class JsonSchemaViewerComponent extends LitElement {
             return html`<bdo-alert type="error">${unsafeHTML(md.render(this.error.message))}</bdo-alert>`;
         }
 
-        return html`
-            <div>
-                <h1>JSON Schema Viewer</h1>
-            </div>
-        `;
+        return this.template;
     }
 
     override async update(changedProperties: Map<string, unknown>) {
         if (changedProperties.has("src")) {
             try {
-                const schema = await fetchAndValidateSchema(path.resolve(this.src!));
-                this.schema = schema;
+                this.schema = await fetchAndValidateSchema(path.resolve(this.src!));
+                const iterator = this.schemaFactory.build(this.schema);
+                const results: TemplateResult[] = [];
+                let result = await iterator.next();
+                while (!result.done) {
+                    results.push(result.value);
+                    result = await iterator.next();
+                }
+                this.template = results;
+                this.error = undefined;
             }
             catch (error: unknown) {
                 this.error = error as Error;
@@ -56,7 +60,7 @@ export class JsonSchemaViewerComponent extends LitElement {
     static override get styles(): CSSResult | CSSResultArray {
         return [
             resetCss,
-            jsonSchemaViewerCss
+            schemaViewerCss
         ];
     }
 }
