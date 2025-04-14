@@ -1,8 +1,7 @@
 import { bundle } from "@apidevtools/json-schema-ref-parser";
 import YAML from "yaml";
 import Ajv from "ajv";
-// import openApi from "ajv-openapi";
-const ajv = new Ajv({ strict: true });
+import addFormats from "ajv-formats";
 
 export async function fetchText(src: string): Promise<string> {
     const response = await fetch(src);
@@ -36,7 +35,6 @@ export async function fetchYamlAs<T>(src: string): Promise<T> {
     const response = await fetch(src);
     if (response.ok) {
         const yaml = await response.text();
-        console.log("yaml", yaml);
         return YAML.parse(yaml) as T;
     }
     else {
@@ -55,33 +53,48 @@ export async function fetchYamlAndBundleAs<T>(src: string): Promise<T> {
 
 export async function fetchAndValidateSchema(src: string): Promise<any> {
     const schema = await fetchSchema(src);
-    console.log("schema", schema);
     if (!schema) {
         return undefined;
     }
 
     try {
-        ajv.compile(schema);
+        const ajv = new Ajv({ strict: true, loadSchema: async (uri) => {
+            return await fetchSchema(uri);
+        }});
+        addFormats(ajv);
+        await ajv.compileAsync(schema);
     }
     catch (error: any) {
         console.log("error", error);
-        console.dir(error);
-        throw new FetchError(src,  `Invalid schema:\n${error?.errors?.map(e => `* ${e?.message}`).join("\n")}`, error.errors);
+        console.dir(error.errors);
+        let message = `Schema validation error: ${error}`;
+        if (error.errors) {
+            message += `\n\n${error?.errors?.map(e => `* ${e?.message}`).join("\n")}`;
+        }
+        throw new FetchError(src, message, error);
     }
 
     return schema;
 }
 
 export async function fetchSchema(src: string): Promise<any> {
+    let schema: any | undefined;
     if (src.includes(".json")) {
-        return await fetchJsonAsAny(src);
+        schema = await fetchJsonAsAny(src);
     }
 
     if (src.includes(".yml") || src.includes(".yaml")) {
-        return await fetchYamlAsAny(src);
+        schema = await fetchYamlAsAny(src);
     }
 
-    throw new FetchError(src, "Unsupported file type", undefined);
+    if (!schema) {
+        throw new FetchError(src, "Unsupported file type", undefined);
+    }
+
+    if (!schema["$id"]) {
+        schema["$id"] = src;
+    }
+    return schema;
 }
 
 export class FetchError extends Error {

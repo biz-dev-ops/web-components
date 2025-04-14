@@ -37,6 +37,7 @@
     "@apidevtools/json-schema-ref-parser": "^11.9.3",
     "@cucumber/gherkin": "^32.0.0",
     "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
     "bpmn-js": "^18.3.1",
     "bpmn-js-token-simulation": "^0.38.0",
     "dmn-js": "^17.2.0",

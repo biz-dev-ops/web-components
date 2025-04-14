@@ -1,5 +1,6 @@
-import { CSSResult, CSSResultArray, html, LitElement, TemplateResult } from "lit";
-import { customElement, property, state } from "lit/decorators.js";
+import path from "node:path";
+import { CSSResult, CSSResultArray, html, LitElement } from "lit";
+import { customElement, eventOptions, property, state } from "lit/decorators.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import markdownFactory from "../markdown-viewer/markdown-it";
 const md = markdownFactory();
@@ -7,47 +8,76 @@ import resetCss from "../shared/styles/reset.css";
 import schemaViewerCss from "./schema-viewer.css";
 
 import "../shared/alert";
-import { fetchAndValidateSchema } from "../shared/fetch";
-import path from "path";
-import SchemaFactory from "./schema-factory";
+import "./components/object-properties-schema-viewer";
+import "./components/array-schema-viewer";
+import "./components/one-of-schema-viewer";
+import "./components/one-of-items-schema-viewer";
+import "./components/schema-navigation";
+
+import SchemaResolver from "./schema-resolver";
+import { FragmentIndexSelected, Fragment, FragmentSelected } from "./types";
+
 export const tag = "schema-viewer";
 
 @customElement(tag)
 export class SchemaViewerComponent extends LitElement {
-    private schemaFactory = new SchemaFactory();
+    private resolver?: SchemaResolver;
 
-    @property({ type: String })
-    src?: string;
+    private fragments: Fragment[] = [];
 
+    @state()
     private schema?: any;
 
     @state()
-    private template?: TemplateResult[];
-
-    @state()
     private error?: Error;
+
+    @property({ type: String })
+    src?: string;
 
     override render() {
         if (this.error) {
             return html`<bdo-alert type="error">${unsafeHTML(md.render(this.error.message))}</bdo-alert>`;
         }
 
-        return this.template;
+        const key = this.fragments.at(-1)!.key;
+        const required = key ? this.schema.required?.includes(key) : false;
+
+        return html`
+            <schema-navigation .fragments=${this.fragments} @FragmentIndexSelected=${this._onFragmentIndexSelected}></schema-navigation>
+
+            <array-schema-viewer .key=${key} .schema=${this.schema} .required=${required} @FragmentSelected=${this._onFragmentSelected}></array-schema-viewer>
+            <object-properties-schema-viewer .key=${key} .schema=${this.schema} .required=${required} @FragmentSelected=${this._onFragmentSelected}></object-properties-schema-viewer>
+            <one-of-schema-viewer .key=${key} .schema=${this.schema} .required=${required} @FragmentSelected=${this._onFragmentSelected}></one-of-schema-viewer>
+            <one-of-items-schema-viewer .key=${key} .schema=${this.schema} .required=${required} @FragmentSelected=${this._onFragmentSelected}></one-of-items-schema-viewer>
+        `;
+    }
+
+    @eventOptions({ passive: true })
+    private async _onFragmentSelected(event: CustomEvent<FragmentSelected>) {
+        const fragments =  Array.isArray(event.detail) ? event.detail : [event.detail]
+        await this._setFragments([...this.fragments, ...fragments]);
+    }
+
+    @eventOptions({ passive: true })
+    private async _onFragmentIndexSelected(event: CustomEvent<FragmentIndexSelected>) {
+        const fragments = this.fragments.slice(0, event.detail.index + 1);
+        await this._setFragments(fragments);
+    }
+
+    private async _setFragments(fragment: Fragment[]) {
+        this.fragments = fragment;
+        this.schema = await this.resolver!.resolve(this.fragments.map(f => f.key));
     }
 
     override async update(changedProperties: Map<string, unknown>) {
         if (changedProperties.has("src")) {
             try {
-                this.schema = await fetchAndValidateSchema(path.resolve(this.src!));
-                const iterator = this.schemaFactory.build(this.schema);
-                const results: TemplateResult[] = [];
-                let result = await iterator.next();
-                while (!result.done) {
-                    results.push(result.value);
-                    result = await iterator.next();
-                }
-                this.template = results;
-                this.error = undefined;
+                const ref = SchemaResolver.parseRef(this.src!);
+                this.resolver = new SchemaResolver(ref.url!);
+                const schema = await this.resolver.resolve(ref.parts);
+                const name = schema?.title ?? path.basename(this.src!).split(".")[0];
+                this.fragments = [{ name, key: "" }];
+                this.schema = schema;
             }
             catch (error: unknown) {
                 this.error = error as Error;

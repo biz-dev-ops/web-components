@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <title>Schema viewer</title>
     <link rel="stylesheet" href="../theme.css" />
+    <link rel="stylesheet" href="../specflow.css" />
   </head>
 
   <body>
@@ -28,7 +29,7 @@
       buttons.addEventListener("click", function (event) {
         const target = event.target;
         if (target.id === "change-src") {
-          viewer.setAttribute("src", viewer.src.endsWith("index.command.yml") ? "../markdown-viewer/examples/payroll-service/calculate-payroll/get-time-and-attendance.query.yml" : "../markdown-viewer/examples/payroll-service/calculate-payroll/index.command.yml");
+          viewer.setAttribute("src", viewer.src.endsWith("index.command.yml") ? "../markdown-viewer/examples/payroll-service/calculate-payroll/get-time-and-attendance.query.yml" : "/markdown-viewer/examples/payroll-service/calculate-payroll/index.command.yml");
         }
       });
     </script>
