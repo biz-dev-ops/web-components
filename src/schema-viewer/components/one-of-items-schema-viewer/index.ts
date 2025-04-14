@@ -15,6 +15,10 @@ export const tag = "one-of-items-schema-viewer";
 
 @customElement(tag)
 export class OneOfItemsSchemaViewerComponent extends LitElement {
+    static CanRender(_schema: any, key: string) : boolean {
+        return key === "oneOf";
+    }
+
     @property({ type: Boolean })
     required!: boolean;
 
@@ -25,7 +29,7 @@ export class OneOfItemsSchemaViewerComponent extends LitElement {
     schema!: any;
 
     override render() {
-        if(this.key != "oneOf") {
+        if(!OneOfItemsSchemaViewerComponent.CanRender(this.schema, this.key)) {
             return;
         }
 
@@ -67,6 +71,10 @@ export class OneOfItemsSchemaViewerComponent extends LitElement {
             resetCss,
             schemaViewerCss,
             css`
+                [hidden=true] {
+                    display: none !important;
+                }
+
                 .list--one-of {
                     list-style: none;
                     padding-inline-start: 0;

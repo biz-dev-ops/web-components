@@ -14,6 +14,9 @@ export const tag = "array-schema-viewer";
 
 @customElement(tag)
 export class ArraySchemaViewerComponent extends LitElement {
+    static CanRender(schema: any, _key: string) : boolean {
+        return "type" in schema && schema.type === "array";
+    }
 
     @property({ type: Boolean })
     required!: boolean;
@@ -25,7 +28,7 @@ export class ArraySchemaViewerComponent extends LitElement {
     schema!: any;
 
     override render() {
-        if(this.schema.type !== "array") {
+        if(!ArraySchemaViewerComponent.CanRender(this.schema, this.key)) {
             return;
         }
 

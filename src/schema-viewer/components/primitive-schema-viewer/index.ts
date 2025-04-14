@@ -15,6 +15,9 @@ export const tag = "primitive-schema-viewer";
 
 @customElement(tag)
 export class PrimitiveSchemaViewerComponent extends LitElement {
+    static CanRender(schema: any, _key: string) : boolean {
+        return PRIMITIVE_TYPES.includes(schema.type);
+    }
 
     @property({ type: Boolean })
     required!: boolean;
@@ -26,7 +29,7 @@ export class PrimitiveSchemaViewerComponent extends LitElement {
     schema!: any;
 
     override render() {
-        if (!PRIMITIVE_TYPES.includes(this.schema.type)) {
+        if (!PrimitiveSchemaViewerComponent.CanRender(this.schema, this.key)) {
             return;
         }
 

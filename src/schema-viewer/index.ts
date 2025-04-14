@@ -16,6 +16,10 @@ import "./components/schema-navigation";
 
 import SchemaResolver from "./schema-resolver";
 import { FragmentIndexSelected, Fragment, FragmentSelected } from "./types";
+import { ObjectPropertiesSchemaViewerComponent } from "./components/object-properties-schema-viewer";
+import { OneOfSchemaViewerComponent } from "./components/one-of-schema-viewer";
+import { OneOfItemsSchemaViewerComponent } from "./components/one-of-items-schema-viewer";
+import { ArraySchemaViewerComponent } from "./components/array-schema-viewer";
 
 export const tag = "schema-viewer";
 
@@ -45,10 +49,10 @@ export class SchemaViewerComponent extends LitElement {
         return html`
             <schema-navigation .fragments=${this.fragments} @FragmentIndexSelected=${this._onFragmentIndexSelected}></schema-navigation>
 
-            <array-schema-viewer .key=${key} .schema=${this.schema} .required=${required} @FragmentSelected=${this._onFragmentSelected}></array-schema-viewer>
-            <object-properties-schema-viewer .key=${key} .schema=${this.schema} .required=${required} @FragmentSelected=${this._onFragmentSelected}></object-properties-schema-viewer>
-            <one-of-schema-viewer .key=${key} .schema=${this.schema} .required=${required} @FragmentSelected=${this._onFragmentSelected}></one-of-schema-viewer>
-            <one-of-items-schema-viewer .key=${key} .schema=${this.schema} .required=${required} @FragmentSelected=${this._onFragmentSelected}></one-of-items-schema-viewer>
+            ${ArraySchemaViewerComponent.CanRender(this.schema, key) ? html`<array-schema-viewer .key=${key} .schema=${this.schema} .required=${required} @FragmentSelected=${this._onFragmentSelected}></array-schema-viewer>` : null}
+            ${ObjectPropertiesSchemaViewerComponent.CanRender(this.schema, key) ? html`<object-properties-schema-viewer .key=${key} .schema=${this.schema} .required=${required} @FragmentSelected=${this._onFragmentSelected}></object-properties-schema-viewer>` : null}
+            ${OneOfSchemaViewerComponent.CanRender(this.schema, key) ? html`<one-of-schema-viewer .key=${key} .schema=${this.schema} .required=${required} @FragmentSelected=${this._onFragmentSelected}></one-of-schema-viewer>` : null}
+            ${OneOfItemsSchemaViewerComponent.CanRender(this.schema, key) ? html`<one-of-items-schema-viewer .key=${key} .schema=${this.schema} .required=${required} @FragmentSelected=${this._onFragmentSelected}></one-of-items-schema-viewer>` : null}
         `;
     }
 

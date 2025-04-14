@@ -24,10 +24,6 @@ export class SchemaNavigation extends LitElement {
                     ${
                         this.fragments
                             .map((fragment, index) => {
-                                // if(fragment.hidden) {
-                                //     return;
-                                // }
-
                                 const name = html`<span class="txt--property">${titlelize(fragment.name)}</span>`;
 
                                 if(fragment.disabled || index === this.fragments.length - 1) {

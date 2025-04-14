@@ -2,20 +2,30 @@ import { css, CSSResult, CSSResultArray, html, LitElement } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { customElement, eventOptions, property } from "lit/decorators.js";
 
-import { parseMarkdown, titlelize } from "../../../shared/util";
+import { parseMarkdown } from "../../../shared/util";
 
 import resetCss from "../../../shared/styles/reset.css";
 import schemaViewerCss from "../schema-viewer.css";
 import "../array-schema-viewer";
 import "../object-schema-viewer";
 import "../one-of-schema-viewer";
+import "../one-of-items-schema-viewer";
 import "../primitive-schema-viewer";
+
 import { FragmentSelected } from "../../types";
+import { ArraySchemaViewerComponent } from "../array-schema-viewer";
+import { ObjectSchemaViewerComponent } from "../object-schema-viewer";
+import { OneOfSchemaViewerComponent } from "../one-of-schema-viewer";
+import { OneOfItemsSchemaViewerComponent } from "../one-of-items-schema-viewer";
+import { PrimitiveSchemaViewerComponent } from "../primitive-schema-viewer";
 
 export const tag = "object-properties-schema-viewer";
 
 @customElement(tag)
 export class ObjectPropertiesSchemaViewerComponent extends LitElement {
+    static CanRender(schema: any, _key: string) : boolean {
+        return "properties" in schema;
+    }
 
     @property({ type: Boolean })
     required!: boolean;
@@ -27,7 +37,7 @@ export class ObjectPropertiesSchemaViewerComponent extends LitElement {
     schema!: any;
 
     override render() {
-        if (this.schema.type !== "object") {
+        if (!ObjectPropertiesSchemaViewerComponent.CanRender(this.schema, this.key)) {
             return;
         }
 
@@ -40,10 +50,11 @@ export class ObjectPropertiesSchemaViewerComponent extends LitElement {
                         const required = this.schema.required.includes(key);
 
                         return html`
-                            <array-schema-viewer .key=${key} .schema=${property} .required=${required} @FragmentSelected=${this._onItemSelected}></array-schema-viewer>
-                            <object-schema-viewer .key=${key} .schema=${property} .required=${required} @FragmentSelected=${this._onItemSelected}></object-schema-viewer>
-                            <one-of-schema-viewer .key=${key} .schema=${property} .required=${required} @FragmentSelected=${this._onItemSelected}></one-of-schema-viewer>
-                            <primitive-schema-viewer .key=${key} .schema=${property} .required=${required}></primitive-schema-viewer>
+                            ${ArraySchemaViewerComponent.CanRender(property, key) ? html`<array-schema-viewer .key=${key} .schema=${property} .required=${required} @FragmentSelected=${this._onItemSelected}></array-schema-viewer>` : null}
+                            ${ObjectSchemaViewerComponent.CanRender(property, key) ? html`<object-schema-viewer .key=${key} .schema=${property} .required=${required} @FragmentSelected=${this._onItemSelected}></object-schema-viewer>` : null}
+                            ${OneOfSchemaViewerComponent.CanRender(property, key) ? html`<one-of-schema-viewer .key=${key} .schema=${property} .required=${required} @FragmentSelected=${this._onItemSelected}></one-of-schema-viewer>` : null}
+                            ${OneOfItemsSchemaViewerComponent.CanRender(property, key) ? html`<one-of-items-schema-viewer .key=${key} .schema=${property} .required=${required} @FragmentSelected=${this._onItemSelected}></one-of-items-schema-viewer>` : null}
+                            ${PrimitiveSchemaViewerComponent.CanRender(property, key) ? html`<primitive-schema-viewer .key=${key} .schema=${property} .required=${required}></primitive-schema-viewer>` : null}
                         `;
                     })}
                 </div>
@@ -69,13 +80,13 @@ export class ObjectPropertiesSchemaViewerComponent extends LitElement {
             schemaViewerCss,
             css`
                 .items {
-                display: flex;
-                flex-direction: column;
-                gap: var(--space-md);
+                    display: flex;
+                    flex-direction: column;
+                    gap: var(--space-md);
                 }
 
                 p {
-                white-space: pre-wrap;
+                    white-space: pre-wrap;
                 }
             `,
         ];

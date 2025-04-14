@@ -12,6 +12,9 @@ export const tag = "object-schema-viewer";
 
 @customElement(tag)
 export class ObjectSchemaViewerComponent extends LitElement {
+    static CanRender(schema: any, _key: string) : boolean {
+        return "type" in schema && schema.type === "object";
+    }
 
     @property({ type: Boolean })
     required!: boolean;
@@ -23,7 +26,7 @@ export class ObjectSchemaViewerComponent extends LitElement {
     schema!: any;
 
     override render() {
-        if(this.schema.type !== "object") {
+        if(!ObjectSchemaViewerComponent.CanRender(this.schema, this.key)) {
             return;
         }
 

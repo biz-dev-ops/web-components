@@ -1,4 +1,4 @@
-import { CSSResult, CSSResultArray, html, LitElement } from "lit";
+import { CSSResult, CSSResultArray, html, LitElement, render } from "lit";
 import { customElement, eventOptions, property } from "lit/decorators.js";
 
 import { titlelize } from "../../../shared/util";
@@ -12,6 +12,10 @@ export const tag = "one-of-schema-viewer";
 
 @customElement(tag)
 export class OneOfSchemaViewerComponent extends LitElement {
+    static CanRender(_schema: any, _key: string) : boolean {
+        return "oneOf" in _schema;
+    }
+
     @property({ type: Boolean })
     required!: boolean;
 
@@ -22,7 +26,7 @@ export class OneOfSchemaViewerComponent extends LitElement {
     schema!: any;
 
     override render() {
-        if(!("oneOf" in this.schema)) {
+        if(!OneOfSchemaViewerComponent.CanRender(this.schema, this.key)) {
             return;
         }
 
