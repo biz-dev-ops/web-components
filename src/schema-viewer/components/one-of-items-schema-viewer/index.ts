@@ -71,10 +71,6 @@ export class OneOfItemsSchemaViewerComponent extends LitElement {
             resetCss,
             schemaViewerCss,
             css`
-                [hidden=true] {
-                    display: none !important;
-                }
-
                 .list--one-of {
                     list-style: none;
                     padding-inline-start: 0;

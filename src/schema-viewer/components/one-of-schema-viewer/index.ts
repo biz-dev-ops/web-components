@@ -1,4 +1,4 @@
-import { CSSResult, CSSResultArray, html, LitElement, render } from "lit";
+import { CSSResult, CSSResultArray, html, LitElement } from "lit";
 import { customElement, eventOptions, property } from "lit/decorators.js";
 
 import { titlelize } from "../../../shared/util";
@@ -12,8 +12,8 @@ export const tag = "one-of-schema-viewer";
 
 @customElement(tag)
 export class OneOfSchemaViewerComponent extends LitElement {
-    static CanRender(_schema: any, _key: string) : boolean {
-        return "oneOf" in _schema;
+    static CanRender(schema: any, _key: string) : boolean {
+        return "oneOf" in schema;
     }
 
     @property({ type: Boolean })
@@ -36,7 +36,7 @@ export class OneOfSchemaViewerComponent extends LitElement {
                     <span class="txt--property">
                         ${titlelize(this.schema.title || this.key)}
                         ${this.required ? html`<span class="txt--required">*</span>` : ``}
-                </span>
+                    </span>
                 </bdo-button>
             </div>
         `;

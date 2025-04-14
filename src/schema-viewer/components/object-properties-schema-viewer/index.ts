@@ -9,14 +9,12 @@ import schemaViewerCss from "../schema-viewer.css";
 import "../array-schema-viewer";
 import "../object-schema-viewer";
 import "../one-of-schema-viewer";
-import "../one-of-items-schema-viewer";
 import "../primitive-schema-viewer";
 
 import { FragmentSelected } from "../../types";
 import { ArraySchemaViewerComponent } from "../array-schema-viewer";
 import { ObjectSchemaViewerComponent } from "../object-schema-viewer";
 import { OneOfSchemaViewerComponent } from "../one-of-schema-viewer";
-import { OneOfItemsSchemaViewerComponent } from "../one-of-items-schema-viewer";
 import { PrimitiveSchemaViewerComponent } from "../primitive-schema-viewer";
 
 export const tag = "object-properties-schema-viewer";
@@ -53,7 +51,6 @@ export class ObjectPropertiesSchemaViewerComponent extends LitElement {
                             ${ArraySchemaViewerComponent.CanRender(property, key) ? html`<array-schema-viewer .key=${key} .schema=${property} .required=${required} @FragmentSelected=${this._onItemSelected}></array-schema-viewer>` : null}
                             ${ObjectSchemaViewerComponent.CanRender(property, key) ? html`<object-schema-viewer .key=${key} .schema=${property} .required=${required} @FragmentSelected=${this._onItemSelected}></object-schema-viewer>` : null}
                             ${OneOfSchemaViewerComponent.CanRender(property, key) ? html`<one-of-schema-viewer .key=${key} .schema=${property} .required=${required} @FragmentSelected=${this._onItemSelected}></one-of-schema-viewer>` : null}
-                            ${OneOfItemsSchemaViewerComponent.CanRender(property, key) ? html`<one-of-items-schema-viewer .key=${key} .schema=${property} .required=${required} @FragmentSelected=${this._onItemSelected}></one-of-items-schema-viewer>` : null}
                             ${PrimitiveSchemaViewerComponent.CanRender(property, key) ? html`<primitive-schema-viewer .key=${key} .schema=${property} .required=${required}></primitive-schema-viewer>` : null}
                         `;
                     })}
