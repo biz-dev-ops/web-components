@@ -7,19 +7,15 @@ const md = markdownFactory();
 import resetCss from "../shared/styles/reset.css";
 import schemaViewerCss from "./schema-viewer.css";
 
-import "../shared/alert";
-import "./components/object-properties-schema-viewer";
-import "./components/array-schema-viewer";
-import "./components/one-of-schema-viewer";
-import "./components/one-of-items-schema-viewer";
-import "./components/schema-navigation";
-
 import SchemaResolver from "./schema-resolver";
 import { FragmentIndexSelected, Fragment, FragmentSelected } from "./types";
+
 import { ObjectPropertiesSchemaViewerComponent } from "./components/object-properties-schema-viewer";
 import { OneOfSchemaViewerComponent } from "./components/one-of-schema-viewer";
 import { OneOfItemsSchemaViewerComponent } from "./components/one-of-items-schema-viewer";
 import { ArraySchemaViewerComponent } from "./components/array-schema-viewer";
+import "../shared/alert";
+import "./components/schema-navigation";
 
 export const tag = "schema-viewer";
 

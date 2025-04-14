@@ -6,12 +6,9 @@ import { parseMarkdown } from "../../../shared/util";
 
 import resetCss from "../../../shared/styles/reset.css";
 import schemaViewerCss from "../schema-viewer.css";
-import "../array-schema-viewer";
-import "../object-schema-viewer";
-import "../one-of-schema-viewer";
-import "../primitive-schema-viewer";
 
 import { FragmentSelected } from "../../types";
+
 import { ArraySchemaViewerComponent } from "../array-schema-viewer";
 import { ObjectSchemaViewerComponent } from "../object-schema-viewer";
 import { OneOfSchemaViewerComponent } from "../one-of-schema-viewer";
