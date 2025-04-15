@@ -11,10 +11,11 @@ import schemaViewerCss from "./schema-viewer.css";
 import { getResolver, parseRef } from "./schema-resolver";
 import { FragmentIndexSelected, Fragment, FragmentSelected } from "./types";
 
-import { OneOfSchemaViewerComponent } from "./components/one-of-schema-viewer";
 import { ArraySchemaViewerComponent } from "./components/array-schema-viewer";
-import { RefSchemaViewerComponent } from "./components/ref-schema-viewer";
 import { ObjectSchemaViewerComponent } from "./components/object-schema-viewer";
+import { PrimitiveSchemaViewerComponent } from "./components/primitive-schema-viewer";
+import { RefSchemaViewerComponent } from "./components/ref-schema-viewer";
+import { XOfSchemaViewerComponent } from "./components/x-of-schema-viewer";
 import "../shared/alert";
 import "./components/schema-navigation";
 
@@ -46,8 +47,9 @@ export class SchemaViewerComponent extends LitElement {
 
             ${ArraySchemaViewerComponent.CanRender(this.schema, key) ? html`<array-schema-viewer .src=${this.src} .key=${key} .schema=${this.schema} .required=${required} @FragmentSelected=${this._onFragmentSelected}></array-schema-viewer>` : null}
             ${ObjectSchemaViewerComponent.CanRender(this.schema, key) ? html`<object-schema-viewer .src=${this.src} .key=${key} .schema=${this.schema} .required=${required} .collapse=${false} @FragmentSelected=${this._onFragmentSelected}></object-schema-viewer>` : null}
-            ${OneOfSchemaViewerComponent.CanRender(this.schema, key) ? html`<one-of-schema-viewer .src=${this.src} .key=${key} .schema=${this.schema} .required=${required} .collapse=${false} @FragmentSelected=${this._onFragmentSelected}></one-of-schema-viewer>` : null}
+            ${PrimitiveSchemaViewerComponent.CanRender(this.schema, key) ? html`<primitive-schema-viewer .src=${this.src} .key=${key} .schema=${this.schema} .required=${required} @FragmentSelected=${this._onFragmentSelected}></primitive-schema-viewer>` : null}
             ${RefSchemaViewerComponent.CanRender(this.schema, key) ? html`<ref-schema-viewer .src=${this.src} .key=${key} .schema=${this.schema} .required=${required} .collapse=${false} @FragmentSelected=${this._onFragmentSelected}></ref-schema-viewer>` : null}
+            ${XOfSchemaViewerComponent.CanRender(this.schema, key) ? html`<x-of-schema-viewer .src=${this.src} .key=${key} .schema=${this.schema} .required=${required} .collapse=${false} @FragmentSelected=${this._onFragmentSelected}></x-of-schema-viewer>` : null}
         `;
     }
 

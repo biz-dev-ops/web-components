@@ -1,0 +1,27 @@
+{
+    "definitions": {
+        "address": {
+            "type": "object",
+            "properties": {
+                "street": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "type": "object",
+    "properties": {
+        "billingAddress": {
+            "$ref": "#/definitions/address"
+        },
+        "shippingAddress": {
+            "$ref": "#/definitions/address"
+        },
+        "person":{
+            "$ref": "./object-schema.json"
+        }
+    }
+}

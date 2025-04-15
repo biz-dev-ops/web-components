@@ -15,12 +15,12 @@ import { PrimitiveSchemaViewerComponent } from "../primitive-schema-viewer";
 import { RefSchemaViewerComponent } from "../ref-schema-viewer";
 import "../../../shared/button";
 
-export const tag = "one-of-schema-viewer";
+export const tag = "x-of-schema-viewer";
 
 @customElement(tag)
-export class OneOfSchemaViewerComponent extends LitElement {
+export class XOfSchemaViewerComponent extends LitElement {
     static CanRender(schema: any, _key: string): boolean {
-        return "oneOf" in schema;
+        return "oneOf" in schema || "anyOf" in schema || "allOf" in schema;
     }
 
     @property({ type: Boolean })
@@ -39,13 +39,15 @@ export class OneOfSchemaViewerComponent extends LitElement {
     src!: string;
 
     override render() {
-        if (!OneOfSchemaViewerComponent.CanRender(this.schema, this.key)) {
-            return "oneOf" in this.schema;
+        if (!XOfSchemaViewerComponent.CanRender(this.schema, this.key)) {
+            return;
         }
+
+        const type = this.getType();
 
         if (this.collapse) {
             return html`
-                <div class="item item--object">
+                <div class="item item--object item--${type.key}">
                     <bdo-button type="button" direction="right" @clicked=${this._onClick}>
                         <span class="txt--property">
                             ${titlelize(this.schema.title || this.key)}
@@ -58,15 +60,16 @@ export class OneOfSchemaViewerComponent extends LitElement {
         }
 
         return html`
-            <div class="item item--one-of">
+            <div class="item item--${type.key}">
                 ${this.schema.description ? html`<bdo-truncate>${unsafeHTML(parseMarkdown(this.schema.description))}</bdo-truncate>` : null}
-                <ul class="list--one-of">
-                    ${this.schema.oneOf.map((item: any, index: number) => html`
+                <h3>${titlelize(type.name)}</h3>
+                <ul class="list--${type.key}">
+                    ${this.schema[type.key].map((item: any, index: number) => html`
                         <li>
-                            ${ArraySchemaViewerComponent.CanRender(item, this.key) ? html`<array-schema-viewer .src=${this.src} .key=${this.key} .schema=${item} .required=${this.required} @FragmentSelected=${(event: CustomEvent<FragmentSelected>) => { this._onFragmentSelected(index, event); }}></array-schema-viewer>` : null}
-                            ${ObjectSchemaViewerComponent.CanRender(item, this.key) ? html`<object-schema-viewer .src=${this.src} .key=${this.key} .schema=${item} .required=${this.required} .collapse=${true} @FragmentSelected=${(event: CustomEvent<FragmentSelected>) => { this._onFragmentSelected(index, event); }}></object-schema-viewer>` : null}
-                            ${PrimitiveSchemaViewerComponent.CanRender(item, this.key) ? html`<primitive-schema-viewer .src=${this.src} .key=${this.key} .schema=${item} .required=${this.required} @FragmentSelected=${(event: CustomEvent<FragmentSelected>) => { this._onFragmentSelected(index, event); }}></primitive-schema-viewer>` : null}
-                            ${RefSchemaViewerComponent.CanRender(item, this.key) ? html`<ref-schema-viewer .src=${this.src} .key=${this.key} .schema=${item} .required=${this.required} .collapse=${true} @FragmentSelected=${(event: CustomEvent<FragmentSelected>) => { this._onFragmentSelected(index, event); }}></ref-schema-viewer>` : null}
+                            ${ArraySchemaViewerComponent.CanRender(item, this.key) ? html`<array-schema-viewer .src=${this.src} .key=${this.key} .schema=${item} .required=${this.required} @FragmentSelected=${(event: CustomEvent<FragmentSelected>) => { this._onFragmentSelected(index, type, event); }}></array-schema-viewer>` : null}
+                            ${ObjectSchemaViewerComponent.CanRender(item, this.key) ? html`<object-schema-viewer .src=${this.src} .key=${this.key} .schema=${item} .required=${this.required} .collapse=${true} @FragmentSelected=${(event: CustomEvent<FragmentSelected>) => { this._onFragmentSelected(index, type, event); }}></object-schema-viewer>` : null}
+                            ${PrimitiveSchemaViewerComponent.CanRender(item, this.key) ? html`<primitive-schema-viewer .src=${this.src} .key=${this.key} .schema=${item} .required=${this.required} @FragmentSelected=${(event: CustomEvent<FragmentSelected>) => { this._onFragmentSelected(index, type, event); }}></primitive-schema-viewer>` : null}
+                            ${RefSchemaViewerComponent.CanRender(item, this.key) ? html`<ref-schema-viewer .src=${this.src} .key=${this.key} .schema=${item} .required=${this.required} .collapse=${true} @FragmentSelected=${(event: CustomEvent<FragmentSelected>) => { this._onFragmentSelected(index, type, event); }}></ref-schema-viewer>` : null}
                         </li>
                     `)}
                 </ul>
@@ -85,10 +88,10 @@ export class OneOfSchemaViewerComponent extends LitElement {
     }
 
     @eventOptions({ passive: true })
-    private _onFragmentSelected(index: number, event?: CustomEvent<FragmentSelected>) {
+    private _onFragmentSelected(index: number, type: { name: string, key: string }, event?: CustomEvent<FragmentSelected>) {
         const fragments = [{
-            name: "oneOf",
-            key: "oneOf",
+            name: type.name,
+            key: type.key,
             hidden: true
         }, {
             name: event?.detail[0].name,
@@ -98,37 +101,58 @@ export class OneOfSchemaViewerComponent extends LitElement {
         this.dispatchEvent(new CustomEvent<FragmentSelected>('FragmentSelected', { detail: fragments }));
     }
 
+    private getType() {
+        if("oneOf" in this.schema) {
+            return { name: "one of", key: "oneOf" };
+        }
+
+        if("anyOf" in this.schema) {
+            return { name: "any of", key: "anyOf" };
+        }
+        return { name: "all of", key: "allOf" };
+    }
+
     static override get styles(): CSSResult | CSSResultArray {
         return [
             resetCss,
             schemaViewerCss,
             css`
-                .list--one-of {
+                .list--oneOf,
+                .list--anyOf,
+                .list--allOf {
                     list-style: none;
                     padding-inline-start: 0;
                     display: flex;
                     flex-direction: column;
-                    row-gap: var(--space-sm);
-                }
-
-                .list--one-of {
                     row-gap: var(--space-xxs);
                 }
 
-                .list--one-of li {
+                .list--oneOf li,
+                .list--anyOf li,
+                .list--allOf li {
                     display: flex;
                     flex-direction: column;
                     position: relative;
                     row-gap: var(--space-xxs);
                 }
 
-                .list--one-of li:not(:last-child)::after {
-                    content: 'OR';
+                .list--oneOf li:not(:last-child)::after,
+                .list--anyOf li:not(:last-child)::after,
+                .list--allOf li:not(:last-child)::after {
                     font-size: var(--font-size-xs);
                     text-align: center;
                     display: block;
                     color: var(--color-black-a40);
                     font-weight: 600;
+                }
+
+                .list--oneOf li:not(:last-child)::after,
+                .list--anyOf li:not(:last-child)::after {
+                    content: "or";
+                }
+
+                .list--allOf li:not(:last-child)::after {
+                    content: "and";
                 }
 
                 .button-label {

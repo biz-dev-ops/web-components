@@ -13,27 +13,27 @@ export function getResolver(url: string): SchemaResolver {
     return resolver;
 }
 
-export function parseRef(ref: string): Ref {
-    ref = ref.trim();
-    if (ref.startsWith("#")) {
+export function parseRef($ref: string, $id?: string): Ref {
+    $ref = $ref.trim();
+    if ($ref.startsWith("#")) {
         return {
-            url: null,
-            parts: ref.substring(1).split("/")
+            url: $id ?? null,
+            parts: $ref.substring(1).split("/").filter(p => p.length > 0)
         };
     }
 
-    if (ref.startsWith(".")) {
-        ref = path.resolve(ref);
+    if ($ref.startsWith(".")) {
+        $ref = path.resolve($id ? path.dirname($id) : "", $ref);
     }
 
-    if (!ref.includes("#")) {
+    if (!$ref.includes("#")) {
         return {
-            url: ref,
+            url: $ref,
             parts: []
         };
     }
 
-    const p = ref.split("#");
+    const p = $ref.split("#");
     return {
         url: p[0],
         parts: p[1].split("/").filter(p => p.length > 0)

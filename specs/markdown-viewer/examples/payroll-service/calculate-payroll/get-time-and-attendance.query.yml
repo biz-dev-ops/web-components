@@ -1,4 +1,11 @@
 ---
+definitions:
+  employee_id:
+    type: string
+    description: The ID of the employee to calculate the payroll for.
+    pattern: ^\d{10}$
+    examples:
+      - "1234567890"
 title: get time and attandance
 description: |
   Ensures that all relevant work and absence information for the pay period is
@@ -18,11 +25,7 @@ properties:
       - end_date
     properties:
       employee_id:
-        type: string
-        description: The ID of the employee to calculate the payroll for.
-        pattern: ^\d{10}$
-        examples:
-          - "1234567890"
+        $ref: "#/definitions/employee_id"
       start_date:
         type: string
         format: date

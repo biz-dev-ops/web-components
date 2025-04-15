@@ -1,0 +1,4 @@
+---
+oneOf:
+  - type: boolean
+  - type: string

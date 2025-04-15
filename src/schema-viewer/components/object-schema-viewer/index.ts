@@ -10,7 +10,7 @@ import schemaViewerCss from "../schema-viewer.css";
 import { FragmentSelected } from "../../types";
 
 import { ArraySchemaViewerComponent } from "../array-schema-viewer";
-import { OneOfSchemaViewerComponent } from "../one-of-schema-viewer";
+import { XOfSchemaViewerComponent } from "../x-of-schema-viewer";
 import { PrimitiveSchemaViewerComponent } from "../primitive-schema-viewer";
 import { RefSchemaViewerComponent } from "../ref-schema-viewer";
 import "../../../shared/button";
@@ -69,7 +69,7 @@ export class ObjectSchemaViewerComponent extends LitElement {
                         return html`
                             ${ArraySchemaViewerComponent.CanRender(property, key) ? html`<array-schema-viewer .src=${this.src} .key=${key} .schema=${property} .required=${required} @FragmentSelected=${this._onItemSelected}></array-schema-viewer>` : null}
                             ${ObjectSchemaViewerComponent.CanRender(property, key) ? html`<object-schema-viewer .src=${this.src} .key=${key} .schema=${property} .required=${required} .collapse=${true} @FragmentSelected=${this._onItemSelected}></object-schema-viewer>` : null}
-                            ${OneOfSchemaViewerComponent.CanRender(property, key) ? html`<one-of-schema-viewer .src=${this.src} .key=${key} .schema=${property} .required=${required} .collapse=${true} @FragmentSelected=${this._onItemSelected}></one-of-schema-viewer>` : null}
+                            ${XOfSchemaViewerComponent.CanRender(property, key) ? html`<x-of-schema-viewer .src=${this.src} .key=${key} .schema=${property} .required=${required} .collapse=${true} @FragmentSelected=${this._onItemSelected}></x-of-schema-viewer>` : null}
                             ${PrimitiveSchemaViewerComponent.CanRender(property, key) ? html`<primitive-schema-viewer .src=${this.src} .key=${key} .schema=${property} .required=${required} @FragmentSelected=${this._onItemSelected}></primitive-schema-viewer>` : null}
                             ${RefSchemaViewerComponent.CanRender(property, key) ? html`<ref-schema-viewer .src=${this.src} .key=${key} .schema=${property} .required=${required} .collapse=${true} @FragmentSelected=${this._onItemSelected}></ref-schema-viewer>` : null}
                         `;
