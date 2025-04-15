@@ -5,7 +5,7 @@ import { customElement, property, state, eventOptions } from "lit/decorators.js"
 import resetCss from "../../../shared/styles/reset.css";
 import schemaViewerCss from "../schema-viewer.css";
 
-import { getActiveResolver, getResolver, parseRef } from "../../schema-resolver";
+import { getResolver, parseRef } from "../../schema-resolver";
 
 import { FragmentSelected } from "../../types";
 

@@ -44,8 +44,6 @@ export class ObjectSchemaViewerComponent extends LitElement {
             return;
         }
 
-        console.log("src", this.src);
-
         if(this.collapse) {
             return html`
                 <div class="item item--object">
