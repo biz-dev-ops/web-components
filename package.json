@@ -41,7 +41,7 @@
     "dmn-js": "^17.2.0",
     "lit": "^3.2.1",
     "markdown-it": "^14.1.0",
-    "material-symbols": "^0.30.0",
+    "material-symbols": "^0.31.1",
     "mermaid": "^11.5.0",
     "yaml": "^2.7.0"
   },
