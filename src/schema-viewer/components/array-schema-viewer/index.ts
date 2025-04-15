@@ -4,11 +4,13 @@ import { customElement, eventOptions, property } from "lit/decorators.js";
 
 import resetCss from "../../../shared/styles/reset.css";
 import schemaViewerCss from "../schema-viewer.css";
-import "../../../shared/popover";
-import "../../../shared/button";
 
 import { parseMarkdown, titlelize } from "../../../shared/util";
 import { FragmentSelected } from "../../types";
+
+
+import "../../../shared/popover";
+import "../../../shared/button";
 
 export const tag = "array-schema-viewer";
 
@@ -40,13 +42,7 @@ export class ArraySchemaViewerComponent extends LitElement {
                     <span class="txt--property">
                         ${titlelize(this.schema.title || this.key)} ${this.required ? html`<span class="txt--required">*</span>` : ``}
                     </span>
-                    ${this.schema.description ?
-                        html`
-                            <bdo-popover>
-                                ${unsafeHTML(parseMarkdown(this.schema.description.trim()))}
-                            </bdo-popover>
-                        ` : null
-                    }
+                    ${this.schema.description ? html`<bdo-popover>${unsafeHTML(parseMarkdown(this.schema.description.trim()))}</bdo-popover>` : null }
                 </h3>
 
                 <ul class="list--array">

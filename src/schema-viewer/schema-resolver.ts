@@ -1,9 +1,54 @@
 import { fetchAndValidateSchema } from "../shared/fetch";
 import path from "node:path";
 
-export default class SchemaResolver {
+const refs: Map<string, SchemaResolver> = new Map();
+let activeResolver: SchemaResolver | undefined;
+
+export function getResolver(url: string): SchemaResolver {
+    const ref = parseRef(url);
+    if (refs.has(ref.url!)) {
+        activeResolver = refs.get(ref.url!)!;
+        return activeResolver;
+    }
+    activeResolver = new SchemaResolver(ref.url!);
+    refs.set(ref.url!, activeResolver);
+    return activeResolver;
+}
+
+export function getActiveResolver(): SchemaResolver | undefined {
+    return activeResolver;
+}
+
+export function parseRef(ref: string): Ref {
+    ref = ref.trim();
+    if (ref.startsWith("#")) {
+        return {
+            url: null,
+            parts: ref.substring(1).split("/")
+        };
+    }
+
+    if (ref.startsWith(".")) {
+        ref = path.resolve(ref);
+    }
+
+    if (!ref.includes("#")) {
+        return {
+            url: ref,
+            parts: []
+        };
+    }
+
+    const p = ref.split("#");
+    return {
+        url: p[0],
+        parts: p[1].split("/").filter(p => p.length > 0)
+    };
+}
+
+
+class SchemaResolver {
     private schema: any | undefined;
-    private resolvers: Map<string, SchemaResolver> = new Map();
 
     constructor(readonly url: string) { }
 
@@ -13,52 +58,22 @@ export default class SchemaResolver {
         }
 
         let schema = _getInternalSchema(this.schema, path);
-        if (!("$ref" in schema)) {
-            return schema;
-        }
-
-        const ref = SchemaResolver.parseRef(schema.$ref);
-        const resolver = this._getResolver(ref.url!);
-        schema = await resolver.resolve(ref.parts);
         return schema;
+        // if (!("$ref" in schema)) {
+        //     return schema;
+        // }
+
+        // const ref = parseRef(schema.$ref);
+        // const resolver = getResolver(ref.url!);
+        // schema = await resolver.resolve(ref.parts);
+        // return schema;
     }
 
-    static parseRef(ref: string): Ref {
-        ref = ref.trim();
-        if (ref.startsWith("#")) {
-            return {
-                url: null,
-                parts: ref.substring(1).split("/")
-            };
+    async getId() : Promise<string | undefined> {
+        if (!this.schema) {
+            this.schema = await fetchAndValidateSchema(this.url);
         }
-
-        if (ref.startsWith(".")) {
-            ref = path.resolve(ref);
-        }
-
-        if (!ref.includes("#")) {
-            return {
-                url: ref,
-                parts: []
-            };
-        }
-
-        const p = ref.split("#");
-        return {
-            url: p[0],
-            parts: p[1].split("/").filter(p => p.length > 0)
-        };
-    }
-
-    private _getResolver(url: string): SchemaResolver {
-        if (this.resolvers.has(url)) {
-            return this.resolvers.get(url)!;
-        }
-        else {
-            const resolver = new SchemaResolver(url);
-            this.resolvers.set(url, resolver);
-            return resolver;
-        }
+        return this.schema?.$id;
     }
 }
 

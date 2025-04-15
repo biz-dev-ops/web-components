@@ -40,13 +40,7 @@ export class PrimitiveSchemaViewerComponent extends LitElement {
                         ${titlelize(this.schema.title || this.key)}
                         ${this.required ? html`<span class="txt--required">*</span>` : ``}
                     </span>
-                    ${this.schema.description ?
-                        html`
-                            <bdo-popover>
-                                ${unsafeHTML(parseMarkdown(this.schema.description.trim()))}
-                            </bdo-popover>
-                        ` : null
-                    }
+                    ${this.schema.description ? html`<bdo-popover>${unsafeHTML(parseMarkdown(this.schema.description.trim()))}</bdo-popover>` : null }
                     <span class="icon--type">
                         ${this.schema.type}${this.schema.format ? html`: <em>${this.schema.format}</em>` : ''}
                     </span>
