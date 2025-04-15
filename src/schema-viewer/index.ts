@@ -31,23 +31,23 @@ export class SchemaViewerComponent extends LitElement {
     private error?: Error;
 
     @property({ type: String })
-    src?: string;
+    src!: string;
 
     override render() {
         if (this.error) {
             return html`<bdo-alert type="error">${unsafeHTML(md.render(this.error.message))}</bdo-alert>`;
         }
 
-        const key = this.fragments.length > 0 ? this.fragments.at(-1)!.key : "";
+        const key = this.fragments.at(-1)!.key;
         const required = key ? this.schema.required?.includes(key) : false;
 
         return html`
             <schema-navigation .fragments=${this.fragments} @FragmentIndexSelected=${this._onFragmentIndexSelected}></schema-navigation>
 
-            ${ArraySchemaViewerComponent.CanRender(this.schema, key) ? html`<array-schema-viewer .key=${key} .schema=${this.schema} .required=${required} @FragmentSelected=${this._onFragmentSelected}></array-schema-viewer>` : null}
-            ${ObjectSchemaViewerComponent.CanRender(this.schema, key) ? html`<object-schema-viewer .key=${key} .schema=${this.schema} .required=${required} .collapse=${false} @FragmentSelected=${this._onFragmentSelected}></object-schema-viewer>` : null}
-            ${OneOfSchemaViewerComponent.CanRender(this.schema, key) ? html`<one-of-schema-viewer .key=${key} .schema=${this.schema} .required=${required} .collapse=${false} @FragmentSelected=${this._onFragmentSelected}></one-of-schema-viewer>` : null}
-            ${RefSchemaViewerComponent.CanRender(this.schema, key) ? html`<ref-schema-viewer .key=${key} .schema=${this.schema} .required=${required} .collapse=${false} @FragmentSelected=${this._onFragmentSelected}></ref-schema-viewer>` : null}
+            ${ArraySchemaViewerComponent.CanRender(this.schema, key) ? html`<array-schema-viewer .src=${this.src} .key=${key} .schema=${this.schema} .required=${required} @FragmentSelected=${this._onFragmentSelected}></array-schema-viewer>` : null}
+            ${ObjectSchemaViewerComponent.CanRender(this.schema, key) ? html`<object-schema-viewer .src=${this.src} .key=${key} .schema=${this.schema} .required=${required} .collapse=${false} @FragmentSelected=${this._onFragmentSelected}></object-schema-viewer>` : null}
+            ${OneOfSchemaViewerComponent.CanRender(this.schema, key) ? html`<one-of-schema-viewer .src=${this.src} .key=${key} .schema=${this.schema} .required=${required} .collapse=${false} @FragmentSelected=${this._onFragmentSelected}></one-of-schema-viewer>` : null}
+            ${RefSchemaViewerComponent.CanRender(this.schema, key) ? html`<ref-schema-viewer .src=${this.src} .key=${key} .schema=${this.schema} .required=${required} .collapse=${false} @FragmentSelected=${this._onFragmentSelected}></ref-schema-viewer>` : null}
         `;
     }
 
@@ -76,6 +76,7 @@ export class SchemaViewerComponent extends LitElement {
                 const schema = await resolver.resolve(ref.parts);
                 const name = schema?.title ?? path.basename(this.src!).split(".")[0];
                 this.fragments = [{ name, key: "" }];
+                this.src = ref.url!;
                 this.schema = schema;
             }
             catch (error: unknown) {

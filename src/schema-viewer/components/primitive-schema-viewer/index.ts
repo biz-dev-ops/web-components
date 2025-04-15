@@ -28,6 +28,9 @@ export class PrimitiveSchemaViewerComponent extends LitElement {
     @property({ type: Object })
     schema!: any;
 
+    @property({ type: String })
+    src!: string;
+
     override render() {
         if (!PrimitiveSchemaViewerComponent.CanRender(this.schema, this.key)) {
             return;

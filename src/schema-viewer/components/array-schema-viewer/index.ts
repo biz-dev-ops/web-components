@@ -29,6 +29,9 @@ export class ArraySchemaViewerComponent extends LitElement {
     @property({ type: Object })
     schema!: any;
 
+    @property({ type: String })
+    src!: string;
+
     override render() {
         if(!ArraySchemaViewerComponent.CanRender(this.schema, this.key)) {
             return;

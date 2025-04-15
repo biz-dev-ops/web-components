@@ -35,6 +35,9 @@ export class OneOfSchemaViewerComponent extends LitElement {
     @property({ type: Boolean })
     collapse!: boolean;
 
+    @property({ type: String })
+    src!: string;
+
     override render() {
         if (!OneOfSchemaViewerComponent.CanRender(this.schema, this.key)) {
             return "oneOf" in this.schema;
@@ -60,10 +63,10 @@ export class OneOfSchemaViewerComponent extends LitElement {
                 <ul class="list--one-of">
                     ${this.schema.oneOf.map((item: any, index: number) => html`
                         <li>
-                            ${ArraySchemaViewerComponent.CanRender(item, this.key) ? html`<array-schema-viewer .key=${this.key} .schema=${item} .required=${this.required} @FragmentSelected=${(event: CustomEvent<FragmentSelected>) => { this._onFragmentSelected(index, event); }}></array-schema-viewer>` : null}
-                            ${ObjectSchemaViewerComponent.CanRender(item, this.key) ? html`<object-schema-viewer .key=${this.key} .schema=${item} .required=${this.required} .collapse=${true} @FragmentSelected=${(event: CustomEvent<FragmentSelected>) => { this._onFragmentSelected(index, event); }}></object-schema-viewer>` : null}
-                            ${PrimitiveSchemaViewerComponent.CanRender(item, this.key) ? html`<primitive-schema-viewer .key=${this.key} .schema=${item} .required=${this.required} @FragmentSelected=${(event: CustomEvent<FragmentSelected>) => { this._onFragmentSelected(index, event); }}></primitive-schema-viewer>` : null}
-                            ${RefSchemaViewerComponent.CanRender(item, this.key) ? html`<ref-schema-viewer .key=${this.key} .schema=${item} .required=${this.required} .collapse=${true} @FragmentSelected=${(event: CustomEvent<FragmentSelected>) => { this._onFragmentSelected(index, event); }}></ref-schema-viewer>` : null}
+                            ${ArraySchemaViewerComponent.CanRender(item, this.key) ? html`<array-schema-viewer .src=${this.src} .key=${this.key} .schema=${item} .required=${this.required} @FragmentSelected=${(event: CustomEvent<FragmentSelected>) => { this._onFragmentSelected(index, event); }}></array-schema-viewer>` : null}
+                            ${ObjectSchemaViewerComponent.CanRender(item, this.key) ? html`<object-schema-viewer .src=${this.src} .key=${this.key} .schema=${item} .required=${this.required} .collapse=${true} @FragmentSelected=${(event: CustomEvent<FragmentSelected>) => { this._onFragmentSelected(index, event); }}></object-schema-viewer>` : null}
+                            ${PrimitiveSchemaViewerComponent.CanRender(item, this.key) ? html`<primitive-schema-viewer .src=${this.src} .key=${this.key} .schema=${item} .required=${this.required} @FragmentSelected=${(event: CustomEvent<FragmentSelected>) => { this._onFragmentSelected(index, event); }}></primitive-schema-viewer>` : null}
+                            ${RefSchemaViewerComponent.CanRender(item, this.key) ? html`<ref-schema-viewer .src=${this.src} .key=${this.key} .schema=${item} .required=${this.required} .collapse=${true} @FragmentSelected=${(event: CustomEvent<FragmentSelected>) => { this._onFragmentSelected(index, event); }}></ref-schema-viewer>` : null}
                         </li>
                     `)}
                 </ul>

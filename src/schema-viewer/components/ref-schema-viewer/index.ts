@@ -33,13 +33,16 @@ export class RefSchemaViewerComponent extends LitElement {
     schema!: any;
 
     @state()
-    private refSchema?: any;
+    private ref?: { src: string, schema: any };
 
     @state()
     private error?: Error;
 
     @property({ type: Boolean })
     collapse!: boolean;
+
+    @property({ type: String })
+    src!: string;
 
     override render() {
         if(!RefSchemaViewerComponent.CanRender(this.schema, this.key)) {
@@ -52,16 +55,16 @@ export class RefSchemaViewerComponent extends LitElement {
             `;
         }
 
-        if(!this.refSchema) {
+        if(!this.ref) {
             return;
         }
 
         return html`
             <div class="item item--ref">
-                ${ArraySchemaViewerComponent.CanRender(this.refSchema, this.key) ? html`<array-schema-viewer .key=${this.key} .schema=${this.refSchema} .required=${this.required} @FragmentSelected=${this._onFragmentSelected}></array-schema-viewer>` : null}
-                ${ObjectSchemaViewerComponent.CanRender(this.refSchema, this.key) ? html`<object-schema-viewer .key=${this.key} .schema=${this.refSchema} .required=${this.required} .collapse=${this.collapse} @FragmentSelected=${this._onFragmentSelected}></object-schema-viewer>` : null}
-                ${OneOfSchemaViewerComponent.CanRender(this.refSchema, this.key) ? html`<one-of-schema-viewer .key=${this.key} .schema=${this.refSchema} .required=${this.required} .collapse=${this.collapse} @FragmentSelected=${this._onFragmentSelected}></one-of-schema-viewer>` : null}
-                ${RefSchemaViewerComponent.CanRender(this.refSchema, this.key) ? html`<ref-schema-viewer .key=${this.key} .schema=${this.refSchema} .required=${this.required} .collapse=${this.collapse} @FragmentSelected=${this._onFragmentSelected}></ref-schema-viewer>` : null}
+                ${ArraySchemaViewerComponent.CanRender(this.ref.schema, this.key) ? html`<array-schema-viewer .src=${this.ref.src} .key=${this.key} .schema=${this.ref.schema} .required=${this.required} @FragmentSelected=${this._onFragmentSelected}></array-schema-viewer>` : null}
+                ${ObjectSchemaViewerComponent.CanRender(this.ref.schema, this.key) ? html`<object-schema-viewer .src=${this.ref.src} .key=${this.key} .schema=${this.ref.schema} .required=${this.required} .collapse=${this.collapse} @FragmentSelected=${this._onFragmentSelected}></object-schema-viewer>` : null}
+                ${OneOfSchemaViewerComponent.CanRender(this.ref.schema, this.key) ? html`<one-of-schema-viewer .src=${this.ref.src} .key=${this.key} .schema=${this.ref.schema} .required=${this.required} .collapse=${this.collapse} @FragmentSelected=${this._onFragmentSelected}></one-of-schema-viewer>` : null}
+                ${RefSchemaViewerComponent.CanRender(this.ref.schema, this.key) ? html`<ref-schema-viewer .src=${this.ref.src} .key=${this.key} .schema=${this.ref.schema} .required=${this.required} .collapse=${this.collapse} @FragmentSelected=${this._onFragmentSelected}></ref-schema-viewer>` : null}
             </div>
         `;
     }
@@ -74,11 +77,10 @@ export class RefSchemaViewerComponent extends LitElement {
     override async update(changedProperties: Map<string, unknown>) {
         if (changedProperties.has("schema")) {
             try {
-                const id = await getActiveResolver()!.getId();
-                const ref = parseRef(path.resolve(path.dirname(id!), this.schema.$ref));
+                const ref = parseRef(path.resolve(path.dirname(this.src), this.schema.$ref));
                 const resolver = getResolver(ref.url!);
                 const schema = await resolver.resolve(ref.parts);
-                this.refSchema = schema;
+                this.ref = { src: ref.url!, schema };
             }
             catch (error: unknown) {
                 this.error = error as Error;

@@ -2,21 +2,15 @@ import { fetchAndValidateSchema } from "../shared/fetch";
 import path from "node:path";
 
 const refs: Map<string, SchemaResolver> = new Map();
-let activeResolver: SchemaResolver | undefined;
 
 export function getResolver(url: string): SchemaResolver {
     const ref = parseRef(url);
     if (refs.has(ref.url!)) {
-        activeResolver = refs.get(ref.url!)!;
-        return activeResolver;
+        return refs.get(ref.url!)!;
     }
-    activeResolver = new SchemaResolver(ref.url!);
-    refs.set(ref.url!, activeResolver);
-    return activeResolver;
-}
-
-export function getActiveResolver(): SchemaResolver | undefined {
-    return activeResolver;
+    const resolver = new SchemaResolver(ref.url!);
+    refs.set(ref.url!, resolver);
+    return resolver;
 }
 
 export function parseRef(ref: string): Ref {
@@ -57,23 +51,7 @@ class SchemaResolver {
             this.schema = await fetchAndValidateSchema(this.url);
         }
 
-        let schema = _getInternalSchema(this.schema, path);
-        return schema;
-        // if (!("$ref" in schema)) {
-        //     return schema;
-        // }
-
-        // const ref = parseRef(schema.$ref);
-        // const resolver = getResolver(ref.url!);
-        // schema = await resolver.resolve(ref.parts);
-        // return schema;
-    }
-
-    async getId() : Promise<string | undefined> {
-        if (!this.schema) {
-            this.schema = await fetchAndValidateSchema(this.url);
-        }
-        return this.schema?.$id;
+        return _getInternalSchema(this.schema, path);
     }
 }
 

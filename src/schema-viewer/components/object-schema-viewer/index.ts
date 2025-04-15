@@ -36,10 +36,15 @@ export class ObjectSchemaViewerComponent extends LitElement {
     @property({ type: Boolean })
     collapse!: boolean;
 
+    @property({ type: String })
+    src!: string;
+
     override render() {
         if (!ObjectSchemaViewerComponent.CanRender(this.schema, this.key)) {
             return;
         }
+
+        console.log("src", this.src);
 
         if(this.collapse) {
             return html`
@@ -64,11 +69,11 @@ export class ObjectSchemaViewerComponent extends LitElement {
                         const required = this.schema.required?.includes(key);
 
                         return html`
-                            ${ArraySchemaViewerComponent.CanRender(property, key) ? html`<array-schema-viewer .key=${key} .schema=${property} .required=${required} @FragmentSelected=${this._onItemSelected}></array-schema-viewer>` : null}
-                            ${ObjectSchemaViewerComponent.CanRender(property, key) ? html`<object-schema-viewer .key=${key} .schema=${property} .required=${required} .collapse=${true} @FragmentSelected=${this._onItemSelected}></object-schema-viewer>` : null}
-                            ${OneOfSchemaViewerComponent.CanRender(property, key) ? html`<one-of-schema-viewer .key=${key} .schema=${property} .required=${required} .collapse=${true} @FragmentSelected=${this._onItemSelected}></one-of-schema-viewer>` : null}
-                            ${PrimitiveSchemaViewerComponent.CanRender(property, key) ? html`<primitive-schema-viewer .key=${key} .schema=${property} .required=${required} @FragmentSelected=${this._onItemSelected}></primitive-schema-viewer>` : null}
-                            ${RefSchemaViewerComponent.CanRender(property, key) ? html`<ref-schema-viewer .key=${key} .schema=${property} .required=${required} .collapse=${true} @FragmentSelected=${this._onItemSelected}></ref-schema-viewer>` : null}
+                            ${ArraySchemaViewerComponent.CanRender(property, key) ? html`<array-schema-viewer .src=${this.src} .key=${key} .schema=${property} .required=${required} @FragmentSelected=${this._onItemSelected}></array-schema-viewer>` : null}
+                            ${ObjectSchemaViewerComponent.CanRender(property, key) ? html`<object-schema-viewer .src=${this.src} .key=${key} .schema=${property} .required=${required} .collapse=${true} @FragmentSelected=${this._onItemSelected}></object-schema-viewer>` : null}
+                            ${OneOfSchemaViewerComponent.CanRender(property, key) ? html`<one-of-schema-viewer .src=${this.src} .key=${key} .schema=${property} .required=${required} .collapse=${true} @FragmentSelected=${this._onItemSelected}></one-of-schema-viewer>` : null}
+                            ${PrimitiveSchemaViewerComponent.CanRender(property, key) ? html`<primitive-schema-viewer .src=${this.src} .key=${key} .schema=${property} .required=${required} @FragmentSelected=${this._onItemSelected}></primitive-schema-viewer>` : null}
+                            ${RefSchemaViewerComponent.CanRender(property, key) ? html`<ref-schema-viewer .src=${this.src} .key=${key} .schema=${property} .required=${required} .collapse=${true} @FragmentSelected=${this._onItemSelected}></ref-schema-viewer>` : null}
                         `;
                     })}
                 </div>
