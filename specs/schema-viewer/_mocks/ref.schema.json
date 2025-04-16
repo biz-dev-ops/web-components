@@ -21,7 +21,7 @@
             "$ref": "#/definitions/address"
         },
         "person":{
-            "$ref": "./object-schema.json"
+            "$ref": "./object.schema.json"
         }
     }
 }

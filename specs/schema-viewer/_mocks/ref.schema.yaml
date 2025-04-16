@@ -15,4 +15,4 @@ properties:
   shippingAddress:
     $ref: "#/definitions/address"
   person:
-    $ref: "./object-schema.yaml"
+    $ref: "./object.schema.yaml"

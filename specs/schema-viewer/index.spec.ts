@@ -5,8 +5,8 @@ import { useRoutes, FileRoute } from "../helper/router-helper";
 const mockSchemas = [
     "allOf", "anyOf", "array", "boolean", "integer", "number", "object", "oneOf", "ref", "string"
 ].flatMap(schema => [
-    new FileRoute(`/${schema}-schema.yaml`, new URL(`./_mocks/${schema}-schema.yaml`, import.meta.url)),
-    new FileRoute(`/${schema}-schema.json`, new URL(`./_mocks/${schema}-schema.json`, import.meta.url))
+    new FileRoute(`/${schema}.schema.yaml`, new URL(`./_mocks/${schema}.schema.yaml`, import.meta.url)),
+    new FileRoute(`/${schema}.schema.json`, new URL(`./_mocks/${schema}.schema.json`, import.meta.url))
 ]);
 
 test.describe("schema-viewer", async () => {
@@ -18,11 +18,13 @@ test.describe("schema-viewer", async () => {
     test("can navigate to schema fragments", async ({ mount }) => {
         const component = await mount(SchemaViewerComponent, {
             props: {
-                src: "/ref-schema.yaml"
+                src: "/ref.schema.yaml"
             }
         });
 
         await expect(component).toBeVisible();
+        await expect(component.locator("bdo-alert")).not.toBeVisible();
+
         const navigation = component.locator("schema-navigation");
         await expect(navigation).toBeVisible();
         await expect(navigation.locator("bdo-button")).toHaveCount(0);
@@ -44,18 +46,19 @@ test.describe("schema-viewer", async () => {
         test(`renders array schema viewer with ${extension} extension`, async ({ mount }) => {
                 const component = await mount(SchemaViewerComponent, {
                     props: {
-                        src: `/array-schema.${extension}`
+                        src: `/array.schema.${extension}`
                     }
                 });
 
             await expect(component).toBeVisible();
+            await expect(component.locator("bdo-alert")).not.toBeVisible();
             await expect(component.locator("array-schema-viewer")).toBeVisible();
         });
 
         test(`renders object schema viewer with ${extension} extension`, async ({ mount }) => {
                 const component = await mount(SchemaViewerComponent, {
                     props: {
-                        src: `/object-schema.${extension}`
+                        src: `/object.schema.${extension}`
                     }
                 });
 
@@ -67,11 +70,12 @@ test.describe("schema-viewer", async () => {
             test(`renders ${combinator} schema viewer with ${extension} extension`, async ({ mount }) => {
                 const component = await mount(SchemaViewerComponent, {
                     props: {
-                        src: `/${combinator}-schema.${extension}`
+                        src: `/${combinator}.schema.${extension}`
                     }
                 });
 
                 await expect(component).toBeVisible();
+                await expect(component.locator("bdo-alert")).not.toBeVisible();
                 await expect(component.locator("x-of-schema-viewer")).toBeVisible();
             });
         });
@@ -80,11 +84,12 @@ test.describe("schema-viewer", async () => {
             test(`renders ${primitive} schema viewer with ${extension} extension`, async ({ mount }) => {
                 const component = await mount(SchemaViewerComponent, {
                     props: {
-                        src: `/${primitive}-schema.${extension}`
+                        src: `/${primitive}.schema.${extension}`
                     }
                 });
 
                 await expect(component).toBeVisible();
+                await expect(component.locator("bdo-alert")).not.toBeVisible();
                 await expect(component.locator("primitive-schema-viewer")).toBeVisible();
             });
         });
@@ -92,11 +97,12 @@ test.describe("schema-viewer", async () => {
         test(`handles $ref references with ${extension} extension`, async ({ mount }) => {
             const component = await mount(SchemaViewerComponent, {
                 props: {
-                    src: `/ref-schema.${extension}`
+                    src: `/ref.schema.${extension}`
                 }
             });
 
             await expect(component).toBeVisible();
+            await expect(component.locator("bdo-alert")).not.toBeVisible();
             await expect(component.locator("ref-schema-viewer")).toHaveCount(3);
         });
     });
@@ -104,7 +110,7 @@ test.describe("schema-viewer", async () => {
     test("shows error when schema is invalid", async ({ mount }) => {
         const component = await mount(SchemaViewerComponent, {
             props: {
-                src: "invalid-url"
+                src: "invalid.url"
             }
         });
 
