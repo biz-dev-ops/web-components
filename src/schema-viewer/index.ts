@@ -73,10 +73,7 @@ export class SchemaViewerComponent extends LitElement {
     override async update(changedProperties: Map<string, unknown>) {
         if (changedProperties.has("src")) {
             try {
-                const ref = parseRef(this.src!);
-                const resolver = getResolver(ref.url!);
-                const schema = await resolver.resolve(ref.parts);
-                const name = schema?.title ?? path.basename(this.src!).split(".")[0];
+                const { name, ref, schema } = await SchemaViewerComponent.getSchema(this.src!);
                 this.fragments = [{ name, key: "" }];
                 this.src = ref.url!;
                 this.schema = schema;
@@ -87,6 +84,17 @@ export class SchemaViewerComponent extends LitElement {
         }
 
         super.update(changedProperties);
+    }
+
+    private static async getSchema(src: string) {
+        if (src.startsWith(".")) {
+            src = path.resolve(src);
+        }
+        const ref = parseRef(src);
+        const resolver = getResolver(ref.url!);
+        const schema = await resolver.resolve(ref.parts);
+        const name = schema?.title ?? path.basename(ref.url!).split(".")[0];
+        return { name, ref, schema };
     }
 
     static override get styles(): CSSResult | CSSResultArray {

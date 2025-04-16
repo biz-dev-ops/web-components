@@ -1,5 +1,4 @@
 import { fetchAndValidateSchema } from "../shared/fetch";
-import path from "node:path";
 
 const refs: Map<string, SchemaResolver> = new Map();
 
@@ -23,7 +22,18 @@ export function parseRef($ref: string, $id?: string): Ref {
     }
 
     if ($ref.startsWith(".")) {
-        $ref = path.resolve($id ? path.dirname($id) : "", $ref);
+        if (!$id) {
+            throw new Error(`Relative reference ${$ref} requires an id`);
+        }
+        const dummyUrl = "http://dummy.com";
+        const base = new URL($id, dummyUrl);
+        const resolvedUrl = new URL($ref, base);
+        if (dummyUrl.endsWith(resolvedUrl.hostname)) {
+            $ref = $id?.startsWith("/") ? resolvedUrl.pathname : resolvedUrl.pathname.substring(1);
+        }
+        else {
+            $ref = resolvedUrl.toString();
+        }
     }
 
     if (!$ref.includes("#")) {

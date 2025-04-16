@@ -1,98 +1,106 @@
 import { expect, test } from "@sand4rt/experimental-ct-web";
 import { XOfSchemaViewerComponent } from "../../../src/schema-viewer/components/x-of-schema-viewer/index";
+import { StringContentRoute } from "../../helper/router-helper";
 
-test("renders oneOf schema viewer", async ({ mount }) => {
-    const component = await mount(XOfSchemaViewerComponent, {
-        props: {
-            schema: {
-                oneOf: [
-                    { type: "string" },
-                    { type: "number" }
-                ]
-            },
-            key: "value",
-            src: "https://example.com/schema.json"
-        }
+test.describe("XOfSchemaViewer", () => {
+    test("renders oneOf schema viewer", async ({ mount }) => {
+        const component = await mount(XOfSchemaViewerComponent, {
+            props: {
+                schema: {
+                    oneOf: [
+                        { type: "string" },
+                        { type: "number" }
+                    ]
+                },
+                key: "value",
+                src: "https://example.com/schema.json"
+            }
+        });
+
+        await expect(component).toBeVisible();
+        await expect(component.locator("[data-testid='xof-title']")).toContainText("One Of");
+        await expect(component.locator("[data-testid='xof-item']")).toHaveCount(2);
     });
 
-    await expect(component).toBeVisible();
-    await expect(component.locator("h3")).toContainText("One Of");
-});
+    test("renders anyOf schema viewer", async ({ mount }) => {
+        const component = await mount(XOfSchemaViewerComponent, {
+            props: {
+                schema: {
+                    anyOf: [
+                        { type: "string" },
+                        { type: "number" }
+                    ]
+                },
+                key: "value",
+                src: "https://example.com/schema.json"
+            }
+        });
 
-test("renders anyOf schema viewer", async ({ mount }) => {
-    const component = await mount(XOfSchemaViewerComponent, {
-        props: {
-            schema: {
-                anyOf: [
-                    { type: "string" },
-                    { type: "number" }
-                ]
-            },
-            key: "value",
-            src: "https://example.com/schema.json"
-        }
+        await expect(component.locator("[data-testid='xof-title']")).toContainText("Any Of");
     });
 
-    await expect(component.locator("h3")).toContainText("Any Of");
-});
+    test("renders allOf schema viewer", async ({ mount }) => {
+        const component = await mount(XOfSchemaViewerComponent, {
+            props: {
+                schema: {
+                    allOf: [
+                        { type: "string" },
+                        { type: "number" }
+                    ]
+                },
+                key: "value",
+                src: "https://example.com/schema.json"
+            }
+        });
 
-test("renders allOf schema viewer", async ({ mount }) => {
-    const component = await mount(XOfSchemaViewerComponent, {
-        props: {
-            schema: {
-                allOf: [
-                    { type: "string" },
-                    { type: "number" }
-                ]
-            },
-            key: "value",
-            src: "https://example.com/schema.json"
-        }
+        await expect(component.locator("[data-testid='xof-title']")).toContainText("All Of");
     });
 
-    await expect(component.locator("h3")).toContainText("All Of");
-});
+    test("shows required indicator when required", async ({ mount }) => {
+        const component = await mount(XOfSchemaViewerComponent, {
+            props: {
+                schema: {
+                    oneOf: [
+                        { type: "string" },
+                        { type: "number" }
+                    ]
+                },
+                key: "value",
+                required: true,
+                src: "https://example.com/schema.json"
+            }
+        });
 
-test("shows required indicator when required", async ({ mount }) => {
-    const component = await mount(XOfSchemaViewerComponent, {
-        props: {
-            schema: {
-                oneOf: [
-                    { type: "string" },
-                    { type: "number" }
-                ]
-            },
-            key: "value",
-            required: true,
-            src: "https://example.com/schema.json"
-        }
+        await expect(component.locator("[data-testid='required-indicator']")).toBeVisible();
     });
 
-    await expect(component.locator(".txt--required")).toBeVisible();
-});
-
-test("emits FragmentSelected event on click", async ({ mount }) => {
-    const component = await mount(XOfSchemaViewerComponent, {
-        props: {
-            schema: {
-                oneOf: [
-                    { type: "string" },
-                    { type: "number" }
-                ]
+    test("emits FragmentSelected event on item click", async ({ mount }) => {
+        const events: any[] = [];
+        const component = await mount(XOfSchemaViewerComponent, {
+            props: {
+                schema: {
+                    oneOf: [
+                        { type: "string" },
+                        { type: "number" }
+                    ]
+                },
+                key: "value",
+                src: "https://example.com/schema.json"
             },
-            key: "value",
-            src: "https://example.com/schema.json"
-        }
+            on: {
+                FragmentSelected: (event) => events.push(event)
+            }
+        });
+
+        await component.locator("[data-testid='xof-item']").first().click();
+        expect(events).toHaveLength(1);
+        expect(events[0].detail).toEqual([{
+            name: "one of",
+            key: "oneOf",
+            hidden: true
+        }, {
+            name: "string",
+            key: "0"
+        }]);
     });
-
-    const [event] = await Promise.all([
-        component.evaluate((node) => {
-            return new Promise((resolve) => {
-                node.addEventListener("FragmentSelected", (e) => resolve(e), { once: true });
-            });
-        }),
-        component.locator("bdo-button").first().click()
-    ]);
-
-    expect(event).toBeDefined();
 }); 

@@ -52,7 +52,7 @@ export class RefSchemaViewerComponent extends LitElement {
 
         if(this.error) {
             return html`
-                <bdo-alert type="error">${this.error.message}</bdo-alert>
+                <bdo-alert type="error" data-testid="error">${this.error.message}</bdo-alert>
             `;
         }
 
@@ -62,10 +62,10 @@ export class RefSchemaViewerComponent extends LitElement {
 
         return html`
             <div class="item item--ref">
-                ${ArraySchemaViewerComponent.CanRender(this.ref.schema, this.key) ? html`<array-schema-viewer .src=${this.ref.src} .key=${this.key} .schema=${this.ref.schema} .required=${this.required} @FragmentSelected=${this._onFragmentSelected}></array-schema-viewer>` : null}
-                ${ObjectSchemaViewerComponent.CanRender(this.ref.schema, this.key) ? html`<object-schema-viewer .src=${this.ref.src} .key=${this.key} .schema=${this.ref.schema} .required=${this.required} .collapse=${this.collapse} @FragmentSelected=${this._onFragmentSelected}></object-schema-viewer>` : null}
-                ${PrimitiveSchemaViewerComponent.CanRender(this.ref.schema, this.key) ? html`<primitive-schema-viewer .src=${this.ref.src} .key=${this.key} .schema=${this.ref.schema} .required=${this.required} @FragmentSelected=${this._onFragmentSelected}></primitive-schema-viewer>` : null}
-                ${RefSchemaViewerComponent.CanRender(this.ref.schema, this.key) ? html`<ref-schema-viewer .src=${this.ref.src} .key=${this.key} .schema=${this.ref.schema} .required=${this.required} .collapse=${this.collapse} @FragmentSelected=${this._onFragmentSelected}></ref-schema-viewer>` : null}
+                ${ArraySchemaViewerComponent.CanRender(this.ref.schema, this.key) ? html`<array-schema-viewer .src=${this.ref.src} .key=${this.key} .schema=${this.ref.schema} .required=${this.required} @FragmentSelected=${this._onFragmentSelected} data-testid="ref-content"></array-schema-viewer>` : null}
+                ${ObjectSchemaViewerComponent.CanRender(this.ref.schema, this.key) ? html`<object-schema-viewer .src=${this.ref.src} .key=${this.key} .schema=${this.ref.schema} .required=${this.required} .collapse=${this.collapse} @FragmentSelected=${this._onFragmentSelected} data-testid="ref-content"></object-schema-viewer>` : null}
+                ${PrimitiveSchemaViewerComponent.CanRender(this.ref.schema, this.key) ? html`<primitive-schema-viewer .src=${this.ref.src} .key=${this.key} .schema=${this.ref.schema} .required=${this.required} @FragmentSelected=${this._onFragmentSelected} data-testid="ref-content"></primitive-schema-viewer>` : null}
+                ${RefSchemaViewerComponent.CanRender(this.ref.schema, this.key) ? html`<ref-schema-viewer .src=${this.ref.src} .key=${this.key} .schema=${this.ref.schema} .required=${this.required} .collapse=${this.collapse} @FragmentSelected=${this._onFragmentSelected} data-testid="ref-content"></ref-schema-viewer>` : null}
                 ${XOfSchemaViewerComponent.CanRender(this.ref.schema, this.key) ? html`<x-of-schema-viewer .src=${this.ref.src} .key=${this.key} .schema=${this.ref.schema} .required=${this.required} .collapse=${this.collapse} @FragmentSelected=${this._onFragmentSelected}></x-of-schema-viewer>` : null}
             </div>
         `;

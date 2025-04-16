@@ -38,13 +38,13 @@ export class PrimitiveSchemaViewerComponent extends LitElement {
 
         return html`
             <div class="item item--value">
-                <h3>
+                <h3 data-testid="primitive-title">
                     <span class="txt--property">
                         ${titlelize(this.schema.title || this.key)}
-                        ${this.required ? html`<span class="txt--required">*</span>` : ``}
+                        ${this.required ? html`<span class="txt--required" data-testid="required-indicator">*</span>` : ``}
                     </span>
-                    ${this.schema.description ? html`<bdo-popover>${unsafeHTML(parseMarkdown(this.schema.description.trim()))}</bdo-popover>` : null }
-                    <span class="icon--type">
+                    ${this.schema.description ? html`<bdo-popover data-testid="description">${unsafeHTML(parseMarkdown(this.schema.description.trim()))}</bdo-popover>` : null }
+                    <span class="icon--type" data-testid="type-indicator">
                         ${this.schema.type}${this.schema.format ? html`: <em>${this.schema.format}</em>` : ''}
                     </span>
                 </h3>
@@ -55,7 +55,7 @@ export class PrimitiveSchemaViewerComponent extends LitElement {
                     }
                     const property = this.schema[key];
                     return html`
-                        <dt>${key}</dt>
+                        <dt data-testid="additional-property">${key}</dt>
                         ${Array.isArray(property) ?
                             html`
                                 <ul>

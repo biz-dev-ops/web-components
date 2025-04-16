@@ -1,95 +1,104 @@
 import { expect, test } from "@sand4rt/experimental-ct-web";
 import { ObjectSchemaViewerComponent } from "../../../src/schema-viewer/components/object-schema-viewer/index";
+import { StringContentRoute } from "../../helper/router-helper";
 
-test("renders object schema viewer", async ({ mount }) => {
-    const component = await mount(ObjectSchemaViewerComponent, {
-        props: {
-            schema: {
-                type: "object",
-                properties: {
-                    name: {
-                        type: "string"
-                    }
-                }
-            },
-            key: "user",
-            src: "https://example.com/schema.json"
-        }
-    });
-
-    await expect(component).toBeVisible();
-    await expect(component.locator("h3")).toContainText("User");
-});
-
-test("shows required indicator when required", async ({ mount }) => {
-    const component = await mount(ObjectSchemaViewerComponent, {
-        props: {
-            schema: {
-                type: "object",
-                properties: {
-                    name: {
-                        type: "string"
+test.describe("ObjectSchemaViewer", () => {
+    test("renders object schema viewer with properties", async ({ mount }) => {
+        const component = await mount(ObjectSchemaViewerComponent, {
+            props: {
+                schema: {
+                    type: "object",
+                    properties: {
+                        name: {
+                            type: "string"
+                        }
                     }
                 },
-                required: ["name"]
-            },
-            key: "user",
-            required: true,
-            src: "https://example.com/schema.json"
-        }
+                key: "user",
+                src: "https://example.com/schema.json"
+            }
+        });
+
+        await expect(component).toBeVisible();
+        await expect(component.locator("[data-testid='object-title']")).toContainText("User");
+        await expect(component.locator("[data-testid='property']")).toHaveCount(1);
     });
 
-    await expect(component.locator(".txt--required")).toBeVisible();
-});
+    test("shows required indicator when required", async ({ mount }) => {
+        const component = await mount(ObjectSchemaViewerComponent, {
+            props: {
+                schema: {
+                    type: "object",
+                    properties: {
+                        name: {
+                            type: "string"
+                        }
+                    },
+                    required: ["name"]
+                },
+                key: "user",
+                required: true,
+                src: "https://example.com/schema.json"
+            }
+        });
 
-test("emits FragmentSelected event on click", async ({ mount }) => {
-    const component = await mount(ObjectSchemaViewerComponent, {
-        props: {
-            schema: {
-                type: "object",
-                properties: {
-                    name: {
-                        type: "string"
+        await expect(component.locator("[data-testid='required-indicator']")).toBeVisible();
+    });
+
+    test("emits FragmentSelected event on property click", async ({ mount }) => {
+        const events: any[] = [];
+        const component = await mount(ObjectSchemaViewerComponent, {
+            props: {
+                schema: {
+                    type: "object",
+                    properties: {
+                        name: {
+                            type: "string"
+                        }
                     }
-                }
+                },
+                key: "user",
+                src: "https://example.com/schema.json"
             },
-            key: "user",
-            src: "https://example.com/schema.json"
-        }
+            on: {
+                FragmentSelected: (event) => events.push(event)
+            }
+        });
+
+        await component.locator("[data-testid='property']").first().click();
+        expect(events).toHaveLength(1);
+        expect(events[0].detail).toEqual([{
+            name: "properties",
+            key: "properties",
+            hidden: true,
+            disabled: true
+        }, {
+            name: "name",
+            key: "name"
+        }]);
     });
 
-    const [event] = await Promise.all([
-        component.evaluate((node) => {
-            return new Promise((resolve) => {
-                node.addEventListener("FragmentSelected", (e) => resolve(e), { once: true });
-            });
-        }),
-        component.locator("bdo-button").first().click()
-    ]);
-
-    expect(event).toBeDefined();
-});
-
-test("renders nested properties", async ({ mount }) => {
-    const component = await mount(ObjectSchemaViewerComponent, {
-        props: {
-            schema: {
-                type: "object",
-                properties: {
-                    address: {
-                        type: "object",
-                        properties: {
-                            street: {
-                                type: "string"
+    test("renders nested properties", async ({ mount }) => {
+        const component = await mount(ObjectSchemaViewerComponent, {
+            props: {
+                schema: {
+                    type: "object",
+                    properties: {
+                        address: {
+                            type: "object",
+                            properties: {
+                                street: {
+                                    type: "string"
+                                }
                             }
                         }
                     }
-                }
-            },
-            key: "user",
-            src: "https://example.com/schema.json"
-        }
-    });
+                },
+                key: "user",
+                src: "https://example.com/schema.json"
+            }
+        });
 
-    await expect(component.locator("object-schema-viewer")).toHaveCount(2);
+        await expect(component.locator("[data-testid='nested-object']")).toHaveCount(1);
+    });
 }); 

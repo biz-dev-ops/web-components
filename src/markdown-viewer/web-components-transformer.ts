@@ -12,7 +12,8 @@ export const components = [
     { extensions: [".mmd"], tag: "mermaid-viewer" },
     { extensions: [".model.yml", ".model.yaml"], tag: "model-viewer" },
     { extensions: [".query.yml", ".query.yaml"], tag: "query-viewer" },
-    { extensions: [".task.yml", ".task.yaml"], tag: "task-viewer" }
+    { extensions: [".task.yml", ".task.yaml"], tag: "task-viewer" },
+    { extensions: [".schema.yml", ".schema.yaml"], tag: "schema-viewer" }
 ];
 
 export function urlRewriterFactory(src: string) : (link: Link) => void {

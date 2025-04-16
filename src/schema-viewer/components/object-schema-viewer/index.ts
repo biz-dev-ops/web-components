@@ -60,18 +60,24 @@ export class ObjectSchemaViewerComponent extends LitElement {
 
         return html`
             <div class="item item--object">
-                ${this.schema.description ? html`<bdo-truncate>${unsafeHTML(parseMarkdown(this.schema.description))}</bdo-truncate>` : null}
+                ${this.schema.description ? html`<bdo-truncate data-testid="description">${unsafeHTML(parseMarkdown(this.schema.description))}</bdo-truncate>` : null}
+                <h3 data-testid="object-title">
+                    <span class="txt--property">
+                        ${titlelize(this.schema.title || this.key)}
+                        ${this.required ? html`<span class="txt--required" data-testid="required-indicator">*</span>` : ``}
+                    </span>
+                </h3>
                 <div class="items">
                     ${Object.keys(this.schema.properties || {}).map(key => {
                         const property = this.schema.properties[key];
                         const required = this.schema.required?.includes(key);
 
                         return html`
-                            ${ArraySchemaViewerComponent.CanRender(property, key) ? html`<array-schema-viewer .src=${this.src} .key=${key} .schema=${property} .required=${required} @FragmentSelected=${this._onItemSelected}></array-schema-viewer>` : null}
-                            ${ObjectSchemaViewerComponent.CanRender(property, key) ? html`<object-schema-viewer .src=${this.src} .key=${key} .schema=${property} .required=${required} .collapse=${true} @FragmentSelected=${this._onItemSelected}></object-schema-viewer>` : null}
-                            ${XOfSchemaViewerComponent.CanRender(property, key) ? html`<x-of-schema-viewer .src=${this.src} .key=${key} .schema=${property} .required=${required} .collapse=${true} @FragmentSelected=${this._onItemSelected}></x-of-schema-viewer>` : null}
-                            ${PrimitiveSchemaViewerComponent.CanRender(property, key) ? html`<primitive-schema-viewer .src=${this.src} .key=${key} .schema=${property} .required=${required} @FragmentSelected=${this._onItemSelected}></primitive-schema-viewer>` : null}
-                            ${RefSchemaViewerComponent.CanRender(property, key) ? html`<ref-schema-viewer .src=${this.src} .key=${key} .schema=${property} .required=${required} .collapse=${true} @FragmentSelected=${this._onItemSelected}></ref-schema-viewer>` : null}
+                            ${ArraySchemaViewerComponent.CanRender(property, key) ? html`<array-schema-viewer .src=${this.src} .key=${key} .schema=${property} .required=${required} @FragmentSelected=${this._onItemSelected} data-testid="property"></array-schema-viewer>` : null}
+                            ${ObjectSchemaViewerComponent.CanRender(property, key) ? html`<object-schema-viewer .src=${this.src} .key=${key} .schema=${property} .required=${required} .collapse=${true} @FragmentSelected=${this._onItemSelected} data-testid="nested-object"></object-schema-viewer>` : null}
+                            ${XOfSchemaViewerComponent.CanRender(property, key) ? html`<x-of-schema-viewer .src=${this.src} .key=${key} .schema=${property} .required=${required} .collapse=${true} @FragmentSelected=${this._onItemSelected} data-testid="property"></x-of-schema-viewer>` : null}
+                            ${PrimitiveSchemaViewerComponent.CanRender(property, key) ? html`<primitive-schema-viewer .src=${this.src} .key=${key} .schema=${property} .required=${required} @FragmentSelected=${this._onItemSelected} data-testid="property"></primitive-schema-viewer>` : null}
+                            ${RefSchemaViewerComponent.CanRender(property, key) ? html`<ref-schema-viewer .src=${this.src} .key=${key} .schema=${property} .required=${required} .collapse=${true} @FragmentSelected=${this._onItemSelected} data-testid="property"></ref-schema-viewer>` : null}
                         `;
                     })}
                 </div>

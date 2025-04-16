@@ -2,6 +2,7 @@ import { bundle } from "@apidevtools/json-schema-ref-parser";
 import YAML from "yaml";
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
+import { regexpCode } from "ajv/dist/compile/codegen";
 
 export async function fetchText(src: string): Promise<string> {
     const response = await fetch(src);
@@ -52,17 +53,21 @@ export async function fetchYamlAndBundleAs<T>(src: string): Promise<T> {
 }
 
 export async function fetchAndValidateSchema(src: string): Promise<any> {
-    const schema = await fetchSchema(src);
-    if (!schema) {
-        return undefined;
-    }
-
     try {
+        const references = new Map<string, any>();
+        const schema = await fetchSchema(src);
+
         const ajv = new Ajv({ strict: true, loadSchema: async (uri) => {
-            return await fetchSchema(uri);
+            if(references.has(uri)) {
+                return references.get(uri);
+            }
+            const schema = await fetchSchema(uri);
+            references.set(uri, schema);
+            return schema;
         }});
         addFormats(ajv);
         await ajv.compileAsync(schema);
+        return schema;
     }
     catch (error: any) {
         console.log("error", error);
@@ -73,8 +78,6 @@ export async function fetchAndValidateSchema(src: string): Promise<any> {
         }
         throw new FetchError(src, message, error);
     }
-
-    return schema;
 }
 
 export async function fetchSchema(src: string): Promise<any> {

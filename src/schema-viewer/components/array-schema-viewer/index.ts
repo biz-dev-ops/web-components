@@ -41,9 +41,9 @@ export class ArraySchemaViewerComponent extends LitElement {
 
         return html`
             <div class="item item--array">
-                <h3>
+                <h3 data-testid="array-title">
                     <span class="txt--property">
-                        ${titlelize(this.schema.title || this.key)} ${this.required ? html`<span class="txt--required">*</span>` : ``}
+                        ${titlelize(this.schema.title || this.key)} ${this.required ? html`<span class="txt--required" data-testid="required-indicator">*</span>` : ``}
                     </span>
                     ${this.schema.description ? html`<bdo-popover>${unsafeHTML(parseMarkdown(this.schema.description.trim()))}</bdo-popover>` : null }
                 </h3>
@@ -51,7 +51,7 @@ export class ArraySchemaViewerComponent extends LitElement {
                 <ul class="list--array">
                     ${[...Array(2).keys()].map((_, index) => html`
                         <li>
-                            <bdo-button direction="right" ?disabled="${index > 0}" @clicked=${this._onClick}>
+                            <bdo-button direction="right" ?disabled="${index > 0}" @clicked=${this._onClick} data-testid="array-item">
                                 <span class="txt--property">${name}</span>
                             </bdo-button>
                         </li>
