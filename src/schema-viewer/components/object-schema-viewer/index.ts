@@ -8,51 +8,50 @@ import resetCss from "../../../shared/styles/reset.css";
 import schemaViewerCss from "../schema-viewer.css";
 
 import { FragmentSelected } from "../../types";
+import { Schema } from "../../../shared/fetch";
 
 import { ArraySchemaViewerComponent } from "../array-schema-viewer";
 import { XOfSchemaViewerComponent } from "../x-of-schema-viewer";
 import { PrimitiveSchemaViewerComponent } from "../primitive-schema-viewer";
-import { RefSchemaViewerComponent } from "../ref-schema-viewer";
 import "../../../shared/button";
 import "../../../shared/truncate";
-
 export const tag = "object-schema-viewer";
 
 @customElement(tag)
 export class ObjectSchemaViewerComponent extends LitElement {
-    static CanRender(schema: any, _key: string): boolean {
+    static CanRender(schema: any): boolean {
         return "type" in schema && schema.type === "object";
     }
 
     @property({ type: Boolean })
     required!: boolean;
 
-    @property({ type: String })
-    key!: string;
+    @property({ type: Array })
+    path!: string[];
 
     @property({ type: Object })
-    schema!: any;
+    schema!: Schema;
 
     @property({ type: Boolean })
     collapse!: boolean;
 
-    @property({ type: String })
-    src!: string;
-
     override render() {
-        if (!ObjectSchemaViewerComponent.CanRender(this.schema, this.key)) {
+        const key = this.path.at(-1)!;
+        const schema = this.schema.resolveSchema(this.path);
+
+        if (!ObjectSchemaViewerComponent.CanRender(schema)) {
             return;
         }
 
         if(this.collapse) {
             return html`
                 <div class="item item--object">
-                    <bdo-button type="button" direction="right" @clicked=${this._onClick}>
+                    <bdo-button type="button" direction="right" @clicked=${() => { this._onClick(schema, key); }}>
                         <span class="txt--property">
-                            ${titlelize(this.schema.title || this.key)}
+                            ${titlelize(schema.title || key)}
                             ${this.required ? html`<span class="txt--required">*</span>` : ``}
                         </span>
-                        ${this.schema.description ? html`<bdo-popover>${unsafeHTML(parseMarkdown(this.schema.description.trim()))}</bdo-popover>` : null }
+                        ${schema.description ? html`<bdo-popover>${unsafeHTML(parseMarkdown(schema.description.trim()))}</bdo-popover>` : null }
                     </bdo-button>
                 </div>
             `;
@@ -60,24 +59,24 @@ export class ObjectSchemaViewerComponent extends LitElement {
 
         return html`
             <div class="item item--object">
-                ${this.schema.description ? html`<bdo-truncate data-testid="description">${unsafeHTML(parseMarkdown(this.schema.description))}</bdo-truncate>` : null}
+                ${schema.description ? html`<bdo-truncate data-testid="description">${unsafeHTML(parseMarkdown(schema.description))}</bdo-truncate>` : null}
                 <h3 data-testid="object-title">
                     <span class="txt--property">
-                        ${titlelize(this.schema.title || this.key)}
+                        ${titlelize(schema.title || key)}
                         ${this.required ? html`<span class="txt--required" data-testid="required-indicator">*</span>` : ``}
                     </span>
                 </h3>
                 <div class="items">
-                    ${Object.keys(this.schema.properties || {}).map(key => {
-                        const property = this.schema.properties[key];
-                        const required = this.schema.required?.includes(key);
+                    ${Object.keys(schema.properties || {}).map(key => {
+                        const path = [...this.path, "properties", key];
+                        const property = this.schema.resolveSchema(path);
+                        const required = schema.required?.includes(key);
 
                         return html`
-                            ${ArraySchemaViewerComponent.CanRender(property, key) ? html`<array-schema-viewer .src=${this.src} .key=${key} .schema=${property} .required=${required} @FragmentSelected=${this._onItemSelected} data-testid="property"></array-schema-viewer>` : null}
-                            ${ObjectSchemaViewerComponent.CanRender(property, key) ? html`<object-schema-viewer .src=${this.src} .key=${key} .schema=${property} .required=${required} .collapse=${true} @FragmentSelected=${this._onItemSelected} data-testid="nested-object"></object-schema-viewer>` : null}
-                            ${XOfSchemaViewerComponent.CanRender(property, key) ? html`<x-of-schema-viewer .src=${this.src} .key=${key} .schema=${property} .required=${required} .collapse=${true} @FragmentSelected=${this._onItemSelected} data-testid="property"></x-of-schema-viewer>` : null}
-                            ${PrimitiveSchemaViewerComponent.CanRender(property, key) ? html`<primitive-schema-viewer .src=${this.src} .key=${key} .schema=${property} .required=${required} @FragmentSelected=${this._onItemSelected} data-testid="property"></primitive-schema-viewer>` : null}
-                            ${RefSchemaViewerComponent.CanRender(property, key) ? html`<ref-schema-viewer .src=${this.src} .key=${key} .schema=${property} .required=${required} .collapse=${true} @FragmentSelected=${this._onItemSelected} data-testid="property"></ref-schema-viewer>` : null}
+                            ${ArraySchemaViewerComponent.CanRender(property) ? html`<array-schema-viewer .path=${path} .schema=${this.schema} .required=${required} @FragmentSelected=${this._onItemSelected} data-testid="property"></array-schema-viewer>` : null}
+                            ${ObjectSchemaViewerComponent.CanRender(property) ? html`<object-schema-viewer .path=${path} .schema=${this.schema} .required=${required} .collapse=${true} @FragmentSelected=${this._onItemSelected} data-testid="nested-object"></object-schema-viewer>` : null}
+                            ${XOfSchemaViewerComponent.CanRender(property) ? html`<x-of-schema-viewer .path=${path} .schema=${this.schema} .required=${required} .collapse=${true} @FragmentSelected=${this._onItemSelected} data-testid="property"></x-of-schema-viewer>` : null}
+                            ${PrimitiveSchemaViewerComponent.CanRender(property) ? html`<primitive-schema-viewer .path=${path} .schema=${this.schema} .required=${required} @FragmentSelected=${this._onItemSelected} data-testid="property"></primitive-schema-viewer>` : null}
                         `;
                     })}
                 </div>
@@ -86,10 +85,10 @@ export class ObjectSchemaViewerComponent extends LitElement {
     }
 
     @eventOptions({ passive: true })
-    private _onClick() {
+    private _onClick(schema: any, key: string) {
         const fragments = [{
-            name: this.schema.title || this.key,
-            key: this.key
+            name: schema.title || key,
+            key: key
         }];
 
         this.dispatchEvent(new CustomEvent<FragmentSelected>('FragmentSelected', { detail: fragments }));

@@ -8,68 +8,72 @@ import schemaViewerCss from "../schema-viewer.css";
 import resetCss from "../../../shared/styles/reset.css";
 
 import { FragmentSelected } from "../../types";
+import { Schema } from "../../../shared/fetch";
 
 import { ArraySchemaViewerComponent } from "../array-schema-viewer";
 import { ObjectSchemaViewerComponent } from "../object-schema-viewer";
 import { PrimitiveSchemaViewerComponent } from "../primitive-schema-viewer";
-import { RefSchemaViewerComponent } from "../ref-schema-viewer";
 import "../../../shared/button";
 
 export const tag = "x-of-schema-viewer";
 
 @customElement(tag)
 export class XOfSchemaViewerComponent extends LitElement {
-    static CanRender(schema: any, _key: string): boolean {
+    static CanRender(schema: any): boolean {
         return "oneOf" in schema || "anyOf" in schema || "allOf" in schema;
     }
 
     @property({ type: Boolean })
     required!: boolean;
 
-    @property({ type: String })
-    key!: string;
+    @property({ type: Array })
+    path!: string[];
 
     @property({ type: Object })
-    schema!: any;
+    schema!: Schema;
 
     @property({ type: Boolean })
     collapse!: boolean;
 
-    @property({ type: String })
-    src!: string;
-
     override render() {
-        if (!XOfSchemaViewerComponent.CanRender(this.schema, this.key)) {
+        const key = this.path.at(-1)!;
+        const schema = this.schema.resolveSchema(this.path);
+        const type = this.getType(schema);
+
+        if (!XOfSchemaViewerComponent.CanRender(schema)) {
             return;
         }
-
-        const type = this.getType();
 
         if (this.collapse) {
             return html`
                 <div class="item item--object item--${type.key}">
-                    <bdo-button type="button" direction="right" @clicked=${this._onClick} data-testid="xof-item">
+                    <bdo-button type="button" direction="right" @clicked=${() => { this._onClick(schema, key); }} data-testid="xof-item">
                         <span class="txt--property">
-                            ${titlelize(this.schema.title || this.key)}
+                            ${titlelize(schema.title || key)}
                             ${this.required ? html`<span class="txt--required" data-testid="required-indicator">*</span>` : ``}
                         </span>
-                        ${this.schema.description ? html`<bdo-popover>${unsafeHTML(parseMarkdown(this.schema.description.trim()))}</bdo-popover>` : null}
+                        ${schema.description ? html`<bdo-popover>${unsafeHTML(parseMarkdown(schema.description.trim()))}</bdo-popover>` : null}
                     </bdo-button>
                 </div>
             `;
         }
 
+        const items = schema[type.key].map((_item: any, index: number) => {
+            const path = [...this.path, type.key, index.toString()];
+            return { path, property: this.schema.resolveSchema(path) };
+        });
+
         return html`
             <div class="item item--${type.key}">
-                ${this.schema.description ? html`<bdo-truncate>${unsafeHTML(parseMarkdown(this.schema.description))}</bdo-truncate>` : null}
+                ${schema.description ? html`<bdo-truncate>${unsafeHTML(parseMarkdown(schema.description))}</bdo-truncate>` : null}
                 <h3 data-testid="xof-title">${titlelize(type.name)}</h3>
                 <ul class="list--${type.key}">
-                    ${this.schema[type.key].map((item: any, index: number) => html`
+                    ${items
+                        .map(({ path, property }, index:number) => html`
                         <li>
-                            ${ArraySchemaViewerComponent.CanRender(item, this.key) ? html`<array-schema-viewer .src=${this.src} .key=${this.key} .schema=${item} .required=${this.required} @FragmentSelected=${(event: CustomEvent<FragmentSelected>) => { this._onFragmentSelected(index, type, event); }} data-testid="xof-item"></array-schema-viewer>` : null}
-                            ${ObjectSchemaViewerComponent.CanRender(item, this.key) ? html`<object-schema-viewer .src=${this.src} .key=${this.key} .schema=${item} .required=${this.required} .collapse=${true} @FragmentSelected=${(event: CustomEvent<FragmentSelected>) => { this._onFragmentSelected(index, type, event); }} data-testid="xof-item"></object-schema-viewer>` : null}
-                            ${PrimitiveSchemaViewerComponent.CanRender(item, this.key) ? html`<primitive-schema-viewer .src=${this.src} .key=${this.key} .schema=${item} .required=${this.required} @FragmentSelected=${(event: CustomEvent<FragmentSelected>) => { this._onFragmentSelected(index, type, event); }} data-testid="xof-item"></primitive-schema-viewer>` : null}
-                            ${RefSchemaViewerComponent.CanRender(item, this.key) ? html`<ref-schema-viewer .src=${this.src} .key=${this.key} .schema=${item} .required=${this.required} .collapse=${true} @FragmentSelected=${(event: CustomEvent<FragmentSelected>) => { this._onFragmentSelected(index, type, event); }} data-testid="xof-item"></ref-schema-viewer>` : null}
+                            ${ArraySchemaViewerComponent.CanRender(property) ? html`<array-schema-viewer .path=${path} .schema=${this.schema} .required=${this.required} @FragmentSelected=${(event: CustomEvent<FragmentSelected>) => { this._onFragmentSelected(index, type, event); }} data-testid="xof-item"></array-schema-viewer>` : null}
+                            ${ObjectSchemaViewerComponent.CanRender(property) ? html`<object-schema-viewer .path=${path} .schema=${this.schema} .required=${this.required} .collapse=${true} @FragmentSelected=${(event: CustomEvent<FragmentSelected>) => { this._onFragmentSelected(index, type, event); }} data-testid="xof-item"></object-schema-viewer>` : null}
+                            ${PrimitiveSchemaViewerComponent.CanRender(property) ? html`<primitive-schema-viewer .path=${path} .schema=${this.schema} .required=${this.required} @FragmentSelected=${(event: CustomEvent<FragmentSelected>) => { this._onFragmentSelected(index, type, event); }} data-testid="xof-item"></primitive-schema-viewer>` : null}
                         </li>
                     `)}
                 </ul>
@@ -78,10 +82,10 @@ export class XOfSchemaViewerComponent extends LitElement {
     }
 
     @eventOptions({ passive: true })
-    private _onClick() {
+    private _onClick(schema: any, key: string) {
         const fragments = [{
-            name: this.schema.title || this.key,
-            key: this.key
+            name: schema.title || key,
+            key: key
         }];
 
         this.dispatchEvent(new CustomEvent<FragmentSelected>('FragmentSelected', { detail: fragments }));
@@ -101,12 +105,12 @@ export class XOfSchemaViewerComponent extends LitElement {
         this.dispatchEvent(new CustomEvent<FragmentSelected>('FragmentSelected', { detail: fragments }));
     }
 
-    private getType() {
-        if("oneOf" in this.schema) {
+    private getType(schema: any) {
+        if("oneOf" in schema) {
             return { name: "one of", key: "oneOf" };
         }
 
-        if("anyOf" in this.schema) {
+        if("anyOf" in schema) {
             return { name: "any of", key: "anyOf" };
         }
         return { name: "all of", key: "allOf" };

@@ -11,47 +11,47 @@ import { FragmentSelected } from "../../types";
 
 import "../../../shared/popover";
 import "../../../shared/button";
+import { Schema } from "../../../shared/fetch";
 
 export const tag = "array-schema-viewer";
 
 @customElement(tag)
 export class ArraySchemaViewerComponent extends LitElement {
-    static CanRender(schema: any, _key: string) : boolean {
+    static CanRender(schema: any) : boolean {
         return "type" in schema && schema.type === "array";
     }
 
     @property({ type: Boolean })
     required!: boolean;
 
-    @property({ type: String })
-    key!: string;
+    @property({ type: Array })
+    path!: string[];
 
     @property({ type: Object })
-    schema!: any;
-
-    @property({ type: String })
-    src!: string;
+    schema!: Schema;
 
     override render() {
-        if(!ArraySchemaViewerComponent.CanRender(this.schema, this.key)) {
+        const key = this.path.at(-1)!;
+        const schema = this.schema.resolveSchema(this.path);
+        const name = titlelize(schema.items.title || "item");
+
+        if(!ArraySchemaViewerComponent.CanRender(schema)) {
             return;
         }
-
-        const name = titlelize(this.schema.items.title || "item");
 
         return html`
             <div class="item item--array">
                 <h3 data-testid="array-title">
                     <span class="txt--property">
-                        ${titlelize(this.schema.title || this.key)} ${this.required ? html`<span class="txt--required" data-testid="required-indicator">*</span>` : ``}
+                        ${titlelize(schema.title || key)} ${this.required ? html`<span class="txt--required" data-testid="required-indicator">*</span>` : ``}
                     </span>
-                    ${this.schema.description ? html`<bdo-popover>${unsafeHTML(parseMarkdown(this.schema.description.trim()))}</bdo-popover>` : null }
+                    ${schema.description ? html`<bdo-popover>${unsafeHTML(parseMarkdown(schema.description.trim()))}</bdo-popover>` : null }
                 </h3>
 
                 <ul class="list--array">
                     ${[...Array(2).keys()].map((_, index) => html`
                         <li>
-                            <bdo-button direction="right" ?disabled="${index > 0}" @clicked=${this._onClick} data-testid="array-item">
+                            <bdo-button direction="right" ?disabled="${index > 0}" @clicked=${() => { this._onClick(schema, key); }} data-testid="array-item">
                                 <span class="txt--property">${name}</span>
                             </bdo-button>
                         </li>
@@ -62,13 +62,13 @@ export class ArraySchemaViewerComponent extends LitElement {
     }
 
     @eventOptions({ passive: true })
-    private _onClick() {
+    private _onClick(schema: any, key: string) {
         const fragments = [{
-            name: this.schema.title || this.key,
-            key: this.key,
+            name: schema.title || key,
+            key: key,
             disabled: true
          }, {
-            name: this.schema.items.title || "item",
+            name: schema.items.title || "item",
             key: "items",
          }];
 

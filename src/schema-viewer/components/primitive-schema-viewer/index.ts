@@ -7,7 +7,7 @@ import schemaViewerCss from "../schema-viewer.css";
 import "../../../shared/popover";
 
 import { parseMarkdown, titlelize } from "../../../shared/util";
-
+import { Schema } from "../../../shared/fetch";
 const PRIMITIVE_TYPES = ["string", "number", "integer", "boolean"];
 const SKIP_KEYS = ["description", "title", "type", "format"];
 
@@ -15,24 +15,27 @@ export const tag = "primitive-schema-viewer";
 
 @customElement(tag)
 export class PrimitiveSchemaViewerComponent extends LitElement {
-    static CanRender(schema: any, _key: string) : boolean {
+    static CanRender(schema: any) : boolean {
         return PRIMITIVE_TYPES.includes(schema.type);
     }
 
     @property({ type: Boolean })
     required!: boolean;
 
-    @property({ type: String })
-    key!: string;
+    @property({ type: Array })
+    path!: string[];
 
     @property({ type: Object })
-    schema!: any;
+    schema!: Schema;
 
     @property({ type: String })
     src!: string;
 
     override render() {
-        if (!PrimitiveSchemaViewerComponent.CanRender(this.schema, this.key)) {
+        const key = this.path.at(-1)!;
+        const schema = this.schema.resolveSchema(this.path);
+
+        if (!PrimitiveSchemaViewerComponent.CanRender(schema)) {
             return;
         }
 
@@ -40,20 +43,20 @@ export class PrimitiveSchemaViewerComponent extends LitElement {
             <div class="item item--value">
                 <h3 data-testid="primitive-title">
                     <span class="txt--property">
-                        ${titlelize(this.schema.title || this.key)}
+                        ${titlelize(schema.title || key)}
                         ${this.required ? html`<span class="txt--required" data-testid="required-indicator">*</span>` : ``}
                     </span>
-                    ${this.schema.description ? html`<bdo-popover data-testid="description">${unsafeHTML(parseMarkdown(this.schema.description.trim()))}</bdo-popover>` : null }
+                    ${schema.description ? html`<bdo-popover data-testid="description">${unsafeHTML(parseMarkdown(schema.description.trim()))}</bdo-popover>` : null }
                     <span class="icon--type" data-testid="type-indicator">
-                        ${this.schema.type}${this.schema.format ? html`: <em>${this.schema.format}</em>` : ''}
+                        ${schema.type}${schema.format ? html`: <em>${schema.format}</em>` : ''}
                     </span>
                 </h3>
 
-                ${Object.keys(this.schema).map(key => {
+                ${Object.keys(schema).map(key => {
                     if (SKIP_KEYS.includes(key)) {
                         return;
                     }
-                    const property = this.schema[key];
+                    const property = schema[key];
                     return html`
                         <dt data-testid="additional-property">${key}</dt>
                         ${Array.isArray(property) ?

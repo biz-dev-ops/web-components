@@ -1,5 +1,4 @@
-
-import path from "node:path";
+import path from "path";
 import { CSSResult, CSSResultArray, html, LitElement } from "lit";
 import { customElement, eventOptions, property, state } from "lit/decorators.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
@@ -8,25 +7,24 @@ const md = markdownFactory();
 import resetCss from "../shared/styles/reset.css";
 import schemaViewerCss from "./schema-viewer.css";
 
-import { getResolver, parseRef } from "./schema-resolver";
 import { FragmentIndexSelected, Fragment, FragmentSelected } from "./types";
 
 import { ArraySchemaViewerComponent } from "./components/array-schema-viewer";
 import { ObjectSchemaViewerComponent } from "./components/object-schema-viewer";
 import { PrimitiveSchemaViewerComponent } from "./components/primitive-schema-viewer";
-import { RefSchemaViewerComponent } from "./components/ref-schema-viewer";
 import { XOfSchemaViewerComponent } from "./components/x-of-schema-viewer";
 import "../shared/alert";
 import "./components/schema-navigation";
+import { fetchAndValidateSchema, Schema } from "../shared/fetch";
 
 export const tag = "schema-viewer";
 
 @customElement(tag)
 export class SchemaViewerComponent extends LitElement {
+    @state()
     private fragments: Fragment[] = [];
 
-    @state()
-    private schema?: any;
+    private schema?: Schema;
 
     @state()
     private error?: Error;
@@ -39,17 +37,22 @@ export class SchemaViewerComponent extends LitElement {
             return html`<bdo-alert type="error">${unsafeHTML(md.render(this.error.message))}</bdo-alert>`;
         }
 
+        if(!this.schema) {
+            return;
+        }
+
         const key = this.fragments.at(-1)!.key;
-        const required = key ? this.schema.required?.includes(key) : false;
+        const path = this.fragments.map(f => f.key);
+        const schema = this.schema?.resolveSchema(path);
+        const required = key ? schema.required?.includes(key) : false;
 
         return html`
             <schema-navigation .fragments=${this.fragments} @FragmentIndexSelected=${this._onFragmentIndexSelected}></schema-navigation>
 
-            ${ArraySchemaViewerComponent.CanRender(this.schema, key) ? html`<array-schema-viewer .src=${this.src} .key=${key} .schema=${this.schema} .required=${required} @FragmentSelected=${this._onFragmentSelected}></array-schema-viewer>` : null}
-            ${ObjectSchemaViewerComponent.CanRender(this.schema, key) ? html`<object-schema-viewer .src=${this.src} .key=${key} .schema=${this.schema} .required=${required} .collapse=${false} @FragmentSelected=${this._onFragmentSelected}></object-schema-viewer>` : null}
-            ${PrimitiveSchemaViewerComponent.CanRender(this.schema, key) ? html`<primitive-schema-viewer .src=${this.src} .key=${key} .schema=${this.schema} .required=${required} @FragmentSelected=${this._onFragmentSelected}></primitive-schema-viewer>` : null}
-            ${RefSchemaViewerComponent.CanRender(this.schema, key) ? html`<ref-schema-viewer .src=${this.src} .key=${key} .schema=${this.schema} .required=${required} .collapse=${false} @FragmentSelected=${this._onFragmentSelected}></ref-schema-viewer>` : null}
-            ${XOfSchemaViewerComponent.CanRender(this.schema, key) ? html`<x-of-schema-viewer .src=${this.src} .key=${key} .schema=${this.schema} .required=${required} .collapse=${false} @FragmentSelected=${this._onFragmentSelected}></x-of-schema-viewer>` : null}
+            ${ArraySchemaViewerComponent.CanRender(schema) ? html`<array-schema-viewer .path=${path} .schema=${this.schema} .required=${required} @FragmentSelected=${this._onFragmentSelected}></array-schema-viewer>` : null}
+            ${ObjectSchemaViewerComponent.CanRender(schema) ? html`<object-schema-viewer .path=${path} .schema=${this.schema} .required=${required} .collapse=${false} @FragmentSelected=${this._onFragmentSelected}></object-schema-viewer>` : null}
+            ${PrimitiveSchemaViewerComponent.CanRender(schema) ? html`<primitive-schema-viewer .path=${path} .schema=${this.schema} .required=${required} @FragmentSelected=${this._onFragmentSelected}></primitive-schema-viewer>` : null}
+            ${XOfSchemaViewerComponent.CanRender(schema) ? html`<x-of-schema-viewer .path=${path} .schema=${this.schema} .required=${required} .collapse=${false} @FragmentSelected=${this._onFragmentSelected}></x-of-schema-viewer>` : null}
         `;
     }
 
@@ -67,16 +70,14 @@ export class SchemaViewerComponent extends LitElement {
 
     private async _setFragments(fragment: Fragment[]) {
         this.fragments = fragment;
-        this.schema = await getResolver(this.src!).resolve(this.fragments.map(f => f.key));
     }
 
     override async update(changedProperties: Map<string, unknown>) {
         if (changedProperties.has("src")) {
             try {
-                const { name, ref, schema } = await SchemaViewerComponent.getSchema(this.src!);
-                this.fragments = [{ name, key: "" }];
-                this.src = ref.url!;
+                const schema = await fetchAndValidateSchema(this.src);
                 this.schema = schema;
+                this.fragments = [{ name: getSchemaTitle(schema), key: "root" }];
             }
             catch (error: unknown) {
                 this.error = error as Error;
@@ -86,17 +87,6 @@ export class SchemaViewerComponent extends LitElement {
         super.update(changedProperties);
     }
 
-    private static async getSchema(src: string) {
-        if (src.startsWith(".")) {
-            src = path.resolve(src);
-        }
-        const ref = parseRef(src);
-        const resolver = getResolver(ref.url!);
-        const schema = await resolver.resolve(ref.parts);
-        const name = schema?.title ?? path.basename(ref.url!).split(".")[0];
-        return { name, ref, schema };
-    }
-
     static override get styles(): CSSResult | CSSResultArray {
         return [
             resetCss,
@@ -104,3 +94,9 @@ export class SchemaViewerComponent extends LitElement {
         ];
     }
 }
+function getSchemaTitle(schema: Schema): string {
+    const s = schema.resolveSchema("");
+    const uri = s.$id;
+    return s.title ?? path.basename(uri).split(".")[0];;
+}
+
