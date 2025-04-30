@@ -1,0 +1,53 @@
+title: Complex Schema
+type: object
+properties:
+  person:
+    type: object
+    properties:
+      name:
+        type: string
+        description: The name of the person
+      address:
+        $ref: "#/definitions/address"
+    required:
+      - name
+  company:
+    type: object
+    properties:
+      name:
+        type: string
+        description: The name of the company
+      employees:
+        type: array
+        items:
+          $ref: "#/definitions/person"
+    required:
+      - name
+definitions:
+  address:
+    type: object
+    properties:
+      street:
+        type: string
+        description: The street address
+      city:
+        type: string
+        description: The city
+      country:
+        type: string
+        description: The country
+    required:
+      - street
+      - city
+      - country
+  person:
+    type: object
+    properties:
+      name:
+        type: string
+        description: The name of the person
+      age:
+        type: integer
+        description: The age of the person
+    required:
+      - name

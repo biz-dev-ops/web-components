@@ -8,7 +8,7 @@ import schemaViewerCss from "../schema-viewer.css";
 import resetCss from "../../../shared/styles/reset.css";
 
 import { FragmentSelected } from "../../types";
-import { Schema } from "../../../shared/fetch";
+import { Schema } from "../../../shared/fetch/schema";
 
 import { ArraySchemaViewerComponent } from "../array-schema-viewer";
 import { ObjectSchemaViewerComponent } from "../object-schema-viewer";
@@ -58,18 +58,17 @@ export class XOfSchemaViewerComponent extends LitElement {
             `;
         }
 
-        const items = schema[type.key].map((_item: any, index: number) => {
-            const path = [...this.path, type.key, index.toString()];
-            return { path, property: this.schema.resolveSchema(path) };
-        });
-
         return html`
             <div class="item item--${type.key}">
                 ${schema.description ? html`<bdo-truncate>${unsafeHTML(parseMarkdown(schema.description))}</bdo-truncate>` : null}
                 <h3 data-testid="xof-title">${titlelize(type.name)}</h3>
                 <ul class="list--${type.key}">
-                    ${items
-                        .map(({ path, property }, index:number) => html`
+                    ${schema[type.key]
+                        .map((_item: any, index: number) => {
+                            const path = [...this.path, type.key, index.toString()];
+                            return { path, property: this.schema.resolveSchema(path), index };
+                        })
+                        .map(({ path, property, index }) => html`
                         <li>
                             ${ArraySchemaViewerComponent.CanRender(property) ? html`<array-schema-viewer .path=${path} .schema=${this.schema} .required=${this.required} @FragmentSelected=${(event: CustomEvent<FragmentSelected>) => { this._onFragmentSelected(index, type, event); }} data-testid="xof-item"></array-schema-viewer>` : null}
                             ${ObjectSchemaViewerComponent.CanRender(property) ? html`<object-schema-viewer .path=${path} .schema=${this.schema} .required=${this.required} .collapse=${true} @FragmentSelected=${(event: CustomEvent<FragmentSelected>) => { this._onFragmentSelected(index, type, event); }} data-testid="xof-item"></object-schema-viewer>` : null}

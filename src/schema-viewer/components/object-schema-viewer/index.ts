@@ -8,7 +8,7 @@ import resetCss from "../../../shared/styles/reset.css";
 import schemaViewerCss from "../schema-viewer.css";
 
 import { FragmentSelected } from "../../types";
-import { Schema } from "../../../shared/fetch";
+import { Schema } from "../../../shared/fetch/schema";
 
 import { ArraySchemaViewerComponent } from "../array-schema-viewer";
 import { XOfSchemaViewerComponent } from "../x-of-schema-viewer";

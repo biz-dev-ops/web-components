@@ -11,7 +11,7 @@ import { FragmentSelected } from "../../types";
 
 import "../../../shared/popover";
 import "../../../shared/button";
-import { Schema } from "../../../shared/fetch";
+import { Schema } from "../../../shared/fetch/schema";
 
 export const tag = "array-schema-viewer";
 

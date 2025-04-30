@@ -15,7 +15,8 @@ import { PrimitiveSchemaViewerComponent } from "./components/primitive-schema-vi
 import { XOfSchemaViewerComponent } from "./components/x-of-schema-viewer";
 import "../shared/alert";
 import "./components/schema-navigation";
-import { fetchAndValidateSchema, Schema } from "../shared/fetch";
+import { fetchAndValidateSchema } from "../shared/fetch";
+import { Schema } from "../shared/fetch/schema";
 
 export const tag = "schema-viewer";
 
@@ -77,7 +78,7 @@ export class SchemaViewerComponent extends LitElement {
             try {
                 const schema = await fetchAndValidateSchema(this.src);
                 this.schema = schema;
-                this.fragments = [{ name: getSchemaTitle(schema), key: "root" }];
+                this.fragments = [{ name: getSchemaTitle(schema.resolveSchema("")), key: "" }];
             }
             catch (error: unknown) {
                 this.error = error as Error;
@@ -94,9 +95,9 @@ export class SchemaViewerComponent extends LitElement {
         ];
     }
 }
-function getSchemaTitle(schema: Schema): string {
-    const s = schema.resolveSchema("");
-    const uri = s.$id;
-    return s.title ?? path.basename(uri).split(".")[0];;
+
+function getSchemaTitle(schema: any): string {
+    const uri = schema.$id;
+    return schema.title ?? path.basename(uri).split(".")[0];;
 }
 

@@ -7,7 +7,7 @@ import schemaViewerCss from "../schema-viewer.css";
 import "../../../shared/popover";
 
 import { parseMarkdown, titlelize } from "../../../shared/util";
-import { Schema } from "../../../shared/fetch";
+import { Schema } from "../../../shared/fetch/schema";
 const PRIMITIVE_TYPES = ["string", "number", "integer", "boolean"];
 const SKIP_KEYS = ["description", "title", "type", "format"];
 

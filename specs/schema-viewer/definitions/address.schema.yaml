@@ -1,0 +1,16 @@
+title: Address Schema
+type: object
+properties:
+  street:
+    type: string
+    description: The street address
+  city:
+    type: string
+    description: The city
+  country:
+    type: string
+    description: The country
+required:
+  - street
+  - city
+  - country
