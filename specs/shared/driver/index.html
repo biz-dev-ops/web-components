@@ -57,8 +57,8 @@ customElements.define("custom-driven", CustomDrivenComponent);
             this.attachShadow({ mode: "open" });
             this.shadowRoot.innerHTML = `
               <div>
-                <h3>Driven Component</h3>
-                <p>Current state: <span id="state">normal</span></p>
+                <h3><slot>Driven Component</slot></h3>
+                <p>Current state: <mark id="state">normal</mark></p>
               </div>
             `;
           }
@@ -81,20 +81,42 @@ customElements.define("custom-driven", CustomDrivenComponent);
         customElements.define("custom-driven", CustomDrivenComponent);
       </script>
 
+      <h3>Drivers with text</h3>
+
       <bdo-driver>
-        <button slot="driver" data-action="toggle-fullscreen">
+        <bdo-button slot="driver" data-action="toggle-fullscreen">
           <bdo-icon icon="mat-fullscreen"></bdo-icon>Toggle Fullscreen
-        </button>
-        <button slot="driver" data-action="zoom-in">
+        </bdo-button>
+        <bdo-button slot="driver" data-action="zoom-in">
           <bdo-icon icon="mat-zoom_in"></bdo-icon>Zoom In
-        </button>
-        <button slot="driver" data-action="zoom-out">
+        </bdo-button>
+        <bdo-button slot="driver" data-action="zoom-out">
           <bdo-icon icon="mat-zoom_out"></bdo-icon>Zoom Out
-        </button>
-        <button slot="driver" data-action="zoom-reset">
+        </bdo-button>
+        <bdo-button slot="driver" data-action="zoom-reset">
           <bdo-icon icon="mat-reset_focus"></bdo-icon>Zoom Reset
-        </button>
-        <custom-driven></custom-driven>
+        </bdo-button>
+        
+        <custom-driven>Driven Component 1</custom-driven>
+      </bdo-driver>
+
+      <h3>Drivers with icons only</h3>
+
+      <bdo-driver>
+        <bdo-button slot="driver" data-action="toggle-fullscreen" title="Toggle Fullscreen">
+          <bdo-icon icon="mat-fullscreen"></bdo-icon>
+        </bdo-button>
+        <bdo-button slot="driver" data-action="zoom-in" title="Zoom In">
+          <bdo-icon icon="mat-zoom_in"></bdo-icon>
+        </bdo-button>
+        <bdo-button slot="driver" data-action="zoom-out" title="Zoom Out">
+          <bdo-icon icon="mat-zoom_out"></bdo-icon>
+        </bdo-button>
+        <bdo-button slot="driver" data-action="zoom-reset" title="Zoom Reset">
+          <bdo-icon icon="mat-reset_focus"></bdo-icon>
+        </bdo-button>
+        
+        <custom-driven>Driven Component 2</custom-driven>
       </bdo-driver>
 
       <h2>Run tests</h2>
@@ -104,6 +126,7 @@ customElements.define("custom-driven", CustomDrivenComponent);
     <script type="module">
       import "../../../src/shared/driver/index.ts";
       import "../../../src/shared/icon/index.ts";
+      import "../../../src/shared/button/index.ts";
     </script>
   </body>
 </html>

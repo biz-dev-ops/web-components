@@ -2,7 +2,6 @@ import { LitElement, html } from 'lit';
 import { customElement, eventOptions, state } from 'lit/decorators.js';
 import resetCss from '../styles/reset.css';
 import driverCss from './driver.css';
-import "../icon";
 import "../alert";
 
 @customElement('bdo-driver')

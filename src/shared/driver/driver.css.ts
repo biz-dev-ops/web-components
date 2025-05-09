@@ -1,7 +1,8 @@
 import { css } from "lit";
 
 export default css`
-    :host {
-
+    .driver {
+        display: flex;
+        gap: var(--space-xs);
     }
 `;
