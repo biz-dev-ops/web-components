@@ -35,8 +35,11 @@ export default css`
     }
 
     button[disabled] {
+        --_button-border-color: var(--color-black-a30);
+        --button-text-color: var(--color-black-a80);
+
         cursor: initial;
-        pointer-event: none;
+        pointer-events: none;
     }
 
     button span {
@@ -68,22 +71,22 @@ export default css`
       transform-origin: 50% 50%;
       justify-self: flex-end;
     }
-    
+
     :host([direction="up"]) button::after {
         inset-block-end: -.25em;
         transform: rotate(315deg);
     }
-    
+
     :host([direction="right"]) button::after {
         transform: rotate(45deg);
         inset-inline-start: -.25em;
     }
-    
+
     :host([direction="down"]) button::after {
         inset-block-start: -.25em;
         transform: rotate(135deg);
     }
-    
+
     :host([direction="left"]) button::before {
         inset-inline-end: -.25em;
         transform: rotate(225deg);
