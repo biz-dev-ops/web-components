@@ -5,9 +5,13 @@ const styles = css`
     --_icon-color: var(--icon-color, var(--text-color-base));
 
     color: var(--_icon-color);
-    display: flex;
+    display: inline-flex;
     line-height: 1;
     position: relative;
+  }
+
+  :host, .icon, .symbol {
+    display: inline-flex;
   }
 
   .material-symbols {
@@ -18,10 +22,10 @@ const styles = css`
     font-feature-settings: "liga";
   }
 
-  .icon {
-    display: flex;
-    justify-content: var(--icon-justify, end);
-    align-items: var(--icon-align, end);
+  .icon + .icon {
+      display: flex;
+      justify-content: var(--icon-justify, end);
+      align-items: var(--icon-align, end);
   }
 
   .icon:nth-child(2) {
