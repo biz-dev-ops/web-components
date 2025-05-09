@@ -30,10 +30,14 @@ export class SchemaNavigation extends LitElement {
 
                                 const name = html`<span class="txt--property">${titlelize(fragment.name)}</span>`;
 
-                                if(fragment.disabled || index === this.fragments.length - 1) {
-                                    return html`<li>${name}</li>`;
-                                }
-                                else {
+                                if (fragment.disabled || index === this.fragments.length - 1) {
+                                    return html`
+                                        <li>
+                                            <bdo-button class="button--path" @clicked="${() => { this._onClick(index); }}" disabled>
+                                                ${name}
+                                            </bdo-button>
+                                        </li>`;
+                                } else {
                                     return html`
                                         <li>
                                             <bdo-button class="button--path" @clicked="${() => { this._onClick(index); }}">

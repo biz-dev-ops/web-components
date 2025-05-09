@@ -35,8 +35,11 @@ export default css`
     }
 
     button[disabled] {
+        --_button-border-color: var(--color-black-a30);
+        --button-text-color: var(--color-black-a80);
+
         cursor: initial;
-        pointer-event: none;
+        pointer-events: none;
     }
 
     button span {
