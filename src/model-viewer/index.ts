@@ -84,7 +84,7 @@ export class ModelViewer extends LitElement {
   }
 
   override updated() {
-    this.shadowRoot?.querySelector("model-viewer-path")?.scrollIntoView();
+    this.renderRoot.querySelector("model-viewer-path")?.scrollIntoView();
   }
 
   async setPath(path: ModelItemDecorator[]) {

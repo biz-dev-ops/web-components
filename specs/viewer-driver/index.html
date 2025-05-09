@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Viewer driver component</title>
+    <link rel="stylesheet" href="../../theme.css" />
+  </head>
+
+  <body>
+    <main>
+      <h1>Viewer driver component</h1>
+
+      <p>
+        This component toggles the fullscreen action and is used to drive the viewer components with default actions:
+
+        <ul>
+          <li>toggle-fullscreen</li>
+          <li>zoom-in</li>
+          <li>zoom-out</li>
+          <li>zoom-reset</li>
+        </ul>
+      </p>
+
+      <script>
+        // Define a custom driven component
+        class CustomDrivenComponent extends HTMLElement {
+          constructor() {
+            super();
+            this.attachShadow({ mode: "open" });
+            this.shadowRoot.innerHTML = `
+              <div>
+                <h3>Driven Component</h3>
+                <p>Last action: <span id="state">none</span></p>
+              </div>
+            `;
+          }
+
+          handleDriverAction(action) {
+            const stateElement = this.shadowRoot.getElementById("state");
+            stateElement.textContent = action;
+          }
+
+          canHandleDriverAction(action) {
+            return [
+              "toggle-fullscreen",
+              "zoom-in",
+              "zoom-out",
+              "zoom-reset",
+            ].includes(action);
+          }
+        }
+
+        customElements.define("custom-driven", CustomDrivenComponent);
+      </script>
+
+      <viewer-driver>
+        <button slot="driver" onclick="console.log('clicked')">
+          <bdo-icon icon="mat-favorite"></bdo-icon>Custom driver
+        </button>
+        <custom-driven></custom-driven>
+      </viewer-driver>
+
+      <h2>Run tests</h2>
+      <code>npm run test -- 'viewer-driver'</code>
+    </main>
+
+    <script type="module">
+      import "../../src/viewer-driver/index.ts";
+    </script>
+  </body>
+</html>

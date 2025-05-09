@@ -92,7 +92,7 @@
   --link-text-color: var(--color-brand-base, var(--text-color-base));
 
   /* Button */
-  --button-text-color: var(--text-color-base, var(--color-black));
+  --button-text-color: var(--link-text-color, var(--color-black));
   --button-text-color-active: var(--button-text-color);
   --button-background-base: var(--color-brand-a20);
   --button-background-active: var(--color-brand-a40);

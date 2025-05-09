@@ -30,7 +30,7 @@ export class BdoTruncate extends LitElement {
 
 
     override firstUpdated(): void {
-        const content = this.shadowRoot?.querySelector('.truncate__content');
+        const content = this.renderRoot.querySelector('.truncate__content');
 
         if (!content) return;
 
