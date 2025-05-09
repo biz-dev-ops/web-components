@@ -6,6 +6,7 @@ import typographyCss from "../../shared/styles/typography.css";
 
 import { ScenarioOutline, Scenario, TestResult } from "../models";
 import "../scenario";
+import scenarioOutlineCss from "./scenario-outline.css";
 
 export const tag = "feature-scenario-outline";
 
@@ -62,36 +63,6 @@ export class ScenarioOutlineComponent extends LitElement {
   static override styles = [
     resetCss,
     typographyCss,
-    css`
-      .scenario-outline {
-        background-color: var(--main-surface);
-        border-radius: var(--radius-base);
-        border-left: var(--line-medium) solid var(--_scenario-outline-status-color, transparent);
-        box-shadow: var(--drop-shadow-base);
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-md);
-        padding: var(--space-md);
-        padding-inline-start: calc(var(--space-md) - var(--line-medium));
-      }
-
-      .scenario-outline--passed {
-        --_scenario-outline-status-color: var(--status-passed);
-      }
-
-      .scenario-outline--failed {
-        --_scenario-outline-status-color: var(--status-failed);
-      }
-
-      .scenario-outline--not_implemented {
-        --_scenario-outline-status-color: var(--status-undefined);
-      }
-
-      .scenario-outline_scenarios {
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-md);
-      }
-    `
+    scenarioOutlineCss
   ];
 }

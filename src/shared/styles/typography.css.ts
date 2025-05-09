@@ -7,6 +7,10 @@ export default css`
         margin: 0;
     }
 
+    table {
+        max-width: 100%;
+    }
+
     :where(p, table, ul, ol, dl, pre, blockquote, [data-fullscreen="false"]):not(:last-child, [slot]) {
         margin-block-end: calc(var(--line-height-base) * 1rem);
     }

@@ -7,6 +7,7 @@ import typographyCss from "../../shared/styles/typography.css";
 import { Scenario } from "../models";
 import "../step";
 import "../../shared/badge";
+import scenarioCss from "./scenario.css";
 
 export const tag = "feature-scenario";
 
@@ -51,51 +52,6 @@ export class ScenarioComponent extends LitElement {
   static override styles = [
     resetCss,
     typographyCss,
-    css`
-      .scenario {
-        background-color: var(--color-black-a05);
-        padding: calc(var(--space-md) - var(--line-base));
-        border-radius: var(--radius-base);
-        border: var(--line-base) solid var(--color-black-a10);
-      }
-
-      .scenario--passed,
-      .scenario--failed,
-      .scenario--not_implemented {
-        padding-inline-start: calc(var(--space-md) - var(--line-medium));
-        border-inline-start: var(--line-medium) solid var(--_scenario-status-color, var(--color-black-a10));
-      }
-
-      .scenario--passed {
-        --_scenario-status-color: var(--status-passed);
-      }
-
-      .scenario--failed {
-        --_scenario-status-color: var(--status-failed);
-      }
-
-      .scenario--not_implemented {
-        --_scenario-status-color: var(--status-undefined);
-      }
-
-      .scenario__header {
-        margin-bottom: 12px;
-      }
-
-      .scenario__tags {
-        display: flex;
-        gap: var(--space-xs);
-      }
-
-      .scenario__description {
-        color: var(--color-black-a80);
-      }
-
-      .scenario__steps {
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-xs);
-      }
-    `
+    scenarioCss
   ];
 }

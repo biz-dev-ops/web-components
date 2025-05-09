@@ -9,6 +9,7 @@ import { FeatureParser } from "./parser";
 import "./background";
 import "./scenario";
 import "./scenario-outline";
+import featureViewerCss from "./feature-viewer.css";
 
 export const tag = "feature-viewer";
 
@@ -38,35 +39,33 @@ export class FeatureViewerComponent extends LitElement {
     }
 
     return html`
-      <div class="${this.getFeatureClass()}">
-        <div class="feature__header">
-          <h2 class="feature__title">Feature: ${this.feature.name}</h2>
-          ${this.feature.tags?.length ? html`
-            <p class="feature__tags">
-              ${this.feature.tags.map((tag) => html`<bdo-badge type="tag">${tag}</bdo-badge>`)}
-            </p>`: null}
-          ${this.feature.description ? html`
-            <p class="feature__description">
-              ${this.feature.description}
-            </p>`: null}
-          ${this.feature.resultFile ? html`
-            <a
-              href="${this.feature.resultFile}"
-              class="feature__result-link"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View Test Results
-            </a>`: null}
-        </div>
-        <div class="feature__content">
-          ${this.feature.background ? html`<feature-background .background=${this.feature.background}></feature-background>`: null}
-          ${this.feature.scenarios.map((scenario) =>
-          "examples" in scenario
-            ? html`<feature-scenario-outline .outline=${scenario}></feature-scenario-outline>`
-            : html`<feature-scenario .scenario=${scenario}></feature-scenario>`
-          )}
-        </div>
+      <div class="feature__header">
+        <h2 class="feature__title">Feature: ${this.feature.name}</h2>
+        ${this.feature.tags?.length ? html`
+          <p class="feature__tags">
+            ${this.feature.tags.map((tag) => html`<bdo-badge type="tag">${tag}</bdo-badge>`)}
+          </p>`: null}
+        ${this.feature.description ? html`
+          <p class="feature__description">
+            ${this.feature.description}
+          </p>`: null}
+        ${this.feature.resultFile ? html`
+          <a
+            href="${this.feature.resultFile}"
+            class="feature__result-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View Test Results
+          </a>`: null}
+      </div>
+      <div class="feature__content">
+        ${this.feature.background ? html`<feature-background .background=${this.feature.background}></feature-background>`: null}
+        ${this.feature.scenarios.map((scenario) =>
+        "examples" in scenario
+          ? html`<feature-scenario-outline .outline=${scenario}></feature-scenario-outline>`
+          : html`<feature-scenario .scenario=${scenario}></feature-scenario>`
+        )}
       </div>
     `;
   }
@@ -105,52 +104,8 @@ export class FeatureViewerComponent extends LitElement {
     return [
       resetCss,
       typographyCss,
-      css`
-        .feature {
-          background-color: var(--main-surface);
-          border-radius: var(--radius-base);
-          border-left: var(--line-medium) solid var(--_feature-status-color, transparent);
-          box-shadow: var(--drop-shadow-base);
-          display: flex;
-          flex-direction: column;
-          gap: var(--space-md);
-          padding: var(--space-md);
-          padding-inline-start: calc(var(--space-md) - var(--line-medium));
-        }
-
-        .feature--passed {
-          --_feature-status-color: var(--status-passed);
-        }
-
-        .feature--failed {
-          --_feature-status-color: var(--status-failed);
-        }
-
-        .feature--not_implemented {
-          --_feature-status-color: var(--status-undefined);
-        }
-
-        .feature__content {
-          display: flex;
-          flex-direction: column;
-          gap: var(--space-md);
-        }
-
-        .feature__error {
-          color: var(--color-error);
-          padding: var(--space-sm);
-          background-color: var(--color-error-100);
-          border-radius: var(--radius-half);
-          border: var(--line-base) solid var(--color-error);
-        }
-      `,
+      featureViewerCss
     ];
-  }
-
-  private getFeatureClass(): string {
-    const baseClass = "feature";
-    if (!this.feature?.result) return baseClass;
-    return `${baseClass} feature--${this.feature.result}`;
   }
 
   private setNotImplementedResult(): void {
