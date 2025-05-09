@@ -14,6 +14,7 @@ import { ObjectSchemaViewerComponent } from "./components/object-schema-viewer";
 import { PrimitiveSchemaViewerComponent } from "./components/primitive-schema-viewer";
 import { XOfSchemaViewerComponent } from "./components/x-of-schema-viewer";
 import "../shared/alert";
+import "../shared/badge";
 import "./components/schema-navigation";
 import { fetchAndValidateSchema } from "../shared/fetch";
 import { Schema } from "../shared/fetch/schema";
@@ -34,6 +35,9 @@ export class SchemaViewerComponent extends LitElement {
     @property({ type: String })
     src!: string;
 
+    @property({ type: String, attribute: "use-case" })
+    useCaseType?: 'command' | 'query' | 'event' | 'task';
+
     override render() {
         if (this.error) {
             return html`<bdo-alert type="error">${unsafeHTML(md.render(this.error.message))}</bdo-alert>`;
@@ -49,6 +53,10 @@ export class SchemaViewerComponent extends LitElement {
         const required = key ? schema.required?.includes(key) : false;
 
         return html`
+            ${this.useCaseType ? html`
+                <bdo-badge type=${this.useCaseType} icon=${this.useCaseType}>${this.useCaseType}</bdo-badge>
+            ` : null}
+
             <schema-navigation .fragments=${this.fragments} @FragmentIndexSelected=${this._onFragmentIndexSelected}></schema-navigation>
 
             ${ArraySchemaViewerComponent.CanRender(schema) ? html`<array-schema-viewer .path=${path} .schema=${this.schema} .required=${required} @FragmentSelected=${this._onFragmentSelected}></array-schema-viewer>` : null}

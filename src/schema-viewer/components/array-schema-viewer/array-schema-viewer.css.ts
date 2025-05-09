@@ -2,6 +2,7 @@ import { css } from "lit";
 
 export default css`    
     .item--array {
+        padding-block-start: var(--space-xs);
         margin-block-end: calc(var(--space-xs) * -1);
     }
     
@@ -52,6 +53,7 @@ export default css`
         display: flex;
         flex-direction: column;
         row-gap: var(--space-sm);
+        max-width: 100%;
     }
 
     .list--array li {

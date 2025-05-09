@@ -8,6 +8,7 @@ import "../../../shared/popover";
 
 import { parseMarkdown, titlelize } from "../../../shared/util";
 import { Schema } from "../../../shared/fetch/schema";
+import typographyCss from "../../../shared/styles/typography.css";
 const PRIMITIVE_TYPES = ["string", "number", "integer", "boolean"];
 const SKIP_KEYS = ["description", "title", "type", "format"];
 
@@ -52,6 +53,7 @@ export class PrimitiveSchemaViewerComponent extends LitElement {
                     </span>
                 </h3>
 
+                <dl>
                 ${Object.keys(schema).map(key => {
                     if (SKIP_KEYS.includes(key)) {
                         return;
@@ -61,14 +63,13 @@ export class PrimitiveSchemaViewerComponent extends LitElement {
                         <dt data-testid="additional-property">${key}</dt>
                         ${Array.isArray(property) ?
                             html`
-                                <ul>
-                                    ${property.map(item => html`<li>${item}</li>`)}
-                                </ul>
+                                ${property.map(item => html`<dd>${item}</dd>`)}
                             `
                             : html`<dd>${property}</dd>`
                         }
                     `;
                 })}
+                </dl>
             </div>
         `;
     }
@@ -76,8 +77,13 @@ export class PrimitiveSchemaViewerComponent extends LitElement {
     static override get styles(): CSSResult | CSSResultArray {
         return [
             resetCss,
+            typographyCss,
             schemaViewerSharedCss,
             css`
+                dl {
+                    font-size: var(--font-size-sm);
+                }
+                
                 dt {
                     color: rgba(0 0 0 / 50%);
                     font-weight: 600;

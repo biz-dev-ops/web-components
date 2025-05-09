@@ -12,6 +12,10 @@ export default css`
     font-size: var(--font-size-sm);
   }
   
+  h2, h3 {
+    color: var(--text-color-base);
+  }
+
   h3 {
     column-gap: var(--space-xs);
     display: flex;
