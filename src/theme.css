@@ -11,6 +11,8 @@
   --text-color-base: rgba(var(--rgb-text) / 90%);
   --text-color-heading: rgb(var(--rgb-heading));
 
+  --link-color: var(--color-brand-base);
+
   /* Brand colors */
   --color-brand-a80: color-mix(in srgb, rgb(var(--rgb-brand)) 80%, white);
   --color-brand-a60: color-mix(in srgb, rgb(var(--rgb-brand)) 60%, white);
@@ -89,7 +91,7 @@
   --font-size-md: 1.125rem;
 
   /* Link */
-  --link-text-color: var(--color-brand-base, var(--text-color-base));
+  --link-text-color: var(--link-color, var(--text-color-base));
 
   /* Button */
   --button-text-color: var(--link-text-color, var(--color-black));
