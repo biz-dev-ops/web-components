@@ -46,7 +46,7 @@ export class BPMNViewer extends LitElement {
   disableInteraction: boolean = false;
 
   @state()
-  error!: FetchError | null;
+  error!: Error | null;
 
   override render() {
     if (this.error) {
@@ -139,8 +139,8 @@ export class BPMNViewer extends LitElement {
         this._expandSubProcess();
       }
     }
-    catch (err) {
-      console.log("something went wrong while importing bpmn:", err);
+    catch (error: unknown) {
+      this.error = error as Error;
     }
   }
 

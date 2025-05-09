@@ -14,7 +14,7 @@ export class BdoAlert extends LitElement {
     override render() {
         return html`
             <div class="alert ${this.type ? `alert--${this.type}` : ``}" role="alert">
-                <bdo-icon icon="${getIcon(this.type)}" class="alert__icon"></bdo-icon>
+                <bdo-icon icon="${getIcon(this.type)}"></bdo-icon>
                 <div class="alert__message">
                     <slot></slot>
                 </div>

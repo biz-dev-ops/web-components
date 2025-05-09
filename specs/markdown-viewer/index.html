@@ -4,25 +4,29 @@
     <meta charset="utf-8" />
     <title>Markdown viewer</title>
     <link rel="stylesheet" href="../theme.css" />
+    <link rel="stylesheet" href="../specflow.css" />
   </head>
 
   <body>
     <main>
       <h1>Markdown viewer</h1>
       <div id="buttons">
-        <button id="bpmn">BPMN</button>
-        <button id="business-model-canvas">Business model canvas</button>
-        <button id="business-reference-architecture">Business reference architecture</button>
-        <button id="command">Command</button>
-        <button id="dmn">DMN</button>
-        <button id="event">Event</button>
-        <button id="mermaid">Mermaid</button>
-        <button id="model">Model</button>
-        <button id="query">Query</button>
-        <button id="tabs">Tabs</button>
-        <button id="task">Task</button>
+        <button data-file="./examples/payroll-service/index.md">Payroll service</button>
+        <button data-file="./examples/payroll-service/calculate-payroll/index.md">Calculate payroll</button>
+        <button data-file="./examples/bpmn.md">BPMN</button>
+        <button data-file="./examples/business-model-canvas.md">Business model canvas</button>
+        <button data-file="./examples/business-reference-architecture.md">Business reference architecture</button>
+        <button data-file="./examples/command.md">Command</button>
+        <button data-file="./examples/dmn.md">DMN</button>
+        <button data-file="./examples/event.md">Event</button>
+        <button data-file="./examples/feature.md">Feature</button>
+        <button data-file="./examples/mermaid.md">Mermaid</button>
+        <button data-file="./examples/model.md">Model</button>
+        <button data-file="./examples/query.md">Query</button>
+        <button data-file="./examples/tabs.md">Tabs</button>
+        <button data-file="./examples/task.md">Task</button>
       </div>
-      <markdown-viewer src="markdown.md"></markdown-viewer>
+      <markdown-viewer src="examples/markdown.md"></markdown-viewer>
       <h2>Run tests</h2>
       <code>
         npm run test -- 'markdown-viewer'
@@ -41,6 +45,7 @@
       import "../../src/command-viewer";
       import "../../src/dmn-viewer";
       import "../../src/event-viewer";
+      import "../../src/feature-viewer";
       import "../../src/mermaid-viewer";
       import "../../src/model-viewer";
       import "../../src/query-viewer";
@@ -51,7 +56,8 @@
 
       buttons.addEventListener("click", function (event) {
         const target = event.target;
-        viewer.setAttribute("src", `markdown-${target.id}.md`);
+        const file = target.getAttribute("data-file");
+        viewer.setAttribute("src", file);
       });
     </script>
   </body>

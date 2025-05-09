@@ -116,4 +116,9 @@ export default css`
     dd + dt {
         margin-block-start: var(--space-sm);
     }
+
+    blockquote {
+        padding: 0 var(--space-sm);
+        border-left: var(--space-xxs) solid var( --color-brand-pop);
+    }
 `;

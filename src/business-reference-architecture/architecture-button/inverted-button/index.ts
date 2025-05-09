@@ -20,10 +20,6 @@ export class InvertedArchitectureButton extends AbstractArchitectureButton {
                     color: var(--text-color-base);
                     border-radius: var(--radius-base);
                 }
-
-                .icon {
-                    color: var(--color-brand-base)!important;
-                }
             `
         )
         return styles;

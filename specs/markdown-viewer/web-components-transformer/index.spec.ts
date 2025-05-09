@@ -1,7 +1,7 @@
 import { test, expect } from "@sand4rt/experimental-ct-web";
 import MarkdownIt from "markdown-it";
-import transformer, { components } from "../../../src/markdown-viewer/web-components-transformer";
-import linkTransformRulerPlugin, { Link } from "../../../src/markdown-viewer/link-transform-ruler";
+import { transformComponentLink, urlRewriterFactory, components } from "../../../src/markdown-viewer/web-components-transformer";
+import linkTransformRulerPlugin from "../../../src/markdown-viewer/link-transform-ruler";
 import { Token } from "markdown-it/dist/index.cjs.js";
 import { expectMarkdownToMatchTokens } from "../markdown-test-util";
 
@@ -15,6 +15,7 @@ test.describe("webComponentsTransformer", () => {
       "command-viewer",
       "dmn-viewer",
       "event-viewer",
+      "feature-viewer",
       "mermaid-viewer",
       "model-viewer",
       "query-viewer",
@@ -30,9 +31,9 @@ test.describe("webComponentsTransformer", () => {
       test(`should transform link with extension ${extension} to tag ${tag}`, async () => {
         const markdown = `[Test Link](example${extension})`;
         const expectedTokens = [
-          { type: "link_open", tag: tag, block: true, attrs: [ [ "src", `example${extension}`] ] },
+          { type: "link_open", tag: tag, block: true, attrs: [ [ "src", `test/example${extension}`] ] },
           { type: "text", content: "Test Link" },
-          { type: "link_close", tag: tag, block: true, attrs: [ [ "src", `example${extension}`] ] }
+          { type: "link_close", tag: tag, block: true, attrs: [ [ "src", `test/example${extension}`] ] }
         ] as unknown as Token[];
 
         expectTokens(markdown, expectedTokens);
@@ -64,9 +65,9 @@ test.describe("webComponentsTransformer", () => {
         test(`should transform link with extension ${extension} to tag ${tag} with parameters ${parameters}`, async () => {
           const markdown = `[Test Link](example${extension}${parameters})`;
           const expectedTokens = [
-            { type: "link_open", tag: tag, block: true, attrs: [ [ "src", `example${extension}${parameters}`] ] },
+            { type: "link_open", tag: tag, block: true, attrs: [ [ "src", `test/example${extension}${parameters}`] ] },
             { type: "text", content: "Test Link" },
-            { type: "link_close", tag: tag, block: true, attrs: [ [ "src", `example${extension}${parameters}`] ] }
+            { type: "link_close", tag: tag, block: true, attrs: [ [ "src", `test/example${extension}${parameters}`] ] }
         ] as unknown as Token[];
 
           expectTokens(markdown, expectedTokens);
@@ -79,7 +80,7 @@ test.describe("webComponentsTransformer", () => {
 function expectTokens(markdown: string, expectedTokens: Token[]) {
   const md = new MarkdownIt();
   md.use(linkTransformRulerPlugin, {
-    transformer
+    transformers: [  urlRewriterFactory("test/example.md"), transformComponentLink ]
   });
   expectMarkdownToMatchTokens(md, markdown, expectedTokens);
 }

@@ -15,7 +15,7 @@ export class IconCircleArchitectureButton extends AbstractArchitectureButton {
                     color: var(--text-color-base);
                 }
 
-                .icon {
+                span.icon {
                     padding: var(--space-xs);
                     flex: none;
                     display: inline-flex;
@@ -25,6 +25,7 @@ export class IconCircleArchitectureButton extends AbstractArchitectureButton {
                     color: var(--surface-current);
                     border-radius: var(--radius-pill);
                     aspect-ratio: 1;
+                    --icon-color: var(--surface-current);
                 }
             `
         )

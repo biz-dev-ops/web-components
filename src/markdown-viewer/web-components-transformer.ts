@@ -1,4 +1,4 @@
-import { Token } from "markdown-it";
+import path from "node:path";
 import { Link } from "./link-transform-ruler";
 
 export const components = [
@@ -8,13 +8,25 @@ export const components = [
     { extensions: [".command.yml", ".command.yaml"], tag: "command-viewer" },
     { extensions: [".dmn"], tag: "dmn-viewer" },
     { extensions: [".event.yml", ".event.yaml"], tag: "event-viewer" },
+    { extensions: [".feature"], tag: "feature-viewer" },
     { extensions: [".mmd"], tag: "mermaid-viewer" },
     { extensions: [".model.yml", ".model.yaml"], tag: "model-viewer" },
     { extensions: [".query.yml", ".query.yaml"], tag: "query-viewer" },
     { extensions: [".task.yml", ".task.yaml"], tag: "task-viewer" }
 ];
 
-export default function (link: Link) : void {
+export function urlRewriterFactory(src: string) : (link: Link) => void {
+    return (link: Link) => {
+        const href = link.getAttribute("href")!;
+        if(!href) {
+            return;
+        }
+        const newHref = path.join(path.dirname(src), href);
+        link.tokens.find(token => token.type === "link_open")?.attrSet("href", newHref);
+    }
+}
+
+export function transformComponentLink(link: Link) : void {
     const tag = getTag();
 
     if(!tag) {

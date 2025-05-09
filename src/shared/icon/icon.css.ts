@@ -3,6 +3,8 @@ import { css } from "lit";
 const styles = css`
   :host {
     --_icon-color: var(--icon-color, var(--text-color-base));
+    --icon-justify: center;
+    --icon-align: center;
 
     color: var(--_icon-color);
     display: inline-flex;
