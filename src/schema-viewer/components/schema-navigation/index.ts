@@ -7,7 +7,7 @@ import "../../../shared/button";
 
 import { titlelize } from "../../../shared/util";
 import { FragmentIndexSelected, Fragment } from "../../types";
-import schemaViewerCss from "../schema-viewer.css";
+import schemaViewerSharedCss from "../shared.css";
 
 export const tag = "schema-navigation";
 
@@ -57,7 +57,7 @@ export class SchemaNavigation extends LitElement {
     static override get styles(): CSSResult | CSSResultArray {
         return [
             resetCss,
-            schemaViewerCss,
+            schemaViewerSharedCss,
             css`
                 .list--path {
                     --button-padding: var(--space-xs);

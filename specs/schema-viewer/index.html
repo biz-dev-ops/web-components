@@ -13,7 +13,7 @@
       <div id="buttons">
         <button id="change-src">Change src</button>
       </div>
-      <schema-viewer src="../markdown-viewer/examples/payroll-service/calculate-payroll/index.command.yml"></schema-viewer>
+      <schema-viewer src="../markdown-viewer/examples/payroll-service/calculate-payroll/get-time-and-attendance.query.yml"></schema-viewer>
       <h2>Run tests</h2>
       <code>
         npm run test -- 'schema-viewer'
@@ -29,6 +29,7 @@
       buttons.addEventListener("click", function (event) {
         const target = event.target;
         if (target.id === "change-src") {
+          console.log("Changing src");
           viewer.setAttribute("src", viewer.src.endsWith("index.command.yml") ? "../markdown-viewer/examples/payroll-service/calculate-payroll/get-time-and-attendance.query.yml" : "/markdown-viewer/examples/payroll-service/calculate-payroll/index.command.yml");
         }
       });

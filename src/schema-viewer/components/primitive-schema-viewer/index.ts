@@ -3,7 +3,7 @@ import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { customElement, property } from "lit/decorators.js";
 
 import resetCss from "../../../shared/styles/reset.css";
-import schemaViewerCss from "../schema-viewer.css";
+import schemaViewerSharedCss from "../shared.css";
 import "../../../shared/popover";
 
 import { parseMarkdown, titlelize } from "../../../shared/util";
@@ -76,7 +76,7 @@ export class PrimitiveSchemaViewerComponent extends LitElement {
     static override get styles(): CSSResult | CSSResultArray {
         return [
             resetCss,
-            schemaViewerCss,
+            schemaViewerSharedCss,
             css`
                 dt {
                     color: rgba(0 0 0 / 50%);

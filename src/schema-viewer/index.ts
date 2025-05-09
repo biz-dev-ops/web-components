@@ -17,6 +17,7 @@ import "../shared/alert";
 import "./components/schema-navigation";
 import { fetchAndValidateSchema } from "../shared/fetch";
 import { Schema } from "../shared/fetch/schema";
+import typographyCss from "../shared/styles/typography.css";
 
 export const tag = "schema-viewer";
 

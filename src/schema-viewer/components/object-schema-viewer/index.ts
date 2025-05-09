@@ -5,7 +5,7 @@ import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { parseMarkdown, titlelize } from "../../../shared/util";
 
 import resetCss from "../../../shared/styles/reset.css";
-import schemaViewerCss from "../schema-viewer.css";
+import schemaViewerSharedCss from "../shared.css";
 
 import { FragmentSelected } from "../../types";
 import { Schema } from "../../../shared/fetch/schema";
@@ -15,6 +15,7 @@ import { XOfSchemaViewerComponent } from "../x-of-schema-viewer";
 import { PrimitiveSchemaViewerComponent } from "../primitive-schema-viewer";
 import "../../../shared/button";
 import "../../../shared/truncate";
+import typographyCss from "../../../shared/styles/typography.css";
 export const tag = "object-schema-viewer";
 
 @customElement(tag)
@@ -109,7 +110,8 @@ export class ObjectSchemaViewerComponent extends LitElement {
     static override get styles(): CSSResult | CSSResultArray {
         return [
             resetCss,
-            schemaViewerCss,
+            typographyCss,
+            schemaViewerSharedCss,
             css`
                 .items {
                     display: flex;

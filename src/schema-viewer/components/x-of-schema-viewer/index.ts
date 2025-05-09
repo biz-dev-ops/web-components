@@ -4,7 +4,7 @@ import { unsafeHTML } from "lit/directives/unsafe-html.js";
 
 import { parseMarkdown, titlelize } from "../../../shared/util";
 
-import schemaViewerCss from "../schema-viewer.css";
+import schemaViewerSharedCss from "../shared.css";
 import resetCss from "../../../shared/styles/reset.css";
 
 import { FragmentSelected } from "../../types";
@@ -62,7 +62,7 @@ export class XOfSchemaViewerComponent extends LitElement {
             <div class="item item--${type.key}">
                 ${schema.description ? html`<bdo-truncate>${unsafeHTML(parseMarkdown(schema.description))}</bdo-truncate>` : null}
                 <h3 data-testid="xof-title">${titlelize(type.name)}</h3>
-                <ul class="list--${type.key}">
+                <ul class="list--xOf list--${type.key}">
                     ${schema[type.key]
                         .map((_item: any, index: number) => {
                             const path = [...this.path, type.key, index.toString()];
@@ -118,11 +118,9 @@ export class XOfSchemaViewerComponent extends LitElement {
     static override get styles(): CSSResult | CSSResultArray {
         return [
             resetCss,
-            schemaViewerCss,
+            schemaViewerSharedCss,
             css`
-                .list--oneOf,
-                .list--anyOf,
-                .list--allOf {
+                .list--xOf {
                     list-style: none;
                     padding-inline-start: 0;
                     display: flex;
@@ -130,22 +128,19 @@ export class XOfSchemaViewerComponent extends LitElement {
                     row-gap: var(--space-xxs);
                 }
 
-                .list--oneOf li,
-                .list--anyOf li,
-                .list--allOf li {
+                .list--xOf li {
                     display: flex;
                     flex-direction: column;
                     position: relative;
                     row-gap: var(--space-xxs);
                 }
 
-                .list--oneOf li:not(:last-child)::after,
-                .list--anyOf li:not(:last-child)::after,
-                .list--allOf li:not(:last-child)::after {
+                .list--xOf li:not(:last-child)::after {
                     font-size: var(--font-size-xs);
                     text-align: center;
                     display: block;
                     color: var(--color-black-a40);
+                    text-transform: uppercase;
                     font-weight: 600;
                 }
 
