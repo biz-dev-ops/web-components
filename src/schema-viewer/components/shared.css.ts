@@ -8,6 +8,8 @@ export default css`
     --button-hover-color: var(--_schema-viewer-color-a10);
     --button-font-size: var(--font-size-sm);
     --button-inline-size: 100%;
+
+    font-size: var(--font-size-sm);
   }
   
   h3 {
