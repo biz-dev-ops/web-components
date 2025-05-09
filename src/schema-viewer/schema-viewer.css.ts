@@ -24,7 +24,7 @@ export default css`
         --schema-viewer-color-a40: var(--use-case-color-500);
         --schema-viewer-color-base: var(--use-case-color-800);
     }
-    
+
     :host([use-case="command"]) {
         --use-case-color-200: #E5CAF5;
         --use-case-color-500: #7B449E;

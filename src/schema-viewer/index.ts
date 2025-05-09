@@ -18,7 +18,6 @@ import "../shared/badge";
 import "./components/schema-navigation";
 import { fetchAndValidateSchema } from "../shared/fetch";
 import { Schema } from "../shared/fetch/schema";
-import typographyCss from "../shared/styles/typography.css";
 
 export const tag = "schema-viewer";
 
@@ -38,6 +37,13 @@ export class SchemaViewerComponent extends LitElement {
     @property({ type: String, attribute: "use-case" })
     useCaseType?: 'command' | 'query' | 'event' | 'task';
 
+    useCaseIconMap = {
+        command: "mat-terminal",
+        query: "mat-search",
+        event: "mat-notifications",
+        task: "mat-task_alt"
+    };
+
     override render() {
         if (this.error) {
             return html`<bdo-alert type="error">${unsafeHTML(md.render(this.error.message))}</bdo-alert>`;
@@ -54,7 +60,7 @@ export class SchemaViewerComponent extends LitElement {
 
         return html`
             ${this.useCaseType ? html`
-                <bdo-badge type=${this.useCaseType} icon=${this.useCaseType}>${this.useCaseType}</bdo-badge>
+                <bdo-badge type=${this.useCaseType} icon=${this.useCaseIconMap[this.useCaseType]}>${this.useCaseType}</bdo-badge>
             ` : null}
 
             <schema-navigation .fragments=${this.fragments} @FragmentIndexSelected=${this._onFragmentIndexSelected}></schema-navigation>
