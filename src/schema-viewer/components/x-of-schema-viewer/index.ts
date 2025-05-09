@@ -144,9 +144,12 @@ export class XOfSchemaViewerComponent extends LitElement {
                     font-weight: 600;
                 }
 
-                .list--oneOf li:not(:last-child)::after,
-                .list--anyOf li:not(:last-child)::after {
+                .list--oneOf li:not(:last-child)::after {
                     content: "or";
+                }
+
+                .list--anyOf li:not(:last-child)::after {
+                    content: "and/or";
                 }
 
                 .list--allOf li:not(:last-child)::after {
