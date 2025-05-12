@@ -4,7 +4,7 @@ import { customElement, property } from "lit/decorators.js";
 import resetCss from "../shared/styles/reset.css";
 import { Section } from "./models";
 import "./architecture-section";
-import { FetchError, fetchYamlAndBundleAs } from "../shared/fetch";
+import { FetchError, fetchYamlAs } from "../shared/fetch";
 import "../shared/alert";
 
 export const tag = "business-reference-architecture";
@@ -45,7 +45,7 @@ export class BusinessReferenceArchitectureComponent extends LitElement {
   override async update(changedProperties: Map<string, unknown>) {
     if (changedProperties.has("src")) {
       try {
-        this.model = await fetchYamlAndBundleAs<Section[]>(this.src);
+        this.model = await fetchYamlAs<Section[]>(this.src);
       }
       catch (error: any) {
         this.model = error;

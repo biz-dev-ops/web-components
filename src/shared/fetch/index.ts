@@ -1,4 +1,3 @@
-import { bundle } from "@apidevtools/json-schema-ref-parser";
 import YAML from "yaml";
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
@@ -40,15 +39,6 @@ export async function fetchYamlAs<T>(src: string): Promise<T> {
     }
     else {
         throw new FetchError(src, response.statusText, response);
-    }
-}
-
-export async function fetchYamlAndBundleAs<T>(src: string): Promise<T> {
-    try {
-        return await bundle(src) as T;
-    }
-    catch (error: any) {
-        throw new FetchError(src, error.message, error);
     }
 }
 
