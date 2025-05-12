@@ -61,12 +61,6 @@ export class ObjectSchemaViewerComponent extends LitElement {
         return html`
             <div class="item item--object">
                 ${schema.description ? html`<bdo-truncate data-testid="description">${unsafeHTML(parseMarkdown(schema.description))}</bdo-truncate>` : null}
-                <h3 data-testid="object-title">
-                    <span class="txt--property">
-                        ${titlelize(schema.title || key)}
-                        ${this.required ? html`<span class="txt--required" data-testid="required-indicator">*</span>` : ``}
-                    </span>
-                </h3>
                 <div class="items">
                     ${Object.keys(schema.properties || {}).map(key => {
                         const path = [...this.path, "properties", key];

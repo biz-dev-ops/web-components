@@ -61,7 +61,6 @@ export class XOfSchemaViewerComponent extends LitElement {
         return html`
             <div class="item item--${type.key}">
                 ${schema.description ? html`<bdo-truncate>${unsafeHTML(parseMarkdown(schema.description))}</bdo-truncate>` : null}
-                <h3 data-testid="xof-title">${titlelize(type.name)}</h3>
                 <ul class="list--xOf list--${type.key}">
                     ${schema[type.key]
                         .map((_item: any, index: number) => {
