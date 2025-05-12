@@ -34,22 +34,14 @@ export class SchemaViewerComponent extends LitElement {
     @property({ type: String })
     src!: string;
 
-    @property({ type: String, attribute: "use-case" })
-    useCaseType?: 'command' | 'query' | 'event' | 'task';
-
-    useCaseIconMap = {
-        command: "mat-terminal",
-        query: "mat-search",
-        event: "mat-notifications",
-        task: "mat-task_alt"
-    };
+    private useCaseType?: UseCaseType;
 
     override render() {
         if (this.error) {
             return html`<bdo-alert type="error">${unsafeHTML(md.render(this.error.message))}</bdo-alert>`;
         }
 
-        if(!this.schema) {
+        if (!this.schema) {
             return;
         }
 
@@ -58,9 +50,13 @@ export class SchemaViewerComponent extends LitElement {
         const schema = this.schema?.resolveSchema(path);
         const required = key ? schema.required?.includes(key) : false;
 
+        if(this.useCaseType) {
+            this.setAttribute('use-case', this.useCaseType);
+        }
+
         return html`
             ${this.useCaseType ? html`
-                <bdo-badge type=${this.useCaseType} icon=${this.useCaseIconMap[this.useCaseType]}>${this.useCaseType}</bdo-badge>
+                <bdo-badge type=${this.useCaseType} icon=${getUseCaseTypeIcon(this.useCaseType)}>${this.useCaseType}</bdo-badge>
             ` : null}
 
             <schema-navigation .fragments=${this.fragments} @FragmentIndexSelected=${this._onFragmentIndexSelected}></schema-navigation>
@@ -74,7 +70,7 @@ export class SchemaViewerComponent extends LitElement {
 
     @eventOptions({ passive: true })
     private async _onFragmentSelected(event: CustomEvent<FragmentSelected>) {
-        const fragments =  Array.isArray(event.detail) ? event.detail : [event.detail]
+        const fragments = Array.isArray(event.detail) ? event.detail : [event.detail]
         await this._setFragments([...this.fragments, ...fragments]);
     }
 
@@ -91,6 +87,8 @@ export class SchemaViewerComponent extends LitElement {
     override async update(changedProperties: Map<string, unknown>) {
         if (changedProperties.has("src")) {
             try {
+                this.error = undefined;
+                this.useCaseType = determineUseCaseType(this.src);
                 const schema = await fetchAndValidateSchema(this.src);
                 this.schema = schema;
                 this.fragments = [{ name: getSchemaTitle(schema.resolveSchema("")), key: "" }];
@@ -116,3 +114,33 @@ function getSchemaTitle(schema: any): string {
     return schema.title ?? path.basename(uri).split(".")[0];;
 }
 
+function determineUseCaseType(src: string): UseCaseType | undefined {
+    for (const key in UseCaseType) {
+        const regex = new RegExp(`${key}.schema\\.ya?ml$`, 'i');
+        if (regex.test(src)) {
+            return UseCaseType[key as keyof typeof UseCaseType];
+        }
+    }
+    return undefined;
+
+}
+
+enum UseCaseType {
+    Command = 'command',
+    Query = 'query',
+    Event = 'event',
+    Task = 'task'
+}
+
+function getUseCaseTypeIcon(useCaseType: UseCaseType) : string {
+    switch (useCaseType) {
+        case UseCaseType.Command:
+            return "mat-terminal";
+        case UseCaseType.Query:
+            return "mat-search";
+        case UseCaseType.Event:
+            return "mat-notifications";
+        case UseCaseType.Task:
+            return "mat-task_alt";
+    }
+}
