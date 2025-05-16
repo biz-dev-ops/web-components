@@ -1,13 +1,14 @@
-import { html, css, LitElement } from "lit";
+import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
 import resetCss from "../../shared/styles/reset.css";
 import typographyCss from "../../shared/styles/typography.css";
 
 import { Scenario } from "../models";
-import "../step";
-import "../../shared/badge";
 import scenarioCss from "./scenario.css";
+import "../step";
+import "../stats";
+import "../../shared/badge";
 
 export const tag = "feature-scenario";
 
@@ -35,6 +36,7 @@ export class ScenarioComponent extends LitElement {
             ` : null}
         </summary>
         <div class="scenario__steps">
+          <feature-stats .items=${this.scenario.steps}></feature-stats>
           ${this.scenario.steps.map(
             (step) => html`<feature-step .step=${step}></feature-step>`
           )}

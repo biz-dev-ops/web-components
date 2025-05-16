@@ -81,4 +81,8 @@ export default css`
     .scenario__description {
         color: var(--color-black-a80);
     }
+
+    feature-stats {
+        --stats-font-size: var(--font-size-sm);
+    }
 `;

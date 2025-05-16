@@ -10,6 +10,7 @@ import "./background";
 import "./scenario";
 import "./scenario-outline";
 import featureViewerCss from "./feature-viewer.css";
+import "./stats";
 
 export const tag = "feature-viewer";
 
@@ -60,6 +61,7 @@ export class FeatureViewerComponent extends LitElement {
           </a>`: null}
       </div>
       <div class="feature__content">
+        <feature-stats .items=${this.feature.scenarios}></feature-stats>
         ${this.feature.background ? html`<feature-background .background=${this.feature.background}></feature-background>`: null}
         ${this.feature.scenarios.map((scenario) =>
         "examples" in scenario

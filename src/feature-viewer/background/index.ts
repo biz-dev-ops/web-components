@@ -5,9 +5,9 @@ import resetCss from "../../shared/styles/reset.css";
 import typographyCss from "../../shared/styles/typography.css";
 
 import { Background } from "../models";
-import "../step";
-import backgroundCss from "./background.css";
 import scenarioCss from "../scenario/scenario.css";
+import "../step";
+import "../stats";
 
 export const tag = "feature-background";
 
@@ -35,6 +35,7 @@ export class BackgroundComponent extends LitElement {
           <h3 class="scenario__title">Background: ${this.background.name || ""}</h3>
         </summary>
         <div class="scenario__steps">
+          <feature-stats .items=${this.background.steps}></feature-stats>
           ${this.background.steps.map(
             (step) => html`<feature-step .step=${step}></feature-step>`
           )}
