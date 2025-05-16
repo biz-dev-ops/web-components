@@ -30,14 +30,16 @@ export class BackgroundComponent extends LitElement {
 
   override render() {
     return html`
-      <div class="${this.getBackgroundClass()}">
-        <h3 class="scenario__title">Background: ${this.background.name || ""}</h3>
+      <details class="${this.getBackgroundClass()}">
+        <summary class="scenario__header">
+          <h3 class="scenario__title">Background: ${this.background.name || ""}</h3>
+        </summary>
         <div class="scenario__steps">
           ${this.background.steps.map(
             (step) => html`<feature-step .step=${step}></feature-step>`
           )}
         </div>
-      </div>
+      </details>
     `;
   }
 } 

@@ -18,8 +18,8 @@ export class ScenarioComponent extends LitElement {
 
   override render() {
     return html`
-      <div class="${this.getScenarioClass()}">
-        <div class="scenario__header">
+      <details class="${this.getScenarioClass()}">
+        <summary class="scenario__header">
           <h3 class="scenario__title">Scenario: ${this.scenario.name}</h3>
           ${this.scenario.tags ? html`
               <div class="scenario__tags">
@@ -33,13 +33,13 @@ export class ScenarioComponent extends LitElement {
                 ${this.scenario.description}
               </p>
             ` : null}
-        </div>
+        </summary>
         <div class="scenario__steps">
           ${this.scenario.steps.map(
             (step) => html`<feature-step .step=${step}></feature-step>`
           )}
         </div>
-      </div>
+      </details>
     `;
   }
 
