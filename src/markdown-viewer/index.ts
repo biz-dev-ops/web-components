@@ -47,6 +47,11 @@ export class MarkdownViewer extends LitElement {
         :host {
           display: block;
         }
+
+        dmn-viewer,
+        bpmn-viewer {
+          background-color: var(--color-black-a05);
+        }
       `,
     ];
   }
