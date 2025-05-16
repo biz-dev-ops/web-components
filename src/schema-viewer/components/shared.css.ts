@@ -34,4 +34,19 @@ export default css`
   .txt--required {
     color: var(--color-error);
   }
+
+  .badge--type {
+    margin-inline-start: auto;
+    font-weight: 600;
+    font-size: var(--font-size-xs);
+    background-color: var(--color-black-a05);
+    border-radius: var(--radius-pill);
+    align-self: center;
+    padding: var(--space-xxs) var(--space-xs);
+  }
+
+  .badge--type em {
+    font-style: normal;
+    font-weight: 400;
+  }
 `;

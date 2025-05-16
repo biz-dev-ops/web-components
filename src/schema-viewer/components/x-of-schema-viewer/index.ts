@@ -53,6 +53,9 @@ export class XOfSchemaViewerComponent extends LitElement {
                             ${this.required ? html`<span class="txt--required" data-testid="required-indicator">*</span>` : ``}
                         </span>
                         ${schema.description ? html`<bdo-popover>${unsafeHTML(parseMarkdown(schema.description.trim()))}</bdo-popover>` : null}
+                        <span class="badge--type" data-testid="type-indicator">
+                            ${type.name}
+                        </span>
                     </bdo-button>
                 </div>
             `;

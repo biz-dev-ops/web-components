@@ -48,7 +48,7 @@ export class PrimitiveSchemaViewerComponent extends LitElement {
                         ${this.required ? html`<span class="txt--required" data-testid="required-indicator">*</span>` : ``}
                     </span>
                     ${schema.description ? html`<bdo-popover data-testid="description">${unsafeHTML(parseMarkdown(schema.description.trim()))}</bdo-popover>` : null }
-                    <span class="icon--type" data-testid="type-indicator">
+                    <span class="badge--type" data-testid="type-indicator">
                         ${schema.type}${schema.format ? html`: <em>${schema.format}</em>` : ''}
                     </span>
                 </h3>
@@ -102,20 +102,6 @@ export class PrimitiveSchemaViewerComponent extends LitElement {
                     background-color: var(--color-black-a05);
                     border-radius: var(--radius-half);
                     padding: var(--space-sm);
-                }
-
-                .icon--type {
-                    margin-inline-start: auto;
-                    font-size: var(--font-size-xs);
-                    background-color: var(--surface-main);
-                    border-radius: var(--radius-pill);
-                    align-self: center;
-                    padding: var(--space-xxs) var(--space-xs);
-                }
-
-                .icon--type em {
-                    font-style: normal;
-                    font-weight: 400;
                 }
             `
         ];

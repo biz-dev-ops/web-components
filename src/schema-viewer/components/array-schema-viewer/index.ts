@@ -60,6 +60,9 @@ export class ArraySchemaViewerComponent extends LitElement {
                                 <li>
                                     <bdo-button direction="right" ?disabled="${index > 0}" @clicked=${() => { this._onClick(schema, key); }} data-testid="array-item">
                                         <span class="txt--property">${name}</span>
+                                        <span class="badge--type" data-testid="type-indicator">
+                                            ${schema.items.type}
+                                        </span>
                                     </bdo-button>
                                 </li>
                             `)}
