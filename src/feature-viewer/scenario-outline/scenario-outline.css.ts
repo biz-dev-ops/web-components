@@ -5,10 +5,14 @@ export default css`
         background-color: var(--main-surface);
         padding: calc(var(--space-sm) - var(--line-thin));
         border-radius: var(--radius-base);
-        border: var(--line-base) solid var(--_scenario-status-color);
+        border: var(--line-thin) dotted var(--_scenario-status-color);
         display: flex;
         flex-direction: column;
         gap: var(--space-sm);
+    }
+
+    .scenario-outline__title {
+        font-size: var(--heading-5-size);
     }
 
     .scenario-outline--passed {
@@ -23,9 +27,10 @@ export default css`
         --_scenario-status-color: var(--status-undefined);
     }
 
-    .scenario-outline_scenarios {
+    .scenario-outline__scenarios {
         display: flex;
         flex-direction: column;
         gap: var(--space-sm);
+        margin-inline: calc((var(--space-sm)) / -1);
     }
 `;

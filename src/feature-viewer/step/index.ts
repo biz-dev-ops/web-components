@@ -54,7 +54,7 @@ export class StepComponent extends LitElement {
 
   private getResultLabel(): TemplateResult {
     if (this.step.result === "not_implemented") {
-      return html`<bdo-icon icon="mat-close"></bdo-icon> Not implemented`;
+      return html`<bdo-icon icon="mat-error"></bdo-icon> Not implemented`;
     } else if (this.step.result === "passed") {
       return html`<bdo-icon icon="mat-check"></bdo-icon> Passed`;
     } else if (this.step.result === "failed") {

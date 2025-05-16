@@ -20,9 +20,9 @@ export class ScenarioOutlineComponent extends LitElement {
     return html`
       <div class="${this.getOutlineClass()}">
         <div class="scenario-outline__header">
-          <h3 class="scenario-outline_title">Scenario Outline: ${this.outline.name || ""}</h3>
+          <h3 class="scenario-outline__title">Scenario Outline: ${this.outline.name || ""}</h3>
         </div>
-        <div class="scenario-outline_scenarios">
+        <div class="scenario-outline__scenarios">
           ${expandedScenarios.map(
             (scenario) => html`<feature-scenario .scenario=${scenario}></feature-scenario>`
           )}
