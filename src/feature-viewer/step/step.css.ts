@@ -11,6 +11,16 @@ export default css`
         font-size: var(--font-size-xs);
     }
 
+    .step__state {
+        --icon-color: var(--_step-status-color);
+
+        align-items: center;
+        background: none;
+        color: var(--_step-status-color);
+        display: inline-flex;
+        gap: var(--space-xxs);
+    }
+
     .step--passed {
         --_step-status-color: var(--status-passed);
         --_step-status-color-100: var(--status-passed-100);
