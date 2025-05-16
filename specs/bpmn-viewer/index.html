@@ -17,15 +17,33 @@
   <body>
     <main>
       <h1>BPMN viewer</h1>
-      <div id="buttons">
-        <button id="zoom-out">➖</button>
-        <button id="reset-zoom">🔍</button>
-        <button id="zoom-in">➕</button>
-        <button id="change-src">Change src</button>
-        <button id="toggle-simulator">Toggle simulator</button>
-        <button id="toggle-interaction">Toggle interaction</button>
-      </div>
-      <bpmn-viewer src="custom-links.bpmn"></bpmn-viewer>
+      <bdo-driver>
+        <bdo-button slot="driver" data-action="toggle-fullscreen" title="Toggle Fullscreen">
+          <bdo-icon icon="mat-fullscreen"></bdo-icon>
+        </bdo-button>
+        <bdo-button slot="driver" data-action="zoom-in" title="Zoom In">
+          <bdo-icon icon="mat-zoom_in"></bdo-icon>
+        </bdo-button>
+        <bdo-button slot="driver" data-action="zoom-out" title="Zoom Out">
+          <bdo-icon icon="mat-zoom_out"></bdo-icon>
+        </bdo-button>
+        <bdo-button slot="driver" data-action="zoom-reset" title="Zoom Reset">
+          <bdo-icon icon="mat-reset_focus"></bdo-icon>
+        </bdo-button>
+
+        <bdo-button slot="driver" data-action="change-src" title="Change src">
+          <bdo-icon icon="mat-cycle"></bdo-icon>
+        </bdo-button>
+        <bdo-button slot="driver" data-action="toggle-simulator" title="Toggle simulator">
+          <bdo-icon icon="mat-modeling"></bdo-icon>
+        </bdo-button>
+        <bdo-button slot="driver" data-action="toggle-interaction" title="Toggle interaction">
+          <bdo-icon icon="mat-touch_app"></bdo-icon>
+        </bdo-button>
+
+        <bpmn-viewer src="custom-links.bpmn"></bpmn-viewer>
+      </bdo-driver>
+
       <h2>Run tests</h2>
       <code>
         npm run test -- 'bpmn-viewer'
@@ -34,39 +52,23 @@
 
     <script type="module">
       import "../../src/bpmn-viewer/index.ts";
+      import "../../src/shared/driver/index.ts";
+      import "../../src/shared/icon/index.ts";
+      import "../../src/shared/button/index.ts";
 
-      const buttons = document.getElementById("buttons");
+      const driver = document.getElementsByTagName("bdo-driver")[0];
       const viewer = document.getElementsByTagName("bpmn-viewer")[0];
 
       viewer.addEventListener("onelementclick", (event) => {
         console.dir(event);
       });
 
-      buttons.addEventListener("click", function (bpmn) {
-        const target = bpmn.target;
+      viewer.addEventListener("click", function (event) {
+        console.log("click", event);
+        const target = event.target;
 
-        if (target.id === "zoom-in") {
-          viewer.zoomIn();
-        }
-
-        if (target.id === "zoom-out") {
-          viewer.zoomOut();
-        }
-
-        if (target.id === "reset-zoom") {
-          viewer.zoomReset();
-        }
-
-        if (target.id === "change-src") {
+        if (target.getAttribute("data-action") === "change-src") {
           viewer.setAttribute("src", viewer.src.endsWith("custom-links.bpmn") ? "subprocesses.bpmn" : "custom-links.bpmn");
-        }
-
-        if (target.id === "toggle-simulator") {
-          viewer.enableSimulator = !viewer.enableSimulator;
-        }
-
-        if (target.id === "toggle-interaction") {
-          viewer.disableInteraction = !viewer.disableInteraction;
         }
       });
     </script>

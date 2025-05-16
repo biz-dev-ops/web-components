@@ -1,5 +1,5 @@
 import { html, LitElement, } from "lit";
-import { customElement } from "lit/decorators.js";
+import { customElement, eventOptions } from "lit/decorators.js";
 
 import resetCss from "../styles/reset.css";
 import headingContainerCss from "./heading-container.css";
@@ -21,7 +21,7 @@ export class BdoHeadingContainer extends LitElement {
     protected override firstUpdated() {
         const headingLevel = this.getHeadingLevel();
         this.setAttribute("level", `${headingLevel}`);
-        const headerContainer = this.shadowRoot?.querySelector("[data-testid='header-container']") as HTMLElement;
+        const headerContainer = this.renderRoot.querySelector("[data-testid='header-container']") as HTMLElement;
 
         if(this.getAttribute("aria-expanded") === undefined) {
             return;
@@ -30,12 +30,14 @@ export class BdoHeadingContainer extends LitElement {
         headerContainer.tabIndex = 0;
     }
 
+    @eventOptions({ passive: true })
     private handleKeydown(event: KeyboardEvent) {
         if (event.key === "Enter") {
             this.toggleExpanded();
         }
     }
 
+    @eventOptions({ passive: true })
     private toggleExpanded() {
         const ariaExpanded = this.ariaIsExpanded();
         if (ariaExpanded === undefined) {
@@ -56,7 +58,7 @@ export class BdoHeadingContainer extends LitElement {
     }
 
     private getHeadingLevel(): number | undefined {
-        const headerSlot = this.shadowRoot?.querySelector("slot[name='header']") as HTMLSlotElement;
+        const headerSlot = this.renderRoot.querySelector("slot[name='header']") as HTMLSlotElement;
         for (const node of headerSlot.assignedNodes({ flatten: true })) {
             const level = this.extractHeadingLevelFromTagName(node.nodeName);
             if (level === undefined) {

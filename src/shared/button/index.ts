@@ -14,9 +14,12 @@ export class BdoButton extends LitElement {
     @property({ type: Boolean })
     disabled = false;
 
+    @property({ type: String, attribute: 'title', reflect: true })
+    label?: string;
+
     override render() {
         return html`
-            <button type="${this.type}" .disabled='${this.disabled}' @click="${this._onClick}">
+            <button type="${this.type}" .disabled='${this.disabled}' @click="${this._onClick}" .ariaLabel="${this.label ? this.label : null}">
                 <span class="content">
                     <slot></slot>
                 </span>
