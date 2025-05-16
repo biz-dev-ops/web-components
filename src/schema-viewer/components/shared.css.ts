@@ -2,10 +2,10 @@ import { css } from "lit";
 
 export default css`
   :host {
-    --_item-line-color: var(--_schema-viewer-color-base);
-
-    --button-border-color: var(--_item-line-color);
+    --button-border-color: var(--_schema-viewer-color-a40);
     --button-hover-color: var(--_schema-viewer-color-a10);
+    --button-text-color: var(--_schema-viewer-color-base);
+    --button-text-color-active: var(--button-text-color);
     --button-font-size: var(--font-size-sm);
     --button-inline-size: 100%;
 

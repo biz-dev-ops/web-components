@@ -9,7 +9,7 @@ export default css`
         --badge-color: var(--schema-viewer-color-a10);
         --badge-text-color: var(--schema-viewer-color-base);
 
-        border: var(--line-base) solid var(--_schema-viewer-color-a40);
+        border: var(--line-thin) solid var(--_schema-viewer-color-a10);
         padding: var(--space-md);
         display: block;
         border-radius: var(--radius-base);

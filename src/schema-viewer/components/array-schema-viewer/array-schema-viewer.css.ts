@@ -9,7 +9,7 @@ export default css`
     .item--header,
     .item--fadeout {
         border-radius: var(--radius-half);
-        border: var(--line-thin) solid var(--_item-line-color);
+        border: var(--line-thin) solid var(--button-border-color);
         position: relative;
         padding: var(--space-sm);
     }
@@ -66,11 +66,10 @@ export default css`
         position: absolute;
         inset-inline-start: calc(var(--space-sm) * -1);
         inset-block-start: calc(50% - (var(--line-thin) * .5));
-        /* top: calc(50% + var(--line-thine) * -.5); */
     }
 
     .list--array li::before {
-        background-color: var(--_item-line-color);
+        background-color: var(--button-border-color);
         block-size: var(--line-thin);
         inline-size: var(--space-sm);
     }
@@ -80,7 +79,7 @@ export default css`
         background-color: var(--surface-main);
         block-size: .625rem;
         border-radius: var(--radius-circle);
-        border: var(--line-thin) solid var(--_item-line-color);
+        border: var(--line-thin) solid var(--button-border-color);
         transform: translateX(calc(-50% - (var(--line-thin) / 2)))  translateY(calc(-50% + (var(--line-thin) / 2)));
     }
 
