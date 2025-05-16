@@ -17,6 +17,18 @@ export class DefaultArchitectureButton extends AbstractArchitectureButton {
                     border-radius: var(--radius-pill);
                 }
 
+                a {
+                    text-decoration: none;
+                }
+
+                a .inner span:not(.icon) {
+                  text-decoration: underline;  
+                }
+
+                a:is(:hover, :focus) .inner span:not(.icon) {
+                  text-decoration: none;  
+                }
+
                 bdo-icon {
                     --icon-color: var(--surface-current);
                 }

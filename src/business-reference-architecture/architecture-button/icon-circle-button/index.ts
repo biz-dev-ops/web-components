@@ -15,6 +15,18 @@ export class IconCircleArchitectureButton extends AbstractArchitectureButton {
                     color: var(--text-color-base);
                 }
 
+                a {
+                    text-decoration: none;
+                }
+
+                a .inner span:not(.icon) {
+                  text-decoration: underline;  
+                }
+
+                a:is(:hover, :focus) .inner span:not(.icon) {
+                  text-decoration: none;  
+                }
+
                 span.icon {
                     padding: var(--space-xs);
                     flex: none;
