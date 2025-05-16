@@ -2,12 +2,11 @@ import { css } from "lit";
 
 export default css`
     :host {
-        all: unset;
-        color: var(--text-color-base);
+        color: inherit;
         font-family: var(--font-family-base);
-        font-size: var(--font-size-base);
+        font-size: inherit;
         display: inline-block;
-        line-height: var(--line-height-base);
+        line-height: inherit;
         box-sizing: border-box;
         text-align: start;
     }

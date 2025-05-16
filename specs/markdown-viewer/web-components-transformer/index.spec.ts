@@ -19,6 +19,7 @@ test.describe("webComponentsTransformer", () => {
       "mermaid-viewer",
       "model-viewer",
       "query-viewer",
+      "schema-viewer",
       "task-viewer"
     ].sort();
     const actual = [...new Set(components.map(c => c.tag))].sort();

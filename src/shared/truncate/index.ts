@@ -22,7 +22,7 @@ export class BdoTruncate extends LitElement {
                     <slot></slot>
                 </div>
                 <button aria-expanded="${this.open}" @click="${this._onClick}" class="truncate__toggle" ?disabled="${this.disabled}">
-                    ${this.open ? 'Toon minder' : 'Toon meer'}
+                    ${this.open ? 'Show less' : 'Show more'}
                 </button>
             </div>
         `;

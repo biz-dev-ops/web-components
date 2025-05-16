@@ -5,6 +5,7 @@ export default css`
         font-size: var(--font-size-base);
         line-height: var(--line-height-base);
         margin: 0;
+        max-width: 80ch;
     }
 
     :where(p, table, ul, ol, dl, pre, blockquote, [data-fullscreen="false"]):not(:last-child, [slot]) {

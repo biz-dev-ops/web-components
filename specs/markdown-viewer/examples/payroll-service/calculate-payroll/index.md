@@ -6,7 +6,7 @@ Determines how much each employee earns during a specific pay period. It involve
 
 Ensures employees are compensated accurately and in compliance with legal requirements.
 
-* [Command](./index.model.yml)
+* [Command](./index.command.schema.yml)
 * [Requirements](./index.feature)
 
 ## Process
@@ -28,7 +28,7 @@ Collects and consolidates information about employee work hours and absences. Th
 
 Ensures that all relevant work and absence information for the pay period is gathered, verified, and prepared for the subsequent steps in the payroll calculation.
 
-* [Query](./get-time-and-attendance.model.yml)
+* [Query](./get-time-and-attendance.query.schema.yml)
 * [Requirements](./get-time-and-attendance.feature)
 
 ### Determine gross pay
@@ -38,7 +38,7 @@ Ensures that all relevant work and absence information for the pay period is gat
 Calculates the total earnings for each employee based on their employment type and the time and attendance data gathered:
 
 * **Hourly Employees**: Gross pay is calculated by multiplying the total number of regular hours worked by their hourly rate. Any overtime hours worked are then multiplied by their overtime rate (typically 1.5 times the regular rate) and added to the regular pay.
-* **Salaried Employees**: Gross pay is usually a fixed amount per pay period. This is typically derived by dividing their annual salary by the number of pay periods in a year (e.g., weekly, bi-weekly, monthly). Adjustments might be necessary for partial pay periods (e.g., if an employee starts or leaves mid-period) or for unpaid leave taken.   
+* **Salaried Employees**: Gross pay is usually a fixed amount per pay period. This is typically derived by dividing their annual salary by the number of pay periods in a year (e.g., weekly, bi-weekly, monthly). Adjustments might be necessary for partial pay periods (e.g., if an employee starts or leaves mid-period) or for unpaid leave taken.
 
 Translates accurately the recorded work and absence data into a monetary value representing the employee's initial earnings for the pay period.
 
