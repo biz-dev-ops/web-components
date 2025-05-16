@@ -31,6 +31,16 @@ export class BdoDriver extends LitElement {
         this._configureDriver();
     }
 
+    override connectedCallback(): void {
+        super.connectedCallback();
+        this.addEventListener('fullscreenchange', this._setFullscreenState);
+    }
+
+    override disconnectedCallback(): void {
+        this.removeEventListener('fullscreenchange', this._setFullscreenState);
+        super.disconnectedCallback();
+    }
+
     @eventOptions({ passive: true })
     _handleSlotChange() {
         this._configureDriver();
@@ -41,6 +51,12 @@ export class BdoDriver extends LitElement {
         const clickedEl = event.target as HTMLElement;
         const action = clickedEl.getAttribute('data-action') || clickedEl.closest('[data-action]')?.getAttribute('data-action');
         if (!action) {
+            return;
+        }
+
+        // Handle toggle-fullscreen action
+        if (action === 'toggle-fullscreen') {
+            this._toggleFullscreen(event);
             return;
         }
 
@@ -80,6 +96,22 @@ export class BdoDriver extends LitElement {
 
             return (drivenEl as any).canHandleDriverAction(action);
         });
+    }
+
+    _toggleFullscreen(): void {
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+        } else {
+            this.requestFullscreen();
+        }
+    }
+
+    _setFullscreenState(): void {
+        if (document.fullscreenElement) {
+            this.classList.add('fullscreen');
+        } else {
+            this.classList.remove('fullscreen');
+        }
     }
 
     static override get styles() {
