@@ -11,11 +11,19 @@ import ViewerDMNCss from "dmn-js/dist/assets/dmn-font/css/dmn-embedded.css?inlin
 import { appendFontFaceDefinitionToDom } from "../shared/util";
 import { FetchError, fetchText } from "../shared/fetch";
 import "../shared/alert";
-
+import { DrivenByAction } from "../shared/driver/types";
 export const tag: string = "dmn-viewer";
 
 @customElement(tag)
-export class DMNViewer extends LitElement {
+export class DMNViewer extends LitElement implements DrivenByAction {
+  canHandleDriverAction(action: string): boolean {
+    return ["toggle-fullscreen"].includes(action);
+  }
+  handleDriverAction(action: string): void {
+    if (action === "toggle-fullscreen") {
+      this.zoomReset();
+    }
+  }
   private _viewer!: any;
 
   @property({ attribute: "src" })

@@ -13,6 +13,7 @@ import { Element, ModdleElement } from "bpmn-js/lib/model/Types";
 import * as bizdevops from "./bizdevops.moddle.json";
 import { FetchError, fetchText } from "../shared/fetch";
 import "../shared/alert";
+import { DrivenByAction } from "../shared/driver/types";
 
 interface Link {
   name?: string;
@@ -26,7 +27,7 @@ interface ModdleLinks {
 export const tag: string = "bpmn-viewer";
 
 @customElement(tag)
-export class BPMNViewer extends LitElement {
+export class BPMNViewer extends LitElement implements DrivenByAction {
   private _initialized = false;
   private _viewer!: any;
 
@@ -245,31 +246,32 @@ export class BPMNViewer extends LitElement {
     });
   }
 
-  static override get styles() {
-    return [
-      resetCss,
-      css`
-        :host {
-          display: block;
-          width: 100%;
-          height: 100%;
-        }
-        #bpmn-container {
-          width: 100%;
-          height: 100%;
-        }
-        .bjs-breadcrumbs {
-          top: 0px!important;
-          left:0px!important;
-        }
-        .bjs-powered-by {
-            display: none;
-        }
-      `,
-      css`${unsafeCSS(viewerDiagramJsCss)}`,
-      css`${unsafeCSS(viewerBpmnJsCss)}`,
-      css`${unsafeCSS(simulatorCss)}`,
-    ];
+  canHandleDriverAction(action: string): boolean {
+    return ["toggle-fullscreen", "zoom-in", "zoom-out", "zoom-reset"].includes(action);
+  }
+
+  handleDriverAction(action: string): void {
+    if (action === "toggle-fullscreen") {
+      const container = this.renderRoot.querySelector("#bpmn-container") as HTMLElement;
+      if(container.style.maxHeight === "100%") {
+        this._setHeight();
+      }
+      else {
+        container.style.maxHeight = "100%";
+      }
+      setTimeout(() => {
+        this.zoomReset();
+      }, 50);
+    }
+    else if (action === "zoom-in") {
+      this.zoomIn();
+    }
+    else if (action === "zoom-out") {
+      this.zoomOut();
+    }
+    else if (action === "zoom-reset") {
+      this.zoomReset();
+    }
   }
 
   public getZoomLevel() {
@@ -295,5 +297,32 @@ export class BPMNViewer extends LitElement {
     })
 
     this._viewer.get("canvas").zoom("fit-viewport", "auto");
+  }
+
+  static override get styles() {
+    return [
+      resetCss,
+      css`
+        :host {
+          display: block;
+          width: 100%;
+          height: 100%;
+        }
+        #bpmn-container {
+          width: 100%;
+          height: 100%;
+        }
+        .bjs-breadcrumbs {
+          top: 0px!important;
+          left:0px!important;
+        }
+        .bjs-powered-by {
+            display: none;
+        }
+      `,
+      css`${unsafeCSS(viewerDiagramJsCss)}`,
+      css`${unsafeCSS(viewerBpmnJsCss)}`,
+      css`${unsafeCSS(simulatorCss)}`,
+    ];
   }
 }

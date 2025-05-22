@@ -3,6 +3,7 @@ import { customElement, eventOptions, state } from 'lit/decorators.js';
 import resetCss from '../styles/reset.css';
 import driverCss from './driver.css';
 import "../alert";
+import { DrivenByAction, isDrivenByAction } from './types';
 
 @customElement('bdo-driver')
 export class BdoDriver extends LitElement {
@@ -28,7 +29,7 @@ export class BdoDriver extends LitElement {
     }
 
     override firstUpdated() {
-        this._configureDriver();
+        this._hideDriversWhichActionCanNotBeHandled();
     }
 
     override connectedCallback(): void {
@@ -42,76 +43,77 @@ export class BdoDriver extends LitElement {
     }
 
     @eventOptions({ passive: true })
-    _handleSlotChange() {
-        this._configureDriver();
+    private _handleSlotChange() {
+        this._hideDriversWhichActionCanNotBeHandled();
     }
 
     @eventOptions({ passive: true })
-    _handleDriverClicked(event: CustomEvent) {
-        const clickedEl = event.target as HTMLElement;
-        const action = clickedEl.getAttribute('data-action') || clickedEl.closest('[data-action]')?.getAttribute('data-action');
+    private _handleDriverClicked(event: CustomEvent) {
+        const action = this._determineAction(event);
         if (!action) {
             return;
         }
 
-        // Handle toggle-fullscreen action
-        if (action === 'toggle-fullscreen') {
-            this._toggleFullscreen(event);
-            return;
-        }
-
-        const driven = (this.renderRoot.querySelector('slot:not([name])') as HTMLSlotElement).assignedElements({ flatten: true });
-        for (const drivenEl of driven) {
-            if (typeof (drivenEl as any).handleDriverAction === 'function') {
-                (drivenEl as any).handleDriverAction(action);
-            }
-        }
+        this._handleAction(action);
     }
 
-    _configureDriver() {
-        const drivers = (this.renderRoot.querySelector('slot[name="driver"]') as HTMLSlotElement)?.assignedElements({ flatten: true });
-
-        for (const driver of drivers) {
-            const action = driver.getAttribute('data-action');
-            if (action) {
-                const canHandle = this._canHandleDriverAction(action);
-
-                if(canHandle === false) {
-                    (driver as HTMLElement).hidden = true;
-                }
-                else {
-                    (driver as HTMLElement).hidden = false;
-                }
-            }
-        }
-    }
-
-    _canHandleDriverAction(action: string) : boolean | undefined {
-        const driven = (this.renderRoot.querySelector('slot:not([name])') as HTMLSlotElement).assignedElements({ flatten: true });
-
-        return driven.some(drivenEl => {
-            if (typeof (drivenEl as any).canHandleDriverAction !== 'function') {
-                return false;
-            }
-
-            return (drivenEl as any).canHandleDriverAction(action);
-        });
-    }
-
-    _toggleFullscreen(): void {
+    private _toggleFullscreen(): void {
         if (document.fullscreenElement) {
             document.exitFullscreen();
-        } else {
+        }
+        else {
             this.requestFullscreen();
         }
     }
 
-    _setFullscreenState(): void {
+    private _setFullscreenState(): void {
         if (document.fullscreenElement) {
             this.classList.add('fullscreen');
         } else {
             this.classList.remove('fullscreen');
         }
+    }
+
+    private _handleAction(action: string) {
+        if (action === 'toggle-fullscreen') {
+            this._toggleFullscreen();
+        }
+
+        this._getDrivenElements()
+            .forEach(el => el.handleDriverAction(action));
+    }
+
+    private _hideDriversWhichActionCanNotBeHandled() {
+        const drivers = this._getDriverElements();
+        const driven = this._getDrivenElements();
+
+        for (const driver of drivers) {
+            const action = driver.getAttribute('data-action');
+            if (!action) {
+                continue;
+            }
+
+            driver.hidden = driven.some(el => el.canHandleDriverAction(action)) === false;
+        }
+    }
+
+    private _determineAction(event: CustomEvent<any>) {
+        const clickedEl = event.target as HTMLElement;
+        const action = clickedEl.getAttribute('data-action') || clickedEl.closest('[data-action]')?.getAttribute('data-action');
+        return action;
+    }
+
+    private _getDriverElements() : any[] {
+        return (this.renderRoot.querySelector('slot[name="driver"]') as HTMLSlotElement)
+            .assignedElements({ flatten: true })
+            .map(el => el as any);
+    }
+
+    private _getDrivenElements() : DrivenByAction[] {
+        return (this.renderRoot.querySelector('slot:not([name])') as HTMLSlotElement)
+            .assignedElements({ flatten: true })
+            .filter(isDrivenByAction)
+            .map(el => (el as unknown) as DrivenByAction);
     }
 
     static override get styles() {

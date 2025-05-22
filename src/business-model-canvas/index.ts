@@ -8,11 +8,17 @@ import "./canvas-box";
 import { data } from "./data";
 import { FetchError, fetchYamlAndBundleAs } from "../shared/fetch";
 import "../shared/alert";
+import { DrivenByAction } from "../shared/driver/types";
 
 export const tag = "business-model-canvas";
 
 @customElement(tag)
-export class BusinessModelCanvasComponent extends LitElement {
+export class BusinessModelCanvasComponent extends LitElement implements DrivenByAction {
+  canHandleDriverAction(action: string): boolean {
+    return ["toggle-fullscreen"].includes(action);
+  }
+  handleDriverAction(_action: string): void { }
+
   @property({ type: Object })
   model!: Model | FetchError;
 

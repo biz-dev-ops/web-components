@@ -1,9 +1,10 @@
 import MarkdownIt from "markdown-it";
-import { urlRewriterFactory, transformComponentLink, components } from "./web-components-transformer";
+import { urlRewriterFactory, transformComponentLink,components } from "./web-components-transformer";
 import nestedHeadersRulePlugin from "./nested-headers-rule";
 import tabsRulePlugin from "./tabs-rule";
 import linkTransformRulerPlugin from "./link-transform-ruler";
 import { ListItem } from "./tabs-ruler";
+import WebComponentsDriverRulerPlugin from "./web-components-driver-ruler";
 
 const extensions = components.flatMap(c => c.extensions);
 
@@ -28,6 +29,8 @@ export default function mdFactory(src: string) {
     });
 
     md.use(linkTransformRulerPlugin, { transformers: [ urlRewriterFactory(src), transformComponentLink ] });
+
+    md.use(WebComponentsDriverRulerPlugin);
 
     return md;
 }

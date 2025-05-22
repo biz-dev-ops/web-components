@@ -9,11 +9,16 @@ import { FeatureParser } from "./parser";
 import "./background";
 import "./scenario";
 import "./scenario-outline";
-
+import { DrivenByAction } from "../shared/driver/types";
 export const tag = "feature-viewer";
 
 @customElement(tag)
-export class FeatureViewerComponent extends LitElement {
+export class FeatureViewerComponent extends LitElement implements DrivenByAction {
+  canHandleDriverAction(action: string): boolean {
+    return ["toggle-fullscreen"].includes(action);
+  }
+  handleDriverAction(_action: string): void { }
+
   @property({ type: String })
   src?: string;
 

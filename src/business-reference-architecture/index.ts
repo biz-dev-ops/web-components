@@ -6,11 +6,17 @@ import { Section } from "./models";
 import "./architecture-section";
 import { FetchError, fetchYamlAndBundleAs } from "../shared/fetch";
 import "../shared/alert";
+import { DrivenByAction } from "../shared/driver/types";
 
 export const tag = "business-reference-architecture";
 
 @customElement(tag)
-export class BusinessReferenceArchitectureComponent extends LitElement {
+export class BusinessReferenceArchitectureComponent extends LitElement implements DrivenByAction {
+  canHandleDriverAction(action: string): boolean {
+    return ["toggle-fullscreen"].includes(action);
+  }
+  handleDriverAction(_action: string): void { }
+
   @property({ type: Array })
   model!: Section[];
 
