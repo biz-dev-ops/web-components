@@ -1,8 +1,9 @@
 import { test, expect } from "@sand4rt/experimental-ct-web";
 import MarkdownIt from "markdown-it";
-import tabsRulerPlugin, { ListItem } from "../../../src/markdown-viewer/tabs-ruler/";
+import { tabsRulerPlugin } from "../../../src/markdown-viewer/tabs-ruler";
 import { expectMarkdownToMatchTokens } from "../markdown-test-util";
 import { Token } from "markdown-it/index.js";
+import { ListItem } from "../../../src/markdown-viewer/tabs-ruler";
 
 test.describe("tabsRuler", () => {
 
@@ -139,7 +140,7 @@ test.describe("tabsRuler", () => {
     ] as Token[];
 
     expectTokens(markdown, expectedTokens, (listItem: ListItem) => {
-      return listItem.getLink()?.getPath()?.endsWith(".bpmn") || false
+      return listItem.findToken("link_open")?.attrGet("href")?.endsWith(".bpmn") || false;
     });
   });
 });

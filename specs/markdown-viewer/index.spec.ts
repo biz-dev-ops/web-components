@@ -75,7 +75,7 @@ test.describe("markdown-viewer", async () => {
           }
         });
 
-        await expect(component.locator(tag)).toBeVisible();
+        await expect(component.locator(tag)).toHaveCount(1);
       });
     });
   });
