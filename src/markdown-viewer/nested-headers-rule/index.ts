@@ -1,11 +1,11 @@
 import MarkdownIt, { Options, Renderer, Token } from "markdown-it";
-import nestedHeadersRulerPlugin from "../nested-headers-ruler";
+import { nestedHeadersRulerPlugin } from "../nested-headers-ruler";
 
 export interface nestedHeadersRulePluginOptions {
     isAriaExpanded?: (level: number) => boolean | undefined;
 }
 
-export default function nestedHeadersRulePlugin(md: MarkdownIt, options?: nestedHeadersRulePluginOptions): void {
+export function nestedHeadersRulePlugin(md: MarkdownIt, options?: nestedHeadersRulePluginOptions): void {
     const isAriaExpanded = options?.isAriaExpanded || ((_level: number) => undefined);
 
     md.use(nestedHeadersRulerPlugin);

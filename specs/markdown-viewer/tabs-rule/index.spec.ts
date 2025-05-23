@@ -1,6 +1,6 @@
 import { test, expect } from "@sand4rt/experimental-ct-web";
 import MarkdownIt from "markdown-it";
-import tabsRulePlugin from "../../../src/markdown-viewer/tabs-rule/";
+import { tabsRulePlugin } from "../../../src/markdown-viewer/tabs-rule";
 import { expectMarkdownToMatchHtml } from "../markdown-test-util";
 import { ListItem } from "../../../src/markdown-viewer/tabs-ruler";
 

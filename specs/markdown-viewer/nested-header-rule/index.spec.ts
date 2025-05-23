@@ -1,6 +1,6 @@
-import { test, expect } from "@sand4rt/experimental-ct-web";
+import { test } from "@sand4rt/experimental-ct-web";
 import MarkdownIt from "markdown-it";
-import nestedHeadersRulePlugin from "../../../src/markdown-viewer/nested-headers-rule"
+import { nestedHeadersRulePlugin } from "../../../src/markdown-viewer/nested-headers-rule"
 import { expectMarkdownToMatchHtml } from "../markdown-test-util";
 
 test.describe("nestedHeadersRulePlugin", () => {
