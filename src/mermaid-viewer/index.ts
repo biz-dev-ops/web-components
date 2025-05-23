@@ -1,4 +1,4 @@
-import { css, html, LitElement } from "lit";
+import { css, html } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 
@@ -7,16 +7,12 @@ import { fetchText } from "../shared/fetch";
 
 import mermaid from "mermaid";
 import "../shared/alert";
-import { DrivenByAction } from "../shared/driver/types";
+import { ActionLitElement } from "../shared/action-dispatcher";
 
 export const tag: string = "mermaid-viewer";
 
 @customElement(tag)
-export class MermaidViewer extends LitElement implements DrivenByAction {
-    canHandleDriverAction(action: string): boolean {
-        return ["toggle-fullscreen"].includes(action);
-    }
-    handleDriverAction(_action: string): void { }
+export class MermaidViewer extends ActionLitElement {
 
     @property({ attribute: "src" })
     src!: string;

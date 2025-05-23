@@ -19,7 +19,7 @@
 
       <pre>
         <code>
-class CustomDrivenComponent extends HTMLElement implements DrivenByAction {
+class CustomDrivenComponent extends HTMLElement implements IActionDispatcher {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
@@ -31,12 +31,12 @@ class CustomDrivenComponent extends HTMLElement implements DrivenByAction {
     `;
   }
 
-  handleDriverAction(action) {
+  handleAction(action, payload?: any) : void {
     const stateElement = this.shadowRoot.getElementById("state");
     stateElement.textContent = action;
   }
 
-  canHandleDriverAction(action) {
+  canHandleAction(action: string) : boolean {
     return [
       "toggle-fullscreen",
       "zoom-in",

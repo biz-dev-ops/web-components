@@ -1,4 +1,4 @@
-import { html, css, LitElement } from "lit";
+import { html, css } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 
 import resetCss from "../shared/styles/reset.css";
@@ -9,16 +9,11 @@ import { FeatureParser } from "./parser";
 import "./background";
 import "./scenario";
 import "./scenario-outline";
-import { DrivenByAction } from "../shared/driver/types";
+import { ActionLitElement } from "../shared/action-dispatcher";
 export const tag = "feature-viewer";
 
 @customElement(tag)
-export class FeatureViewerComponent extends LitElement implements DrivenByAction {
-  canHandleDriverAction(action: string): boolean {
-    return ["toggle-fullscreen"].includes(action);
-  }
-  handleDriverAction(_action: string): void { }
-
+export class FeatureViewerComponent extends ActionLitElement {
   @property({ type: String })
   src?: string;
 

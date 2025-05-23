@@ -3,7 +3,7 @@ import { customElement, eventOptions, state } from 'lit/decorators.js';
 import resetCss from '../styles/reset.css';
 import driverCss from './driver.css';
 import "../alert";
-import { DrivenByAction, isDrivenByAction } from './types';
+import { IActionDispatcher, isActionDispatcher } from '../action-dispatcher';
 
 @customElement('bdo-driver')
 export class BdoDriver extends LitElement {
@@ -80,7 +80,7 @@ export class BdoDriver extends LitElement {
         }
 
         this._getDrivenElements()
-            .forEach(el => el.handleDriverAction(action));
+            .forEach(el => el.handleAction(action));
     }
 
     private _hideDriversWhichActionCanNotBeHandled() {
@@ -93,7 +93,7 @@ export class BdoDriver extends LitElement {
                 continue;
             }
 
-            driver.hidden = driven.some(el => el.canHandleDriverAction(action)) === false;
+            driver.hidden = driven.some(el => el.canHandleAction(action)) === false;
         }
     }
 
@@ -109,11 +109,11 @@ export class BdoDriver extends LitElement {
             .map(el => el as any);
     }
 
-    private _getDrivenElements() : DrivenByAction[] {
+    private _getDrivenElements() : IActionDispatcher[] {
         return (this.renderRoot.querySelector('slot:not([name])') as HTMLSlotElement)
             .assignedElements({ flatten: true })
-            .filter(isDrivenByAction)
-            .map(el => (el as unknown) as DrivenByAction);
+            .filter(isActionDispatcher)
+            .map(el => (el as unknown) as IActionDispatcher);
     }
 
     static override get styles() {

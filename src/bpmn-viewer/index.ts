@@ -1,5 +1,6 @@
-import { css, html, LitElement, unsafeCSS } from "lit";
+import { css, html, unsafeCSS } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
+import { Action, ActionLitElement } from "../shared/action-dispatcher";
 
 import resetCss from "../shared/styles/reset.css";
 import viewerDiagramJsCss from "bpmn-js/dist/assets/diagram-js.css?inline";
@@ -11,9 +12,8 @@ import Viewer from "bpmn-js/lib/NavigatedViewer.js";
 import { Element, ModdleElement } from "bpmn-js/lib/model/Types";
 
 import * as bizdevops from "./bizdevops.moddle.json";
-import { FetchError, fetchText } from "../shared/fetch";
+import { fetchText } from "../shared/fetch";
 import "../shared/alert";
-import { DrivenByAction } from "../shared/driver/types";
 
 interface Link {
   name?: string;
@@ -27,9 +27,10 @@ interface ModdleLinks {
 export const tag: string = "bpmn-viewer";
 
 @customElement(tag)
-export class BPMNViewer extends LitElement implements DrivenByAction {
+export class BPMNViewer extends ActionLitElement {
   private _initialized = false;
   private _viewer!: any;
+  private _resizeObserver: ResizeObserver | null = null;
 
   @property({ attribute: "src" })
   src!: string
@@ -117,6 +118,7 @@ export class BPMNViewer extends LitElement implements DrivenByAction {
       this._viewer.get("zoomScroll").toggle(this.disableInteraction);
     }
 
+    this._setupResizeObserver();
     this._initialized = true;
   }
 
@@ -155,8 +157,6 @@ export class BPMNViewer extends LitElement implements DrivenByAction {
     container.style.minHeight = `${minMax.minHeight}px`;
     container.style.maxHeight = `${Math.min(viewbox.inner.height + extraHeight, minMax.maxHeight)}px`;
 
-    this.zoomReset();
-
     function _calculateExtraHeigt(el) {
       const breadcrumbs = el.renderRoot.querySelector(".bjs-breadcrumbs") as HTMLElement;
       const { x, height } = breadcrumbs.getBoundingClientRect();
@@ -182,6 +182,27 @@ export class BPMNViewer extends LitElement implements DrivenByAction {
         maxHeight: parseValue(maxHeightRaw) ?? Number.MAX_SAFE_INTEGER,
       };
     }
+  }
+
+  private _setupResizeObserver() {
+    const container = this.renderRoot.querySelector("#bpmn-container") as HTMLElement;
+
+    if (this._resizeObserver) {
+      this._resizeObserver.disconnect();
+    }
+
+    this._resizeObserver = new ResizeObserver(entries => {
+      for (let entry of entries) {
+        if (entry.target === container) {
+          const canvas = this._viewer.get('canvas');
+          canvas.resized();
+          this.zoomReset();
+        }
+      }
+    });
+
+    // Start observing the viewer's container
+    this._resizeObserver.observe(container);
   }
 
   private _expandSubProcess() {
@@ -246,31 +267,14 @@ export class BPMNViewer extends LitElement implements DrivenByAction {
     });
   }
 
-  canHandleDriverAction(action: string): boolean {
-    return ["toggle-fullscreen", "zoom-in", "zoom-out", "zoom-reset"].includes(action);
-  }
-
-  handleDriverAction(action: string): void {
-    if (action === "toggle-fullscreen") {
-      const container = this.renderRoot.querySelector("#bpmn-container") as HTMLElement;
-      if(container.style.maxHeight === "100%") {
-        this._setHeight();
-      }
-      else {
-        container.style.maxHeight = "100%";
-      }
-      setTimeout(() => {
-        this.zoomReset();
-      }, 50);
+  @Action("toggle-fullscreen")
+  public toggleFullscreen() {
+    const container = this.renderRoot.querySelector("#bpmn-container") as HTMLElement;
+    if(container.style.maxHeight === "100%") {
+      this._setHeight();
     }
-    else if (action === "zoom-in") {
-      this.zoomIn();
-    }
-    else if (action === "zoom-out") {
-      this.zoomOut();
-    }
-    else if (action === "zoom-reset") {
-      this.zoomReset();
+    else {
+      container.style.maxHeight = "100%";
     }
   }
 
@@ -278,14 +282,17 @@ export class BPMNViewer extends LitElement implements DrivenByAction {
     return this._viewer.get("canvas").zoom();
   }
 
+  @Action("zoom-in")
   public zoomIn() {
     (this._viewer.get("zoomScroll") as any).stepZoom(1);
   }
 
+  @Action("zoom-out")
   public zoomOut() {
     (this._viewer.get("zoomScroll") as any).stepZoom(-1);
   }
 
+  @Action("zoom-reset")
   public zoomReset() {
     const currentViewbox = this._viewer.get("canvas").viewbox()
 

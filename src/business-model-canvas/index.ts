@@ -1,4 +1,4 @@
-import { html, css, LitElement } from "lit";
+import { html, css } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
 import resetCss from "../shared/styles/reset.css";
@@ -8,16 +8,12 @@ import "./canvas-box";
 import { data } from "./data";
 import { FetchError, fetchYamlAndBundleAs } from "../shared/fetch";
 import "../shared/alert";
-import { DrivenByAction } from "../shared/driver/types";
+import { ActionLitElement } from "../shared/action-dispatcher";
 
 export const tag = "business-model-canvas";
 
 @customElement(tag)
-export class BusinessModelCanvasComponent extends LitElement implements DrivenByAction {
-  canHandleDriverAction(action: string): boolean {
-    return ["toggle-fullscreen"].includes(action);
-  }
-  handleDriverAction(_action: string): void { }
+export class BusinessModelCanvasComponent extends ActionLitElement {
 
   @property({ type: Object })
   model!: Model | FetchError;

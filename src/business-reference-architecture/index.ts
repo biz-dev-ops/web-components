@@ -1,4 +1,4 @@
-import { css, html, LitElement } from "lit";
+import { css, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
 import resetCss from "../shared/styles/reset.css";
@@ -6,16 +6,12 @@ import { Section } from "./models";
 import "./architecture-section";
 import { FetchError, fetchYamlAndBundleAs } from "../shared/fetch";
 import "../shared/alert";
-import { DrivenByAction } from "../shared/driver/types";
+import { ActionLitElement } from "../shared/action-dispatcher";
 
 export const tag = "business-reference-architecture";
 
 @customElement(tag)
-export class BusinessReferenceArchitectureComponent extends LitElement implements DrivenByAction {
-  canHandleDriverAction(action: string): boolean {
-    return ["toggle-fullscreen"].includes(action);
-  }
-  handleDriverAction(_action: string): void { }
+export class BusinessReferenceArchitectureComponent extends ActionLitElement {
 
   @property({ type: Array })
   model!: Section[];
