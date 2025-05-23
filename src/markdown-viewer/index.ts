@@ -7,7 +7,7 @@ import typographyCss from "../shared/styles/typography.css";
 
 import { FetchError, fetchText } from "../shared/fetch";
 
-import mdFactory from "./markdown-it";
+import { createMarkdownIt } from "./markdown-it-factory";
 import "../shared/alert";
 
 @customElement("markdown-viewer")
@@ -30,7 +30,7 @@ export class MarkdownViewer extends LitElement {
     if (changedProperties.has("src")) {
       try {
         const markdown = await fetchText(this.src);
-        const md = mdFactory(this.src);
+        const md = createMarkdownIt(this.src);
         this.state = md.render(markdown);
       }
       catch (error: any) {
@@ -46,6 +46,11 @@ export class MarkdownViewer extends LitElement {
       css`
         :host {
           display: block;
+        }
+
+        dmn-viewer,
+        bpmn-viewer {
+          background-color: var(--color-black-a05);
         }
       `,
     ];

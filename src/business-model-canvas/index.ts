@@ -1,4 +1,4 @@
-import { html, css, LitElement } from "lit";
+import { html, css } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
 import resetCss from "../shared/styles/reset.css";
@@ -8,11 +8,13 @@ import "./canvas-box";
 import { data } from "./data";
 import { FetchError, fetchYamlAs } from "../shared/fetch";
 import "../shared/alert";
+import { ActionLitElement } from "../shared/action-dispatcher";
 
 export const tag = "business-model-canvas";
 
 @customElement(tag)
-export class BusinessModelCanvasComponent extends LitElement {
+export class BusinessModelCanvasComponent extends ActionLitElement {
+
   @property({ type: Object })
   model!: Model | FetchError;
 

@@ -1,5 +1,6 @@
-import { css, html, LitElement, unsafeCSS } from "lit";
+import { css, html, unsafeCSS } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
+import { Action, ActionLitElement } from "../shared/action-dispatcher";
 
 import resetCss from "../shared/styles/reset.css";
 import viewerDiagramJsCss from "bpmn-js/dist/assets/diagram-js.css?inline";
@@ -11,7 +12,7 @@ import Viewer from "bpmn-js/lib/NavigatedViewer.js";
 import { Element, ModdleElement } from "bpmn-js/lib/model/Types";
 
 import * as bizdevops from "./bizdevops.moddle.json";
-import { FetchError, fetchText } from "../shared/fetch";
+import { fetchText } from "../shared/fetch";
 import "../shared/alert";
 
 interface Link {
@@ -26,9 +27,10 @@ interface ModdleLinks {
 export const tag: string = "bpmn-viewer";
 
 @customElement(tag)
-export class BPMNViewer extends LitElement {
+export class BPMNViewer extends ActionLitElement {
   private _initialized = false;
   private _viewer!: any;
+  private _resizeObserver: ResizeObserver | null = null;
 
   @property({ attribute: "src" })
   src!: string
@@ -97,7 +99,7 @@ export class BPMNViewer extends LitElement {
     }
 
     this._viewer = new Viewer({
-      container: this.shadowRoot?.querySelector("#bpmn-container") as HTMLElement,
+      container: this.renderRoot.querySelector("#bpmn-container") as HTMLElement,
       moddleExtensions: {
         bizdevops,
       },
@@ -116,6 +118,7 @@ export class BPMNViewer extends LitElement {
       this._viewer.get("zoomScroll").toggle(this.disableInteraction);
     }
 
+    this._setupResizeObserver();
     this._initialized = true;
   }
 
@@ -148,16 +151,14 @@ export class BPMNViewer extends LitElement {
     const minMax = _getMinMaxHeight(this);
     const extraHeight = _calculateExtraHeigt(this);
     const viewbox = this._viewer.get("canvas").viewbox();
-    const container = this.shadowRoot?.querySelector("#bpmn-container") as HTMLElement;
+    const container = this.renderRoot.querySelector("#bpmn-container") as HTMLElement;
 
     container.style.aspectRatio = `${viewbox.inner.width} / ${viewbox.inner.height}`;
     container.style.minHeight = `${minMax.minHeight}px`;
     container.style.maxHeight = `${Math.min(viewbox.inner.height + extraHeight, minMax.maxHeight)}px`;
 
-    this.zoomReset();
-
     function _calculateExtraHeigt(el) {
-      const breadcrumbs = el.shadowRoot?.querySelector(".bjs-breadcrumbs") as HTMLElement;
+      const breadcrumbs = el.renderRoot.querySelector(".bjs-breadcrumbs") as HTMLElement;
       const { x, height } = breadcrumbs.getBoundingClientRect();
       const lineTweak = Math.max(10, x + height) * 2;
       return lineTweak;
@@ -181,6 +182,27 @@ export class BPMNViewer extends LitElement {
         maxHeight: parseValue(maxHeightRaw) ?? Number.MAX_SAFE_INTEGER,
       };
     }
+  }
+
+  private _setupResizeObserver() {
+    const container = this.renderRoot.querySelector("#bpmn-container") as HTMLElement;
+
+    if (this._resizeObserver) {
+      this._resizeObserver.disconnect();
+    }
+
+    this._resizeObserver = new ResizeObserver(entries => {
+      for (let entry of entries) {
+        if (entry.target === container) {
+          const canvas = this._viewer.get('canvas');
+          canvas.resized();
+          this.zoomReset();
+        }
+      }
+    });
+
+    // Start observing the viewer's container
+    this._resizeObserver.observe(container);
   }
 
   private _expandSubProcess() {
@@ -245,6 +267,45 @@ export class BPMNViewer extends LitElement {
     });
   }
 
+  @Action("toggle-fullscreen")
+  public toggleFullscreen() {
+    const container = this.renderRoot.querySelector("#bpmn-container") as HTMLElement;
+    if(container.style.maxHeight === "100%") {
+      this._setHeight();
+    }
+    else {
+      container.style.maxHeight = "100%";
+    }
+  }
+
+  public getZoomLevel() {
+    return this._viewer.get("canvas").zoom();
+  }
+
+  @Action("zoom-in")
+  public zoomIn() {
+    (this._viewer.get("zoomScroll") as any).stepZoom(1);
+  }
+
+  @Action("zoom-out")
+  public zoomOut() {
+    (this._viewer.get("zoomScroll") as any).stepZoom(-1);
+  }
+
+  @Action("zoom-reset")
+  public zoomReset() {
+    const currentViewbox = this._viewer.get("canvas").viewbox()
+
+    this._viewer.get("canvas").viewbox({
+      x: 0,
+      y: 0,
+      width: currentViewbox.width,
+      height: currentViewbox.height
+    })
+
+    this._viewer.get("canvas").zoom("fit-viewport", "auto");
+  }
+
   static override get styles() {
     return [
       resetCss,
@@ -270,30 +331,5 @@ export class BPMNViewer extends LitElement {
       css`${unsafeCSS(viewerBpmnJsCss)}`,
       css`${unsafeCSS(simulatorCss)}`,
     ];
-  }
-
-  public getZoomLevel() {
-    return this._viewer.get("canvas").zoom();
-  }
-
-  public zoomIn() {
-    (this._viewer.get("zoomScroll") as any).stepZoom(1);
-  }
-
-  public zoomOut() {
-    (this._viewer.get("zoomScroll") as any).stepZoom(-1);
-  }
-
-  public zoomReset() {
-    const currentViewbox = this._viewer.get("canvas").viewbox()
-
-    this._viewer.get("canvas").viewbox({
-      x: 0,
-      y: 0,
-      width: currentViewbox.width,
-      height: currentViewbox.height
-    })
-
-    this._viewer.get("canvas").zoom("fit-viewport", "auto");
   }
 }

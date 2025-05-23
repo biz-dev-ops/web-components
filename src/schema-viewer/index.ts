@@ -2,8 +2,8 @@ import path from "path";
 import { CSSResult, CSSResultArray, html, LitElement } from "lit";
 import { customElement, eventOptions, property, state } from "lit/decorators.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import markdownFactory from "../markdown-viewer/markdown-it";
-const md = markdownFactory();
+import { createMarkdownIt } from "../markdown-viewer/markdown-it-factory";
+const md = createMarkdownIt("");
 import resetCss from "../shared/styles/reset.css";
 import schemaViewerCss from "./schema-viewer.css";
 

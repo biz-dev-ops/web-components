@@ -1,7 +1,7 @@
 import MarkdownIt, { Options, Renderer, Token } from "markdown-it";
-import tabsRulerPlugin, { tabsRulePluginOptions } from "../tabs-ruler";
+import { tabsRulerPlugin, tabsRulerPluginOptions } from "../tabs-ruler";
 
-export default function tabsRulePlugin(md: MarkdownIt, options?: tabsRulePluginOptions): void {
+export function tabsRulePlugin(md: MarkdownIt, options?: tabsRulerPluginOptions): void {
   md.use(tabsRulerPlugin, options);
 
   let tabIndex = 0;
@@ -29,8 +29,7 @@ export default function tabsRulePlugin(md: MarkdownIt, options?: tabsRulePluginO
 
     tabPanelIndex += 1;
 
-    const textToken = getNextTextToken(tokens, idx);
-    const title = textToken?.content || "undefined";
+    const title = getNextTitleOrTextContent(tokens, idx) || "undefined";
 
     return `<bdo-tab title="${title}">`;
   }
@@ -56,17 +55,25 @@ export default function tabsRulePlugin(md: MarkdownIt, options?: tabsRulePluginO
   }
 }
 
-function getNextTextToken(tokens: Token[], idx: number): Token | null {
+function getNextTitleOrTextContent(tokens: Token[], idx: number): string | null {
   for (idx; idx < tokens.length; idx++) {
     const token = tokens[idx];
+    if(token.type === "list_item_close") {
+      return null;
+    }
+
+    if(token.attrGet("title")) {
+      return token.attrGet("title");
+    }
+
     if (token.type === "text") {
-      return token;
+      return token.content;
     }
 
     if(token.children) {
-      const textToken = token.children.find(child => child.type === "text");
-      if(textToken) {
-        return textToken;
+      const title = getNextTitleOrTextContent(token.children, 0);
+      if(title) {
+        return title;
       }
     }
   }

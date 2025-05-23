@@ -10,8 +10,9 @@ export default css`
         --_button-padding-inline: var(--button-padding-inline, var(--button-padding, var(--space-sm)));
         --_button-inline-size: var(--button-inline-size, auto);
         --_button-border-color: var(--button-border-color, transparent);
-        --_button-text-color: var(--button-text-color, var(--link-text-color));
-        --_button-text-color-active: var(--button-text-color-active, var(--link-text-color));
+        --_button-action-border-color: var(--button-border-color, var(--link-text-color));
+
+        --icon-color: var(--button-text-color);
 
         inline-size: var(--_button-inline-size);
     }
@@ -92,5 +93,28 @@ export default css`
     :host([direction="left"]) button::before {
         inset-inline-end: -.25em;
         transform: rotate(225deg);
+    }
+
+    /* Action buttons */
+    :host([data-action]) button {
+        border: var(--line-base) solid var(--_button-action-border-color);
+        border-radius: var(--radius-pill);
+        padding: var(--space-xxs) var(--space-sm);
+        font-size: var(--font-size-sm);
+        line-height: 1;
+        font-weight: 600;
+        min-block-size: auto;
+    }
+
+    :host([data-action]) button .content {
+        display: flex;
+        align-items: center;
+        gap: var(--space-xs);
+    }
+
+    /* Action button with a hidden text label */
+    :host([data-action]) button[aria-label] {
+        border-radius: var(--radius-circle);
+        padding: var(--space-xs);
     }
 `;

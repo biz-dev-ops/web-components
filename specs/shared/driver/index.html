@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Driver component</title>
+    <link rel="stylesheet" href="../../theme.css" />
+    <link rel="stylesheet" href="../../specflow.css" />
+  </head>
+
+  <body>
+    <main>
+      <h1>Driver component</h1>
+
+      <h2>Custom Driven Component</h2>
+      <p>
+        You can create custom driven components which implement the required
+        <code>DrivenByAction</code> interface.
+      </p>
+
+      <pre>
+        <code>
+class CustomDrivenComponent extends HTMLElement implements IActionDispatcher {
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+    this.shadowRoot.innerHTML = `
+      &lt;div&gt;
+        &lt;h3&gt;Driven Component&lt;/h3&gt;
+        &lt;p&gt;Current state: &lt;span id=&quot;state&quot;&gt;normal&lt;/span&gt;&lt;/p&gt;
+      &lt;/div&gt;
+    `;
+  }
+
+  handleAction(action, payload?: any) : void {
+    const stateElement = this.shadowRoot.getElementById("state");
+    stateElement.textContent = action;
+  }
+
+  canHandleAction(action: string) : boolean {
+    return [
+      "toggle-fullscreen",
+      "zoom-in",
+      "zoom-out",
+      "zoom-reset",
+    ].includes(action);
+  }
+}
+
+customElements.define("custom-driven", CustomDrivenComponent);
+        </code>
+      </pre>
+
+      <script>
+        // Define a custom driven component
+        class CustomDrivenComponent extends HTMLElement {
+          constructor() {
+            super();
+            this.attachShadow({ mode: "open" });
+            this.shadowRoot.innerHTML = `
+              <div>
+                <h3><slot>Driven Component</slot></h3>
+                <p>Current state: <mark id="state">normal</mark></p>
+              </div>
+            `;
+          }
+
+          handleDriverAction(action) {
+            const stateElement = this.shadowRoot.getElementById("state");
+            stateElement.textContent = action;
+          }
+
+          canHandleDriverAction(action) {
+            return [
+              "toggle-fullscreen",
+              "zoom-in",
+              "zoom-out",
+              "zoom-reset",
+            ].includes(action);
+          }
+        }
+
+        customElements.define("custom-driven", CustomDrivenComponent);
+      </script>
+
+      <h3>Drivers with text</h3>
+
+      <bdo-driver>
+        <bdo-button slot="driver" data-action="toggle-fullscreen">
+          <bdo-icon icon="mat-fullscreen"></bdo-icon>Toggle Fullscreen
+        </bdo-button>
+        <bdo-button slot="driver" data-action="zoom-in">
+          <bdo-icon icon="mat-zoom_in"></bdo-icon>Zoom In
+        </bdo-button>
+        <bdo-button slot="driver" data-action="zoom-out">
+          <bdo-icon icon="mat-zoom_out"></bdo-icon>Zoom Out
+        </bdo-button>
+        <bdo-button slot="driver" data-action="zoom-reset">
+          <bdo-icon icon="mat-reset_focus"></bdo-icon>Zoom Reset
+        </bdo-button>
+
+        <custom-driven>Driven Component 1</custom-driven>
+      </bdo-driver>
+
+      <h3>Drivers with icons only</h3>
+
+      <bdo-driver>
+        <bdo-button slot="driver" data-action="toggle-fullscreen" title="Toggle Fullscreen">
+          <bdo-icon icon="mat-fullscreen"></bdo-icon>
+        </bdo-button>
+        <bdo-button slot="driver" data-action="zoom-in" title="Zoom In">
+          <bdo-icon icon="mat-zoom_in"></bdo-icon>
+        </bdo-button>
+        <bdo-button slot="driver" data-action="zoom-out" title="Zoom Out">
+          <bdo-icon icon="mat-zoom_out"></bdo-icon>
+        </bdo-button>
+        <bdo-button slot="driver" data-action="zoom-reset" title="Zoom Reset">
+          <bdo-icon icon="mat-reset_focus"></bdo-icon>
+        </bdo-button>
+
+        <custom-driven>Driven Component 2</custom-driven>
+      </bdo-driver>
+
+      <h2>Run tests</h2>
+      <code> npm run test -- 'bdo-driver' </code>
+    </main>
+
+    <script type="module">
+      import "../../../src/shared/driver/index.ts";
+      import "../../../src/shared/icon/index.ts";
+      import "../../../src/shared/button/index.ts";
+    </script>
+  </body>
+</html>

@@ -119,7 +119,9 @@ export default css`
     }
 
     blockquote {
-        padding: 0 var(--space-sm);
-        border-left: var(--space-xxs) solid var( --color-brand-pop);
+        background-color: var(--color-black-a05);
+        padding: var(--space-sm);
+        padding-inline-start: calc(var(--space-sm) - var(--line-medium));
+        border-left: var(--line-medium) solid var( --color-brand-pop);
     }
 `;
