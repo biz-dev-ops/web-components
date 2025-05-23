@@ -7,10 +7,12 @@ import typographyCss from "../shared/styles/typography.css";
 
 import { Feature, TestResult } from "./models";
 import { FeatureParser } from "./parser";
+
 import "./background";
 import "./scenario";
 import "./scenario-outline";
 import "./stats";
+import "../shared/alert";
 
 import featureViewerCss from "./feature-viewer.css";
 
@@ -29,12 +31,7 @@ export class FeatureViewerComponent extends ActionLitElement {
 
   override render() {
     if (this.error) {
-      // TODO: Is this not a feature with a error modifier? With a classname `feature feature--error`?
-      return html`
-        <div class="feature__error">
-          ${this.error.message}
-        </div>
-      `;
+      return html`<bdo-alert type="error">${this.error.message}</bdo-alert>`;
     }
 
     if (!this.feature) {
