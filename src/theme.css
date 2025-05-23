@@ -11,6 +11,8 @@
   --text-color-base: rgba(var(--rgb-text) / 90%);
   --text-color-heading: rgb(var(--rgb-heading));
 
+  --link-color: var(--color-brand-base);
+
   /* Brand colors */
   --color-brand-a80: color-mix(in srgb, rgb(var(--rgb-brand)) 80%, white);
   --color-brand-a60: color-mix(in srgb, rgb(var(--rgb-brand)) 60%, white);
@@ -83,13 +85,13 @@
   --heading-2-size: calc(var(--heading-3-size) * var(--type-scale));
   --heading-1-size: calc(var(--heading-2-size) * var(--type-scale));
 
-  --font-size-xs: 0.5rem;
+  --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
   --font-size-md: 1.125rem;
 
   /* Link */
-  --link-text-color: var(--color-brand-base, var(--text-color-base));
+  --link-text-color: var(--link-color, var(--text-color-base));
 
   /* Button */
   --button-text-color: var(--link-text-color, var(--color-black));
