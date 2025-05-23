@@ -109,6 +109,9 @@ Automatically committs the data to its permanent storage. It's crucial that this
 
 Acts as a crucial safety net and a point of human oversight in the automated payroll process. It acknowledges that unforeseen issues can arise and provides a structured way to address them, minimizing disruptions and ensuring appropriate handling of payroll exceptions. The clear outcomes of this task dictate the subsequent flow of the payroll process, ensuring either a successful completion or a formal recognition of failure.
 
+* [Task](./solve-problem.task.schema.yml)
+* [Requirements](./solve-problem.feature)
+
 ## Events
 
 ### Payroll calculated
@@ -124,6 +127,8 @@ Indicates the successful completion of the payroll calculations. It implies that
 
 The system is now ready to move on to the next stages of the payroll cycle.
 
+[Event](./payroll-calculated.event.schema.yml)
+
 ### Payroll could not be calculated
 
 > Signals a significant problem that needs immediate attention. It means employees will likely not be paid accurately or on time, leading to potential employee dissatisfaction, legal issues, financial disruptions, and damage to the company's reputation. Identifying and understanding the reasons behind this event is crucial for timely resolution and preventing future occurrences.
@@ -134,3 +139,5 @@ Signifies that one or more critical steps in the payroll calculation process hav
 * **Errors in calculation logic**: Issues with the formulas or rules used to determine gross pay, deductions, or net pay. This could be due to system bugs, incorrect configurations, or changes in regulations that haven't been implemented.
 * **Incomplete or inconsistent dat**a: Missing or conflicting information that the payroll system cannot reconcile.
 * **Critical configuration errors**: Incorrect setup of pay rules, tax settings, or deduction parameters.
+
+[Event](./payroll-could-not-be-calculated.event.schema.yml)
