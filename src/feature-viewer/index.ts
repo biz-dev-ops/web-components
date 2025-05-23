@@ -1,5 +1,6 @@
-import { html, css, LitElement } from "lit";
+import { html } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
+import { ActionLitElement } from "../shared/action-dispatcher";
 
 import resetCss from "../shared/styles/reset.css";
 import typographyCss from "../shared/styles/typography.css";
@@ -9,13 +10,14 @@ import { FeatureParser } from "./parser";
 import "./background";
 import "./scenario";
 import "./scenario-outline";
-import featureViewerCss from "./feature-viewer.css";
 import "./stats";
+
+import featureViewerCss from "./feature-viewer.css";
 
 export const tag = "feature-viewer";
 
 @customElement(tag)
-export class FeatureViewerComponent extends LitElement {
+export class FeatureViewerComponent extends ActionLitElement {
   @property({ type: String })
   src?: string;
 

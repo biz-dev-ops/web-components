@@ -7,9 +7,13 @@ const styles = css`
     --icon-align: center;
 
     color: var(--_icon-color);
-    display: flex;
+    display: inline-flex;
     line-height: 1;
     position: relative;
+  }
+
+  :host, .icon, .symbol {
+    display: inline-flex;
   }
 
   .material-symbols {
@@ -20,10 +24,10 @@ const styles = css`
     font-feature-settings: "liga";
   }
 
-  .icon {
-    display: flex;
-    justify-content: var(--icon-justify, center);
-    align-items: var(--icon-align, center);
+  .icon + .icon {
+      display: flex;
+      justify-content: var(--icon-justify, end);
+      align-items: var(--icon-align, end);
   }
 
   .icon:nth-child(2) {

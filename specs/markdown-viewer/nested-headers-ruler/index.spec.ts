@@ -2,7 +2,7 @@ import { test } from "@sand4rt/experimental-ct-web";
 import MarkdownIt from "markdown-it";
 import { Token } from "markdown-it/index.js";
 import { expectMarkdownToMatchTokens } from "../markdown-test-util";
-import nestedHeadersRulerPlugin from "../../../src/markdown-viewer/nested-headers-ruler";
+import { nestedHeadersRulerPlugin } from "../../../src/markdown-viewer/nested-headers-ruler";
 
 test.describe("nestedHeadersRuler", () => {
 
