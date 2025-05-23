@@ -7,11 +7,11 @@ class DrivenStubElement extends HTMLElement {
         super();
     }
 
-    canHandleDriverAction(action: string) {
+    canHandleAction(action: string) {
         return this.hasAttribute(`can-${action}`);
     }
 
-    handleDriverAction(action: string) {
+    handleAction(action: string) {
         this.classList.toggle(action);
     }
 }

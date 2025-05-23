@@ -64,11 +64,9 @@ function ActionDispatchMixin<TBase extends Constructor>(Base: TBase) {
 
         const handlerMeta = handlersMeta.find(meta => meta.action === action);
         if (handlerMeta) {
-          // Get the method from the instance (this)
           const originalMethod = (this as any)[handlerMeta.methodName];
 
           if (typeof originalMethod === 'function') {
-            // THE FIX: Bind the method to the current instance (this)
             const handlerMethod = originalMethod.bind(this) as ActionHandlerMethod;
             return { handlerMeta, handlerMethod };
           }
@@ -78,7 +76,6 @@ function ActionDispatchMixin<TBase extends Constructor>(Base: TBase) {
       return null;
     }
 
-    // canHandleAction and handleAction remain the same as they call _findHandlerMetadata
     canHandleAction(action: string): boolean {
       return this._findHandlerMetadata(action) !== null;
     }
@@ -87,11 +84,11 @@ function ActionDispatchMixin<TBase extends Constructor>(Base: TBase) {
       const handlerInfo = this._findHandlerMetadata(action);
 
       if (handlerInfo) {
-        const { handlerMeta, handlerMethod } = handlerInfo;
-        console.log(`[Mixin] Executing handler for action '${action}': ${this.constructor.name}.${String(handlerMeta.methodName)}`);
-        handlerMethod(payload); // This will now correctly have 'this' bound
-      } else {
-        console.warn(`[Mixin] No handler found for action: '${action}'`);
+        const { handlerMethod } = handlerInfo;
+        handlerMethod(payload);
+      }
+      else {
+        console.warn(`No handler found for action: '${action}'`);
       }
     }
   };
