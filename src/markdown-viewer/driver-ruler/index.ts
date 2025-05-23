@@ -39,7 +39,8 @@ function applyDriver(tokens: Token[], tokenToHtml: (token: Token) => string | un
             continue;
         }
 
-        const newToken = parseToken(token, tokenToHtml);
+        const title = getNextTextContent(tokens, tokenId);
+        const newToken = parseToken(token, title, tokenToHtml);
         if (newToken) {
             replacingTokens = true;
             newTokens.push(newToken);
@@ -53,7 +54,7 @@ function applyDriver(tokens: Token[], tokenToHtml: (token: Token) => string | un
     return newTokens;
 }
 
-function parseToken(token: Token, tokenToHtml: (token: Token) => string | undefined) {
+function parseToken(token: Token, title: string | null, tokenToHtml: (token: Token) => string | undefined) : Token | null {
     const html = tokenToHtml(token);
     if (!html) {
         return null;
@@ -62,6 +63,32 @@ function parseToken(token: Token, tokenToHtml: (token: Token) => string | undefi
     const htmlBlockToken = new Token("html_block", "", 0);
     htmlBlockToken.content = html;
     htmlBlockToken.block = true;
+    if(title) {
+        htmlBlockToken.attrSet("title", title);
+    }
 
     return htmlBlockToken;
 }
+
+
+
+function getNextTextContent(tokens: Token[], idx: number): string | null {
+    for (idx; idx < tokens.length; idx++) {
+      const token = tokens[idx];
+      if(token.type === "list_item_close") {
+        return null;
+      }
+
+      if (token.type === "text") {
+        return token.content;
+      }
+
+      if(token.children) {
+        const title = getNextTextContent(token.children, 0);
+        if(title) {
+          return title;
+        }
+      }
+    }
+    return null;
+  }
