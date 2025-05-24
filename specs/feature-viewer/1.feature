@@ -10,7 +10,7 @@ Feature: User Profile Management
     And the user saves the changes
     Then the profile should display "John Doe"
 
-  Scenario Outline: Update contact information
+  Scenario Outline: Update contact information for <contact_type>
     Given the user is on the profile page
     When the user updates their "<contact_type>" to "<contact_value>"
     And the user saves the changes
