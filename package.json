@@ -44,8 +44,7 @@
     "markdown-it": "^14.1.0",
     "material-symbols": "^0.31.1",
     "mermaid": "^11.5.0",
-    "yaml": "^2.7.0",
-    "zod": "^3.24.2"
+    "yaml": "^2.7.0"
   },
   "devDependencies": {
     "@sand4rt/experimental-ct-web": "^1.51.0",
