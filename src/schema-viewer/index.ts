@@ -19,8 +19,15 @@ import "./components/schema-navigation";
 import { fetchAndValidateSchema } from "../shared/fetch";
 import { SchemaResolver } from "../shared/fetch/schema";
 import { ActionLitElement } from "../shared/action-dispatcher";
+import { cp } from "fs";
 
 export const tag = "schema-viewer";
+
+interface SchemaViewerState {
+    component: typeof tag;
+    instance: string;
+    payload: Fragment[];
+}
 
 @customElement(tag)
 export class SchemaViewerComponent extends ActionLitElement {
@@ -28,6 +35,7 @@ export class SchemaViewerComponent extends ActionLitElement {
     private fragments: Fragment[] = [];
     private schema!: Record<string, any>;
     private references!: Record<string, any>
+    private readonly instanceId: string;
 
     @state()
     private error?: Error;
@@ -36,6 +44,12 @@ export class SchemaViewerComponent extends ActionLitElement {
     src!: string;
 
     private useCaseType?: UseCaseType;
+
+    constructor() {
+        super();
+        this.instanceId = crypto.randomUUID();
+        (window as any).addEventListener("popstate", this.onPopState.bind(this));
+    }
 
     override render() {
         if (this.error) {
@@ -52,7 +66,7 @@ export class SchemaViewerComponent extends ActionLitElement {
         const schema = schemaResolver.resolveSchema(path);
         const required = key ? schema.required?.includes(key) : false;
 
-        if(this.useCaseType) {
+        if (this.useCaseType) {
             this.setAttribute('use-case', this.useCaseType);
         }
 
@@ -84,6 +98,19 @@ export class SchemaViewerComponent extends ActionLitElement {
 
     private async _setFragments(fragment: Fragment[]) {
         this.fragments = fragment;
+        const state: SchemaViewerState = {
+            component: tag,
+            instance: this.instanceId,
+            payload: this.fragments
+        };
+        history.pushState(state, "");
+    }
+
+    async onPopState(event: any) {
+        const state = event.state as SchemaViewerState;
+        if (state && state.component === tag && state.instance === this.instanceId) {
+            this.fragments = state.payload;
+        }
     }
 
     override async update(changedProperties: Map<string, unknown>) {
@@ -94,7 +121,7 @@ export class SchemaViewerComponent extends ActionLitElement {
                 const { schema, references } = await fetchAndValidateSchema(this.src);
                 this.schema = schema;
                 this.references = references;
-                this.fragments = [{ name: getSchemaTitle(schema), key: "" }];
+                this._setFragments([{ name: getSchemaTitle(schema), key: "" }]);
             }
             catch (error: unknown) {
                 this.error = error as Error;
@@ -135,7 +162,7 @@ enum UseCaseType {
     Task = 'task'
 }
 
-function getUseCaseTypeIcon(useCaseType: UseCaseType) : string {
+function getUseCaseTypeIcon(useCaseType: UseCaseType): string {
     switch (useCaseType) {
         case UseCaseType.Command:
             return "mat-terminal";

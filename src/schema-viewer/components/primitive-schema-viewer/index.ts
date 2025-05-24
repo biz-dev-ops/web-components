@@ -33,7 +33,6 @@ export class PrimitiveSchemaViewerComponent extends LitElement {
     references!: Record<string, any>
 
     override render() {
-        console.log("rendering primitive schema viewer", this.path, this.schema, this.references);
         const key = this.path.at(-1)!;
         const schemaResolver = new SchemaResolver(this.schema, this.references);
         const schema = schemaResolver.resolveSchema(this.path);
