@@ -20,7 +20,7 @@ export class ScenarioComponent extends LitElement {
 
   override render() {
     return html`
-        <bdo-heading-container data-testid="scenario" aria-expanded="false" class="${this.getScenarioClass()}">
+        <bdo-heading-container aria-expanded="false" class="${this.getScenarioClass()}">
           <summary slot="header" class="scenario__header">
             <h3 class="scenario__title">Scenario: ${this.scenario.name}</h3>
             ${this.renderTags(this.scenario.tags)}

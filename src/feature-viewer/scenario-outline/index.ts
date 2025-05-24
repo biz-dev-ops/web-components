@@ -1,4 +1,4 @@
-import { html, css, LitElement } from "lit";
+import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
 import resetCss from "../../shared/styles/reset.css";
@@ -19,7 +19,7 @@ export class ScenarioOutlineComponent extends LitElement {
     const expandedScenarios = this.expandScenarioOutline();
 
     return html`
-      <bdo-heading-container data-testid="scenario-outline" class="${this.getOutlineClass()}" aria-expanded="false">
+      <bdo-heading-container class="${this.getOutlineClass()}" aria-expanded="false">
         <h3 slot="header" class="scenario-outline__title">Scenario Outline: ${this.outline.name} (${expandedScenarios.length})</h3>
         <feature-stats .items=${expandedScenarios}></feature-stats>
         <div class="scenario-outline__scenarios">
