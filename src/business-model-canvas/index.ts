@@ -6,7 +6,7 @@ import resetCss from "../shared/styles/reset.css";
 import { Model } from "./models";
 import "./canvas-box";
 import { data } from "./data";
-import { FetchError, fetchYamlAndBundleAs } from "../shared/fetch";
+import { FetchError, fetchYamlAs } from "../shared/fetch";
 import "../shared/alert";
 import { ActionLitElement } from "../shared/action-dispatcher";
 
@@ -112,7 +112,7 @@ export class BusinessModelCanvasComponent extends ActionLitElement {
       }
       else {
         try {
-          this.model = await fetchYamlAndBundleAs<Model>(this.src);
+          this.model = await fetchYamlAs<Model>(this.src);
         }
         catch (error: any) {
           this.model = error;
