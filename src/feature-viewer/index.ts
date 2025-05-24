@@ -31,7 +31,7 @@ export class FeatureViewerComponent extends ActionLitElement {
 
   override render() {
     if (this.error) {
-      return html`<bdo-alert type="error">${this.error.message}</bdo-alert>`;
+      return html`<bdo-alert type="error">${this.error?.message}</bdo-alert>`;
     }
 
     if (!this.feature) {
@@ -39,35 +39,59 @@ export class FeatureViewerComponent extends ActionLitElement {
     }
 
     return html`
-      <div class="feature__header">
-        <h2 class="feature__title">Feature: ${this.feature.name}</h2>
-        ${this.feature.tags?.length ? html`
-          <p class="feature__tags">
-            ${this.feature.tags.map((tag) => html`<bdo-badge type="tag">${tag}</bdo-badge>`)}
-          </p>`: null}
-        ${this.feature.description ? html`
-          <p class="feature__description">
-            ${this.feature.description}
-          </p>`: null}
-        ${this.feature.resultFile ? html`
-          <a
-            href="${this.feature.resultFile}"
-            class="feature__result-link"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            View Test Results
-          </a>`: null}
+      <bdo-heading-container data-testid="feature">
+        <h2 slot="header" class="feature__title">Feature: ${this.feature.name}</h2>
+        ${this.renderContent(this.feature)}
+      </bdo-heading-container>
+    `;
+  }
+
+  private renderContent(feature: Feature) {
+    return html`
+       <div class="feature__header">
+        ${this.renderTags(feature.tags)}
+        ${this.renderDescription(feature.description)}
+        ${this.renderResultLink(feature.resultFile)}
       </div>
       <div class="feature__content">
-        <feature-stats .items=${this.feature.scenarios}></feature-stats>
-        ${this.feature.background ? html`<feature-background .background=${this.feature.background}></feature-background>`: null}
-        ${this.feature.scenarios.map((scenario) =>
-        "examples" in scenario
-          ? html`<feature-scenario-outline .outline=${scenario}></feature-scenario-outline>`
-          : html`<feature-scenario .scenario=${scenario}></feature-scenario>`
+        <feature-stats .items=${feature.scenarios}></feature-stats>
+        ${feature.background ? html`<feature-background .background=${feature.background}></feature-background>` : null}
+        ${feature.scenarios.map((scenario) =>
+          "examples" in scenario
+            ? html`<feature-scenario-outline .outline=${scenario}></feature-scenario-outline>`
+            : html`<feature-scenario .scenario=${scenario}></feature-scenario>`
         )}
       </div>
+    `;
+  }
+
+  private renderTags(tags?: string[]) {
+    if (!tags || tags.length === 0) return null;
+
+    return html`
+      <p class="feature__tags">
+        ${tags.map((tag) => html`<bdo-badge type="tag">${tag}</bdo-badge>`)}
+      </p>
+    `;
+  }
+
+  private renderDescription(description?: string) {
+    if (!description) return null;
+
+    return html`
+      <p class="feature__description">
+        ${description}
+      </p>
+    `;
+  }
+
+  private renderResultLink(resultFile?: string) {
+    if (!resultFile) return null;
+
+    return html`
+      <a href="${resultFile}" class="feature__result-link" target="_blank" rel="noopener noreferrer">
+        View Test Results
+      </a>
     `;
   }
 

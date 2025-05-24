@@ -7,6 +7,7 @@ import typographyCss from "../../shared/styles/typography.css";
 import { ScenarioOutline, Scenario, TestResult } from "../models";
 import "../scenario";
 import scenarioOutlineCss from "./scenario-outline.css";
+import "../../shared/heading-container";
 
 export const tag = "feature-scenario-outline";
 
@@ -18,25 +19,24 @@ export class ScenarioOutlineComponent extends LitElement {
     const expandedScenarios = this.expandScenarioOutline();
 
     return html`
-      <div class="${this.getOutlineClass()}">
-        <div class="scenario-outline__header">
-          <h3 class="scenario-outline__title">Scenario Outline: ${this.outline.name || ""}</h3>
-        </div>
+      <bdo-heading-container data-testid="scenario-outline" class="${this.getOutlineClass()}" aria-expanded="false">
+        <h3 slot="header" class="scenario-outline__title">Scenario Outline: ${this.outline.name} (${expandedScenarios.length})</h3>
+        <feature-stats .items=${expandedScenarios}></feature-stats>
         <div class="scenario-outline__scenarios">
           ${expandedScenarios.map(
             (scenario) => html`<feature-scenario .scenario=${scenario}></feature-scenario>`
           )}
         </div>
-      </div>
+      </bdo-heading-container>
     `;
   }
 
   private expandScenarioOutline(): Scenario[] {
-    return this.outline.examples.tableBody.map((row, index) => {
+    return this.outline.examples.tableBody.map((row) => {
       return {
         keyword: "Scenario",
-        name: `${this.outline.name} (${index + 1})`,
-        description: this.outline.description,
+        name: this.replacePlaceholders(this.outline.name, row),
+        description: this.outline.description ? this.replacePlaceholders(this.outline.description, row) : undefined,
         tags: this.outline.tags,
         steps: this.outline.steps.map((step) => ({
           ...step,

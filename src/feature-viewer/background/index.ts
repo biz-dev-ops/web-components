@@ -8,6 +8,7 @@ import { Background } from "../models";
 import scenarioCss from "../scenario/scenario.css";
 import "../step";
 import "../stats";
+import "../../shared/heading-container";
 
 export const tag = "feature-background";
 
@@ -30,17 +31,15 @@ export class BackgroundComponent extends LitElement {
 
   override render() {
     return html`
-      <details class="${this.getBackgroundClass()}">
-        <summary class="scenario__header">
-          <h3 class="scenario__title">Background: ${this.background.name || ""}</h3>
-        </summary>
+      <bdo-heading-container data-testid="background" aria-expanded="false" class="${this.getBackgroundClass()}">
+        <h3 slot="header" class="scenario__title">Background: ${this.background.name}</h3>
         <div class="scenario__steps">
           <feature-stats .items=${this.background.steps}></feature-stats>
           ${this.background.steps.map(
             (step) => html`<feature-step .step=${step}></feature-step>`
           )}
         </div>
-      </details>
+      </bdo-heading-container>
     `;
   }
-} 
+}
