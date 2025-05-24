@@ -29,23 +29,12 @@ export class SchemaNavigation extends LitElement {
                                 }
 
                                 const name = html`<span class="txt--property">${titlelize(fragment.name)}</span>`;
+                                const disabled = fragment.disabled || index === this.fragments.length - 1;
 
-                                if (fragment.disabled || index === this.fragments.length - 1) {
-                                    return html`
-                                        <li>
-                                            <bdo-button class="button--path" @clicked="${() => { this._onClick(index); }}" disabled>
-                                                ${name}
-                                            </bdo-button>
-                                        </li>`;
-                                } else {
-                                    return html`
-                                        <li>
-                                            <bdo-button class="button--path" @clicked="${() => { this._onClick(index); }}">
-                                                ${name}
-                                            </bdo-button>
-                                        </li>
-                                    `;
-                                }
+                                return html`
+                                    <li>
+                                        <bdo-button class="button--path" @clicked="${() => { this._onClick(index); }}" ?disabled=${disabled} data-testid="schema-navigation-button">${name}</bdo-button>
+                                    </li>`;
                             })
                         }
                 </ol>

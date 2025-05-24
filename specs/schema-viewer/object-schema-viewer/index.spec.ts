@@ -1,104 +1,141 @@
 import { expect, test } from "@sand4rt/experimental-ct-web";
 import { ObjectSchemaViewerComponent } from "../../../src/schema-viewer/components/object-schema-viewer/index";
-import { StringContentRoute } from "../../helper/router-helper";
 
 test.describe("ObjectSchemaViewer", () => {
-    test("renders object schema viewer with properties", async ({ mount }) => {
-        const component = await mount(ObjectSchemaViewerComponent, {
-            props: {
-                schema: {
+    test("renders object schema viewer with multiple properties", async ({ mount }) => {
+        const schema = {
+            $id: "https://example.com/schema.json",
+            type: "object",
+            properties: {
+                user: {
                     type: "object",
                     properties: {
                         name: {
-                            type: "string"
+                            type: "string",
+                            title: "Name"
+                        },
+                        age: {
+                            type: "number",
+                            title: "Age"
+                        },
+                        email: {
+                            type: "string",
+                            title: "Email"
                         }
                     }
-                },
-                key: "user",
-                src: "https://example.com/schema.json"
+                }
+            }
+        };
+
+        const component = await mount(ObjectSchemaViewerComponent, {
+            props: {
+                schema,
+                references: {},
+                path: ["properties", "user"]
             }
         });
 
         await expect(component).toBeVisible();
-        await expect(component.locator("[data-testid='object-title']")).toContainText("User");
-        await expect(component.locator("[data-testid='property']")).toHaveCount(1);
+        await expect(component.getByTestId("object-schema-viewer-primitive-property")).toHaveCount(3);
     });
 
     test("shows required indicator when required", async ({ mount }) => {
-        const component = await mount(ObjectSchemaViewerComponent, {
-            props: {
-                schema: {
+        const schema = {
+            $id: "https://example.com/schema.json",
+            type: "object",
+            properties: {
+                user: {
                     type: "object",
                     properties: {
                         name: {
-                            type: "string"
+                            type: "string",
+                            title: "Name"
                         }
                     },
                     required: ["name"]
-                },
-                key: "user",
-                required: true,
-                src: "https://example.com/schema.json"
+                }
+            },
+            required: ["user"]
+        };
+
+        const component = await mount(ObjectSchemaViewerComponent, {
+            props: {
+                schema,
+                references: {},
+                path: ["properties", "user"],
+                collapse: true,
+                required: true
             }
         });
 
-        await expect(component.locator("[data-testid='required-indicator']")).toBeVisible();
+        await expect(component.getByTestId("object-schema-viewer-required-indicator")).toBeVisible();
     });
 
-    test("emits FragmentSelected event on property click", async ({ mount }) => {
+    test("emits FragmentSelected event on property click when collapsed", async ({ mount }) => {
         const events: any[] = [];
-        const component = await mount(ObjectSchemaViewerComponent, {
-            props: {
-                schema: {
+        const schema = {
+            $id: "https://example.com/schema.json",
+            type: "object",
+            properties: {
+                user: {
                     type: "object",
                     properties: {
                         name: {
-                            type: "string"
+                            type: "string",
+                            title: "Name"
                         }
                     }
-                },
-                key: "user",
-                src: "https://example.com/schema.json"
+                }
+            }
+        };
+
+        const component = await mount(ObjectSchemaViewerComponent, {
+            props: {
+                schema,
+                references: {},
+                path: ["properties", "user"],
+                collapse: true
             },
             on: {
-                FragmentSelected: (event) => events.push(event)
+                FragmentSelected: (event: any) => events.push(event)
             }
         });
 
-        await component.locator("[data-testid='property']").first().click();
+        await component.getByTestId("object-schema-viewer-button").click();
         expect(events).toHaveLength(1);
-        expect(events[0].detail).toEqual([{
-            name: "properties",
-            key: "properties",
-            hidden: true,
-            disabled: true
-        }, {
-            name: "name",
-            key: "name"
+        expect(events[0]).toEqual([{
+            name: "user",
+            key: "user"
         }]);
     });
 
-    test("renders nested properties", async ({ mount }) => {
-        const component = await mount(ObjectSchemaViewerComponent, {
-            props: {
-                schema: {
+    test("renders property with description", async ({ mount }) => {
+        const schema = {
+            $id: "https://example.com/schema.json",
+            type: "object",
+            properties: {
+                user: {
                     type: "object",
+                    description: "User object",
                     properties: {
-                        address: {
-                            type: "object",
-                            properties: {
-                                street: {
-                                    type: "string"
-                                }
-                            }
+                        name: {
+                            type: "string",
+                            title: "Name"
                         }
                     }
-                },
-                key: "user",
-                src: "https://example.com/schema.json"
+                }
+            }
+        };
+
+        const component = await mount(ObjectSchemaViewerComponent, {
+            props: {
+                schema,
+                references: {},
+                path: ["properties", "user"]
             }
         });
 
-        await expect(component.locator("[data-testid='nested-object']")).toHaveCount(1);
+        await expect(component.getByTestId("object-schema-viewer-description")).toBeVisible();
+        await expect(component.getByTestId("object-schema-viewer-description")).toContainText("User object");
     });
-}); 
+});

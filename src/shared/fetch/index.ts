@@ -1,7 +1,6 @@
 import YAML from "yaml";
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
-import { Schema } from "./schema";
 
 export async function fetchText(src: string): Promise<string> {
     const response = await fetch(src);
@@ -42,7 +41,7 @@ export async function fetchYamlAs<T>(src: string): Promise<T> {
     }
 }
 
-export async function fetchAndValidateSchema(src: string): Promise<Schema> {
+export async function fetchAndValidateSchema(src: string): Promise<{ schema: Map<string, any>, references: Map<string, any> }> {
     try {
         src = getAbsoluteUrl(src);
         const references = new Map<string, any>();
@@ -58,7 +57,7 @@ export async function fetchAndValidateSchema(src: string): Promise<Schema> {
         }});
         addFormats(ajv);
         await ajv.compileAsync(schema);
-        return new Schema(schema, references);
+        return { schema: schema, references: references };
     }
     catch (error: any) {
         let message = `Schema validation error: ${error}`;

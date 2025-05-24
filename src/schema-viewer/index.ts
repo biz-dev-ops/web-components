@@ -1,5 +1,5 @@
 import path from "path";
-import { CSSResult, CSSResultArray, html, LitElement } from "lit";
+import { CSSResult, CSSResultArray, html } from "lit";
 import { customElement, eventOptions, property, state } from "lit/decorators.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { createMarkdownIt } from "../markdown-viewer/markdown-it-factory";
@@ -17,16 +17,17 @@ import "../shared/alert";
 import "../shared/badge";
 import "./components/schema-navigation";
 import { fetchAndValidateSchema } from "../shared/fetch";
-import { Schema } from "../shared/fetch/schema";
+import { SchemaResolver } from "../shared/fetch/schema";
+import { ActionLitElement } from "../shared/action-dispatcher";
 
 export const tag = "schema-viewer";
 
 @customElement(tag)
-export class SchemaViewerComponent extends LitElement {
+export class SchemaViewerComponent extends ActionLitElement {
     @state()
     private fragments: Fragment[] = [];
-
-    private schema?: Schema;
+    private schema!: Record<string, any>;
+    private references!: Record<string, any>
 
     @state()
     private error?: Error;
@@ -38,16 +39,17 @@ export class SchemaViewerComponent extends LitElement {
 
     override render() {
         if (this.error) {
-            return html`<bdo-alert type="error">${unsafeHTML(md.render(this.error.message))}</bdo-alert>`;
+            return html`<bdo-alert type="error" data-testid="schema-viewer-error">${unsafeHTML(md.render(this.error.message))}</bdo-alert>`;
         }
 
-        if (!this.schema) {
+        if (!this.schema && !this.references) {
             return;
         }
 
         const key = this.fragments.at(-1)!.key;
         const path = this.fragments.map(f => f.key);
-        const schema = this.schema?.resolveSchema(path);
+        const schemaResolver = new SchemaResolver(this.schema, this.references);
+        const schema = schemaResolver.resolveSchema(path);
         const required = key ? schema.required?.includes(key) : false;
 
         if(this.useCaseType) {
@@ -56,15 +58,15 @@ export class SchemaViewerComponent extends LitElement {
 
         return html`
             ${this.useCaseType ? html`
-                <bdo-badge type=${this.useCaseType} icon=${getUseCaseTypeIcon(this.useCaseType)}>${this.useCaseType}</bdo-badge>
+                <bdo-badge type=${this.useCaseType} icon=${getUseCaseTypeIcon(this.useCaseType)} data-testid="schema-viewer-use-case-type">${this.useCaseType}</bdo-badge>
             ` : null}
 
-            <schema-navigation .fragments=${this.fragments} @FragmentIndexSelected=${this._onFragmentIndexSelected}></schema-navigation>
+            <schema-navigation .fragments=${this.fragments} @FragmentIndexSelected=${this._onFragmentIndexSelected} data-testid="schema-navigation"></schema-navigation>
 
-            ${ArraySchemaViewerComponent.CanRender(schema) ? html`<array-schema-viewer .path=${path} .schema=${this.schema} .required=${required} @FragmentSelected=${this._onFragmentSelected}></array-schema-viewer>` : null}
-            ${ObjectSchemaViewerComponent.CanRender(schema) ? html`<object-schema-viewer .path=${path} .schema=${this.schema} .required=${required} .collapse=${false} @FragmentSelected=${this._onFragmentSelected}></object-schema-viewer>` : null}
-            ${PrimitiveSchemaViewerComponent.CanRender(schema) ? html`<primitive-schema-viewer .path=${path} .schema=${this.schema} .required=${required} @FragmentSelected=${this._onFragmentSelected}></primitive-schema-viewer>` : null}
-            ${XOfSchemaViewerComponent.CanRender(schema) ? html`<x-of-schema-viewer .path=${path} .schema=${this.schema} .required=${required} .collapse=${false} @FragmentSelected=${this._onFragmentSelected}></x-of-schema-viewer>` : null}
+            ${ArraySchemaViewerComponent.CanRender(schema) ? html`<array-schema-viewer .path=${path} .schema=${this.schema} .references=${this.references} .required=${required} @FragmentSelected=${this._onFragmentSelected} data-testid="array-schema-viewer"></array-schema-viewer>` : null}
+            ${ObjectSchemaViewerComponent.CanRender(schema) ? html`<object-schema-viewer .path=${path} .schema=${this.schema} .references=${this.references} .required=${required} .collapse=${false} @FragmentSelected=${this._onFragmentSelected} data-testid="object-schema-viewer"></object-schema-viewer>` : null}
+            ${PrimitiveSchemaViewerComponent.CanRender(schema) ? html`<primitive-schema-viewer .path=${path} .schema=${this.schema} .references=${this.references} .required=${required} @FragmentSelected=${this._onFragmentSelected} data-testid="primitive-schema-viewer"></primitive-schema-viewer>` : null}
+            ${XOfSchemaViewerComponent.CanRender(schema) ? html`<x-of-schema-viewer .path=${path} .schema=${this.schema} .references=${this.references} .required=${required} .collapse=${false} @FragmentSelected=${this._onFragmentSelected} data-testid="x-of-schema-viewer"></x-of-schema-viewer>` : null}
         `;
     }
 
@@ -89,9 +91,10 @@ export class SchemaViewerComponent extends LitElement {
             try {
                 this.error = undefined;
                 this.useCaseType = determineUseCaseType(this.src);
-                const schema = await fetchAndValidateSchema(this.src);
+                const { schema, references } = await fetchAndValidateSchema(this.src);
                 this.schema = schema;
-                this.fragments = [{ name: getSchemaTitle(schema.resolveSchema("")), key: "" }];
+                this.references = references;
+                this.fragments = [{ name: getSchemaTitle(schema), key: "" }];
             }
             catch (error: unknown) {
                 this.error = error as Error;

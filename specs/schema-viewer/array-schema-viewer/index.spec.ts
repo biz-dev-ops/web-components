@@ -3,63 +3,88 @@ import { ArraySchemaViewerComponent } from "../../../src/schema-viewer/component
 
 test.describe("ArraySchemaViewer", () => {
     test("renders array schema viewer with basic schema", async ({ mount }) => {
-        const component = await mount(ArraySchemaViewerComponent, {
-            props: {
-                schema: {
+        const schema = {
+            $id: "https://example.com/schema.json",
+            type: "object",
+            properties: {
+                items: {
                     type: "array",
                     items: {
                         type: "string"
                     }
-                },
-                key: "items",
-                src: "https://example.com/schema.json"
+                }
+            }
+        };
+
+        const component = await mount(ArraySchemaViewerComponent, {
+            props: {
+                schema,
+                references: {},
+                path: ["properties", "items"]
             }
         });
 
         await expect(component).toBeVisible();
-        await expect(component.locator("[data-testid='array-title']")).toContainText("Items");
-        await expect(component.locator("[data-testid='array-item']")).toHaveCount(2);
+        await expect(component.getByTestId("array-title")).toContainText("Items");
+        await expect(component.getByTestId("array-item-button")).toHaveCount(2);
     });
 
     test("shows required indicator when required", async ({ mount }) => {
-        const component = await mount(ArraySchemaViewerComponent, {
-            props: {
-                schema: {
+        const schema = {
+            $id: "https://example.com/schema.json",
+            type: "object",
+            properties: {
+                items: {
                     type: "array",
                     items: {
                         type: "string"
                     }
-                },
-                key: "items",
-                required: true,
-                src: "https://example.com/schema.json"
+                }
+            },
+            required: ["items"]
+        };
+
+        const component = await mount(ArraySchemaViewerComponent, {
+            props: {
+                schema,
+                references: {},
+                path: ["properties", "items"],
+                required: true
             }
         });
 
-        await expect(component.locator("[data-testid='required-indicator']")).toBeVisible();
+        await expect(component.getByTestId("required-indicator")).toBeVisible();
     });
 
     test("emits FragmentSelected event on item click", async ({ mount }) => {
         const events: any[] = [];
-        const component = await mount(ArraySchemaViewerComponent, {
-            props: {
-                schema: {
+        const schema = {
+            $id: "https://example.com/schema.json",
+            type: "object",
+            properties: {
+                items: {
                     type: "array",
                     items: {
                         type: "string"
                     }
-                },
-                key: "items",
-                src: "https://example.com/schema.json"
+                }
+            }
+        };
+
+        const component = await mount(ArraySchemaViewerComponent, {
+            props: {
+                schema,
+                references: {},
+                path: ["properties", "items"]
             },
             on: {
-                FragmentSelected: (event) => events.push(event)
+                FragmentSelected: (event: any) => events.push(event)
             }
         });
 
-        await component.locator("[data-testid='array-item']").first().click();
+        await component.getByTestId("array-item-button").first().click();
         expect(events).toHaveLength(1);
-        expect(events[0].detail).toEqual([{
+        expect(events[0]).toEqual([{
             name: "items",
             key: "items",
             disabled: true
@@ -70,19 +95,27 @@ test.describe("ArraySchemaViewer", () => {
     });
 
     test("disables second item button", async ({ mount }) => {
-        const component = await mount(ArraySchemaViewerComponent, {
-            props: {
-                schema: {
+        const schema = {
+            $id: "https://example.com/schema.json",
+            type: "object",
+            properties: {
+                items: {
                     type: "array",
                     items: {
                         type: "string"
                     }
-                },
-                key: "items",
-                src: "https://example.com/schema.json"
+                }
+            }
+        };
+
+        const component = await mount(ArraySchemaViewerComponent, {
+            props: {
+                schema,
+                references: {},
+                path: ["properties", "items"]
             }
         });
 
-        await expect(component.locator("[data-testid='array-item']").nth(1)).toBeDisabled();
+        await expect(component.getByTestId("array-item-button").nth(1)).toHaveAttribute("disabled");
     });
 });

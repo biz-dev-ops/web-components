@@ -3,85 +3,126 @@ import { PrimitiveSchemaViewerComponent } from "../../../src/schema-viewer/compo
 
 test.describe("PrimitiveSchemaViewer", () => {
     test("renders string schema viewer with title and description", async ({ mount }) => {
-        const component = await mount(PrimitiveSchemaViewerComponent, {
-            props: {
-                schema: {
+        const schema = {
+            $id: "https://example.com/schema.json",
+            type: "object",
+            properties: {
+                name: {
                     type: "string",
                     title: "Name",
                     description: "User's full name"
-                },
-                key: "name",
-                src: "https://example.com/schema.json"
+                }
+            }
+        };
+
+        const component = await mount(PrimitiveSchemaViewerComponent, {
+            props: {
+                schema,
+                references: {},
+                path: ["properties", "name"]
             }
         });
 
         await expect(component).toBeVisible();
-        await expect(component.locator("[data-testid='primitive-title']")).toContainText("Name");
-        await expect(component.locator("[data-testid='type-indicator']")).toContainText("string");
-        await expect(component.locator("[data-testid='description']")).toBeVisible();
+        await expect(component.getByTestId("primitive-title")).toContainText("Name");
+        await expect(component.getByTestId("type-indicator")).toContainText("string");
+        await expect(component.getByTestId("description")).toBeVisible();
+        await expect(component.getByTestId("description")).toContainText("User's full name");
     });
 
     test("renders number schema viewer with format", async ({ mount }) => {
-        const component = await mount(PrimitiveSchemaViewerComponent, {
-            props: {
-                schema: {
+        const schema = {
+            $id: "https://example.com/schema.json",
+            type: "object",
+            properties: {
+                age: {
                     type: "number",
                     title: "Age",
                     format: "integer"
-                },
-                key: "age",
-                src: "https://example.com/schema.json"
+                }
+            }
+        };
+
+        const component = await mount(PrimitiveSchemaViewerComponent, {
+            props: {
+                schema,
+                references: {},
+                path: ["properties", "age"]
             }
         });
 
-        await expect(component.locator("[data-testid='type-indicator']")).toContainText("number: integer");
+        await expect(component.getByTestId("type-indicator")).toContainText("number: integer");
     });
 
     test("renders boolean schema viewer", async ({ mount }) => {
-        const component = await mount(PrimitiveSchemaViewerComponent, {
-            props: {
-                schema: {
+        const schema = {
+            $id: "https://example.com/schema.json",
+            type: "object",
+            properties: {
+                active: {
                     type: "boolean",
                     title: "Active"
-                },
-                key: "active",
-                src: "https://example.com/schema.json"
+                }
+            }
+        };
+
+        const component = await mount(PrimitiveSchemaViewerComponent, {
+            props: {
+                schema,
+                references: {},
+                path: ["properties", "active"]
             }
         });
 
-        await expect(component.locator("[data-testid='type-indicator']")).toContainText("boolean");
+        await expect(component.getByTestId("type-indicator")).toContainText("boolean");
     });
 
     test("shows required indicator when required", async ({ mount }) => {
-        const component = await mount(PrimitiveSchemaViewerComponent, {
-            props: {
-                schema: {
+        const schema = {
+            $id: "https://example.com/schema.json",
+            type: "object",
+            properties: {
+                name: {
                     type: "string",
                     title: "Name"
-                },
-                key: "name",
-                required: true,
-                src: "https://example.com/schema.json"
+                }
+            }
+        };
+
+        const component = await mount(PrimitiveSchemaViewerComponent, {
+            props: {
+                schema,
+                references: {},
+                path: ["properties", "name"],
+                required: true
             }
         });
 
-        await expect(component.locator("[data-testid='required-indicator']")).toBeVisible();
+        await expect(component.getByTestId("required-indicator")).toBeVisible();
     });
 
     test("shows additional properties", async ({ mount }) => {
-        const component = await mount(PrimitiveSchemaViewerComponent, {
-            props: {
-                schema: {
+        const schema = {
+            $id: "https://example.com/schema.json",
+            type: "object",
+            properties: {
+                name: {
                     type: "string",
                     title: "Name",
                     minLength: 2,
                     maxLength: 100
-                },
-                key: "name",
-                src: "https://example.com/schema.json"
+                }
+            }
+        };
+
+        const component = await mount(PrimitiveSchemaViewerComponent, {
+            props: {
+                schema,
+                references: {},
+                path: ["properties", "name"]
             }
         });
 
-        await expect(component.locator("[data-testid='additional-property']")).toContainText(["minLength", "maxLength"]);
+        await expect(component.getByTestId("additional-property")).toContainText(["minLength", "maxLength"]);
     });
-}); 
+});

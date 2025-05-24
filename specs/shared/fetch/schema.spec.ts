@@ -1,9 +1,10 @@
 import { test, expect } from "@sand4rt/experimental-ct-web";
-import { Schema } from "../../../src/shared/fetch/schema";
+import { SchemaResolver } from "../../../src/shared/fetch/schema";
+import { Schema } from "yaml";
 
 test.describe("Schema", () => {
     test("can resolve root schema", () => {
-        const rootSchema = {
+        const schema = {
             $id: "/root.schema.yaml",
             title: "Root Schema",
             type: "object",
@@ -12,14 +13,14 @@ test.describe("Schema", () => {
             }
         };
 
-        const schema = new Schema(rootSchema, new Map());
-        const resolved = schema.resolveSchema();
+        const schemaResolver = new SchemaResolver(schema, new Map());
+        const resolved = schemaResolver.resolveSchema();
 
-        expect(resolved).toEqual(rootSchema);
+        expect(resolved).toEqual(schema);
     });
 
     test("can resolve nested properties", () => {
-        const rootSchema = {
+        const schema = {
             $id: "/root.schema.yaml",
             title: "Root Schema",
             type: "object",
@@ -34,14 +35,14 @@ test.describe("Schema", () => {
             }
         };
 
-        const schema = new Schema(rootSchema, new Map());
-        const resolved = schema.resolveSchema(["properties", "person", "properties", "name"]);
+        const resolver = new SchemaResolver(schema, new Map());
+        const resolved = resolver.resolveSchema(["properties", "person", "properties", "name"]);
 
         expect(resolved).toEqual({ type: "string" });
     });
 
     test("can resolve string path", () => {
-        const rootSchema = {
+        const schema = {
             $id: "/root.schema.yaml",
             title: "Root Schema",
             type: "object",
@@ -56,8 +57,8 @@ test.describe("Schema", () => {
             }
         };
 
-        const schema = new Schema(rootSchema, new Map());
-        const resolved = schema.resolveSchema("#/properties/person/properties/name");
+        const resolver = new SchemaResolver(schema, new Map());
+        const resolved = resolver.resolveSchema("#/properties/person/properties/name");
 
         expect(resolved).toEqual({ type: "string" });
     });
@@ -82,8 +83,8 @@ test.describe("Schema", () => {
             }
         };
 
-        const schema = new Schema(rootSchema, new Map());
-        const resolved = schema.resolveSchema(["properties", "person"]);
+        const resolver = new SchemaResolver(rootSchema, new Map());
+        const resolved = resolver.resolveSchema(["properties", "person"]);
 
         expect(resolved).toEqual({
             type: "object",
@@ -114,11 +115,10 @@ test.describe("Schema", () => {
             }
         };
 
-        const references = new Map();
-        references.set("/address.schema.yaml", addressSchema);
+        const references = { "/address.schema.yaml": addressSchema };
 
-        const schema = new Schema(rootSchema, references);
-        const resolved = schema.resolveSchema(["properties", "address"]);
+        const resolver = new SchemaResolver(rootSchema, references);
+        const resolved = resolver.resolveSchema(["properties", "address"]);
 
         expect(resolved).toEqual(addressSchema);
     });
@@ -144,11 +144,10 @@ test.describe("Schema", () => {
             }
         };
 
-        const references = new Map();
-        references.set("https://example.com/address.schema.yaml", addressSchema);
+        const references = { "https://example.com/address.schema.yaml": addressSchema };
 
-        const schema = new Schema(rootSchema, references);
-        const resolved = schema.resolveSchema(["properties", "address"]);
+        const resolver = new SchemaResolver(rootSchema, references);
+        const resolved = resolver.resolveSchema(["properties", "address"]);
 
         expect(resolved).toEqual(addressSchema);
     });
@@ -185,12 +184,13 @@ test.describe("Schema", () => {
             }
         };
 
-        const references = new Map();
-        references.set("/address.schema.yaml", addressSchema);
-        references.set("/person.schema.yaml", personSchema);
+        const references = {
+            "/address.schema.yaml": addressSchema,
+            "/person.schema.yaml": personSchema
+        };
 
-        const schema = new Schema(rootSchema, references);
-        const resolved = schema.resolveSchema(["properties", "person", "properties", "address"]);
+        const resolver = new SchemaResolver(rootSchema, references);
+        const resolved = resolver.resolveSchema(["properties", "person", "properties", "address"]);
 
         expect(resolved).toEqual(addressSchema);
     });
@@ -202,8 +202,8 @@ test.describe("Schema", () => {
             type: "object"
         };
 
-        const schema = new Schema(rootSchema, new Map());
-        const src = schema.resolveSrc();
+        const resolver = new SchemaResolver(rootSchema, new Map());
+        const src = resolver.resolveSrc();
 
         expect(src).toBe("/root.schema.yaml");
     });
@@ -226,11 +226,10 @@ test.describe("Schema", () => {
             }
         };
 
-        const references = new Map();
-        references.set("/address.schema.yaml", addressSchema);
+        const references = { "/address.schema.yaml": addressSchema };
 
-        const schema = new Schema(rootSchema, references);
-        const src = schema.resolveSrc(["properties", "address"]);
+        const resolver = new SchemaResolver(rootSchema, references);
+        const src = resolver.resolveSrc(["properties", "address"]);
 
         expect(src).toBe("/address.schema.yaml");
     });
@@ -253,11 +252,10 @@ test.describe("Schema", () => {
             }
         };
 
-        const references = new Map();
-        references.set("https://example.com/address.schema.yaml", addressSchema);
+        const references = { "https://example.com/address.schema.yaml": addressSchema };
 
-        const schema = new Schema(rootSchema, references);
-        const src = schema.resolveSrc(["properties", "address"]);
+        const resolver = new SchemaResolver(rootSchema, references);
+        const src = resolver.resolveSrc(["properties", "address"]);
 
         expect(src).toBe("https://example.com/address.schema.yaml");
     });
@@ -271,7 +269,7 @@ test.describe("Schema", () => {
             }
         };
 
-        expect(() => new Schema(rootSchema, new Map())).toThrow();
+        expect(() => new SchemaResolver(rootSchema, new Map())).toThrow();
     });
 
     test("throws error for when referenced schema has no $id", () => {
@@ -291,9 +289,8 @@ test.describe("Schema", () => {
             }
         };
 
-        const references = new Map();
-        references.set("/address.schema.yaml", addressSchema);
+        const references = { "/address.schema.yaml": addressSchema };
 
-        expect(() => new Schema(rootSchema, references)).toThrow();
+        expect(() => new SchemaResolver(rootSchema, references)).toThrow();
     });
 });

@@ -12,14 +12,14 @@ import { FragmentSelected } from "../../types";
 
 import "../../../shared/popover";
 import "../../../shared/button";
-import { Schema } from "../../../shared/fetch/schema";
+import { SchemaResolver } from "../../../shared/fetch/schema";
 import typographyCss from "../../../shared/styles/typography.css";
 
 export const tag = "array-schema-viewer";
 
 @customElement(tag)
 export class ArraySchemaViewerComponent extends LitElement {
-    static CanRender(schema: any) : boolean {
+    static CanRender(schema: any): boolean {
         return "type" in schema && schema.type === "array";
     }
 
@@ -30,14 +30,18 @@ export class ArraySchemaViewerComponent extends LitElement {
     path!: string[];
 
     @property({ type: Object })
-    schema!: Schema;
+    schema!: Record<string, any>;
+
+    @property({ type: Object })
+    references!: Record<string, any>
 
     override render() {
         const key = this.path.at(-1)!;
-        const schema = this.schema.resolveSchema(this.path);
+        const schemaResolver = new SchemaResolver(this.schema, this.references);
+        const schema = schemaResolver.resolveSchema(this.path);
         const name = titlelize(schema.items.title || "item");
 
-        if(!ArraySchemaViewerComponent.CanRender(schema)) {
+        if (!ArraySchemaViewerComponent.CanRender(schema)) {
             return;
         }
 
@@ -50,7 +54,7 @@ export class ArraySchemaViewerComponent extends LitElement {
                         </span>
                     </h3>
 
-                    ${schema.description ? html`${unsafeHTML(parseMarkdown(schema.description.trim()))}` : null }
+                    ${schema.description ? html`${unsafeHTML(parseMarkdown(schema.description.trim()))}` : null}
                 </div>
 
                 <div class="item--main">
@@ -58,7 +62,7 @@ export class ArraySchemaViewerComponent extends LitElement {
                         <ul class="list--array">
                             ${[...Array(2).keys()].map((_, index) => html`
                                 <li>
-                                    <bdo-button direction="right" ?disabled="${index > 0}" @clicked=${() => { this._onClick(schema, key); }} data-testid="array-item">
+                                    <bdo-button direction="right" ?disabled="${index > 0}" @clicked=${() => { this._onClick(schema, key); }} data-testid="array-item-button">
                                         <span class="txt--property">${name}</span>
                                         <span class="badge--type" data-testid="type-indicator">
                                             ${schema.items.type}
@@ -79,11 +83,10 @@ export class ArraySchemaViewerComponent extends LitElement {
             name: schema.title || key,
             key: key,
             disabled: true
-         }, {
+        }, {
             name: schema.items.title || "item",
             key: "items",
-         }];
-
+        }];
         this.dispatchEvent(new CustomEvent<FragmentSelected>('FragmentSelected', { detail: fragments }));
     }
 

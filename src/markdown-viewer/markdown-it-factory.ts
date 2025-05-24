@@ -80,7 +80,7 @@ export const components = [
     { extensions: [".dmn"], tag: "dmn-viewer", actions: ["toggle-fullscreen"] },
     { extensions: [".feature"], tag: "feature-viewer", actions: ["toggle-fullscreen"] },
     { extensions: [".mmd"], tag: "mermaid-viewer", actions: ["toggle-fullscreen"] },
-    { extensions: [".schema.yml", ".schema.yaml"], tag: "schema-viewer" }
+    { extensions: [".schema.yml", ".schema.yaml"], tag: "schema-viewer", actions: ["toggle-fullscreen"] }
 ];
 
 const actions = [

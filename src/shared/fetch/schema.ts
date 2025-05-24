@@ -1,16 +1,16 @@
-export class Schema {
+export class SchemaResolver {
 
-    constructor(private schema: any, private references: Map<string, any>) {
+    constructor(private schema: Record<string, any>, private references: Record<string, any>) {
         if(!this.schema.$id) {
             throw new Error(`Schema must have an $id to support relative references.`);
         }
 
-        for(const key of this.references.keys()) {
-            const schema = this.references.get(key);
+        Object.keys(this.references).forEach(key => {
+            const schema = this.references[key];
             if(!schema.$id) {
                 throw new Error(`Schema reference '${key}' must have an $id to support relative references.`);
             }
-        }
+        });
     }
 
     /**
@@ -18,7 +18,7 @@ export class Schema {
      *
      * @returns The references for the schema.
      */
-    getReferences(): Map<string, any> {
+    getReferences(): Record<string, any> {
         return this.references;
     }
 
@@ -51,7 +51,7 @@ export class Schema {
      * @param path - The path to the schema.
      * @returns The resolved schema and the $id.
      */
-    private _resolveSchema(schema: any, path: string | string[]) : { $id: string, property: any } {
+    private _resolveSchema(schema: Record<string, any>, path: string | string[]) : { $id: string, property: any } {
         let $id = schema.$id;
 
         if (typeof path === "string") {
@@ -120,11 +120,11 @@ export class Schema {
         const absoluteUrl = new URL(url, new URL($id, `https://${dummyDomain}`));
         if(absoluteUrl.origin === `https://${dummyDomain}`) {
             const key = absoluteUrl.pathname;
-            return this.references.get(key);
+            return this.references[key];
         }
         else {
             const key = absoluteUrl.toString();
-            return this.references.get(key);
+            return this.references[key];
         }
     }
 }

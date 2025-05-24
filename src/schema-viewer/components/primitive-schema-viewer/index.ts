@@ -7,7 +7,7 @@ import schemaViewerSharedCss from "../shared.css";
 import "../../../shared/popover";
 
 import { parseMarkdown, titlelize } from "../../../shared/util";
-import { Schema } from "../../../shared/fetch/schema";
+import { SchemaResolver } from "../../../shared/fetch/schema";
 import typographyCss from "../../../shared/styles/typography.css";
 const PRIMITIVE_TYPES = ["string", "number", "integer", "boolean"];
 const SKIP_KEYS = ["description", "title", "type", "format"];
@@ -27,14 +27,16 @@ export class PrimitiveSchemaViewerComponent extends LitElement {
     path!: string[];
 
     @property({ type: Object })
-    schema!: Schema;
+    schema!: Record<string, any>;
 
-    @property({ type: String })
-    src!: string;
+    @property({ type: Object })
+    references!: Record<string, any>
 
     override render() {
+        console.log("rendering primitive schema viewer", this.path, this.schema, this.references);
         const key = this.path.at(-1)!;
-        const schema = this.schema.resolveSchema(this.path);
+        const schemaResolver = new SchemaResolver(this.schema, this.references);
+        const schema = schemaResolver.resolveSchema(this.path);
 
         if (!PrimitiveSchemaViewerComponent.CanRender(schema)) {
             return;
@@ -83,7 +85,7 @@ export class PrimitiveSchemaViewerComponent extends LitElement {
                 dl {
                     font-size: var(--font-size-sm);
                 }
-                
+
                 dt {
                     color: rgba(0 0 0 / 50%);
                     font-weight: 600;
