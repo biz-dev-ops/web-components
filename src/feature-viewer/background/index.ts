@@ -1,4 +1,4 @@
-import { html, css, LitElement } from "lit";
+import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
 import resetCss from "../../shared/styles/reset.css";

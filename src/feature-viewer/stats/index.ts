@@ -41,7 +41,7 @@ export class StatsComponent extends LitElement {
       return "Steps";
     }
   }
-  
+
   static override styles = [
     resetCss,
     statsCss

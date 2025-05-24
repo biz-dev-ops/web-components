@@ -22,7 +22,7 @@ export default css`
     h2 {
         font-size: var(--heading-4-size);
     }
-    
+
     .feature__header,
     .feature__content {
         display: flex;

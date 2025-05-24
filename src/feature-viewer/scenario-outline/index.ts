@@ -13,17 +13,19 @@ export const tag = "feature-scenario-outline";
 
 @customElement(tag)
 export class ScenarioOutlineComponent extends LitElement {
+
   @property({ type: Object })
   outline!: ScenarioOutline;
+
   override render() {
-    const expandedScenarios = this.expandScenarioOutline();
+    const scenarios = this.createScenarios();
 
     return html`
       <bdo-heading-container class="${this.getOutlineClass()}" aria-expanded="false">
-        <h3 slot="header" class="scenario-outline__title">Scenario Outline: ${this.outline.name} (${expandedScenarios.length})</h3>
-        <feature-stats .items=${expandedScenarios}></feature-stats>
+        <h3 slot="header" class="scenario-outline__title">Scenario Outline: ${this.outline.name} (${scenarios.length})</h3>
+        <feature-stats .items=${scenarios}></feature-stats>
         <div class="scenario-outline__scenarios">
-          ${expandedScenarios.map(
+          ${scenarios.map(
             (scenario) => html`<feature-scenario .scenario=${scenario}></feature-scenario>`
           )}
         </div>
@@ -31,7 +33,7 @@ export class ScenarioOutlineComponent extends LitElement {
     `;
   }
 
-  private expandScenarioOutline(): Scenario[] {
+  private createScenarios(): Scenario[] {
     return this.outline.examples.tableBody.map((row) => {
       return {
         keyword: "Scenario",
