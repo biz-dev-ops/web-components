@@ -77,14 +77,10 @@ export const components = [
     { extensions: [".bpmn"], tag: "bpmn-viewer", actions: ["toggle-fullscreen", "zoom-in", "zoom-out", "zoom-reset"] },
     { extensions: ["business-model-canvas.yml", "business-model-canvas.yaml"], tag: "business-model-canvas", actions: ["toggle-fullscreen"] },
     { extensions: ["business-reference-architecture.yml", "business-reference-architecture.yaml"], tag: "business-reference-architecture", actions: ["toggle-fullscreen"] },
-    { extensions: [".command.yml", ".command.yaml"], tag: "command-viewer", actions: ["toggle-fullscreen"] },
     { extensions: [".dmn"], tag: "dmn-viewer", actions: ["toggle-fullscreen"] },
-    { extensions: [".event.yml", ".event.yaml"], tag: "event-viewer", actions: ["toggle-fullscreen"] },
     { extensions: [".feature"], tag: "feature-viewer", actions: ["toggle-fullscreen"] },
     { extensions: [".mmd"], tag: "mermaid-viewer", actions: ["toggle-fullscreen"] },
-    { extensions: [".model.yml", ".model.yaml"], tag: "model-viewer", actions: ["toggle-fullscreen"] },
-    { extensions: [".query.yml", ".query.yaml"], tag: "query-viewer" },
-    { extensions: [".task.yml", ".task.yaml"], tag: "task-viewer" }
+    { extensions: [".schema.yml", ".schema.yaml"], tag: "schema-viewer", actions: ["toggle-fullscreen"] }
 ];
 
 const actions = [

@@ -1,0 +1,34 @@
+type: object
+title: Payroll calculated
+description: >
+  Indicates the successful completion of the payroll calculations.
+  It implies that Gross pay has been determined for all employees.
+  All applicable deductions have been calculated and applied.
+  Net pay has been finalized for each employee.
+  Employer contributions have been calculated.
+properties:
+  pay_period_id:
+    type: string
+    format: uuid
+    description: >
+      The unique identifier for the pay period.
+    examples:
+      - "123e4567-e89b-12d3-a456-426614174000"
+  total_net_pay_amount:
+    type: number
+    format: float
+    description: >
+      The total net amount paid to all employees for this pay period.
+    examples:
+      - 100000.00
+  currency:
+    type: string
+    description: >
+      The currency of the payroll amounts (e.g., "USD", "EUR").
+    examples:
+      - "USD"
+      - "EUR"
+required:
+  - pay_period_id
+  - total_net_pay_amount
+  - currency

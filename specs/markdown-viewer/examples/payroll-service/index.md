@@ -19,7 +19,7 @@ The overarching goals are to provide a reliable, compliant, and efficient system
 
 ### Ensure accurate and timely employee compensation
 
-> This is the most fundamental goal. Employees need to be paid the correct amount they've earned, and they need to receive it on the scheduled pay dates. Accuracy builds trust and timely payment ensures financial stability for employees. 
+> This is the most fundamental goal. Employees need to be paid the correct amount they've earned, and they need to receive it on the scheduled pay dates. Accuracy builds trust and timely payment ensures financial stability for employees.
 
 **This will be met by:**
 
@@ -31,7 +31,7 @@ The overarching goals are to provide a reliable, compliant, and efficient system
 
 ### Maintain legal and regulatory compliance
 
-> Payroll is subject to numerous federal, state, and local laws regarding wages, taxes, deductions, and reporting. A key goal is to adhere to all these regulations to avoid penalties, fines, and legal issues for the business. This includes staying updated on changing laws and implementing them correctly. 
+> Payroll is subject to numerous federal, state, and local laws regarding wages, taxes, deductions, and reporting. A key goal is to adhere to all these regulations to avoid penalties, fines, and legal issues for the business. This includes staying updated on changing laws and implementing them correctly.
 
 **This will be met by:**
 
@@ -43,7 +43,7 @@ The overarching goals are to provide a reliable, compliant, and efficient system
 
 ### Minimize administrative burden
 
-> For businesses, especially smaller ones, managing payroll internally can be a significant drain on time and resources. A payroll service aims to streamline and automate these complex processes, freeing up internal staff to focus on core business activities. 
+> For businesses, especially smaller ones, managing payroll internally can be a significant drain on time and resources. A payroll service aims to streamline and automate these complex processes, freeing up internal staff to focus on core business activities.
 
 **This will be met by:**
 
@@ -78,7 +78,7 @@ The overarching goals are to provide a reliable, compliant, and efficient system
 
 ### Facilitate efficient payment disbursement
 
-> The service should offer reliable and efficient methods for paying employees, whether through direct deposit, checks, or other means, ensuring funds are distributed correctly and on time. 
+> The service should offer reliable and efficient methods for paying employees, whether through direct deposit, checks, or other means, ensuring funds are distributed correctly and on time.
 
 **This will be met by:**
 
