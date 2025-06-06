@@ -39,6 +39,7 @@ export default css`
     .step__content {
         display: flex;
         gap: var(--space-xs);
+        max-width: 100%;
     }
 
     .step__content:not(:last-child) {
@@ -48,6 +49,7 @@ export default css`
     .step__keyword {
         font-weight: 700;
         color: var(--color-blue-500);
+        min-width: 5ch;
     }
 
     .step__text {
