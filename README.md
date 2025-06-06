@@ -46,28 +46,12 @@ A component for visualizing business reference architectures.
 <business-reference-architecture src="path/to/business-reference-architecture.yml"></business-reference-architecture>
 ```
 
-### Command Viewer
-
-A component for displaying command structures.
-
-```html
-<command-viewer src="path/to/command.yml"></command-viewer>
-```
-
 ### DMN Viewer
 
 A component for viewing Decision Model and Notation (DMN) diagrams.
 
 ```html
 <dmn-viewer src="path/to/decission-model.dmn"></dmn-viewer>
-```
-
-### Event Viewer
-
-A component for visualizing event structures and flows.
-
-```html
-<event-viewer src="path/to/event.yml"></event-viewer>
 ```
 
 ### Markdown Viewer
@@ -84,30 +68,6 @@ A component for rendering Mermaid diagrams.
 
 ```html
 <mermaid-viewer src="path/to/diagram.mmd"></mermaid-viewer>
-```
-
-### Model Viewer
-
-A component for displaying json schema bjects.
-
-```html
-<model-viewer src="path/to/model.yml"></model-viewer>
-```
-
-### Query Viewer
-
-A component for visualizing query structures.
-
-```html
-<query-viewe src="path/to/query.yml"r></query-viewer>
-```
-
-### Task Viewer
-
-A component for displaying and managing tasks.
-
-```html
-<task-viewer src="path/to/task.yml"></task-viewer>
 ```
 
 ## Development

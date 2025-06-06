@@ -1,5 +1,4 @@
-import "reflect-metadata";
-
+import 'reflect-metadata';
 import { LitElement } from 'lit';
 
 /**
@@ -27,7 +26,7 @@ const ACTION_HANDLERS_METADATA = Symbol('actionHandlersMetadata');
  * @param actionName The string action this method handles.
  */
 function Action(actionName: string) {
-  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+  return function (target: any, propertyKey: string, _descriptor: PropertyDescriptor) {
     const handlers = Reflect.getOwnMetadata(ACTION_HANDLERS_METADATA, target) || [];
     handlers.push({ methodName: propertyKey, action: actionName });
     Reflect.defineMetadata(ACTION_HANDLERS_METADATA, handlers, target);

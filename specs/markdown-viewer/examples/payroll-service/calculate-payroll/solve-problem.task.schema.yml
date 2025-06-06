@@ -1,0 +1,122 @@
+---
+type: object
+title: Solve problem
+description: >
+  Provides a human intervention point to diagnose, resolve, and mitigate these exceptions,
+  aiming to either resume the payroll process successfully or, when resolution is impossible,
+  to gracefully conclude it while signaling a critical failure.
+properties:
+  context:
+    type: object
+    title: Solve problem context
+    description: >
+      Contextual information needed for a user to solve the payroll problem.
+    properties:
+      pay_period_id:
+        type: string
+        format: uuid
+        description: The unique identifier for the pay period experiencing issues.
+        examples:
+          - "123e4567-e89b-12d3-a456-426614174000"
+      problem_description:
+        type: string
+        description: A detailed description of the problem that occurred during payroll calculation.
+        examples:
+          - "Payroll calculation failed due to incorrect employee data."
+      affected_employees:
+        type: array
+        description: A list of employees potentially affected by the problem.
+        items:
+          type: object
+          title: Affected employee
+          description: >
+            An employee potentially affected by the problem.
+          properties:
+            employee_id:
+              type: string
+              format: uuid
+              description: The ID of an affected employee.
+              examples:
+                - "123e4567-e89b-12d3-a456-426614174000"
+            name:
+              type: string
+              description: The name of the affected employee.
+              examples:
+                - "John Doe"
+          required:
+            - employee_id
+            - name
+    required:
+      - pay_period_id
+      - problem_description
+      - affected_employees
+  actions:
+    oneOf:
+      - type: object
+        title: Resolve problem
+        description: >
+          Indicates that the problem has been successfully resolved and the payroll process can be resumed or completed.
+        properties:
+          resolve:
+            type: object
+            properties:
+              resolution_details:
+                type: string
+                description: A description of how the problem was resolved.
+                examples:
+                  - "Resolved the data inconsistency by correcting employee record."
+            required:
+              - resolution_details
+          name:
+            type: string
+            description: Indicates that the problem has been successfully resolved and the payroll process can be resumed or completed.
+            examples:
+              - "Resolved the data inconsistency by correcting employee record."
+        required:
+          - resolve
+      - type: object
+        title: Escalate problem
+        description: >
+          Indicates that the problem could not be resolved by the current user and needs to be escalated to a higher authority or specialized team.
+        properties:
+          escalate:
+            type: object
+            properties:
+              escalation_reason:
+                type: string
+                description: The reason for escalating the problem.
+                examples:
+                  - "Requires database expert intervention."
+            required:
+              - escalation_reason
+          name:
+            type: string
+            description: Indicates that the problem could not be resolved by the current user and needs to be escalated to a higher authority or specialized team.
+            examples:
+              - "Requires database expert intervention."
+        required:
+          - escalate
+  exceptions:
+    oneOf:
+      - type: object
+        title: Unsolvable problem
+        description: >
+          Signifies that the problem is critical and cannot be resolved, leading to a complete halt of the payroll process for the affected period.
+        properties:
+          unsolvable:
+            type: object
+            properties:
+              unsolvable_reason:
+                type: string
+                description: The reason why the problem is deemed unsolvable.
+                examples:
+                  - "Data cannot be recovered, manual intervention required outside system."
+            required:
+              - unsolvable_reason
+          name:
+            type: string
+            description: Signifies that the problem is critical and cannot be resolved, leading to a complete halt of the payroll process for the affected period.
+            examples:
+              - "Data cannot be recovered, manual intervention required outside system."
+        required:
+          - unsolvable
