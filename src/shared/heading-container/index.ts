@@ -49,6 +49,10 @@ export class BdoHeadingContainer extends LitElement {
 
     private ariaIsExpanded(): boolean | undefined {
         const ariaExpanded = this.getAttribute("aria-expanded")?.trim().toLowerCase();
+        
+        if (ariaExpanded === undefined) {
+            return undefined;
+        }
 
         if (ariaExpanded === "false") {
             return false
