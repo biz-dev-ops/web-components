@@ -39,24 +39,16 @@ export class FeatureViewerComponent extends ActionLitElement {
     }
 
     return html`
-      <bdo-heading-container data-testid="feature">
-        <h2 slot="header" class="feature__title">Feature: ${this.feature.name}</h2>
-        ${this.renderContent(this.feature)}
-      </bdo-heading-container>
-    `;
-  }
-
-  private renderContent(feature: Feature) {
-    return html`
        <div class="feature__header">
-        ${this.renderTags(feature.tags)}
-        ${this.renderDescription(feature.description)}
-        ${this.renderResultLink(feature.resultFile)}
+        <h2 class="feature__title">Feature: ${this.feature.name}</h2>
+        ${this.renderTags(this.feature.tags)}
+        ${this.renderDescription(this.feature.description)}
+        ${this.renderResultLink(this.feature.resultFile)}
       </div>
       <div class="feature__content">
-        <feature-stats .items=${feature.scenarios}></feature-stats>
-        ${feature.background ? html`<feature-background .background=${feature.background}></feature-background>` : null}
-        ${feature.scenarios.map((scenario) =>
+        <feature-stats .items=${this.feature.scenarios}></feature-stats>
+        ${this.feature.background ? html`<feature-background .background=${this.feature.background}></feature-background>` : null}
+        ${this.feature.scenarios.map((scenario) =>
           "examples" in scenario
             ? html`<feature-scenario-outline .outline=${scenario}></feature-scenario-outline>`
             : html`<feature-scenario .scenario=${scenario}></feature-scenario>`

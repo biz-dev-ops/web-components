@@ -21,11 +21,12 @@ export class ScenarioComponent extends LitElement {
   override render() {
     return html`
         <bdo-heading-container aria-expanded="false" class="${this.getScenarioClass()}">
-          <summary slot="header" class="scenario__header">
+          <div slot="header" class="scenario__header">
             <h3 class="scenario__title">Scenario: ${this.scenario.name}</h3>
             ${this.renderTags(this.scenario.tags)}
             ${this.renderDescription(this.scenario.description)}
-          </summary>
+          </div>
+          <feature-stats .items=${this.scenario.steps}></feature-stats>
           ${this.renderSteps(this.scenario.steps)}
         </bdo-heading-container>
     `;
@@ -53,7 +54,6 @@ export class ScenarioComponent extends LitElement {
     if (!steps?.length) return null;
     return html`
       <div class="scenario__steps">
-        <feature-stats .items=${steps}></feature-stats>
         ${steps.map((step) => html`<feature-step .step=${step}></feature-step>`)}
       </div>
     `;

@@ -22,7 +22,9 @@ export class ScenarioOutlineComponent extends LitElement {
 
     return html`
       <bdo-heading-container class="${this.getOutlineClass()}" aria-expanded="false">
-        <h3 slot="header" class="scenario-outline__title">Scenario Outline: ${this.outline.name} (${scenarios.length})</h3>
+        <div slot="header" class="scenario-outline__header">
+          <h3 class="scenario-outline__title">Scenario Outline: ${this.outline.name} (${scenarios.length})</h3>
+        </div>
         <feature-stats .items=${scenarios}></feature-stats>
         <div class="scenario-outline__scenarios">
           ${scenarios.map(

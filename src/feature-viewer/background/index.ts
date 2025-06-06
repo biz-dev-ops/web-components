@@ -32,9 +32,11 @@ export class BackgroundComponent extends LitElement {
   override render() {
     return html`
       <bdo-heading-container aria-expanded="false" class="${this.getBackgroundClass()}">
-        <h3 slot="header" class="scenario__title">Background: ${this.background.name}</h3>
+        <div slot="header" class="scenario__header">
+          <h3 class="scenario__title">Background: ${this.background.name}</h3>
+        </div>
+        <feature-stats .items=${this.background.steps}></feature-stats>
         <div class="scenario__steps">
-          <feature-stats .items=${this.background.steps}></feature-stats>
           ${this.background.steps.map(
             (step) => html`<feature-step .step=${step}></feature-step>`
           )}

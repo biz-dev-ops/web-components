@@ -72,7 +72,6 @@ export default css`
         --_scenario-status-color: var(--status-undefined);
     }
 
-    
     .scenario__tags {
         display: flex;
         gap: var(--space-xs);
@@ -81,8 +80,9 @@ export default css`
     .scenario__description {
         color: var(--color-black-a80);
     }
-
+    
     feature-stats {
         --stats-font-size: var(--font-size-sm);
+        margin-block-end: var(--space-sm);
     }
 `;
