@@ -23,7 +23,7 @@ export default css`
         border: var(--line-base) solid var(--_button-border-color);
         border-radius: var(--radius-half);
         column-gap: var(--space-xs);
-        color: var(--_button-text-color);
+        color: var(--button-text-color);
         cursor: pointer;
         display: flex;
         font-family: var(--_button-font-family);
@@ -39,7 +39,7 @@ export default css`
 
     button[disabled] {
         --_button-border-color: var(--color-black-a30);
-        --_button-text-color: var(--color-black-a40);
+        --button-text-color: var(--color-black-a40);
 
         cursor: initial;
         pointer-events: none;
@@ -51,7 +51,7 @@ export default css`
 
     :is(button:not([disabled])):is(:active, :hover, :focus-visible) {
         background-color: var(--_button-hover-color);
-        color: var(--_button-text-color-active);
+        color: var(--button-text-color-active);
     }
 
     /* Directional arrows */

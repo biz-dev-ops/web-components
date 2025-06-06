@@ -4,8 +4,6 @@ export default css`
   :host {
     --button-border-color: var(--_schema-viewer-color-a40);
     --button-hover-color: var(--_schema-viewer-color-a10);
-    --button-text-color: var(--_schema-viewer-color-base);
-    --button-text-color-active: var(--button-text-color);
     --button-font-size: var(--font-size-sm);
     --button-inline-size: 100%;
 
