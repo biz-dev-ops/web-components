@@ -6,9 +6,9 @@ const buttonCss = css`
         --_badge-text-color: var(--badge-text-color, var(--text-color-base));
         --icon-color: var(--_badge-text-color);
         
-        display: inline-block
+        display: inline-block;
     }
-
+    
     .badge {
         align-items: center;
         background-color: var(--_badge-color);
@@ -18,6 +18,7 @@ const buttonCss = css`
         flex-direction: row;
         font-size: var(--font-size-sm);
         gap: var(--space-xxs);
+        margin-block: calc(var(--space-xxs) / -2);
         padding-block: calc(var(--space-xxs) / 2);
         padding-inline: var(--space-xs);
     }

@@ -17,7 +17,7 @@ Feature: Manage User Profile
     And my profile should be updated with the new information
 
   @regression
-  Scenario Outline: Update profile with different data
+  Scenario Outline: Update profile with different data for <name> and <email>
     When I click the "Edit Profile" button
     And I update my name to "<name>"
     And I update my email to "<email>"

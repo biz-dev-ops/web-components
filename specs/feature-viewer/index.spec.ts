@@ -29,8 +29,9 @@ test.describe("feature-viewer", async () => {
 
     // Check scenarios
     await expect(component).toContainText("Scenario: Update user profile information");
-    await expect(component).toContainText("Scenario: Update contact information (1)");
-    await expect(component).toContainText("Scenario: Update contact information (2)");
+    await expect(component).toContainText("Scenario Outline: Update contact information for <contact_type> (2)");
+    await expect(component).toContainText("Scenario: Update contact information for email");
+    await expect(component).toContainText("Scenario: Update contact information for phone");
     await expect(component).toContainText("Scenario: Verify address details");
     await expect(component).toContainText("Scenario: Change password");
   });
@@ -56,9 +57,9 @@ test.describe("feature-viewer", async () => {
     // Check scenarios and tags
     await expect(component).toContainText("@smoke");
     await expect(component).toContainText("@regression");
-    await expect(component).toContainText("Scenario: Update profile information");
-    await expect(component).toContainText("Scenario: Update profile with different data (1)");
-    await expect(component).toContainText("Scenario: Update profile with different data (2)");
+    await expect(component).toContainText("Scenario Outline: Update profile with different data for <name> and <email> (2)");
+    await expect(component).toContainText("Scenario: Update profile with different data for Jane Doe and jane.doe@example.com");
+    await expect(component).toContainText("Scenario: Update profile with different data for Bob Smith and bob.smith@example.com");
     await expect(component).toContainText("Scenario: Upload profile picture");
   });
 
@@ -72,8 +73,7 @@ test.describe("feature-viewer", async () => {
     // Check initial content
     await expect(component).toContainText("Feature: User Profile Management");
     await expect(component).toContainText("Background: User is logged in");
-    await expect(component).toContainText("Scenario: Update contact information (1)");
-    await expect(component).toContainText("Scenario: Update contact information (2)");
+    await expect(component).toContainText("Scenario Outline: Update contact information for <contact_type> (2)");
     await expect(component).not.toContainText("As a user");
 
     // Change to sample feature
@@ -87,8 +87,7 @@ test.describe("feature-viewer", async () => {
     await expect(component).toContainText("Feature: User Profile Management");
     await expect(component).toContainText("As a user");
     await expect(component).toContainText("@smoke");
-    await expect(component).toContainText("Scenario: Update profile with different data (1)");
-    await expect(component).toContainText("Scenario: Update profile with different data (2)");
+    await expect(component).toContainText("Scenario Outline: Update profile with different data for <name> and <email> (2)");
     await expect(component).not.toContainText("Background: User is logged in");
   });
 

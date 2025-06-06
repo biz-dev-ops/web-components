@@ -5,10 +5,13 @@ export default css`
         display: block;
     }
 
-    :host(:where([level="1"], [level="2"], [level="3"], [level="4"])) {
+    :host(:where([level])) {
         display: flex;
         flex-direction: column;
         gap: var(--space-md);
+    }
+
+    :host(:where([level="1"], [level="2"], [level="3"], [level="4"])) {
         border-block-start: var(--line-base) solid var(--color-brand-a20);
         padding: var(--space-lg) var(--space-md);
         margin-inline: calc(var(--space-md) * -1);
@@ -19,33 +22,31 @@ export default css`
         padding-block-end: var(--space-md);
     }
 
-    :host(:where([aria-expanded])) {
+    :host(:where([level="3"], [level="4"], [level="5"], [level="6"])) {
+        --_padding: calc(var(--space-sm) - var(--line-base));
+
         border-inline: var(--line-base) solid var(--color-brand-a20);
         border-block: none;
         gap: var(--space-sm);
-        padding-inline: var(--space-sm);
-        padding-block-start: var(--space-xs);
+        padding-inline: var(--_padding);
+        padding-block-start: var(--_padding);
         padding-block-end: 0;
     }
 
-    :host(:where([aria-expanded]):first-of-type) {
+    :host(:where([level="3"], [level="4"], [level="5"], [level="6"]):first-of-type) {
         border-block-start: var(--line-base) solid var(--color-brand-a20);
         border-radius: var(--radius-base) var(--radius-base) 0 0;
-        padding-block-start: var(--space-sm);
+        padding-block-start: var(--_padding);
     }
 
-    :host(:where([aria-expanded]):last-of-type) {
+    :host(:where([level="3"], [level="4"], [level="5"], [level="6"]):last-of-type) {
         border-block-end: var(--line-base) solid var(--color-brand-a20);
         border-radius: 0 0 var(--radius-base) var(--radius-base);
-        padding-block-end: var(--space-sm);
+        padding-block-end: var(--_padding);
 
     }
-    :host(:where([aria-expanded]):first-of-type:last-of-type) {
+    :host(:where([level="3"], [level="4"], [level="5"], [level="6"]):first-of-type:last-of-type) {
         border-radius: var(--radius-base);
-    }
-
-    :host(:where([aria-expanded])) .content {
-        padding-inline: var(--space-xs)
     }
 
     :host(:where([aria-expanded="false"])) .content {
@@ -84,12 +85,11 @@ export default css`
         transform: rotate(-45deg);
     }
 
-    :host(:where([level="4"])) {
-        padding-inline: var(--space-xs) !important;
-        margin-inline: 0 !important;
+    :host(:where([level="4"], [level="5"], [level="6"])) {
+        margin-inline: 0;
     }
 
-    :host(:not([aria-expanded])) .header ::slotted(:where(h1, h2, h3, h4)) {
+    .header ::slotted(:where(h1, h2, h3, h4, h5, h6)) {
         color: var(--text-color-heading);
         font-family: var(--font-family-heading);
         line-height: var(--line-height-heading);

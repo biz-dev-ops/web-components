@@ -3,6 +3,7 @@ import { customElement, eventOptions } from "lit/decorators.js";
 
 import resetCss from "../styles/reset.css";
 import headingContainerCss from "./heading-container.css";
+import typographyCss from "../styles/typography.css";
 
 @customElement("bdo-heading-container")
 export class BdoHeadingContainer extends LitElement {
@@ -49,6 +50,10 @@ export class BdoHeadingContainer extends LitElement {
 
     private ariaIsExpanded(): boolean | undefined {
         const ariaExpanded = this.getAttribute("aria-expanded")?.trim().toLowerCase();
+        
+        if (ariaExpanded === undefined) {
+            return undefined;
+        }
 
         if (ariaExpanded === "false") {
             return false
@@ -84,6 +89,6 @@ export class BdoHeadingContainer extends LitElement {
     }
 
     static override get styles() {
-        return [resetCss, headingContainerCss];
+        return [resetCss, headingContainerCss, typographyCss];
     }
 }

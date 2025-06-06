@@ -77,7 +77,7 @@ export class ModelViewerItemArray extends ModelViewerItem {
 
             .list--array li::before,
             .list--array li::after {
-            content: '';
+                content: '';
                 position: absolute;
                 inset-inline-start: calc(var(--space-sm) * -1);
                 inset-block-start: calc(var(--space-sm) + var(--space-xxs));
