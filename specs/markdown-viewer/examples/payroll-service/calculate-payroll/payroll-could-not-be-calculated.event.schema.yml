@@ -1,0 +1,34 @@
+type: object
+title: Payroll could not be calculated
+description: >
+  Signifies that one or more critical steps in the payroll calculation process
+  have failed or encountered insurmountable errors.
+properties:
+  pay_period_id:
+    type: string
+    format: uuid
+    description: >
+      The unique identifier for the pay period for which payroll could not be calculated.
+    examples:
+      - "123e4567-e89b-12d3-a456-426614174000"
+  error_code:
+    type: string
+    description: A code indicating the type of error that occurred.
+    examples:
+      - "PAYROLL_CALCULATION_ERROR"
+  error_message:
+    type: string
+    description: A human-readable message describing the error.
+    examples:
+      - "Payroll calculation failed due to incorrect employee data."
+  timestamp:
+    type: string
+    format: date-time
+    description: The time when the error occurred.
+    examples:
+      - "2024-01-01T00:00:00Z"
+required:
+  - pay_period_id
+  - error_code
+  - error_message
+  - timestamp

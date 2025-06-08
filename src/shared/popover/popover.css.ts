@@ -32,6 +32,7 @@ export default css`
     }
 
     [popover] {
+      background-color: var(--surface-main);
       box-shadow: var(--drop-shadow-level2);
       border: 0;
       border-radius: var(--radius-base);
@@ -41,7 +42,8 @@ export default css`
       font-size: var(--font-size-sm);
       font-weight: initial;
       line-height: var(--line-height-base);
-      margin-top: var(--space-xs);
+      margin-block: var(--space-xs);
+      margin-inline: var(--space-sm);
       padding: var(--space-sm);
       position: absolute;
       pointer-events: none;
