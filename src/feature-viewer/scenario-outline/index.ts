@@ -1,4 +1,4 @@
-import { html, css, LitElement } from "lit";
+import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
 import resetCss from "../../shared/styles/reset.css";
@@ -6,36 +6,41 @@ import typographyCss from "../../shared/styles/typography.css";
 
 import { ScenarioOutline, Scenario, TestResult } from "../models";
 import "../scenario";
+import scenarioOutlineCss from "./scenario-outline.css";
+import "../../shared/heading-container";
 
 export const tag = "feature-scenario-outline";
 
 @customElement(tag)
 export class ScenarioOutlineComponent extends LitElement {
+
   @property({ type: Object })
   outline!: ScenarioOutline;
+
   override render() {
-    const expandedScenarios = this.expandScenarioOutline();
+    const scenarios = this.createScenarios();
 
     return html`
-      <div class="${this.getOutlineClass()}">
-        <div class="scenario-outline__header">
-          <h3 class="scenario-outline_title">Scenario Outline: ${this.outline.name || ""}</h3>
+      <bdo-heading-container class="${this.getOutlineClass()}" aria-expanded="false">
+        <div slot="header" class="scenario-outline__header">
+          <h3 class="scenario-outline__title">Scenario Outline: ${this.outline.name} (${scenarios.length})</h3>
         </div>
-        <div class="scenario-outline_scenarios">
-          ${expandedScenarios.map(
+        <feature-stats .items=${scenarios}></feature-stats>
+        <div class="scenario-outline__scenarios">
+          ${scenarios.map(
             (scenario) => html`<feature-scenario .scenario=${scenario}></feature-scenario>`
           )}
         </div>
-      </div>
+      </bdo-heading-container>
     `;
   }
 
-  private expandScenarioOutline(): Scenario[] {
-    return this.outline.examples.tableBody.map((row, index) => {
+  private createScenarios(): Scenario[] {
+    return this.outline.examples.tableBody.map((row) => {
       return {
         keyword: "Scenario",
-        name: `${this.outline.name} (${index + 1})`,
-        description: this.outline.description,
+        name: this.replacePlaceholders(this.outline.name, row),
+        description: this.outline.description ? this.replacePlaceholders(this.outline.description, row) : undefined,
         tags: this.outline.tags,
         steps: this.outline.steps.map((step) => ({
           ...step,
@@ -62,36 +67,6 @@ export class ScenarioOutlineComponent extends LitElement {
   static override styles = [
     resetCss,
     typographyCss,
-    css`
-      .scenario-outline {
-        background-color: var(--main-surface);
-        border-radius: var(--radius-base);
-        border-left: var(--line-medium) solid var(--_scenario-outline-status-color, transparent);
-        box-shadow: var(--drop-shadow-base);
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-md);
-        padding: var(--space-md);
-        padding-inline-start: calc(var(--space-md) - var(--line-medium));
-      }
-
-      .scenario-outline--passed {
-        --_scenario-outline-status-color: var(--status-passed);
-      }
-
-      .scenario-outline--failed {
-        --_scenario-outline-status-color: var(--status-failed);
-      }
-
-      .scenario-outline--not_implemented {
-        --_scenario-outline-status-color: var(--status-undefined);
-      }
-
-      .scenario-outline_scenarios {
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-md);
-      }
-    `
+    scenarioOutlineCss
   ];
 }
