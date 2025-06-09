@@ -70,9 +70,8 @@ const _position = (button: HTMLElement, popover: HTMLElement, context: HTMLEleme
     const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
 
     if (contextPosition) {
-        popover.style.left = `${contextPosition.left}px`;
+        popover.style.left = `${buttonPosition.left - 32}px`;
         popover.style.top = `${buttonPosition.bottom + scrollTop}px`;
-        popover.style.width = `${contextPosition.width}px`;
     }
 }
 

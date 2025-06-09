@@ -5,13 +5,13 @@ export default css`
         --_button-font-family: var(--button-font-family, var(--font-family-base));
         --_button-font-size: var(--button-font-size, var(--font-size-base));
         --_button-line-height: var(--button-line-height, var(--line-height-base));
-        --button-hover-color: var(--color-brand-a10);
+        --_button-hover-color: var(--button-hover-color, var(--color-brand-a10));
         --_button-padding-block: var(--button-padding-block, var(--button-padding, var(--space-sm)));
         --_button-padding-inline: var(--button-padding-inline, var(--button-padding, var(--space-sm)));
         --_button-inline-size: var(--button-inline-size, auto);
         --_button-border-color: var(--button-border-color, transparent);
         --_button-action-border-color: var(--button-border-color, var(--link-text-color));
-        
+
         --icon-color: var(--button-text-color);
 
         inline-size: var(--_button-inline-size);
@@ -38,8 +38,11 @@ export default css`
     }
 
     button[disabled] {
+        --_button-border-color: var(--color-black-a30);
+        --button-text-color: var(--color-black-a40);
+
         cursor: initial;
-        pointer-event: none;
+        pointer-events: none;
     }
 
     button span {
@@ -47,7 +50,7 @@ export default css`
     }
 
     :is(button:not([disabled])):is(:active, :hover, :focus-visible) {
-        background-color: var(--button-hover-color);
+        background-color: var(--_button-hover-color);
         color: var(--button-text-color-active);
     }
 
@@ -58,7 +61,7 @@ export default css`
     :host([direction="left"]) button::before {
       content: '';
       display: inline-block;
-      border-color: currentColor;
+      border-color: currentcolor;
       border-width:var(--line-thin) var(--line-thin) 0 0;
       border-style: solid;
       height: var(--space-xs);
@@ -71,22 +74,22 @@ export default css`
       transform-origin: 50% 50%;
       justify-self: flex-end;
     }
-    
+
     :host([direction="up"]) button::after {
         inset-block-end: -.25em;
         transform: rotate(315deg);
     }
-    
+
     :host([direction="right"]) button::after {
         transform: rotate(45deg);
         inset-inline-start: -.25em;
     }
-    
+
     :host([direction="down"]) button::after {
         inset-block-start: -.25em;
         transform: rotate(135deg);
     }
-    
+
     :host([direction="left"]) button::before {
         inset-inline-end: -.25em;
         transform: rotate(225deg);

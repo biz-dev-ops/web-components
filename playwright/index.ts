@@ -1,6 +1,4 @@
-// Import styles, initialize component theme here.
-// import '../src/common.css';
-
+import "../src/theme.css";
 
 class DrivenStubElement extends HTMLElement {
     constructor() {

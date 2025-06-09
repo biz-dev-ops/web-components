@@ -4,7 +4,7 @@ import { customElement, property } from "lit/decorators.js";
 import resetCss from "../shared/styles/reset.css";
 import { Section } from "./models";
 import "./architecture-section";
-import { FetchError, fetchYamlAndBundleAs } from "../shared/fetch";
+import { FetchError, fetchYamlAs } from "../shared/fetch";
 import "../shared/alert";
 import { ActionLitElement } from "../shared/action-dispatcher";
 
@@ -47,7 +47,7 @@ export class BusinessReferenceArchitectureComponent extends ActionLitElement {
   override async update(changedProperties: Map<string, unknown>) {
     if (changedProperties.has("src")) {
       try {
-        this.model = await fetchYamlAndBundleAs<Section[]>(this.src);
+        this.model = await fetchYamlAs<Section[]>(this.src);
       }
       catch (error: any) {
         this.model = error;
