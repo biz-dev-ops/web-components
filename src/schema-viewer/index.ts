@@ -3,7 +3,6 @@ import { CSSResult, CSSResultArray, html } from "lit";
 import { customElement, eventOptions, property, state } from "lit/decorators.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { createMarkdownIt } from "../markdown-viewer/markdown-it-factory";
-const md = createMarkdownIt("");
 import resetCss from "../shared/styles/reset.css";
 import schemaViewerCss from "./schema-viewer.css";
 
@@ -19,7 +18,6 @@ import "./components/schema-navigation";
 import { fetchAndValidateSchema } from "../shared/fetch";
 import { SchemaResolver } from "../shared/fetch/schema";
 import { ActionLitElement } from "../shared/action-dispatcher";
-import { cp } from "fs";
 
 export const tag = "schema-viewer";
 
@@ -52,6 +50,8 @@ export class SchemaViewerComponent extends ActionLitElement {
     }
 
     override render() {
+        const md = createMarkdownIt(this.src);
+
         if (this.error) {
             return html`<bdo-alert type="error" data-testid="schema-viewer-error">${unsafeHTML(md.render(this.error.message))}</bdo-alert>`;
         }

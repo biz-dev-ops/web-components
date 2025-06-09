@@ -109,4 +109,5 @@ function isActionDispatcher(obj: any): obj is IActionDispatcher {
 }
 
 const ActionLitElement = ActionDispatchMixin(LitElement);
+
 export { Action, IActionDispatcher, ActionHandlerMethod, ActionLitElement, isActionDispatcher };
