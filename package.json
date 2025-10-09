@@ -34,7 +34,7 @@
     "test": "npx playwright test -c playwright-ct.config.ts"
   },
   "dependencies": {
-    "@cucumber/gherkin": "^32.0.0",
+    "@cucumber/gherkin": "^36.0.0",
     "@cucumber/messages": "^27.2.0",
     "ajv": "^8.17.1",
     "ajv-formats": "^3.0.1",
